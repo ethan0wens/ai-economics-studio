@@ -1,0 +1,19 @@
+{
+  "schemaVersion": "1.0.0",
+  "records": [
+    {
+      "meterId": "b0567895-dd0e-4342-8f0b-5fec01296fd4",
+      "sku": "Standard_D2s_v3",
+      "region": "uksouth",
+      "unit": "1 Hour",
+      "quantityPerUnit": 1,
+      "priceType": "Consumption",
+      "currency": "GBP",
+      "price": "0.087215",
+      "effectiveAt": "2017-07-21T00:00:00Z",
+      "source": "https://prices.azure.com/api/retail/prices?api-version=2023-01-01-preview&currencyCode=%27GBP%27&%24filter=serviceName+eq+%27Virtual+Machines%27+and+armRegionName+eq+%27uksouth%27+and+armSkuName+eq+%27Standard_D2s_v3%27+and+priceType+eq+%27Consumption%27",
+      "product": "Virtual Machines DSv3 Series",
+      "verification": "azure-retail-api"
+    }
+  ]
+}

@@ -40,3 +40,22 @@ for (const [name, filter] of Object.entries(filters)) {
     console.log(`::notice title=${name}::${error instanceof Error ? error.message : 'Discovery failed'}`);
   }
 }
+for (const [name, address] of Object.entries({
+  'Copilot Studio pricing UK': 'https://www.microsoft.com/en-gb/microsoft-365-copilot/microsoft-copilot-studio#Pricing',
+  'Copilot Studio pricing US': 'https://www.microsoft.com/en-us/microsoft-365-copilot/microsoft-copilot-studio#Pricing',
+  'Microsoft 365 Copilot pricing UK': 'https://www.microsoft.com/en-gb/microsoft-365-copilot/pricing',
+  'Agent 365 UK': 'https://www.microsoft.com/en-gb/microsoft-365/agent-365',
+  'Entra UK': 'https://www.microsoft.com/en-gb/security/business/microsoft-entra-pricing',
+})) {
+  try {
+    const response = await fetch(address, { signal: AbortSignal.timeout(18000) });
+    if (!response.ok) throw new Error(`HTTP ${response.status}`);
+    const html = await response.text();
+    const plain = html.replace(/<script\b[^>]*>[\s\S]*?<\/script>/gi, ' ').replace(/<style\b[^>]*>[\s\S]*?<\/style>/gi, ' ')
+      .replace(/<[^>]*>/g, ' ').replace(/&pound;|&#163;/g, '£').replace(/&nbsp;|&#160;/g, ' ').replace(/\s+/g, ' ');
+    const matches = [...plain.matchAll(/(?:£|\$)\s*\d+(?:[.,]\d+)*|per credit|pay-as-you-go/gi)].slice(0, 36);
+    const snippets = [...new Set(matches.map(match => plain.slice(Math.max(0, match.index - 60), match.index + 110)))];
+    const message = snippets.join('\n').replaceAll('%', '%25').replaceAll('\n', '%0A').replaceAll('\r', '%0D');
+    console.log(`::notice title=${name}::${message || 'No rendered price snippets found'}`);
+  } catch (error) { console.log(`::notice title=${name}::${error instanceof Error ? error.message : 'Source failed'}`); }
+}

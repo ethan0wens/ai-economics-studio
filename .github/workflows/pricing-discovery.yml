@@ -1,0 +1,19 @@
+name: Discover Microsoft retail meter candidates
+on:
+  push:
+    branches: [work]
+    paths: ['scripts/discover-retail.ts', '.github/workflows/pricing-discovery.yml']
+permissions:
+  contents: read
+jobs:
+  discover:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v6
+        with:
+          node-version: '24'
+      - run: node scripts/discover-retail.ts

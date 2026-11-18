@@ -6,7 +6,7 @@ import { getDocument } from 'pdfjs-dist/legacy/build/pdf.mjs';
 async function add(page: Page, kind: string, name: string) {
   await page.getByRole('button', { name: 'Add object', exact: true }).first().click();
   await page.getByRole('dialog').getByRole('button', { name: kind, exact: true }).click();
-  await page.getByLabel('Object name').fill(name);
+  await page.getByLabel('Object name', { exact: true }).fill(name);
   await expect(page.getByRole('heading', { name, exact: true })).toBeVisible();
 }
 
@@ -23,17 +23,17 @@ test('draft creation, shared costing, keyboard graph, reconciled report and JSON
   await expect(page.getByRole('heading', { name: 'Your inventory is empty' })).toBeVisible();
   await add(page, 'Agent', 'Fictional Alpha');
   await page.getByRole('combobox', { name: 'Platform', exact: true }).selectOption('foundry-agent-service');
-  await page.getByLabel('Model source').selectOption('deployment-ref');
+  await page.getByLabel('Model source', { exact: true }).selectOption('deployment-ref');
   await expect(page.getByText('Link a model deployment.', { exact: true })).toBeVisible();
   await add(page, 'Agent', 'Fictional Beta');
   await page.getByRole('combobox', { name: 'Platform', exact: true }).selectOption('foundry-agent-service');
-  await page.getByLabel('Model source').selectOption('deployment-ref');
+  await page.getByLabel('Model source', { exact: true }).selectOption('deployment-ref');
   await add(page, 'Model deployment', 'Fictional capacity');
-  await page.getByLabel('Model identifier').fill('TEST ONLY');
-  await page.getByLabel('Billing mode').selectOption('provisioned');
+  await page.getByLabel('Model identifier', { exact: true }).fill('TEST ONLY');
+  await page.getByLabel('Billing mode', { exact: true }).selectOption('provisioned');
   await page.getByRole('button', { name: 'Usage', exact: true }).click();
-  await page.getByLabel('Provisioned capacity units').fill('2');
-  await page.getByLabel('Billable hours per month').fill('5');
+  await page.getByLabel('Provisioned capacity units', { exact: true }).fill('2');
+  await page.getByLabel('Billable hours per month', { exact: true }).fill('5');
 
   for (const name of ['Fictional Alpha', 'Fictional Beta']) {
     await page.getByRole('button', { name: new RegExp(name) }).click();
@@ -41,14 +41,14 @@ test('draft creation, shared costing, keyboard graph, reconciled report and JSON
   }
   await page.getByRole('button', { name: 'Cost Analysis' }).click();
   await page.getByText('Shared provisioned capacity', { exact: true }).click();
-  await page.getByLabel('Price agreement').selectOption('fixed');
-  await page.getByLabel(/Rate per billed unit/).fill('70');
-  await page.getByLabel('Agreement reason').fill('Fictional test contract');
+  await page.getByRole('combobox', { name: 'Price agreement', exact: true }).selectOption('fixed');
+  await page.getByRole('textbox', { name: /^Rate per billed unit/ }).fill('70');
+  await page.getByLabel('Agreement reason', { exact: true }).fill('Fictional test contract');
   await page.getByRole('button', { name: 'Save price assumptions' }).click();
   await expect(page.locator('.metric').first()).toContainText('£700.00');
-  await page.getByLabel('Global price change (%)').fill('20');
+  await page.getByLabel('Global price change (%)', { exact: true }).fill('20');
   await expect(page.locator('.compare-grid > div').last()).toContainText('£700.00');
-  await page.getByLabel('Apply forecast to fixed contracts').check();
+  await page.getByLabel('Apply forecast to fixed contracts', { exact: true }).check();
   await expect(page.locator('.compare-grid > div').last()).toContainText('£840.00');
 
   await page.getByRole('button', { name: 'Architecture', exact: true }).click();
@@ -84,7 +84,7 @@ test('draft creation, shared costing, keyboard graph, reconciled report and JSON
   await page.locator('input[type=file]').setInputFiles({ name: 'env.json', mimeType: 'application/json', buffer: json });
   await expect(page.locator('.metric').first()).toContainText('£700.00');
   await expect(page.getByText(/Current ledger recalculated/)).toBeVisible();
-  await page.getByLabel('Search inventory').fill('Beta');
+  await page.getByLabel('Search inventory', { exact: true }).fill('Beta');
   await expect(page.getByRole('button', { name: /Fictional Beta/ })).toBeVisible();
   await expect(page.getByRole('button', { name: /Fictional Alpha/ })).toHaveCount(0);
   const origin = new URL(page.url()).origin;
@@ -152,14 +152,14 @@ test('catalogue changes require explicit adoption and preserve a fixed agreement
   await page.goto('/');
   await expect(page.getByText(/1 verified meters/)).toBeVisible();
   await add(page, 'Supporting resource', 'Fictional billable resource');
-  await page.getByLabel('Verified Azure retail meter').selectOption({ label: 'Fictional test-only meter / fictional / 1 Hour' });
-  await page.getByLabel('Monthly usage quantity').fill('2');
+  await page.getByLabel('Verified Azure retail meter', { exact: true }).selectOption({ label: 'Fictional test-only meter / fictional / 1 Hour' });
+  await page.getByLabel('Monthly usage quantity', { exact: true }).fill('2');
   await expect(page.locator('.metric').first()).toContainText('£20.00');
   await page.getByRole('button', { name: 'Cost Analysis' }).click();
   await page.getByText('Supporting usage', { exact: true }).click();
-  await page.getByLabel('Price agreement').selectOption('fixed');
-  await page.getByLabel(/Rate per billed unit/).fill('7');
-  await page.getByLabel('Agreement reason').fill('Fictional fixed rate');
+  await page.getByRole('combobox', { name: 'Price agreement', exact: true }).selectOption('fixed');
+  await page.getByRole('textbox', { name: /^Rate per billed unit/ }).fill('7');
+  await page.getByLabel('Agreement reason', { exact: true }).fill('Fictional fixed rate');
   await page.getByRole('button', { name: 'Save price assumptions' }).click();
   await expect(page.locator('.metric').first()).toContainText('£14.00');
   current = edition('12', '2025-11-01T00:00:00Z');

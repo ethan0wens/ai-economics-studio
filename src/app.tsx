@@ -1,14 +1,15 @@
 import { lazy, Suspense, useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
 import {
   Activity, ArrowDownToLine, ArrowRight, BarChart3, Boxes, Braces, Building2, ChevronRight, CircleHelp,
-  Cloud, Cpu, FileText, Gauge, GitFork, Layers3, LayoutGrid, Menu, Plus, Search, ShieldCheck, Users, Workflow, X,
+  Cloud, Cpu, FileText, Gauge, GitFork, Layers3, LayoutGrid, Menu, Plus, ShieldCheck, Users, Workflow, X,
 } from 'lucide-react';
 import { blankEnvironment, cloneEnvironment, disclaimer, environmentSchema, importEnvironment, kindLabels, maxBytes, maxObjects, removeObject, type Environment, type Kind } from './domain';
 import { emptyCatalogue, loadCatalogue, retailDocs, type Catalogue } from './catalogue';
 import { categories, formatMoney, governance, ledger, summarize, type Ledger } from './ledger';
 import { Inspector } from './inspector';
 import { basisNames, CostAnalysis } from './pricing-ui';
-import { Field } from './fields';
+import { Field, FieldHelp } from './fields';
+import { hasUnknownPrice, missingInputs } from './inspector-status';
 import { download } from './download';
 
 const Architecture = lazy(() => import('./diagram'));
@@ -233,7 +234,7 @@ export default function App() {
               </div>
             </section>
             <section className="panel padded snapshot"><div className="section-heading"><div><h2>Environment inventory</h2><p className="muted">Objects in this workspace</p></div></div>
-              {!env.objects.length ? <div className="empty"><span className="empty-icon"><Boxes size={26} /></span><h3>Your inventory is empty</h3><p>Add an agent, model deployment or any other object to start modelling.</p><button className="button primary" onClick={() => setModal('add')}><Plus size={17} /> Add first object</button><button className="link-button" onClick={() => imported.current?.click()}>Import existing JSON</button></div>
+              {!env.objects.length ? <div className="empty"><span className="empty-icon"><Boxes size={26} /></span><h3>Your inventory is empty</h3><p>Add an agent, model deployment or any other object to start modelling.</p><button className="button primary" onClick={() => setModal('add')}><Plus size={17} /> Add first object</button><button className="link-button" onClick={() => imported.current?.click()}>Import existing JSON</button><FieldHelp field="importFile" label="Import existing JSON" requirement="Optional" /></div>
                 : <><ul className="inventory-summary">{kinds.filter(kind => env.objects.some(item => item.kind === kind)).map(kind => {
                   const Icon = icons[kind];
                   return <li key={kind}><Icon size={16} />{kindLabels[kind]}<strong>{env.objects.filter(item => item.kind === kind).length}</strong></li>;
@@ -246,19 +247,20 @@ export default function App() {
         </>}
         {page === 'Environment Builder' && <div className="builder-grid">
           <section className="panel padded inventory">
-            <h2>Inventory</h2><div className="inventory-filters"><Field label="Search inventory"><span className="search"><Search size={17} /><input placeholder="Search objects…" value={query} onChange={event => setQuery(event.target.value)} /></span></Field>
-              <Field label="Object type"><select value={filter} onChange={event => setFilter(event.target.value as Kind | '')}><option value="">All types</option>{kinds.map(kind => <option key={kind} value={kind}>{kindLabels[kind]}</option>)}</select></Field></div>
+            <h2>Inventory</h2><div className="inventory-filters"><Field field="inventorySearch"><input placeholder="Search objects…" value={query} onChange={event => setQuery(event.target.value)} /></Field>
+              <Field field="inventoryType"><select value={filter} onChange={event => setFilter(event.target.value as Kind | '')}><option value="">All types</option>{kinds.map(kind => <option key={kind} value={kind}>{kindLabels[kind]}</option>)}</select></Field></div>
             {visible.length === 0 && <div className="empty"><span className="empty-icon"><Boxes size={24} /></span><h3>{env.objects.length ? 'No matching objects' : 'No objects yet'}</h3>{!env.objects.length && <button className="button primary" onClick={() => setModal('add')}><Plus size={16} /> Add first object</button>}</div>}
             {kinds.map(kind => {
               const group = visible.filter(item => item.kind === kind);
               const Icon = icons[kind];
               return group.length ? <section className="inventory-group" key={kind}><h3>{kindLabels[kind]} <small>{group.length}</small></h3>{group.map(item => {
                 const lines = result.lines.filter(line => line.objectId === item.id);
-                const flagged = result.issues.some(issue => issue.id === item.id) || lines.some(line => line.amounts.current === null);
+                const status = missingInputs(item, env).length ? 'Draft' : hasUnknownPrice(lines) ? 'Unknown price'
+                  : result.issues.some(issue => issue.id === item.id) || lines.some(line => line.amounts.current === null) ? 'Needs review' : 'Configured';
                 const subtotal = summarize(lines, env.currency).current;
                 return <button key={item.id} className="object-row" aria-pressed={selected === item.id} onClick={() => setSelected(item.id)}>
                   <span className="tile blue"><Icon size={16} /></span><span className="object-name"><strong>{item.name}</strong><small>{env.relationships.filter(edge => edge.from === item.id || edge.to === item.id).length} links</small></span>
-                  <span className={`status ${flagged ? 'warning' : ''}`}>{flagged ? 'Needs review' : 'Configured'}</span>
+                  <span className={`status ${status === 'Unknown price' ? 'price-unknown' : status === 'Configured' ? '' : 'warning'}`}>{status}</span>
                   {lines.length > 0 && <small>{subtotal.incomplete === lines.length ? 'Unknown' : formatMoney(subtotal.known, env.currency)}</small>}<ChevronRight size={15} />
                 </button>;
               })}</section> : null;
@@ -276,7 +278,7 @@ export default function App() {
         {page === 'Reports & Export' && <>
           <div className="overview-grid"><section className="panel padded"><span className="tile blue"><FileText size={19} /></span><h2>Environment PDF</h2><p className="muted">Includes the logical diagram, monthly and annual comparison, itemised ledger, controls and source coverage.</p><button disabled={exporting} className="button primary" onClick={exportPdf}><ArrowDownToLine size={17} />{exporting ? 'Generating PDF…' : 'Generate PDF'}</button></section>
             <section className="panel padded"><span className="tile teal"><Braces size={19} /></span><h2>Environment JSON</h2><p className="muted">Save or restore objects, relationships and price assumptions. Imported files recalculate against the current catalogue. Keep sensitive details out of labels and notes.</p>
-              <div className="actions"><button className="button" onClick={exportJson}>Export JSON</button><button className="button" onClick={() => imported.current?.click()}>Import JSON</button></div></section></div>
+              <div className="actions"><button className="button" onClick={exportJson}>Export JSON</button><button className="button" onClick={() => imported.current?.click()}>Import JSON</button><FieldHelp field="importFile" label="Import JSON" requirement="Optional" /></div></section></div>
           <section className="panel padded"><h2>Workspace actions</h2><div className="actions"><button className="button" onClick={() => setModal('settings')}>Edit environment</button><button className="button" onClick={() => {
             if (dirty && !window.confirm('Duplicate the current environment and switch to the copy? Export first if you want to retain the original.')) return;
             update(cloneEnvironment(env)); setSelected(undefined); setToast('Environment duplicated with new object IDs.');
@@ -292,7 +294,7 @@ export default function App() {
         <footer>{disclaimer}</footer>
       </main>
     </div>
-    <input ref={imported} type="file" hidden accept=".json,application/json" onChange={event => { void importFile(event.currentTarget.files?.[0]); event.currentTarget.value = ''; }} />
+    <input ref={imported} type="file" aria-label="Import Studio JSON file" hidden accept=".json,application/json" onChange={event => { void importFile(event.currentTarget.files?.[0]); event.currentTarget.value = ''; }} />
     {toast && <div role="status" className="toast">{toast}</div>}
     {modal === 'add' && <Modal title="Add an object" close={() => setModal(null)}><p className="muted">Choose any object to add a draft to your environment.</p>
       <div className="add-grid">{kinds.map(kind => {
@@ -311,10 +313,10 @@ export default function App() {
       const form = new FormData(event.currentTarget);
       update({ ...env, name: String(form.get('name')), description: String(form.get('description')), region: String(form.get('region')), currency: String(form.get('currency')).toUpperCase() });
       setModal(null);
-    }}><Field label="Environment name"><input name="name" required maxLength={300} defaultValue={env.name} /></Field>
-      <Field label="Description"><textarea name="description" maxLength={300} defaultValue={env.description} /></Field>
-      <Field label="Default region"><input name="region" pattern="[a-z0-9\-]+" required defaultValue={env.region} /></Field>
-      <Field label="ISO currency"><input name="currency" pattern="[A-Za-z]{3}" required defaultValue={env.currency} /></Field>
+    }}><Field field="environmentName"><input name="name" required maxLength={300} defaultValue={env.name} /></Field>
+      <Field field="description"><textarea name="description" maxLength={300} defaultValue={env.description} /></Field>
+      <Field field="defaultRegion"><input name="region" pattern="[a-z0-9\-]+" required defaultValue={env.region} /></Field>
+      <Field field="currency"><input name="currency" pattern="[A-Za-z]{3}" required defaultValue={env.currency} /></Field>
       <button className="button primary">Save settings</button></form></Modal>}
   </div>;
 }

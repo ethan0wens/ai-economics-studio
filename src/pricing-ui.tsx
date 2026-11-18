@@ -9,9 +9,9 @@ export function Scenario({ env, update }: { env: Environment; update: (env: Envi
     <h2>Forecast assumptions</h2>
     <p className="muted">Project a hypothetical price change. A specific meter exception replaces the global change.</p>
     <div className="form-grid">
-      <NumberField label="Global price change (%)" value={env.forecast.percent} min={-100} max={10000}
+      <NumberField field="forecast" value={env.forecast.percent} min={-100} max={10000}
         onChange={value => update({ ...env, forecast: { ...env.forecast, percent: value ?? 0 } })} />
-      <Field label="Apply forecast to fixed contracts"><input type="checkbox" checked={env.forecast.applyToFixed}
+      <Field field="forecastFixed"><input type="checkbox" checked={env.forecast.applyToFixed}
         onChange={event => update({ ...env, forecast: { ...env.forecast, applyToFixed: event.target.checked } })} /></Field>
     </div>
   </section>;
@@ -19,10 +19,12 @@ export function Scenario({ env, update }: { env: Environment; update: (env: Envi
 
 function PriceEditor({ line, env, update }: { line: Line; env: Environment; update: (env: Environment) => void }) {
   const [scope, setScope] = useState('object');
+  const [editedMode, setEditedMode] = useState<string>();
   const meter = line.meter!;
   const scoped = { meter, objectId: scope === 'object' ? line.pricingOwner : undefined };
   const key = scopeKey(scoped);
   const existing = env.pricingOverrides.find(rule => scopeKey(rule) === key && rule.currency === env.currency);
+  const mode = editedMode ?? existing?.mode ?? 'catalogue';
   const scenario = env.forecast.exceptions.find(rule => scopeKey(rule) === key);
   const [notice, setNotice] = useState('');
   function save(event: FormEvent<HTMLFormElement>) {
@@ -53,20 +55,31 @@ function PriceEditor({ line, env, update }: { line: Line; env: Environment; upda
     setNotice('Price assumptions saved.');
   }
   return <div className="price-editor">
-    <Select label="Apply to" value={scope} options={[[ 'object', `This meter for ${env.objects.find(item => item.id === line.pricingOwner)?.name ?? line.object}` ], [ 'environment', 'This meter across the environment' ]]}
-      empty={false} onChange={value => { setScope(value); setNotice(''); }} />
+    <Select field="scope" value={scope} options={[[ 'object', `This meter for ${env.objects.find(item => item.id === line.pricingOwner)?.name ?? line.object}` ], [ 'environment', 'This meter across the environment' ]]}
+      empty={false} onChange={value => { setScope(value); setNotice(''); setEditedMode(undefined); }} />
     <form className="price-form" key={key} onSubmit={save}>
-      <Field label="Price agreement"><select name="mode" defaultValue={existing?.mode ?? 'catalogue'}>
+      <Field field="agreement"><select name="mode" value={mode} onChange={event => { setEditedMode(event.target.value); setNotice(''); }}>
         <option value="catalogue">Catalogue</option><option value="discount">Discount (%)</option>
         <option value="fixed">Fixed contractual rate</option><option value="intentional-zero">Intentional zero</option>
       </select></Field>
-      <Field label={`Rate per billed unit (${env.currency}) or discount (%)`}><input name="value" inputMode="decimal" defaultValue={existing && 'value' in existing ? existing.value : ''} /></Field>
-      <Field label="Agreement reason"><input name="reason" maxLength={300} defaultValue={existing?.reason} /></Field>
-      <Field label="Agreement effective date (UTC)"><input name="effective" type="date" defaultValue={existing?.effectiveAt?.slice(0, 10)} /></Field>
-      <Field label="Forecast exception (%)"><input name="scenario" type="number" min="-100" max="10000" step="any" defaultValue={scenario?.percent} /></Field>
-      <Field label="Exception treatment of fixed contracts"><select name="apply-fixed" defaultValue={scenario?.applyToFixed === undefined ? '' : scenario.applyToFixed ? 'yes' : 'no'}>
-        <option value="">Inherit global choice</option><option value="yes">Apply forecast</option><option value="no">Keep fixed rate</option>
-      </select></Field>
+      {(mode === 'discount' || mode === 'fixed') && <Field key={mode} field={mode === 'discount' ? 'discount' : 'fixedRate'}
+        requirement="Required" label={mode === 'discount' ? undefined : `Rate per billed unit (${env.currency})`}
+        hint={mode === 'discount' ? 'Requires a matching retail rate.' : `Enter the contract amount per ${meter.unit} in ${env.currency}.`}>
+        <input name="value" inputMode="decimal" required defaultValue={existing?.mode === mode ? existing.value : ''} />
+      </Field>}
+      {mode !== 'catalogue' && <Field field="reason" requirement="Required" hint={mode === 'intentional-zero' ? 'Explain what covers this charge.' : undefined}>
+        <input name="reason" maxLength={300} required defaultValue={existing?.reason} />
+      </Field>}
+      <details className="price-more">
+        <summary>Advanced timing and forecast</summary>
+        <div className="form-grid">
+          {mode !== 'catalogue' && <Field field="effective"><input name="effective" type="date" defaultValue={existing?.effectiveAt?.slice(0, 10)} /></Field>}
+          <Field field="exception"><input name="scenario" type="number" min="-100" max="10000" step="any" defaultValue={scenario?.percent} /></Field>
+          <Field field="exceptionFixed"><select name="apply-fixed" defaultValue={scenario?.applyToFixed === undefined ? '' : scenario.applyToFixed ? 'yes' : 'no'}>
+            <option value="">Inherit global choice</option><option value="yes">Apply forecast</option><option value="no">Keep fixed rate</option>
+          </select></Field>
+        </div>
+      </details>
       <button className="button" type="submit">Save price assumptions</button>
       {notice && <p role="status">{notice}</p>}
     </form>
@@ -109,8 +122,8 @@ export function CostAnalysis({ env, result, update }: { env: Environment; result
     <section className="panel padded">
       <div className="section-heading"><div><h2>Monthly cost ledger</h2><p className="muted">Open a line to review rates, evidence and assumptions.</p></div></div>
       <div className="form-grid">
-        <Text label="Filter by object, category or meter" value={filter} onChange={setFilter} />
-        <Select label="Price status" value={source} empty="All statuses" onChange={setSource} options={[...new Set(result.lines.map(line => line.status))]} />
+        <Text field="ledgerFilter" value={filter} onChange={setFilter} />
+        <Select field="priceStatus" value={source} empty="All statuses" onChange={setSource} options={[...new Set(result.lines.map(line => line.status))]} />
       </div>
       <Lines env={env} update={update} lines={result.lines.filter(line => (!source || line.status === source) &&
         [line.object, line.category, line.component, line.meter?.sku].join(' ').toLowerCase().includes(filter.toLowerCase()))} />

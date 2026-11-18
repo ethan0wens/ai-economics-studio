@@ -6,6 +6,8 @@ import { Field, NumberField, Select, Text } from './fields';
 import { compatibility } from './microsoft';
 import { type Ledger } from './ledger';
 import { Lines } from './pricing-ui';
+import { hasUnknownPrice, missingInputs } from './inspector-status';
+import type { FieldId } from './field-help';
 
 const edgeLabels: Record<EdgeType, string> = {
   'agent-uses-deployment': 'Model deployment', 'agent-uses-usage': 'Usage profile', 'group-can-access-agent': 'Can access agent',
@@ -14,6 +16,9 @@ const edgeLabels: Record<EdgeType, string> = {
 };
 export const platformOptions: [string, string][] = [['foundry-agent-service', 'Foundry Agent Service'], ['copilot-studio', 'Copilot Studio']];
 
+const levels = ['Essential', 'Detailed', 'Advanced'] as const;
+type Level = typeof levels[number];
+
 export function Inspector({ item, env, catalogue, result, update, select, remove }: {
   item: StudioObject; env: Environment; catalogue: Catalogue; result: Ledger;
   update: (env: Environment) => void; select: (id: string) => void; remove: () => void;
@@ -21,10 +26,15 @@ export function Inspector({ item, env, catalogue, result, update, select, remove
   const panel = useRef<HTMLElement>(null);
   useEffect(() => { panel.current?.querySelector('input')?.focus(); }, []);
   const [tab, setTab] = useState('Configuration');
+  const [level, setLevel] = useState<Level>('Essential');
+  const detailed = level !== 'Essential';
+  const advanced = level === 'Advanced';
+  const missing = missingInputs(item, env);
   const [error, setError] = useState('');
   const [link, setLink] = useState('');
   const [target, setTarget] = useState('');
-  const options = (Object.keys(edgeKinds) as EdgeType[]).filter(key => edgeKinds[key][0] === item.kind);
+  const options = (Object.keys(edgeKinds) as EdgeType[]).filter(key => edgeKinds[key][0] === item.kind &&
+    !(item.kind === 'agent' && item.platform === 'copilot-studio' && (key === 'agent-uses-deployment' || key === 'agent-uses-usage')));
   const related = env.relationships.filter(edge => edge.from === item.id || edge.to === item.id);
   const name = (id: string) => id === env.id ? env.name : env.objects.find(object => object.id === id)?.name ?? 'Missing object';
   const change = (key: string, value: unknown) => {
@@ -35,111 +45,158 @@ export function Inspector({ item, env, catalogue, result, update, select, remove
       update({ ...env, objects: env.objects.map(object => object.id === item.id ? checked.data : object) });
     } else setError(checked.error.issues[0].message);
   };
-  const string = (label: string, key: string, value?: string, placeholder?: string) => <Text label={label} value={value}
-    onChange={text => change(key, text)} placeholder={placeholder} />;
-  const number = (label: string, key: string, value?: number, max?: number, step?: number) =>
-    <NumberField label={label} value={value} max={max} step={step} onChange={value => change(key, value)} />;
-  const option = (label: string, key: string, value: string | undefined, options: (string | [string, string])[]) =>
-    <Select label={label} value={value} options={options} onChange={value => change(key, value || undefined)} />;
+  const string = (field: FieldId, key: string, value?: string) => <Text field={field} value={value}
+    missing={missing.includes(field)} onChange={text => change(key, text)} />;
+  const number = (field: FieldId, key: string, value?: number, max?: number, step?: number, hint?: string) =>
+    <NumberField field={field} value={value} max={max} step={step} hint={hint} missing={missing.includes(field)} onChange={value => change(key, value)} />;
+  const option = (field: FieldId, key: string, value: string | undefined, choices: (string | [string, string])[]) =>
+    <Select field={field} value={value} options={choices} missing={missing.includes(field)} onChange={value => change(key, value || undefined)} />;
+  const region = (value?: string) => <Text field="region" value={value} placeholder={env.region} hint={`Environment default: ${env.region}.`}
+    onChange={text => change('region', text || undefined)} />;
   const setEdge = (type: EdgeType, to: string, replace = false) => {
     const current = replace ? env.relationships.filter(edge => edge.from !== item.id || edge.type !== type) : env.relationships;
     const edge: Edge = { type, from: item.id, to };
     update({ ...env, relationships: to ? [...current, edge] : current });
   };
-  const edgeSelect = (type: 'agent-uses-deployment' | 'agent-uses-usage') => <Select label={edgeLabels[type]}
+  const edgeSelect = (type: 'agent-uses-deployment' | 'agent-uses-usage') => {
+    const field = type === 'agent-uses-deployment' ? 'linkedDeployment' : 'usageLink';
+    return <Select field={field} missing={missing.includes(field)}
     value={related.find(edge => edge.from === item.id && edge.type === type)?.to}
     options={env.objects.filter(object => object.kind === edgeKinds[type][1]).map(object => [object.id,
       object.kind === 'model-deployment' ? [object.name, object.modelId, object.region || env.region, object.mode].filter(Boolean).join(' / ') : object.name])}
     onChange={value => setEdge(type, value, true)} empty="Unlinked" />;
-  const renderConfiguration = () => {
+  };
+  const deploymentId = related.find(edge => edge.from === item.id && edge.type === 'agent-uses-deployment')?.to;
+  const candidate = env.objects.find(object => object.id === deploymentId);
+  const model = candidate?.kind === 'model-deployment' ? candidate : undefined;
+  const evidence = item.kind === 'agent' ? compatibility(item, model) : undefined;
+
+  function renderConfiguration() {
     switch (item.kind) {
       case 'agent': {
-        const modelId = related.find(edge => edge.from === item.id && edge.type === 'agent-uses-deployment')?.to;
-        const model = env.objects.find(object => object.id === modelId);
-        const evidence = compatibility(item, model?.kind === 'model-deployment' ? model : undefined);
+        const sources: [string, string][] = [['platform-managed', 'Platform-managed']];
+        if (item.platform === 'foundry-agent-service') sources.push(['deployment-ref', 'Linked model deployment']);
+        else if (item.modelSource === 'deployment-ref') sources.push(['deployment-ref', 'Previously linked deployment (unsupported)']);
         return <>
-        {option('Platform', 'platform', item.platform, platformOptions)}
-        {option('Model source', 'modelSource', item.modelSource, [['platform-managed', 'Platform-managed'], ['deployment-ref', 'Linked model deployment']])}
-        {item.modelSource === 'deployment-ref' && edgeSelect('agent-uses-deployment')}
-        {option('Autonomy', 'autonomy', item.autonomy, ['read-only', 'approved-writes', 'autonomous-writes'])}
-        {option('Data sensitivity', 'sensitivity', item.sensitivity, ['public', 'internal', 'confidential', 'regulated'])}
-        {option('Identity', 'identity', item.identity, ['delegated', 'application'])}
-        {string('Tools and knowledge sources', 'tools', item.tools)}
-        {'source' in evidence && <p className="muted">Compatibility: {evidence.status.replaceAll('-', ' ')} · <a href={evidence.source} target="_blank" rel="noreferrer">Microsoft guidance</a></p>}
-      </>;
+          {option('platform', 'platform', item.platform, platformOptions)}
+          {item.platform && option('modelSource', 'modelSource', item.modelSource, sources)}
+          {item.platform === 'foundry-agent-service' && item.modelSource === 'deployment-ref' && edgeSelect('agent-uses-deployment')}
+          {item.platform === 'copilot-studio' && <p className="field-hint">For Copilot Studio, use platform-managed pricing and enter your monthly credit estimate in Usage.</p>}
+          {detailed && <div className="field-group"><h3>Risk and data</h3>
+            {option('autonomy', 'autonomy', item.autonomy, [['read-only', 'Read only'], ['approved-writes', 'Writes after approval'], ['autonomous-writes', 'Writes without approval']])}
+            {option('sensitivity', 'sensitivity', item.sensitivity, [['public', 'Public'], ['internal', 'Internal'], ['confidential', 'Confidential'], ['regulated', 'Regulated']])}
+          </div>}
+          {advanced && <div className="field-group"><h3>Access and integrations</h3>
+            {option('identity', 'identity', item.identity, [['delegated', 'Delegated user identity'], ['application', 'Application identity']])}
+            {string('tools', 'tools', item.tools)}
+          </div>}
+          {evidence && 'source' in evidence && <p className="field-hint">{evidence.reason} <a href={evidence.source} target="_blank" rel="noreferrer">Microsoft guidance</a></p>}
+        </>;
       }
       case 'model-deployment': return <>
-        {string('Model identifier', 'modelId', item.modelId)}
-        {string('Model version', 'modelVersion', item.modelVersion)}
-        {string('SKU', 'sku', item.sku)}
-        <Text label="Region" value={item.region} placeholder={env.region} onChange={value => change('region', value || undefined)} />
-        {option('Billing mode', 'mode', item.mode, [['payg', 'Pay as you go'], ['provisioned', 'Provisioned capacity']])}
+        {string('modelId', 'modelId', item.modelId)}
+        {option('billingMode', 'mode', item.mode, [['payg', 'Pay as you go'], ['provisioned', 'Provisioned capacity']])}
+        {detailed && <div className="field-group"><h3>Deployment details</h3>{region(item.region)}{string('modelVersion', 'modelVersion', item.modelVersion)}</div>}
+        {advanced && string('sku', 'sku', item.sku)}
       </>;
       case 'user-group': return <>
-        {number('Total population', 'population', item.population, undefined, 1)}
-        {number('Intended audience', 'intended', item.intended, undefined, 1)}
-        {number('Monthly active users', 'active', item.active, undefined, 1)}
-        {number('Monthly interactions', 'interactions', item.interactions, undefined, 1)}
+        {number('intended', 'intended', item.intended, undefined, 1)}
+        {number('active', 'active', item.active, undefined, 1)}
+        {detailed && number('population', 'population', item.population, undefined, 1)}
+        {advanced && number('interactions', 'interactions', item.interactions, undefined, 1)}
       </>;
       case 'licence-entitlement': return <>
-        {string('Product or SKU', 'product', item.product)}
-        {option('Procurement state', 'procurement', item.procurement, [['existing', 'Already owned'], ['incremental', 'Incremental'], 'unknown'])}
-        {number('Deduplicated seats', 'seats', item.seats, undefined, 1)}
+        {string('product', 'product', item.product)}
+        {option('procurement', 'procurement', item.procurement, [['existing', 'Already owned'], ['incremental', 'Incremental'], ['unknown', 'Unknown']])}
+        {(item.procurement === 'incremental' || (detailed && item.procurement === 'existing')) &&
+          number('seats', 'seats', item.seats, undefined, 1, 'Count each person once across linked groups.')}
       </>;
       case 'supporting-resource': {
         const meters = catalogue.records.filter(record => record.currency === env.currency && record.region === (item.region ?? env.region));
+        const activeMeter = item.meter?.region === (item.region ?? env.region) ? item.meter : undefined;
         return <>
-          {string('Resource category', 'category', item.category)}
-          <Text label="Region" value={item.region} placeholder={env.region} onChange={value => change('region', value || undefined)} />
-          <Select label="Verified Azure retail meter" value={item.meter && meterKey(item.meter)}
+          {string('category', 'category', item.category)}
+          <Select field="meter" value={item.meter && meterKey(item.meter)}
             options={[...(item.meter && !meters.some(record => meterKey(record) === meterKey(item.meter!)) ?
               [[meterKey(item.meter), 'Previously selected meter (unavailable)'] as [string, string]] : []),
               ...meters.map(record => [meterKey(record), `${record.product} / ${record.sku} / ${record.unit}`] as [string, string])]}
             onChange={key => {
               const record = meters.find(record => meterKey(record) === key);
               change('meter', record && { meterId: record.meterId, sku: record.sku, region: record.region, unit: record.unit, quantityPerUnit: record.quantityPerUnit, priceType: record.priceType });
-            }} empty="Manual billing assumption" />
-          {number('Monthly usage quantity', 'monthlyQuantity', item.monthlyQuantity)}
+            }} empty="Manual billing assumption"
+            hint={meters.length ? undefined : 'No verified meters for this region and currency. Use a manual rate under Costs if you have one.'} />
+          {number('resourceQuantity', 'monthlyQuantity', item.monthlyQuantity, undefined, undefined, activeMeter
+            ? `Enter base units per month. The selected meter bills per ${activeMeter.unit} (${activeMeter.quantityPerUnit} base units).`
+            : 'Use the same unit for this quantity and your manual rate. For example, enter hours if your contract quotes a rate per hour.')}
+          {detailed && region(item.region)}
         </>;
       }
       case 'security-policy': return <>
-        {option('Control', 'control', item.control, ['identity', 'approval', 'audit', 'dlp', 'budget'])}
-        {option('Declared status', 'status', item.status, ['implemented', 'planned', 'absent', 'unknown'])}
-        {string('Control notes', 'detail', item.detail)}
+        {option('control', 'control', item.control, [['identity', 'Identity and access'], ['approval', 'Human approval'], ['audit', 'Audit and monitoring'], ['dlp', 'Data loss prevention'], ['budget', 'Budget and usage limits']])}
+        {option('controlStatus', 'status', item.status, [['implemented', 'Implemented'], ['planned', 'Planned'], ['absent', 'Absent'], ['unknown', 'Unknown']])}
+        {detailed && string('controlNotes', 'detail', item.detail)}
       </>;
       case 'usage-profile': return <>
-        {number('Monthly executions', 'executions', item.executions, undefined, 1)}
-        {number('Model calls per execution', 'calls', item.calls)}
-        {number('Input tokens per call', 'input', item.input, undefined, 1)}
-        {number('Output tokens per call', 'output', item.output, undefined, 1)}
-        {number('Additional retries (%)', 'retries', item.retries, 100)}
-        {number('Tool calls per execution', 'toolCalls', item.toolCalls)}
-        <p className="muted">Enter calls before retries. Include downstream executions in their own profiles once. Tool consumption can be declared as a supporting resource.</p>
+        <p className="field-hint">Count workflow runs first, then the average model requests per run. Enter input and output tokens for one request.</p>
+        {number('executions', 'executions', item.executions, undefined, 1)}
+        {number('calls', 'calls', item.calls)}
+        <div className="field-group"><h3>Tokens per request</h3>
+          {number('input', 'input', item.input, undefined, 1)}
+          {number('output', 'output', item.output, undefined, 1)}
+        </div>
+        {detailed && number('retries', 'retries', item.retries, 100, undefined, 'Enter only extra calls. If retries are already included in your base call count, leave this blank.')}
+        {advanced && number('toolCalls', 'toolCalls', item.toolCalls)}
       </>;
     }
-  };
+  }
   const rows = result.lines.filter(line => line.objectId === item.id || item.kind === 'model-deployment' &&
     env.relationships.some(edge => edge.type === 'agent-uses-deployment' && edge.to === item.id && edge.from === line.objectId && line.category === 'Inference'));
-  const issues = result.issues.filter(issue => issue.id === item.id);
+  const issues = result.issues.filter(issue => issue.id === item.id && issue.message !== evidence?.reason);
+  const unknownPrice = hasUnknownPrice(rows);
+  const canUseProfile = item.kind === 'agent' && item.platform === 'foundry-agent-service' &&
+    item.modelSource === 'deployment-ref' && model && (model.mode === 'payg' || model.mode === 'provisioned');
+  const visibleLevels: readonly Level[] = tab === 'Usage' && item.kind === 'model-deployment' && item.mode === 'provisioned'
+    ? levels.filter(choice => choice !== 'Detailed')
+    : tab !== 'Configuration' ? []
+    : item.kind === 'supporting-resource' || item.kind === 'security-policy' || (item.kind === 'licence-entitlement' && item.procurement === 'existing')
+      ? levels.filter(choice => choice !== 'Advanced')
+      : item.kind === 'licence-entitlement' ? []
+      : levels;
+  const selectedLevel = visibleLevels.includes(level) ? level : level === 'Advanced' ? 'Detailed' : 'Essential';
+  const sections = ['Configuration', ...(item.kind === 'agent' || item.kind === 'model-deployment' ? ['Usage'] : []), 'Dependencies', 'Costs'];
 
   return <aside ref={panel} className="panel inspector" aria-labelledby="inspector-title">
-    <header className="inspector-header"><span className="subtle-label">{kindLabels[item.kind]}</span><h2 id="inspector-title">{item.name}</h2></header>
+    <header className="inspector-header"><span className="subtle-label">{kindLabels[item.kind]}</span><h2 id="inspector-title">{item.name}</h2>
+      <div className="inspector-badges">
+        {missing.length > 0 && <span className="status warning">Draft · {missing.length} missing</span>}
+        {unknownPrice && <span className="status price-unknown">Unknown price</span>}
+      </div></header>
     <div className="tabs" role="group" aria-label="Inspector sections">
-      {['Configuration', 'Usage', 'Dependencies', 'Costs'].map(label => <button key={label} type="button" aria-pressed={tab === label} onClick={() => setTab(label)}>{label}</button>)}
+      {sections.map(label => <button key={label} type="button" aria-pressed={tab === label} onClick={() => setTab(label)}>{label}</button>)}
     </div>
     <div className="inspector-content" key={tab}>
       {error && <p role="alert" className="notice">{error}</p>}
       {issues.map(issue => <p className="notice" key={issue.message}>{issue.message}</p>)}
-      {tab === 'Configuration' && <><Text label="Object name" value={item.name} onChange={value => change('name', value)} />{renderConfiguration()}</>}
+      {missing.length > 0 && <p className="draft-note">Keep editing or export JSON to save this draft. Marked fields are needed to complete it.</p>}
+      {tab === 'Configuration' && evidence?.status === 'draft' && missing.includes('linkedDeployment') && <p className="field-hint">{evidence.reason}</p>}
+      {unknownPrice && <p className="field-hint">Usage is entered for at least one line without a current rate. Review the Costs tab for its pricing options.</p>}
+      {visibleLevels.length > 0 && <div className="level-control" role="group" aria-label="Configuration detail">
+        {visibleLevels.map(choice => <button type="button" key={choice} aria-pressed={visibleLevels.includes(selectedLevel) ? selectedLevel === choice : choice === 'Essential'} onClick={() => setLevel(choice)}>{choice}</button>)}
+      </div>}
+      {tab === 'Configuration' && <><Text field="objectName" value={item.name} onChange={value => change('name', value)} />{renderConfiguration()}</>}
       {tab === 'Usage' && (item.kind === 'agent' ? <>
-        {item.platform === 'copilot-studio' ? number('Monthly Copilot credits', 'credits', item.credits) : edgeSelect('agent-uses-usage')}
-        <p className="muted">Enter monthly assumptions for this workload. Connections do not automatically multiply traffic.</p>
-      </> : item.kind === 'model-deployment' ? <>
-        {number('Provisioned capacity units', 'capacity', item.capacity)}
-        {number('Billable hours per month', 'billableHours', item.billableHours, 744)}
-        <Field label="Allocate fixed cost by declared input tokens"><input type="checkbox" checked={!!item.allocationBasis}
-          onChange={event => change('allocationBasis', event.target.checked ? 'input-tokens' : undefined)} /></Field>
-      </> : renderConfiguration())}
+        {item.platform === 'copilot-studio' && item.modelSource === 'platform-managed'
+          ? number('credits', 'credits', item.credits, undefined, undefined, 'Enter credits for the month. Review the plan-specific rate separately under Costs.')
+          : canUseProfile ? edgeSelect('agent-uses-usage')
+          : <p className="field-hint">Choose a supported platform and model source in Configuration to see the applicable usage inputs.</p>}
+        {detailed && canUseProfile && <p className="field-hint">Use a separate profile for each distinct workload. Connections do not multiply traffic. Provisioned deployments use profiles only for cost allocation.</p>}
+      </> : item.kind === 'model-deployment' && (item.mode === 'provisioned' ? <>
+        <p className="field-hint">Enter reserved units and billable hours for the same month. This shared charge is counted once per deployment.</p>
+        {number('capacity', 'capacity', item.capacity)}
+        {number('hours', 'billableHours', item.billableHours, 744)}
+        {advanced && <Field field="allocation"><input type="checkbox" checked={!!item.allocationBasis}
+          onChange={event => change('allocationBasis', event.target.checked ? 'input-tokens' : undefined)} /></Field>}
+      </> : <p className="field-hint">{item.mode === 'payg' ? 'Pay-as-you-go token usage comes from profiles linked to agents.' : 'Choose a billing mode in Configuration to see the applicable usage inputs.'}</p>))}
       {tab === 'Dependencies' && <>
         {related.length === 0 && <p className="muted">This object has no linked dependencies.</p>}
         {related.map(edge => {
@@ -150,9 +207,9 @@ export function Inspector({ item, env, catalogue, result, update, select, remove
           </div>;
         })}
         {options.length > 0 && <>
-          <Select label="Relationship type" value={link} options={options.map(type => [type, edgeLabels[type]])}
+          <Select field="relationship" value={link} options={options.map(type => [type, edgeLabels[type]])}
             onChange={value => { setLink(value); setTarget(''); }} />
-          {link && <><Select label="Target" value={target} options={
+          {link && <><Select field="relationshipTarget" value={target} options={
             edgeKinds[link as EdgeType][1] === 'environment' ? [[env.id, env.name]] :
               env.objects.filter(object => object.id !== item.id && object.kind === edgeKinds[link as EdgeType][1]).map(object => [object.id, object.name])}
           onChange={setTarget} />

@@ -12,7 +12,7 @@ if (process.argv[2] !== 'commercial') for (const [name, filter] of Object.entrie
     let url: URL | undefined = new URL('/api/retail/prices', origin);
     url.searchParams.set('api-version', '2023-01-01-preview');
     url.searchParams.set('currencyCode', "'GBP'");
-    url.searchParams.set('$filter', `${name.startsWith('Copilot') ? '' : "armRegionName eq 'uksouth' and "}priceType eq 'Consumption' and (${filter})`);
+    url.searchParams.set('$filter', `armRegionName eq 'uksouth' and priceType eq 'Consumption' and (${filter})`);
     const rows: string[] = [];
     const seen = new Set<string>();
     for (let page = 0; url && page < 4; page++) {

@@ -10,6 +10,10 @@
 
 Both production workflows share a concurrency group and check out the current `main` head when they start. A non-fast-forward refresh push fails before deploy. GitHub may coalesce pending runs, so review the production deployment and re-dispatch if an expected run was replaced.
 
+## Pre-release pricing check
+
+Changes to the pricing pipeline on `work` run **Verify Azure retail feed before release** in GitHub Actions. It checks the live Azure feed with read-only repository permissions and saves a preview artifact. The production refresh on `main` fetches and validates a fresh catalogue before publication.
+
 ## Pricing incidents
 
 A failed retrieval, schema, mapping or coverage check leaves the manifest unchanged and blocks deployment. Use the failed job's logs to diagnose the selector or upstream response. Recheck the official SKU, billing tier, currency, region, unit and effective date before changing mappings or accepting large price movements. A deployed version includes the current and previous validated catalogue assets. The client can use the previous asset if the current immutable download fails.

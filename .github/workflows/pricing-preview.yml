@@ -1,0 +1,43 @@
+name: Verify Azure retail feed before release
+on:
+  push:
+    branches: [work]
+    paths:
+      - '.github/workflows/pricing-preview.yml'
+      - 'scripts/pricing.ts'
+      - 'scripts/retail-mappings.ts'
+      - 'src/catalogue.ts'
+      - 'public/pricing/**'
+      - 'package-lock.json'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: pricing-preview-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  verify-feed:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v6
+        with:
+          node-version: '24'
+          cache: npm
+      - run: npm ci
+      - run: npm run pricing:refresh && npm run pricing:validate
+      - name: Report verified preview catalogue
+        run: |
+          printf '### Read-only Azure retail preview\n\n' >> "$GITHUB_STEP_SUMMARY"
+          jq -r '"Validated records: \(.records)\n\nChecked at: \(.lastCheckedAt)\n\nCatalogue ID: \(.catalogueId)"' public/pricing/manifest.json >> "$GITHUB_STEP_SUMMARY"
+      - uses: actions/upload-artifact@v7
+        with:
+          name: verified-retail-preview
+          path: public/pricing/*.json
+          if-no-files-found: error
+          retention-days: 7

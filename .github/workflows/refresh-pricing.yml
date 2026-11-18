@@ -7,6 +7,7 @@ on:
       - 'scripts/pricing.ts'
       - 'scripts/retail-mappings.ts'
       - 'src/catalogue.ts'
+      - 'tests/e2e/**'
   schedule:
     - cron: '17 6 * * *'
   workflow_dispatch:

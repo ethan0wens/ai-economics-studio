@@ -93,7 +93,8 @@ test('draft creation, shared costing, keyboard graph, reconciled report and JSON
     if (url.startsWith('blob:')) return true;
     const target = new URL(url);
     return target.origin === origin && !target.search && method === 'GET' && body === null &&
-      (target.pathname === '/' || target.pathname === '/pricing/manifest.json' || target.pathname.startsWith('/assets/'));
+      (target.pathname === '/' || target.pathname === '/pricing/manifest.json' ||
+        /^\/pricing\/catalogue-[a-f0-9]{64}\.json$/.test(target.pathname) || target.pathname.startsWith('/assets/'));
   })).toBe(true);
 });
 

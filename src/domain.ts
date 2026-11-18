@@ -22,13 +22,13 @@ const meter = z.strictObject({
 export type Meter = z.infer<typeof meter>;
 const parts = {
   'model-deployment': z.strictObject({
-    ...common, kind: z.literal('model-deployment'), modelId: text.optional(), modelVersion: text.optional(),
+    ...common, kind: z.literal('model-deployment'), offeringId: id.optional(), modelId: text.optional(), modelVersion: text.optional(),
     region: region.optional(), sku: text.optional(), mode: z.enum(['payg', 'provisioned']).optional(),
     inputMeter: meter.optional(), outputMeter: meter.optional(), capacityMeter: meter.optional(),
     capacity: quantity.optional(), billableHours: quantity.max(744).optional(), allocationBasis: z.literal('input-tokens').optional(),
   }),
   agent: z.strictObject({
-    ...common, kind: z.literal('agent'),
+    ...common, kind: z.literal('agent'), offeringId: id.optional(),
     platform: z.enum(['foundry-agent-service', 'copilot-studio']).optional(),
     modelSource: z.enum(['platform-managed', 'deployment-ref']).optional(),
     autonomy: z.enum(['read-only', 'approved-writes', 'autonomous-writes']).optional(),
@@ -46,12 +46,12 @@ const parts = {
     population: count.optional(), intended: count.optional(), active: count.optional(), interactions: count.optional(),
   }),
   'licence-entitlement': z.strictObject({
-    ...common, kind: z.literal('licence-entitlement'),
+    ...common, kind: z.literal('licence-entitlement'), offeringId: id.optional(),
     product: text.optional(), procurement: z.enum(['existing', 'incremental', 'unknown']).optional(),
     seats: count.optional(), meter: meter.optional(),
   }),
   'supporting-resource': z.strictObject({
-    ...common, kind: z.literal('supporting-resource'), category: text.optional(), region: region.optional(),
+    ...common, kind: z.literal('supporting-resource'), offeringId: id.optional(), category: text.optional(), region: region.optional(),
     monthlyQuantity: quantity.optional(), meter: meter.optional(),
   }),
   'security-policy': z.strictObject({
@@ -88,6 +88,7 @@ const edgeSchema = z.strictObject({ type: z.enum(Object.keys(edgeKinds) as EdgeT
 export type Edge = z.infer<typeof edgeSchema>;
 const scope = { objectId: id.optional(), meter };
 export const overrideSchema = z.discriminatedUnion('mode', [
+  z.strictObject({ ...scope, currency, reason: name, effectiveAt: datetime.optional(), mode: z.literal('retail') }),
   z.strictObject({ ...scope, currency, reason: name, effectiveAt: datetime.optional(), mode: z.literal('fixed'), value: decimal.refine(value => Number(value) > 0) }),
   z.strictObject({ ...scope, currency, reason: name, effectiveAt: datetime.optional(), mode: z.literal('discount'), value: quantity.max(100) }),
   z.strictObject({ ...scope, currency, reason: name, effectiveAt: datetime.optional(), mode: z.literal('intentional-zero') }),

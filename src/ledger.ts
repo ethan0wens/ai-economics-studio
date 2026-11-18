@@ -1,6 +1,7 @@
 import Decimal from 'decimal.js';
-import { findRetail, type RetailRecord } from './catalogue';
+import { findRetail, resolveOffering, type RetailRecord } from './catalogue';
 import { meterKey, type Environment, type Meter, type Override, type StudioObject } from './domain';
+import { applicableOffering, copilotPack, offeringMeter, type Component, type Offering } from './offerings';
 import { compatibility, microsoft } from './microsoft';
 
 const Money = Decimal.clone({ precision: 50, rounding: Decimal.ROUND_HALF_UP });
@@ -18,6 +19,16 @@ export function financialRates(retail: string | undefined, agreement: Override |
   return { baseline, current, future };
 }
 
+export function graduatedAmount(quantity: Decimal.Value, record: Pick<RetailRecord, 'tiers' | 'price' | 'quantityPerUnit'>) {
+  const usage = new Money(quantity);
+  if (!record.tiers) return usage.div(record.quantityPerUnit).times(record.price);
+  return record.tiers.reduce((amount, tier, index) => {
+    const upper = record.tiers?.[index + 1]?.from;
+    const end = upper === undefined ? usage : Money.min(usage, upper);
+    return amount.plus(Money.max(0, end.minus(tier.from)).div(record.quantityPerUnit).times(tier.price));
+  }, zero());
+}
+
 export function assumedMeter(meterId: string, sku: string, region: string, unit: string, quantityPerUnit = 1): Meter {
   return { meterId, sku, region, unit, quantityPerUnit, priceType: 'Consumption' };
 }
@@ -28,7 +39,7 @@ export type Line = {
   id: string; objectId: string; pricingOwner: string; object: string; category: Category; component: string; fixed: boolean;
   meter?: Meter; quantity: string | null; currency: string; amounts: Values; rates: Values;
   source?: RetailRecord; status: string; reason?: string; agreement?: Override; scenario: number;
-  allocatesTo: string[]; allocation?: { agentId: string; amount: string }[];
+  allocatesTo: string[]; includedCredits?: string; allocation?: { agentId: string; amount: string }[];
 };
 
 export function summarize(lines: Line[], code = 'GBP') {
@@ -58,30 +69,70 @@ export function ledger(env: Environment, records: RetailRecord[], at = new Date(
   const bill = (object: StudioObject, category: Category, component: string, options: {
     meter?: Meter; quantity?: Decimal | number; reason?: string; fixed?: boolean; existing?: boolean;
     owner?: string; allocatesTo?: string[]; allowRetail?: boolean;
+    offer?: Offering; componentId?: Component; includedCredits?: Decimal;
   } = {}) => {
-    const { meter, quantity, reason, fixed = false, existing, owner = object.id, allocatesTo = [], allowRetail = true } = options;
+    const { meter, quantity, reason, fixed = false, existing, owner = object.id, allocatesTo = [], allowRetail = false, offer, componentId, includedCredits } = options;
     const matches = (rule: {meter: Meter}) => meter && meterKey(rule.meter) === meterKey(meter);
-    const inForce = (rule: Override) => rule.currency === code && matches(rule) && (!rule.effectiveAt || Date.parse(rule.effectiveAt) <= Date.parse(at));
+    const compatibleLegacyCopilot = (rule: { meter: Meter }) => componentId === 'credits' && offer &&
+      meterKey(rule.meter) === meterKey(assumedMeter('copilot-credits', 'Copilot Studio', env.region, 'credit'));
+    const inForce = (rule: Override) => rule.currency === code && (matches(rule) || compatibleLegacyCopilot(rule)) && (!rule.effectiveAt || Date.parse(rule.effectiveAt) <= Date.parse(at));
     const overrides = env.pricingOverrides.filter(inForce);
-    const agreement = overrides.find(rule => rule.objectId === owner) ?? overrides.find(rule => !rule.objectId);
-    const exceptions = env.forecast.exceptions.filter(matches);
-    const exception = exceptions.find(rule => rule.objectId === owner) ?? exceptions.find(rule => !rule.objectId);
+    const agreement = overrides.find(rule => rule.objectId === owner && matches(rule)) ?? overrides.find(rule => rule.objectId === owner)
+      ?? overrides.find(rule => !rule.objectId && matches(rule)) ?? overrides.find(rule => !rule.objectId);
+    const exceptions = env.forecast.exceptions.filter(rule => matches(rule) || compatibleLegacyCopilot(rule));
+    const exception = exceptions.find(rule => rule.objectId === owner && matches(rule)) ?? exceptions.find(rule => rule.objectId === owner)
+      ?? exceptions.find(rule => !rule.objectId && matches(rule)) ?? exceptions.find(rule => !rule.objectId);
     const scenario = exception?.percent ?? env.forecast.percent;
-    const source = meter && allowRetail ? findRetail(records, meter, code, at) : undefined;
-    const rate = financialRates(source?.price, agreement, scenario, exception?.applyToFixed ?? env.forecast.applyToFixed);
+    const source = offer && componentId ? resolveOffering(records, offer, componentId, code, at)
+      : meter && allowRetail ? findRetail(records.filter(record => !record.component || record.component === 'usage'), meter, code, at) : undefined;
+    const blended = source?.tiers && quantity !== undefined && new Money(quantity).gt(0)
+      ? graduatedAmount(quantity, source).times(source.quantityPerUnit).div(quantity).toFixed() : source?.price;
+    const rate = financialRates(blended, agreement, scenario, exception?.applyToFixed ?? env.forecast.applyToFixed);
+    const fullyCovered = includedCredits?.gt(0) && quantity !== undefined && new Money(quantity).isZero();
     const amounts = (value: Decimal | null) => value === null || quantity === undefined || !meter ? null : new Money(quantity).div(meter.quantityPerUnit).times(value).toFixed(digits);
     const retail = amounts(rate.baseline);
-    const current = existing ? zero().toFixed(digits) : amounts(rate.current);
-    const forecast = existing ? zero().toFixed(digits) : amounts(rate.future);
+    const current = existing || fullyCovered ? zero().toFixed(digits) : amounts(rate.current);
+    const forecast = existing || fullyCovered ? zero().toFixed(digits) : amounts(rate.future);
     lines.push({
       id: `${object.id}:${component}`, objectId: object.id, pricingOwner: owner, object: object.name, category, component, meter, fixed,
       quantity: quantity?.toString() ?? null, currency: code, amounts: { retail, current, forecast },
       rates: { retail: rate.baseline?.toFixed() ?? null, current: existing ? '0' : rate.current?.toFixed() ?? null, forecast: existing ? '0' : rate.future?.toFixed() ?? null },
-      status: existing ? 'Already owned' : current === null ? 'Unknown' : agreement?.mode === 'intentional-zero' ? 'Intentional zero' : agreement ? 'User agreement' : 'Azure retail',
-      reason: reason ?? (current === null ? (quantity === undefined ? 'Enter monthly usage.' : 'No verified matching rate. Enter an explicit contract or included amount.') : undefined),
-      source, agreement, scenario, allocatesTo,
+      status: existing ? 'Already owned' : fullyCovered ? 'Covered by linked packs' : current === null ? 'Unknown' : agreement?.mode === 'intentional-zero' ? 'Intentional zero' : agreement?.mode && agreement.mode !== 'retail' ? 'User agreement' : 'Microsoft retail',
+      reason: reason ?? (current === null ? (quantity === undefined ? 'Enter monthly usage.' : 'No current verified rate matches this configuration. Review the catalogue or enter an evidenced contract amount.') : undefined),
+      source, agreement, scenario, allocatesTo, includedCredits: includedCredits?.toFixed(),
     });
   };
+  function selection(object: StudioObject) {
+    return applicableOffering(object, 'region' in object ? object.region ?? env.region : env.region, code);
+  }
+  const poolLinks = new Map<string, string[]>();
+  const remaining = new Map<string, Decimal>();
+  for (const resource of env.objects) {
+    if (resource.kind === 'supporting-resource' && selection(resource)?.id === copilotPack.offeringId &&
+      code === 'GBP' && resource.monthlyQuantity !== undefined && Number.isInteger(resource.monthlyQuantity)) {
+      remaining.set(resource.id, new Money(resource.monthlyQuantity).times(copilotPack.credits));
+    }
+  }
+  for (const edge of env.relationships) {
+    if (edge.type === 'agent-uses-resource' && remaining.has(edge.to)) {
+      poolLinks.set(edge.from, [...(poolLinks.get(edge.from) ?? []), edge.to]);
+    }
+  }
+  // Stable order makes responsibility for any residual credits reproducible.
+  const creditAllocations = new Map<string, Decimal>();
+  for (const [id, links] of [...poolLinks].sort(([a], [b]) => a.localeCompare(b))) {
+    const agent = objects.get(id);
+    if (agent?.kind !== 'agent' || agent.platform !== 'copilot-studio' || agent.modelSource !== 'platform-managed' || agent.credits === undefined) continue;
+    if (links.length !== 1) {
+      note(id, 'Multiple credit packs are linked. Link one pooled resource per agent to allocate credits.');
+      continue;
+    }
+    const pool = remaining.get(links[0])!;
+    const used = Money.min(pool, agent.credits);
+    creditAllocations.set(id, used);
+    remaining.set(links[0], pool.minus(used));
+  }
+
   for (const object of env.objects) {
     switch (object.kind) {
       case 'agent': {
@@ -91,9 +142,12 @@ export function ledger(env: Environment, records: RetailRecord[], at = new Date(
         if (assessment.status !== 'verified-supported') note(object.id, assessment.reason);
         if (outgoing(object.id, 'agent-invokes-agent').length) note(object.id, 'Invocation links are descriptive. Include downstream volume once in the downstream usage profile.');
         if (object.platform === 'copilot-studio') {
+          const offer = selection(object);
+          const included = creditAllocations.get(object.id) ?? zero();
           bill(object, 'Orchestration', 'Copilot Studio credits', {
-            meter: object.platformMeter ?? assumedMeter('copilot-credits', 'Copilot Studio', env.region, 'credit'),
-            quantity: assessment.status === 'verified-supported' ? object.credits : undefined, allowRetail: false,
+            meter: (offer && offeringMeter(offer, 'credits')) ?? (object.platformMeter?.region === env.region ? object.platformMeter : undefined) ?? assumedMeter('copilot-credits', 'Copilot Studio', env.region, 'credit'),
+            quantity: assessment.status === 'verified-supported' && object.credits !== undefined ? new Money(object.credits).minus(included) : undefined,
+            offer: assessment.status === 'verified-supported' ? offer : undefined, componentId: 'credits', includedCredits: included.gt(0) ? included : undefined,
             reason: assessment.status === 'verified-supported' ? undefined : assessment.reason,
           });
           break;
@@ -109,14 +163,20 @@ export function ledger(env: Environment, records: RetailRecord[], at = new Date(
           : new Money(profile.executions).times(profile.calls).times(new Money(profile.retries ?? 0).div(100).plus(1));
         const region = model.region ?? env.region;
         const sku = model.sku || model.modelId;
+        const offer = selection(model);
+        const modelMeter = (part: 'input' | 'output') => {
+          const manual = part === 'input' ? model.inputMeter : model.outputMeter;
+          const custom = assumedMeter(`model-${part}${model.modelVersion ? ':' + model.modelVersion : ''}`, sku, region, `million ${part} tokens`, 1_000_000);
+          return (offer && offeringMeter(offer, part)) ?? (manual?.sku === sku && manual.region === region && !model.offeringId ? manual : custom);
+        };
         const input = profile?.input === undefined ? undefined : calls?.times(profile.input);
         bill(object, 'Inference', 'Input tokens', {
-          meter: model.inputMeter ?? assumedMeter('model-input', sku, region, 'million input tokens', 1_000_000),
-          quantity: input, owner: model.id, allowRetail: false,
+          meter: modelMeter('input'),
+          quantity: input, owner: model.id, offer, componentId: 'input',
         });
         bill(object, 'Inference', 'Output tokens', {
-          meter: model.outputMeter ?? assumedMeter('model-output', sku, region, 'million output tokens', 1_000_000),
-          quantity: profile?.output === undefined ? undefined : calls?.times(profile.output), owner: model.id, allowRetail: false,
+          meter: modelMeter('output'),
+          quantity: profile?.output === undefined ? undefined : calls?.times(profile.output), owner: model.id, offer, componentId: 'output',
         });
         break;
       }
@@ -137,10 +197,15 @@ export function ledger(env: Environment, records: RetailRecord[], at = new Date(
             }
             return [agent.id];
           });
+          const offer = selection(object);
+          const sku = object.sku || object.modelId || 'Unspecified model';
+          const region = object.region ?? env.region;
+          const custom = assumedMeter(`model-capacity${object.modelVersion ? ':' + object.modelVersion : ''}`, sku, region, 'capacity-unit hour');
+          const manual = object.capacityMeter;
           bill(object, 'Inference', 'Shared provisioned capacity', {
-            meter: object.capacityMeter ?? assumedMeter('model-capacity', object.sku || object.modelId || 'Unspecified model', object.region ?? env.region, 'capacity-unit hour'),
+            meter: (offer && offeringMeter(offer, 'capacity')) ?? (manual?.sku === sku && manual.region === region && !object.offeringId ? manual : custom),
             quantity: object.capacity === undefined || object.billableHours === undefined ? undefined : new Money(object.capacity).times(object.billableHours),
-            fixed: true, allocatesTo: agents, allowRetail: false,
+            fixed: true, allocatesTo: agents, offer, componentId: 'capacity',
           });
           const line = lines.at(-1)!;
           const total = agents.reduce((sum, agent) => sum.plus(shares.get(agent) ?? 0), zero());
@@ -162,12 +227,18 @@ export function ledger(env: Environment, records: RetailRecord[], at = new Date(
         if (!env.relationships.some(edge => edge.to === object.id)) note(object.id, 'Unattached resource. Any configured cost remains in environment totals.');
         {
           const region = object.region ?? env.region;
-          const configured = object.meter?.region === region ? object.meter : undefined;
-          const reason = object.meter && !configured ? 'The selected retail meter is for another region. Select its regional equivalent or enter a manual rate.' : undefined;
+          const offer = selection(object);
+          const configured = !object.offeringId && object.meter?.region === region ? object.meter : undefined;
+          const reason = (object.offeringId && !offer || object.meter && !configured && !offer) ? 'The selected retail meter is for another region. Select its regional equivalent or enter a manual rate.' : undefined;
           if (reason) note(object.id, reason);
-          bill(object, 'Infrastructure', 'Supporting usage', {
-            meter: configured ?? assumedMeter('supporting-usage', object.category || 'Unspecified resource', region, 'declared usage unit'),
-            quantity: object.monthlyQuantity, reason,
+          const isPack = offer?.id === copilotPack.offeringId;
+          const invalidPacks = isPack && object.monthlyQuantity !== undefined && !Number.isInteger(object.monthlyQuantity);
+          const category = offer?.family === 'security' ? 'Governance' : isPack ? 'Orchestration' : 'Infrastructure';
+          bill(object, category, isPack ? 'Shared Copilot credit packs' : 'Supporting usage', {
+            meter: (offer && offeringMeter(offer, 'usage')) ?? configured ?? assumedMeter('supporting-usage', object.category || 'Unspecified resource', region, 'declared usage unit'),
+            quantity: invalidPacks ? undefined : object.monthlyQuantity,
+            reason: invalidPacks ? 'Enter a whole number of monthly credit packs.' : reason,
+            offer, componentId: 'usage', allowRetail: Boolean(configured), fixed: isPack,
           });
         }
         break;
@@ -177,10 +248,12 @@ export function ledger(env: Environment, records: RetailRecord[], at = new Date(
         if (env.objects.some(other => other.id !== object.id && other.kind === 'licence-entitlement' && other.product && other.product === object.product)) {
           note(object.id, 'Multiple entitlements use this SKU. Verify they do not cover the same seats.');
         }
-        bill(object, 'Licensing', 'Monthly seats', {
-          meter: object.meter ?? assumedMeter('licence-seats', object.product || 'Unspecified licence', env.region, 'seat/month'),
+        const offer = selection(object);
+        const manual = object.meter && object.meter.sku === object.product && object.meter.region === env.region ? object.meter : undefined;
+        bill(object, offer?.family === 'security' ? 'Governance' : 'Licensing', 'Monthly seats', {
+          meter: (offer && offeringMeter(offer, 'seats')) ?? manual ?? assumedMeter('licence-seats', object.product || 'Unspecified licence', env.region, 'seat/month'),
           quantity: object.procurement === 'incremental' || object.procurement === 'existing' ? object.seats : undefined,
-          existing: object.procurement === 'existing', fixed: true, allowRetail: false,
+          existing: object.procurement === 'existing', fixed: true, offer, componentId: 'seats',
           reason: object.procurement === 'existing' ? 'Declared already owned. Incremental cost is zero; existing spend may be unknown.'
             : object.procurement !== 'incremental' ? 'Confirm whether seats are owned or incremental.' : undefined,
         });

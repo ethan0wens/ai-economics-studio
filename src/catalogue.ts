@@ -1,13 +1,30 @@
 import { z } from 'zod';
+import { offeringMeter, type Component, type Offering } from './offerings';
 import { currency, meterKey, version, type Meter } from './domain';
 
 export const retailDocs = 'https://learn.microsoft.com/en-us/rest/api/cost-management/retail-prices/azure-retail-prices';
 export const sourceRecord = z.strictObject({
   meterId: z.string().min(1), sku: z.string().min(1), region: z.string().min(1), unit: z.string().min(1),
   quantityPerUnit: z.number().positive(), priceType: z.literal('Consumption'), currency,
-  price: z.string().regex(/^\d+(\.\d+)?$/).refine(value => Number.isFinite(Number(value)) && Number(value) > 0),
-  effectiveAt: z.iso.datetime({ offset: true }), source: z.url().refine(value => new URL(value).origin === 'https://prices.azure.com'),
-  product: z.string().min(1), verification: z.literal('azure-retail-api'),
+  price: z.string().regex(/^\d+(\.\d+)?$/).refine(value => Number.isFinite(Number(value))),
+  tiers: z.array(z.strictObject({ from: z.number().nonnegative(), price: z.string().regex(/^\d+(\.\d+)?$/).refine(value => Number.isFinite(Number(value))) })).min(2).max(20).optional(),
+  effectiveAt: z.iso.datetime({ offset: true }), source: z.url(),
+  product: z.string().min(1), verification: z.enum(['azure-retail-api', 'microsoft-commercial']),
+  offeringId: z.string().min(1).optional(), component: z.enum(['input', 'output', 'capacity', 'credits', 'seats', 'usage']).optional(),
+  meterName: z.string().optional(), publishedSku: z.string().optional(),
+  review: z.strictObject({ checkedAt: z.iso.datetime({ offset: true }), expiresAt: z.iso.datetime({ offset: true }), terms: z.string().min(1) }).optional(),
+}).superRefine((record, ctx) => {
+  const invalid = () => ctx.addIssue({ code: 'custom', message: 'Invalid price source or commercial review metadata' });
+  const origin = URL.canParse(record.source) ? new URL(record.source).origin : '';
+  if (record.tiers ? record.verification !== 'azure-retail-api' || record.tiers[0].from !== 0 ||
+    record.tiers[0].price !== record.price || !record.tiers.some(tier => Number(tier.price) > 0) ||
+    record.tiers.some((tier, index) => index > 0 && tier.from <= record.tiers![index - 1].from)
+    : Number(record.price) <= 0) invalid();
+  if (Boolean(record.offeringId) !== Boolean(record.component)) invalid();
+  if (record.verification === 'azure-retail-api') {
+    if (origin !== 'https://prices.azure.com' || record.review) invalid();
+  } else if (!['https://www.microsoft.com', 'https://learn.microsoft.com'].includes(origin) || !record.offeringId || !record.review ||
+    Date.parse(record.review.expiresAt) <= Date.parse(record.review.checkedAt)) invalid();
 });
 export const catalogueSchema = z.strictObject({
   schemaVersion: z.literal(version), records: z.array(sourceRecord).max(5000),
@@ -55,7 +72,22 @@ export async function loadCatalogue(): Promise<Catalogue> {
   }
 }
 
+export function isCurrentRate(record: RetailRecord, at: string) {
+  const timestamp = Date.parse(at);
+  return Date.parse(record.effectiveAt) <= timestamp &&
+    (!record.review || (Date.parse(record.review.checkedAt) <= timestamp && Date.parse(record.review.expiresAt) >= timestamp));
+}
+
 export function findRetail(records: RetailRecord[], meter: Meter, code: string, at: string) {
-  const labels = records.filter(record => record.currency === code && meterKey(record) === meterKey(meter) && Date.parse(record.effectiveAt) <= Date.parse(at));
+  const labels = records.filter(record => record.currency === code && meterKey(record) === meterKey(meter) && isCurrentRate(record, at));
   return labels.length === 1 ? labels[0] : undefined;
+}
+
+export function resolveOffering(records: RetailRecord[], offering: Offering, component: Component, code: string, at: string) {
+  const meter = offeringMeter(offering, component);
+  if (!meter || offering.currency !== code) return;
+  const matching = records.filter(record => record.offeringId === offering.id && record.component === component &&
+    (meterKey(meter) === meterKey(record)) && record.currency === code &&
+    isCurrentRate(record, at));
+  if (matching.length === 1) return matching[0];
 }

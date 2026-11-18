@@ -7,6 +7,7 @@ import { compatibility } from './microsoft';
 import { type Ledger } from './ledger';
 import { Lines } from './pricing-ui';
 import { hasUnknownPrice, missingInputs } from './inspector-status';
+import { applicableOffering, copilotPack, offeringMeter, offerings } from './offerings';
 import type { FieldId } from './field-help';
 
 const edgeLabels: Record<EdgeType, string> = {
@@ -37,14 +38,46 @@ export function Inspector({ item, env, catalogue, result, update, select, remove
     !(item.kind === 'agent' && item.platform === 'copilot-studio' && (key === 'agent-uses-deployment' || key === 'agent-uses-usage')));
   const related = env.relationships.filter(edge => edge.from === item.id || edge.to === item.id);
   const name = (id: string) => id === env.id ? env.name : env.objects.find(object => object.id === id)?.name ?? 'Missing object';
-  const change = (key: string, value: unknown) => {
-    const draft = { ...item, [key]: value };
+  const save = (draft: StudioObject) => {
     const checked = objectSchema.safeParse(draft);
     if (checked.success) {
       setError('');
       update({ ...env, objects: env.objects.map(object => object.id === item.id ? checked.data : object) });
     } else setError(checked.error.issues[0].message);
   };
+  const activeOffer = applicableOffering(item, 'region' in item ? item.region ?? env.region : env.region, env.currency);
+  const change = (key: string, value: unknown) => {
+    const draft = { ...item, [key]: value };
+    if ('offeringId' in draft && ['modelId', 'modelVersion', 'sku', 'mode', 'region', 'product', 'platform', 'modelSource'].includes(key)) {
+      draft.offeringId = undefined;
+      if (draft.kind === 'model-deployment') {
+        draft.inputMeter = undefined;
+        draft.outputMeter = undefined;
+        draft.capacityMeter = undefined;
+      }
+    }
+    save(draft);
+  };
+  function retailSelector() {
+    const choices = offerings.filter(offer => offer.kind === item.kind);
+    return <Select field="retailOffering" value={activeOffer?.id}
+      options={choices.map(offer => [offer.id, `${offer.name} · ${offer.region === 'gb' ? 'UK market' : offer.region} · ${offer.currency}`])}
+      hint={activeOffer
+        ? activeOffer.currency !== env.currency ? `This offer is published in ${activeOffer.currency}. The environment uses ${env.currency}.` : activeOffer.note
+        : undefined}
+      empty={item.kind === 'agent' ? 'Match the environment billing region' : 'Custom or unlisted configuration'}
+      onChange={id => {
+        const offer = choices.find(candidate => candidate.id === id);
+        if (item.kind === 'model-deployment') {
+          const model = offer?.kind === 'model-deployment' ? offer.model : undefined;
+          save({ ...item, offeringId: offer?.id, ...(model && { modelId: model.id, modelVersion: model.version, sku: model.sku, mode: model.mode, region: offer?.region }),
+            inputMeter: undefined, outputMeter: undefined, capacityMeter: undefined });
+        } else if (item.kind === 'licence-entitlement') save({ ...item, offeringId: offer?.id, product: offer?.name ?? item.product, meter: undefined });
+        else if (item.kind === 'supporting-resource') save({ ...item, offeringId: offer?.id,
+          region: offer && offer.region !== 'gb' ? offer.region : item.region, meter: undefined });
+        else if (item.kind === 'agent') save({ ...item, offeringId: offer?.id, platformMeter: undefined });
+      }} />;
+  }
   const string = (field: FieldId, key: string, value?: string) => <Text field={field} value={value}
     missing={missing.includes(field)} onChange={text => change(key, text)} />;
   const number = (field: FieldId, key: string, value?: number, max?: number, step?: number, hint?: string) =>
@@ -81,7 +114,8 @@ export function Inspector({ item, env, catalogue, result, update, select, remove
           {option('platform', 'platform', item.platform, platformOptions)}
           {item.platform && option('modelSource', 'modelSource', item.modelSource, sources)}
           {item.platform === 'foundry-agent-service' && item.modelSource === 'deployment-ref' && edgeSelect('agent-uses-deployment')}
-          {item.platform === 'copilot-studio' && <p className="field-hint">For Copilot Studio, use platform-managed pricing and enter your monthly credit estimate in Usage.</p>}
+          {item.platform === 'copilot-studio' && item.modelSource === 'platform-managed' && retailSelector()}
+          {item.platform === 'copilot-studio' && <p className="field-hint">For Copilot Studio, enter monthly credits in Usage. Link an eligible shared pack under Dependencies to apply prepaid capacity.</p>}
           {detailed && <div className="field-group"><h3>Risk and data</h3>
             {option('autonomy', 'autonomy', item.autonomy, [['read-only', 'Read only'], ['approved-writes', 'Writes after approval'], ['autonomous-writes', 'Writes without approval']])}
             {option('sensitivity', 'sensitivity', item.sensitivity, [['public', 'Public'], ['internal', 'Internal'], ['confidential', 'Confidential'], ['regulated', 'Regulated']])}
@@ -94,6 +128,7 @@ export function Inspector({ item, env, catalogue, result, update, select, remove
         </>;
       }
       case 'model-deployment': return <>
+        {retailSelector()}
         {string('modelId', 'modelId', item.modelId)}
         {option('billingMode', 'mode', item.mode, [['payg', 'Pay as you go'], ['provisioned', 'Provisioned capacity']])}
         {detailed && <div className="field-group"><h3>Deployment details</h3>{region(item.region)}{string('modelVersion', 'modelVersion', item.modelVersion)}</div>}
@@ -106,17 +141,19 @@ export function Inspector({ item, env, catalogue, result, update, select, remove
         {advanced && number('interactions', 'interactions', item.interactions, undefined, 1)}
       </>;
       case 'licence-entitlement': return <>
+        {retailSelector()}
         {string('product', 'product', item.product)}
         {option('procurement', 'procurement', item.procurement, [['existing', 'Already owned'], ['incremental', 'Incremental'], ['unknown', 'Unknown']])}
         {(item.procurement === 'incremental' || (detailed && item.procurement === 'existing')) &&
           number('seats', 'seats', item.seats, undefined, 1, 'Count each person once across linked groups.')}
       </>;
       case 'supporting-resource': {
-        const meters = catalogue.records.filter(record => record.currency === env.currency && record.region === (item.region ?? env.region));
-        const activeMeter = item.meter?.region === (item.region ?? env.region) ? item.meter : undefined;
+        const meters = catalogue.records.filter(record => (!record.component || record.component === 'usage') && (!record.offeringId || record.offeringId === 'd2s-v3-uk-south') && record.currency === env.currency && record.region === (item.region ?? env.region));
+        const activeMeter = activeOffer ? offeringMeter(activeOffer, 'usage') : item.meter?.region === (item.region ?? env.region) ? item.meter : undefined;
         return <>
+          {retailSelector()}
           {string('category', 'category', item.category)}
-          <Select field="meter" value={item.meter && meterKey(item.meter)}
+          {!activeOffer && <Select field="meter" value={item.meter && meterKey(item.meter)}
             options={[...(item.meter && !meters.some(record => meterKey(record) === meterKey(item.meter!)) ?
               [[meterKey(item.meter), 'Previously selected meter (unavailable)'] as [string, string]] : []),
               ...meters.map(record => [meterKey(record), `${record.product} / ${record.sku} / ${record.unit}`] as [string, string])]}
@@ -124,8 +161,8 @@ export function Inspector({ item, env, catalogue, result, update, select, remove
               const record = meters.find(record => meterKey(record) === key);
               change('meter', record && { meterId: record.meterId, sku: record.sku, region: record.region, unit: record.unit, quantityPerUnit: record.quantityPerUnit, priceType: record.priceType });
             }} empty="Manual billing assumption"
-            hint={meters.length ? undefined : 'No verified meters for this region and currency. Use a manual rate under Costs if you have one.'} />
-          {number('resourceQuantity', 'monthlyQuantity', item.monthlyQuantity, undefined, undefined, activeMeter
+            hint={meters.length ? undefined : 'No verified meters for this region and currency. Use a manual rate under Costs if you have one.'} />}
+          {number('resourceQuantity', 'monthlyQuantity', item.monthlyQuantity, undefined, activeOffer?.id === copilotPack.offeringId ? 1 : undefined, activeMeter
             ? `Enter base units per month. The selected meter bills per ${activeMeter.unit} (${activeMeter.quantityPerUnit} base units).`
             : 'Use the same unit for this quantity and your manual rate. For example, enter hours if your contract quotes a rate per hour.')}
           {detailed && region(item.region)}

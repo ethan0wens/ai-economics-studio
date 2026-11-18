@@ -6,6 +6,7 @@ import {
 import { blankEnvironment, cloneEnvironment, disclaimer, environmentSchema, importEnvironment, kindLabels, maxBytes, maxObjects, removeObject, type Environment, type Kind } from './domain';
 import { emptyCatalogue, loadCatalogue, retailDocs, type Catalogue } from './catalogue';
 import { categories, formatMoney, governance, ledger, summarize, type Ledger } from './ledger';
+import { Coverage } from './coverage-ui';
 import { Inspector } from './inspector';
 import { basisNames, CostAnalysis } from './pricing-ui';
 import { Field, FieldHelp } from './fields';
@@ -15,7 +16,7 @@ import { download } from './download';
 const Architecture = lazy(() => import('./diagram'));
 const pages = [
   ['Overview', LayoutGrid], ['Environment Builder', Boxes], ['Architecture', GitFork],
-  ['Cost Analysis', BarChart3], ['Security & Governance', ShieldCheck], ['Reports & Export', FileText],
+  ['Cost Analysis', BarChart3], ['Pricing Catalogue', Cloud], ['Security & Governance', ShieldCheck], ['Reports & Export', FileText],
 ] as const;
 type Page = typeof pages[number][0];
 const icons = {
@@ -27,6 +28,7 @@ const descriptions: Record<Page, string> = {
   Overview: 'Understand the cost, architecture and assumptions behind your Microsoft AI environment.',
   'Environment Builder': 'Add and connect objects in any order. Costs update as you configure them.',
   Architecture: 'Explore the logical relationships in your environment.',
+  'Pricing Catalogue': 'Check verified coverage, current environment completeness and source freshness.',
   'Cost Analysis': 'Review monthly costs, pricing evidence and forecast assumptions.',
   'Security & Governance': 'Review declared controls and identify areas that need validation.',
   'Reports & Export': 'Download a report or save an environment you can reopen later.',
@@ -270,6 +272,7 @@ export default function App() {
             : <aside className="panel empty"><span className="empty-icon"><Layers3 size={24} /></span><h2>Object inspector</h2><p>Select an object to edit its configuration, usage and dependencies.</p></aside>}
         </div>}
         {page === 'Architecture' && <Suspense fallback={<p role="status">Preparing diagram…</p>}><Architecture env={env} result={result} select={selectObject} /></Suspense>}
+        {page === 'Pricing Catalogue' && <Coverage catalogue={catalogue} result={result} select={selectObject} />}
         {page === 'Cost Analysis' && <><Comparison env={env} result={result} /><CostAnalysis env={env} result={result} update={update} /></>}
         {page === 'Security & Governance' && <section className="panel padded"><h2>Advisory assessment</h2><p className="muted">Ruleset 1.0.0 · {advice.length} applicable checks · {advice.filter(item => item.status === 'Unknown').length} with unknown coverage. Based on declarations only.</p>
           {advice.length === 0 && <div className="empty"><span className="empty-icon"><ShieldCheck size={24} /></span><h3>Add an agent to assess controls</h3><button className="button" onClick={() => setModal('add')}>Add object</button></div>}
@@ -285,7 +288,7 @@ export default function App() {
           }}>Duplicate environment</button><button className="button danger" onClick={() => setModal('reset')}>Reset environment</button></div></section>
         </>}
         <section className="panel source-bar">
-          <div><span className="tile blue"><Cloud size={17} /></span><div><strong>Azure retail catalogue</strong><small>{catalogue.manifest.catalogueId ? `${catalogue.records.length} verified meters · ${catalogue.manifest.lastCheckedAt ?? 'Check time unavailable'}` : 'No verified retail data published'}{catalogue.manifest.lastCheckedAt && Date.now() - Date.parse(catalogue.manifest.lastCheckedAt) > 7 * 86400000 ? ' · Stale' : ''}</small></div></div>
+          <div><span className="tile blue"><Cloud size={17} /></span><div><strong>Microsoft pricing catalogue</strong><small>{catalogue.manifest.catalogueId ? `${catalogue.records.length} verified meters · ${catalogue.manifest.lastCheckedAt ?? 'Check time unavailable'}` : 'No verified retail data published'}{catalogue.manifest.lastCheckedAt && Date.now() - Date.parse(catalogue.manifest.lastCheckedAt) > 7 * 86400000 ? ' · Stale' : ''}</small></div></div>
           <div className="actions"><a className="link-button" href={retailDocs} target="_blank" rel="noreferrer">Source documentation</a><button className="button" onClick={refreshCatalogue}>Check for updates</button></div>
           {catalogueNote && <p role="status">{catalogueNote}</p>}
           {candidate && <button className="button primary" onClick={() => { setCatalogue(candidate); setCandidate(undefined); setCatalogueNote('Catalogue applied. Your price overrides were retained.'); }}>Apply catalogue</button>}

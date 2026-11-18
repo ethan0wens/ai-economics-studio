@@ -3,7 +3,7 @@ import { blankEnvironment, type Environment } from '../../src/domain';
 import { fieldHelp } from '../../src/field-help';
 
 const data: Environment = {
-  ...blankEnvironment(),
+  ...blankEnvironment(), region: 'westus',
   objects: [
     { id: 'desk', name: 'Support desk', kind: 'agent', platform: 'foundry-agent-service', modelSource: 'deployment-ref' },
     { id: 'copilot', name: 'HR assistant', kind: 'agent', platform: 'copilot-studio', modelSource: 'platform-managed' },

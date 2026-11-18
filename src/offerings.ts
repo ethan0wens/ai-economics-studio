@@ -120,6 +120,6 @@ export const unresolved: readonly { family: Family; name: string; status: 'manua
   { family: 'copilot', name: 'External or user-provided model paths', status: 'unsupported', reason: 'Copilot Studio prompt integrations do not establish a primary agent model replacement or a separately billable model deployment.' },
   { family: 'licensing', name: 'Enterprise agreements and Microsoft 365 licence prerequisites', status: 'manual', reason: 'Declare prerequisite and incremental seats explicitly. Eligibility, overlap and discounts depend on the agreement.' },
   { family: 'licensing', name: 'Other unreviewed licence markets or SKUs', status: 'manual', reason: 'Select only reviewed commercial offers or enter an evidenced contract rate per seat.' },
-  { family: 'infrastructure', name: 'Other supporting services and usage bands', status: 'manual', reason: 'Enter a matching rate and base unit. Reservations, volume tiers, cross-region networking paths and free thresholds are not inferred.' },
-  { family: 'security', name: 'Defender, Purview, Sentinel and Entra coverage', status: 'manual', reason: 'Enter each separately billable service as a resource or licence. A security policy records a declaration and does not imply a charge.' },
+  { family: 'infrastructure', name: 'Other supporting services and usage bands', status: 'manual', reason: 'Enter a matching rate and base unit. Reservations, unlisted volume tiers, cross-region networking paths and free thresholds are not inferred.' },
+  { family: 'security', name: 'Defender, Purview and unlisted Sentinel or Entra plans', status: 'manual', reason: 'Enter each separately billable service as a resource or licence. A security policy records a declaration and does not imply a charge.' },
 ];

@@ -22,7 +22,7 @@ npx playwright install chromium
 npm run test:e2e
 ```
 
-See the [field guide](docs/13-field-guide.md) for configuration inputs, units and requirements. See [source coverage](SOURCES.md) for the exact Azure selector and remaining Microsoft evidence gaps, and the [operations runbook](docs/12-operations.md) for publishing, incident response and checks.
+See the [field guide](docs/13-field-guide.md) for configuration inputs, units and requirements. See [source coverage](SOURCES.md) for the pricing coverage matrix, exact Azure mappings, commercial review dates and remaining evidence gaps, and the [operations runbook](docs/12-operations.md) for publishing, incident response and checks.
 
 ## Locked architecture
 

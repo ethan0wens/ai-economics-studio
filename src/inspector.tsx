@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { ArrowUpRight, Link2, Trash2 } from 'lucide-react';
 import { edgeKinds, kindLabels, meterKey, objectSchema, type Edge, type EdgeType, type Environment, type StudioObject } from './domain';
-import { type Catalogue } from './catalogue';
+import { resolveOffering, type Catalogue } from './catalogue';
 import { Field, NumberField, Select, Text } from './fields';
 import { compatibility } from './microsoft';
 import { type Ledger } from './ledger';
@@ -60,7 +60,7 @@ export function Inspector({ item, env, catalogue, result, update, select, remove
   };
   function retailSelector() {
     const choices = offerings.filter(offer => offer.kind === item.kind);
-    return <Select field="retailOffering" value={activeOffer?.id}
+    return <><Select field="retailOffering" value={activeOffer?.id}
       options={choices.map(offer => [offer.id, `${offer.name} · ${offer.region === 'gb' ? 'UK market' : offer.region} · ${offer.currency}`])}
       hint={activeOffer
         ? activeOffer.currency !== env.currency ? `This offer is published in ${activeOffer.currency}. The environment uses ${env.currency}.` : activeOffer.note
@@ -76,7 +76,17 @@ export function Inspector({ item, env, catalogue, result, update, select, remove
         else if (item.kind === 'supporting-resource') save({ ...item, offeringId: offer?.id,
           region: offer && offer.region !== 'gb' ? offer.region : item.region, meter: undefined });
         else if (item.kind === 'agent') save({ ...item, offeringId: offer?.id, platformMeter: undefined });
-      }} />;
+      }} />
+      {activeOffer && <div className="retail-preview">
+        <strong>Latest verified Microsoft retail</strong>
+        <ul>{activeOffer.components.map(part => {
+          const rate = resolveOffering(catalogue.records, activeOffer, part.id, env.currency, new Date().toISOString());
+          return <li key={part.id}>{part.label} · {rate
+            ? <a href={rate.source} target="_blank" rel="noreferrer">{rate.tiers ? 'Graduated usage bands' : `${rate.currency} ${rate.price} per ${part.unit === '1K' ? '1,000 tokens' : part.unit === '1' ? 'credit' : part.unit}`}</a>
+            : 'No current verified rate'}</li>;
+        })}</ul>
+      </div>}
+    </>;
   }
   const string = (field: FieldId, key: string, value?: string) => <Text field={field} value={value}
     missing={missing.includes(field)} onChange={text => change(key, text)} />;
@@ -253,7 +263,7 @@ export function Inspector({ item, env, catalogue, result, update, select, remove
           <button className="button" disabled={!target} onClick={() => setEdge(link as EdgeType, target, link === 'agent-uses-deployment' || link === 'agent-uses-usage')}>Link object</button></>}
         </>}
       </>}
-      {tab === 'Costs' && <Lines lines={rows} env={env} update={update} compact />}
+      {tab === 'Costs' && <Lines lines={rows} env={env} update={update} checkedAt={catalogue.manifest.lastCheckedAt} compact />}
       <div className="inspector-footer"><button className="button danger" onClick={remove}><Trash2 size={15} /> Delete object</button></div>
     </div>
   </aside>;

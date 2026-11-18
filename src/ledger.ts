@@ -105,6 +105,14 @@ export function ledger(env: Environment, records: RetailRecord[], at = new Date(
   function selection(object: StudioObject) {
     return applicableOffering(object, 'region' in object ? object.region ?? env.region : env.region, code);
   }
+  const tariffScopes = new Map<string, number>();
+  for (const object of env.objects) {
+    if (object.kind !== 'supporting-resource') continue;
+    const offer = selection(object);
+    if (offer && resolveOffering(records, offer, 'usage', code, at)?.tiers) {
+      tariffScopes.set(offer.id, (tariffScopes.get(offer.id) ?? 0) + 1);
+    }
+  }
   const poolLinks = new Map<string, string[]>();
   const remaining = new Map<string, Decimal>();
   for (const resource of env.objects) {
@@ -233,11 +241,14 @@ export function ledger(env: Environment, records: RetailRecord[], at = new Date(
           if (reason) note(object.id, reason);
           const isPack = offer?.id === copilotPack.offeringId;
           const invalidPacks = isPack && object.monthlyQuantity !== undefined && !Number.isInteger(object.monthlyQuantity);
+          const duplicateTariff = offer && (tariffScopes.get(offer.id) ?? 0) > 1;
+          if (duplicateTariff) note(object.id, 'Consolidate this graduated tariff into one monthly resource so shared bands are counted once.');
           const category = offer?.family === 'security' ? 'Governance' : isPack ? 'Orchestration' : 'Infrastructure';
           bill(object, category, isPack ? 'Shared Copilot credit packs' : 'Supporting usage', {
             meter: (offer && offeringMeter(offer, 'usage')) ?? configured ?? assumedMeter('supporting-usage', object.category || 'Unspecified resource', region, 'declared usage unit'),
-            quantity: invalidPacks ? undefined : object.monthlyQuantity,
-            reason: invalidPacks ? 'Enter a whole number of monthly credit packs.' : reason,
+            quantity: invalidPacks || duplicateTariff ? undefined : object.monthlyQuantity,
+            reason: invalidPacks ? 'Enter a whole number of monthly credit packs.'
+              : duplicateTariff ? 'Multiple resources use these graduated bands. Enter consolidated monthly usage on one resource.' : reason,
             offer, componentId: 'usage', allowRetail: Boolean(configured), fixed: isPack,
           });
         }

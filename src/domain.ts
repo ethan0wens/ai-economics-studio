@@ -178,7 +178,23 @@ export function importEnvironment(input: string): Environment {
   }
   const result = environmentSchema.safeParse(value);
   if (!result.success) throw new Error(result.error.issues.slice(0, 4).map(issue => `${issue.path.join('.')} ${issue.message}`.trim()).join(' · '));
-  return result.data;
+  const env = result.data;
+  function bindVersion<T extends { objectId?: string; meter: Meter }>(rules: T[], key: (rule: T) => string) {
+    const occupied = new Set(rules.map(key));
+    return rules.map(rule => {
+      const model = env.objects.find(item => item.id === rule.objectId);
+      if (model?.kind !== 'model-deployment' || !model.modelVersion || model.offeringId ||
+        !['model-input', 'model-output', 'model-capacity'].includes(rule.meter.meterId) ||
+        (rule.meter.meterId === 'model-capacity' ? model.mode !== 'provisioned' : model.mode !== 'payg') ||
+        rule.meter.region !== (model.region ?? env.region) || rule.meter.sku !== (model.sku || model.modelId)) return rule;
+      const bound = { ...rule, meter: { ...rule.meter, meterId: `${rule.meter.meterId}:${model.modelVersion}` } };
+      return occupied.has(key(bound)) ? rule : bound;
+    });
+  }
+  return {
+    ...env, pricingOverrides: bindVersion(env.pricingOverrides, rule => JSON.stringify([scopeKey(rule), rule.currency])),
+    forecast: { ...env.forecast, exceptions: bindVersion(env.forecast.exceptions, scopeKey) },
+  };
 }
 
 export function cloneEnvironment(env: Environment): Environment {

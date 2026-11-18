@@ -1,6 +1,6 @@
 # Studio field guide
 
-The studio provides contextual help for 58 fields. **Required** describes the inputs needed to complete a configuration or estimate. Drafts can be exported with missing inputs. **Conditional** means the requirement depends on the selected platform, billing mode, or action. **Optional** fields can be left blank.
+The studio provides contextual help for 59 fields. **Required** describes the inputs needed to complete a configuration or estimate. Drafts can be exported with missing inputs. **Conditional** means the requirement depends on the selected platform, billing mode, or action. **Optional** fields can be left blank.
 
 Essential shows the inputs needed to get started. Detailed adds context and secondary assumptions. Advanced reveals specialist settings where available. Switching levels preserves saved inputs and does not change the estimate.
 
@@ -17,6 +17,7 @@ An **Unknown price** badge means at least one line has a usage quantity but lack
 | Import JSON | Optional | Studio JSON file | Choose an exported Studio environment file. Import validates the file and replaces the open environment. |
 | Search inventory | Optional | Search text | Filter by object name or type. Search does not change the environment. |
 | Object type | Optional | One inventory type | Show only objects of the selected type. Choose All types to clear the filter. |
+| Microsoft retail configuration | Optional | One exact product or billing configuration | Select a reviewed offer to apply the latest verified price for its region, currency and unit. [Pricing methodology](14-retail-catalogue.md) |
 | Object name | Required | Text | Use a name your team will recognise in the inventory and reports. The name does not change costs. |
 
 ## Agents and links

@@ -1,6 +1,6 @@
 import dagre from '@dagrejs/dagre';
 import { kindLabels, type Environment, type Kind } from './domain';
-import type { Ledger } from './ledger';
+import { formatMoney, summarize, type Ledger } from './ledger';
 
 export const groupColors: Record<Kind, string> = {
   'user-group': '#2563eb', 'licence-entitlement': '#0d9488', agent: '#7c3aed', 'usage-profile': '#475569',
@@ -20,12 +20,17 @@ export function logicalGraph(env: Environment, result: Ledger) {
   dagre.layout(graph);
   return {
     width: Math.max(260, graph.graph().width || 0), height: Math.max(100, graph.graph().height || 0),
-    nodes: nodes.map(item => ({
+    nodes: nodes.map(item => {
+      const billable = result.lines.filter(line => line.objectId === item.id);
+      const cost = summarize(billable, env.currency).current;
+      const annotation = !billable.length ? undefined : cost.incomplete === billable.length
+        ? 'Current cost unknown' : `${formatMoney(cost.known, env.currency)}/mo${cost.incomplete ? ' + unknown' : ''}`;
+      return ({
       id: item.id, name: item.name, kind: item.kind, type: kindLabels[item.kind], color: groupColors[item.kind],
       incomplete: result.issues.some(issue => issue.id === item.id) || result.lines.some(line => line.objectId === item.id && line.amounts.current === null),
       shared: item.kind === 'model-deployment' && edges.filter(edge => edge.to === item.id && edge.type === 'agent-uses-deployment').length > 1,
-      ...graph.node(key(item.id)),
-    })),
+      annotation, ...graph.node(key(item.id)),
+    }); }),
     edges: edges.map(edge => ({ ...edge, points: graph.edge(key(edge.from), key(edge.to), edge.type).points as { x: number; y: number }[] })),
   };
 }

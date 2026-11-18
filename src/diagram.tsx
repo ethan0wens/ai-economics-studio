@@ -25,7 +25,7 @@ export default function Architecture({ env, result, select }: { env: Environment
           {graph.nodes.map(node => <g key={node.id} transform={`translate(${node.x - node.width / 2} ${node.y - node.height / 2})`}
             role="button" tabIndex={0} aria-label={`Inspect ${node.name}`} onClick={() => select(node.id)}
             onKeyDown={event => { if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); select(node.id); } }}>
-            <title>{node.name} · {node.type}{node.incomplete ? ' · Needs review' : ''}</title>
+            <title>{node.name} · {node.type}{node.incomplete ? ' · Needs review' : ''}{node.annotation ? ` · ${node.annotation}` : ''}</title>
             <rect width={node.width} height={node.height} rx={9} fill="#fff" stroke={node.color} />
             <text x="11" y="23" fontSize="14" fill="#17243b" fontWeight="700">{node.name.length > 24 ? node.name.slice(0, 23) + '…' : node.name}</text>
             <text x="11" y="45" fontSize="11" fill="#475569">{node.type}{node.shared ? ' · Shared' : ''}{node.incomplete ? ' · Needs review' : ''}</text>
@@ -33,9 +33,10 @@ export default function Architecture({ env, result, select }: { env: Environment
         </svg>
       </div>}
     <p className="muted">Conceptual model for planning. Deployment topology, traffic and security boundaries are outside its scope.</p>
-    {graph.nodes.length > 0 && <div className="table-wrap"><table><caption>Architecture objects and outgoing links</caption><thead><tr><th>Object</th><th>Type</th><th>Status</th><th>Declared dependencies</th></tr></thead>
+    {graph.nodes.length > 0 && <div className="table-wrap"><table><caption>Architecture objects and outgoing links</caption><thead><tr><th>Object</th><th>Type</th><th>Status</th><th>Current cost</th><th>Declared dependencies</th></tr></thead>
       <tbody>{env.objects.map(item => <tr key={item.id}><td><button className="link-button" onClick={() => select(item.id)}>{item.name}</button></td><td>{kindLabels[item.kind]}</td>
         <td>{graph.nodes.find(node => node.id === item.id)?.incomplete ? 'Needs review' : 'Configured'}</td>
+        <td>{graph.nodes.find(node => node.id === item.id)?.annotation ?? '—'}</td>
         <td>{env.relationships.filter(edge => edge.from === item.id).map(edge => `${edge.type}: ${names.get(edge.to)}`).join(' · ') || 'None declared'}</td></tr>)}</tbody></table></div>}
   </section>;
 }

@@ -150,7 +150,7 @@ test('catalogue changes require explicit adoption and preserve a fixed agreement
   await page.route('**/pricing/manifest.json', route => route.fulfill({ json: current.manifest }));
   await page.route('**/pricing/catalogue-*.json', route => route.fulfill({ contentType: 'application/json', body: current.data }));
   await page.goto('/');
-  await expect(page.getByText(/1 verified meters/)).toBeVisible();
+  await expect(page.getByText(/1 published rates/)).toBeVisible();
   await add(page, 'Supporting resource', 'Fictional billable resource');
   await page.getByLabel('Verified Azure retail meter', { exact: true }).selectOption({ label: 'Fictional test-only meter / fictional / 1 Hour' });
   await page.getByLabel('Monthly usage quantity', { exact: true }).fill('2');

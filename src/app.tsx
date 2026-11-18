@@ -273,7 +273,7 @@ export default function App() {
         </div>}
         {page === 'Architecture' && <Suspense fallback={<p role="status">Preparing diagram…</p>}><Architecture env={env} result={result} select={selectObject} /></Suspense>}
         {page === 'Pricing Catalogue' && <Coverage catalogue={catalogue} result={result} select={selectObject} />}
-        {page === 'Cost Analysis' && <><Comparison env={env} result={result} /><CostAnalysis env={env} result={result} update={update} /></>}
+        {page === 'Cost Analysis' && <><Comparison env={env} result={result} /><CostAnalysis env={env} result={result} update={update} checkedAt={catalogue.manifest.lastCheckedAt} /></>}
         {page === 'Security & Governance' && <section className="panel padded"><h2>Advisory assessment</h2><p className="muted">Ruleset 1.0.0 · {advice.length} applicable checks · {advice.filter(item => item.status === 'Unknown').length} with unknown coverage. Based on declarations only.</p>
           {advice.length === 0 && <div className="empty"><span className="empty-icon"><ShieldCheck size={24} /></span><h3>Add an agent to assess controls</h3><button className="button" onClick={() => setModal('add')}>Add object</button></div>}
           {advice.map(item => <article className="finding" key={item.id + item.control}><div><button className="link-button" onClick={() => selectObject(item.id)}>{item.object}</button><h3>{item.title}</h3><p>{item.why}</p><a href={item.source} target="_blank" rel="noreferrer">Microsoft guidance</a></div><span className="status warning">{item.status} · {item.critical ? 'High priority' : 'Advisory'}</span></article>)}
@@ -288,7 +288,7 @@ export default function App() {
           }}>Duplicate environment</button><button className="button danger" onClick={() => setModal('reset')}>Reset environment</button></div></section>
         </>}
         <section className="panel source-bar">
-          <div><span className="tile blue"><Cloud size={17} /></span><div><strong>Microsoft pricing catalogue</strong><small>{catalogue.manifest.catalogueId ? `${catalogue.records.length} verified meters · ${catalogue.manifest.lastCheckedAt ?? 'Check time unavailable'}` : 'No verified retail data published'}{catalogue.manifest.lastCheckedAt && Date.now() - Date.parse(catalogue.manifest.lastCheckedAt) > 7 * 86400000 ? ' · Stale' : ''}</small></div></div>
+          <div><span className="tile blue"><Cloud size={17} /></span><div><strong>Microsoft pricing catalogue</strong><small>{catalogue.manifest.catalogueId ? `${catalogue.records.length} published rates · ${catalogue.manifest.lastCheckedAt ?? 'Check time unavailable'}` : 'No verified retail data published'}{catalogue.manifest.lastCheckedAt && Date.now() - Date.parse(catalogue.manifest.lastCheckedAt) > 7 * 86400000 ? ' · Stale' : ''}</small></div></div>
           <div className="actions"><a className="link-button" href={retailDocs} target="_blank" rel="noreferrer">Source documentation</a><button className="button" onClick={refreshCatalogue}>Check for updates</button></div>
           {catalogueNote && <p role="status">{catalogueNote}</p>}
           {candidate && <button className="button primary" onClick={() => { setCatalogue(candidate); setCandidate(undefined); setCatalogueNote('Catalogue applied. Your price overrides were retained.'); }}>Apply catalogue</button>}

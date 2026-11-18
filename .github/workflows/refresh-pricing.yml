@@ -6,6 +6,8 @@ on:
       - '.github/workflows/refresh-pricing.yml'
       - 'scripts/pricing.ts'
       - 'scripts/retail-mappings.ts'
+      - 'scripts/commercial-pricing.ts'
+      - 'src/offerings.ts'
       - 'src/catalogue.ts'
       - 'tests/e2e/**'
   schedule:
@@ -52,7 +54,8 @@ jobs:
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-      - name: Check field guidance on the live Worker
-        run: npm run test:e2e -- tests/e2e/field-help.spec.ts
+      - name: Check field guidance and verified pricing on the live Worker
+        run: npm run test:e2e -- tests/e2e/field-help.spec.ts tests/e2e/retail-first.spec.ts
         env:
+          STUDIO_CHECK_PUBLISHED_CATALOGUE: '1'
           STUDIO_TEST_URL: https://ai-econmics-studio.ethan0wens.workers.dev

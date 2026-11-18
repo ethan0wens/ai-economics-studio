@@ -28,7 +28,11 @@ export const sourceRecord = z.strictObject({
 });
 export const catalogueSchema = z.strictObject({
   schemaVersion: z.literal(version), records: z.array(sourceRecord).max(5000),
-}).refine(value => new Set(value.records.map(item => JSON.stringify([meterKey(item), item.currency]))).size === value.records.length, 'Duplicate catalogue identity');
+}).refine(value => new Set(value.records.map(item => JSON.stringify([meterKey(item), item.currency]))).size === value.records.length, 'Duplicate catalogue identity')
+  .refine(({ records }) => {
+    const bound = records.filter(record => record.offeringId);
+    return new Set(bound.map(record => JSON.stringify([record.offeringId, record.component, record.currency]))).size === bound.length;
+  }, 'Duplicate configuration component');
 export const manifestSchema = z.strictObject({
   schemaVersion: z.literal(version), catalogueId: z.string().regex(/^[a-f0-9]{64}$/).nullable(),
   lastCheckedAt: z.iso.datetime({ offset: true }).nullable(), records: z.number().int().nonnegative(),

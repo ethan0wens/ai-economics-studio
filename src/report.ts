@@ -1,5 +1,6 @@
 import { PDFDocument, StandardFonts, rgb, type PDFFont, type PDFPage } from 'pdf-lib';
 import { disclaimer, kindLabels, type Environment } from './domain';
+import { environmentCompleteness } from './coverage';
 import { logicalGraph } from './graph';
 import { retailDocs, type Catalogue } from './catalogue';
 import { bases, categories, formatMoney, summarize, type Ledger, type governance } from './ledger';
@@ -85,6 +86,8 @@ export async function report(env: Environment, result: Ledger, catalogue: Catalo
   }
   paragraph('Annual figures are steady-state monthly subtotals multiplied by 12. Unknown amounts are excluded from known subtotals. Taxes, contractual FX and usage growth are outside the estimate.', { color: muted });
   heading('Environment and source coverage');
+  const completeness = environmentCompleteness(result);
+  paragraph(`${completeness.fully} fully priced | ${completeness.partial} partial | ${completeness.unresolved} unresolved | ${completeness.excluded} missing configuration | ${completeness.retail} using verified retail | ${completeness.manual} using customer rates`);
   paragraph(`Currency ${env.currency} | Default region ${env.region} | ${env.objects.length} objects | ${env.relationships.length} declared links`);
   for (const [kind, label] of Object.entries(kindLabels)) {
     const count = env.objects.filter(item => item.kind === kind).length;
@@ -104,7 +107,7 @@ export async function report(env: Environment, result: Ledger, catalogue: Catalo
   heading('Drivers and uncertainty');
   if (!drivers.length) paragraph('No priced cost drivers yet.');
   for (const line of drivers) paragraph(`${line.object} / ${line.component}: ${money(line.amounts.current)} per month`);
-  paragraph('Usage-based lines scale with their declared quantity at a fixed unit rate. Shared provisioned capacity scales with capacity and hours. Review input, output, seat and credit assumptions before relying on a forecast.', { color: muted });
+  paragraph('Flat usage rates scale with declared quantity. Graduated tariffs charge only the units in each band. Shared provisioned capacity scales with capacity and hours. Review input, output, seat and credit assumptions before relying on a forecast.', { color: muted });
   newPage();
   heading('Logical architecture');
   paragraph('Conceptual object relationships for planning. Topology, traffic and security boundaries are outside its scope.', { color: muted });
@@ -132,7 +135,7 @@ export async function report(env: Environment, result: Ledger, catalogue: Catalo
     }
     y -= graph.height * scale + 22;
     heading('Architecture register');
-    for (const node of graph.nodes) paragraph(`${node.name} | ${node.type}${node.shared ? ' | Shared' : ''}${node.incomplete ? ' | Needs review' : ''}`, { gap: 0 });
+    for (const node of graph.nodes) paragraph(`${node.name} | ${node.type}${node.shared ? ' | Shared' : ''}${node.incomplete ? ' | Needs review' : ''}${node.annotation ? ' | ' + node.annotation : ''}`, { gap: 0 });
     for (const edge of env.relationships) paragraph(`${names.get(edge.from)} → ${names.get(edge.to)} | ${edge.type}`, { size: 9, color: muted, gap: 0 });
   }
   heading('Itemised monthly cost ledger');
@@ -144,7 +147,9 @@ export async function report(env: Environment, result: Ledger, catalogue: Catalo
     paragraph(bases.map(basis => `${labels[basis]}: ${money(line.amounts[basis])} (rate ${line.rates[basis] ?? 'unknown'})`).join(' | '), { gap: 1 });
     if (line.reason) paragraph(line.reason, { color: muted, gap: 1 });
     if (line.agreement) paragraph(`User agreement: ${line.agreement.mode} | ${line.agreement.reason} | ${line.agreement.effectiveAt ?? 'undated'}`, { gap: 1 });
-    if (line.source) paragraph(`Retail source: ${line.source.source} | Effective ${line.source.effectiveAt}`, { size: 9, color: muted, gap: 1 });
+    if (line.source) paragraph(`Retail source: ${line.source.source} | ${line.source.review ? 'Reviewed ' + line.source.review.checkedAt + ' | ' + line.source.review.terms : 'Effective ' + line.source.effectiveAt + ' | Validated ' + (catalogue.manifest.lastCheckedAt ?? 'unknown')}`, { size: 9, color: muted, gap: 1 });
+    if (line.source?.tiers) paragraph(`Graduated bands (base units / rate): ${line.source.tiers.map(tier => `${tier.from} / ${tier.price}`).join(' | ')}. Displayed rates are blended at this usage.`, { size: 9, color: muted, gap: 1 });
+    if (line.includedCredits) paragraph(`${line.includedCredits} Copilot credits covered by linked packs. Quantity shown is residual billable usage.`, { size: 9, color: muted, gap: 1 });
     if (line.allocatesTo.length) paragraph(line.allocation ? `Shared allocation by input tokens: ${line.allocation.map(share => `${names.get(share.agentId)} ${money(share.amount)}`).join(' / ')}`
       : 'Shared charge counted once. Allocation unassigned.', { gap: 1 });
     paragraph(`Scenario for this line: ${line.scenario}%`, { color: muted });
@@ -159,7 +164,7 @@ export async function report(env: Environment, result: Ledger, catalogue: Catalo
   }
   heading('Assumptions and source appendix');
   paragraph(`Global forecast ${env.forecast.percent}% | Fixed contracts ${env.forecast.applyToFixed ? 'included in' : 'excluded from'} global forecast | Meter exceptions ${env.forecast.exceptions.length}`);
-  paragraph('Quantity divided by billing unit, multiplied by decimal unit rate. Each ledger line rounds half up to the currency minor unit. Allocations reconcile to the rounded fixed charge.');
+  paragraph('Quantity divided by billing unit, multiplied by decimal unit rate for each flat rate or graduated band. Each ledger line rounds half up to the currency minor unit. Allocations reconcile to the rounded fixed charge.');
   paragraph(`Azure Retail Prices API: ${retailDocs}`);
   for (const issue of result.issues) paragraph(`${names.get(issue.id)}: ${issue.message}`, { size: 9, gap: 1 });
   paragraph(disclaimer, { color: muted });

@@ -21,7 +21,7 @@ export function Coverage({ catalogue, result, select }: { catalogue: Catalogue; 
         <div><h3>Azure source freshness</h3><strong>{stale ? 'Needs review' : 'Current'}</strong><small>{checked ? new Date(checked).toLocaleString('en-GB', { timeZone: 'Europe/London', timeZoneName: 'short' }) : 'Last check unavailable'}</small></div>
       </div>
       {(stale || expired > 0 || catalogue.fallback) && <p className="notice">{catalogue.fallback ? 'Using a previous validated catalogue. ' : ''}{stale ? 'The Azure check is older than seven days or unavailable. ' : ''}{expired > 0 ? `${expired} curated record(s) are outside their review period and unavailable for calculation.` : ''}</p>}
-      <p className="muted">The catalogue contains {catalogue.records.length} published records. A failed refresh preserves the last successful catalogue. <a href="https://github.com/ethan0wens/ai-economics-studio/actions/workflows/refresh-pricing.yml" target="_blank" rel="noreferrer">Check the latest refresh outcome</a>.</p>
+      <p className="muted">The catalogue contains {catalogue.records.filter(record => isCurrentRate(record, at)).length} current verified records of {catalogue.records.length} published. A failed refresh preserves the last successful catalogue. <a href="https://github.com/ethan0wens/ai-economics-studio/actions/workflows/refresh-pricing.yml" target="_blank" rel="noreferrer">Check the latest refresh outcome</a>.</p>
     </section>
     <section className="panel padded">
       <h2>Coverage by product family</h2>

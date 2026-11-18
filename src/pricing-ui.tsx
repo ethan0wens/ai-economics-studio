@@ -1,5 +1,5 @@
 import { useState, type FormEvent } from 'react';
-import { forecastException, overrideSchema, scopeKey, type Environment } from './domain';
+import { forecastException, overrideSchema, scopeKey, type Environment, type Override } from './domain';
 import { bases, formatMoney, type Line, type Ledger } from './ledger';
 import { Field, NumberField, Select, Text } from './fields';
 
@@ -23,10 +23,17 @@ function PriceEditor({ line, env, update }: { line: Line; env: Environment; upda
   const meter = line.meter!;
   const scoped = { meter, objectId: scope === 'object' ? line.pricingOwner : undefined };
   const key = scopeKey(scoped);
-  const existing = env.pricingOverrides.find(rule => scopeKey(rule) === key && rule.currency === env.currency);
-  const mode = editedMode ?? existing?.mode ?? 'catalogue';
+  const existing = env.pricingOverrides.find(rule => scopeKey(rule) === key && rule.currency === env.currency) ??
+    (line.agreement?.objectId === scoped.objectId ? line.agreement : undefined);
+  const mode = editedMode ?? (existing?.mode === 'retail' ? 'catalogue' : existing?.mode) ?? 'catalogue';
   const scenario = env.forecast.exceptions.find(rule => scopeKey(rule) === key);
   const [notice, setNotice] = useState('');
+  function restoreRetail() {
+    const rule: Override = { mode: 'retail', meter, objectId: line.pricingOwner, currency: env.currency, reason: 'Selected Microsoft retail for this object.' };
+    update({ ...env, pricingOverrides: [...env.pricingOverrides.filter(item => scopeKey(item) !== scopeKey(rule) || item.currency !== env.currency), rule] });
+    setEditedMode('catalogue');
+    setNotice('Latest verified Microsoft retail restored for this pricing owner.');
+  }
   function save(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const form = new FormData(event.currentTarget);
@@ -47,7 +54,7 @@ function PriceEditor({ line, env, update }: { line: Line; env: Environment; upda
     if (replacement && !exception.success) { setNotice('Enter a forecast percentage between −100 and 10,000.'); return; }
     update({
       ...env,
-      pricingOverrides: [...env.pricingOverrides.filter(rule => scopeKey(rule) !== key || rule.currency !== env.currency),
+      pricingOverrides: [...env.pricingOverrides.filter(rule => rule !== existing && (scopeKey(rule) !== key || rule.currency !== env.currency)),
         ...(mode !== 'catalogue' && parsed.success ? [parsed.data] : [])],
       forecast: { ...env.forecast, exceptions: [...env.forecast.exceptions.filter(rule => scopeKey(rule) !== key),
         ...(replacement && exception.success ? [exception.data] : [])] },
@@ -59,7 +66,7 @@ function PriceEditor({ line, env, update }: { line: Line; env: Environment; upda
       empty={false} onChange={value => { setScope(value); setNotice(''); setEditedMode(undefined); }} />
     <form className="price-form" key={key} onSubmit={save}>
       <Field field="agreement"><select name="mode" value={mode} onChange={event => { setEditedMode(event.target.value); setNotice(''); }}>
-        <option value="catalogue">Catalogue</option><option value="discount">Discount (%)</option>
+        <option value="catalogue">Latest Verified Microsoft Retail Price</option><option value="discount">Discount (%)</option>
         <option value="fixed">Fixed contractual rate</option><option value="intentional-zero">Intentional zero</option>
       </select></Field>
       {(mode === 'discount' || mode === 'fixed') && <Field key={mode} field={mode === 'discount' ? 'discount' : 'fixedRate'}
@@ -81,13 +88,14 @@ function PriceEditor({ line, env, update }: { line: Line; env: Environment; upda
         </div>
       </details>
       <button className="button" type="submit">Save price assumptions</button>
+      {line.agreement && line.agreement.mode !== 'retail' && <button className="button" type="button" onClick={restoreRetail}>Restore Microsoft retail for this object</button>}
       {notice && <p role="status">{notice}</p>}
     </form>
   </div>;
 }
 
-export function Lines({ lines, env, update, compact = false }: {
-  lines: Line[]; env: Environment; update: (env: Environment) => void; compact?: boolean;
+export function Lines({ lines, env, update, compact = false, checkedAt }: {
+  lines: Line[]; env: Environment; update: (env: Environment) => void; compact?: boolean; checkedAt?: string | null;
 }) {
   if (!lines.length) return <p className="muted">No cost lines in this view.</p>;
   return <div className={compact ? 'ledger-list compact' : 'ledger-list'}>
@@ -100,12 +108,19 @@ export function Lines({ lines, env, update, compact = false }: {
       </summary>
       <div className="ledger-detail">
         {line.reason && <p>{line.reason}</p>}
-        <p className="muted">{line.meter ? `${line.meter.sku} · ${line.meter.region} · ${line.currency} · ${line.meter.priceType} · ${line.meter.quantityPerUnit} base units per ${line.meter.unit}` : 'Billing identity unresolved'} · Monthly quantity {line.quantity ?? 'unknown'}</p>
+        <p className="muted">{line.meter ? `${line.currency} · ${line.meter.region === 'gb' ? 'UK market' : line.meter.region} · ${line.meter.unit === '1K' ? 'per 1,000 tokens' : line.meter.unit} · ${line.meter.quantityPerUnit} base units per billed unit` : 'Billing identity unresolved'} · Monthly billable quantity {line.quantity ?? 'unknown'}</p>
+        {line.includedCredits && <p>{line.includedCredits} credits allocated from the linked monthly pack. The balance above is billable.</p>}
         <dl className="rate-grid">{bases.map(basis => <div key={basis}><dt>{basisNames[basis]}</dt><dd>{formatMoney(line.amounts[basis], env.currency)}</dd>
-          <small>{line.rates[basis] === null ? 'Rate unknown' : `${line.currency} ${line.rates[basis]} per billed unit`}</small></div>)}</dl>
-        {line.source && <p><a href={line.source.source} target="_blank" rel="noreferrer">Azure Retail Prices API</a> · effective {line.source.effectiveAt}</p>}
-        {line.agreement && <p>Agreement basis {line.agreement.mode} · {line.agreement.reason}{line.agreement.effectiveAt && ` · effective ${line.agreement.effectiveAt}`}</p>}
-        <p className="muted">Scenario change {line.scenario}% before fixed-rate rules. Amount = quantity ÷ billing unit × rate.</p>
+          <small>{line.rates[basis] === null ? 'Rate unknown' : `${line.currency} ${line.rates[basis]} ${line.source?.tiers ? 'blended per billed unit' : 'per billed unit'}`}</small></div>)}</dl>
+        {line.source && <p><a href={line.source.source} target="_blank" rel="noreferrer">{line.source.verification === 'azure-retail-api' ? 'Azure Retail Prices API' : 'Microsoft published offer'}</a>
+          {line.source.review ? ` · reviewed ${line.source.review.checkedAt.slice(0, 10)}. ${line.source.review.terms}` : ` · source effective ${line.source.effectiveAt.slice(0, 10)} · verified ${checkedAt?.slice(0, 10) ?? 'date unavailable'}`}</p>}
+        {line.source && <details className="price-more">
+          <summary>Advanced meter details</summary>
+          <p>{line.source.product} · {line.source.publishedSku ?? line.source.sku} · {line.source.meterName ?? line.component} · {line.source.meterId}</p>
+          {line.source.tiers && <ul className="meter-tiers">{line.source.tiers.map(tier => <li key={tier.from}>From {tier.from} base units · {line.currency} {tier.price} per billed unit</li>)}</ul>}
+        </details>}
+        {line.agreement && line.agreement.mode !== 'retail' && <p>Agreement basis {line.agreement.mode} · {line.agreement.reason}{line.agreement.effectiveAt && ` · effective ${line.agreement.effectiveAt}`}</p>}
+        <p className="muted">Scenario change {line.scenario}% before fixed-rate rules. {line.source?.tiers ? 'Usage is priced separately in each graduated retail band. A fixed agreement replaces those retail bands.' : 'Amount = quantity ÷ billing unit × rate.'}</p>
         {line.allocatesTo.length > 0 && <p>{line.allocation ? line.allocation.map(record => `${env.objects.find(object => object.id === record.agentId)?.name}: ${formatMoney(record.amount, env.currency)}`).join(' · ')
           : 'Allocation unassigned. Enable allocation by input tokens on the model and provide usage for every linked agent.'} Shared charges appear once.</p>}
         {line.meter && <PriceEditor line={line} env={env} update={update} />}
@@ -114,7 +129,7 @@ export function Lines({ lines, env, update, compact = false }: {
   </div>;
 }
 
-export function CostAnalysis({ env, result, update }: { env: Environment; result: Ledger; update: (env: Environment) => void }) {
+export function CostAnalysis({ env, result, update, checkedAt }: { env: Environment; result: Ledger; update: (env: Environment) => void; checkedAt?: string | null }) {
   const [filter, setFilter] = useState('');
   const [source, setSource] = useState('');
   return <>
@@ -125,7 +140,7 @@ export function CostAnalysis({ env, result, update }: { env: Environment; result
         <Text field="ledgerFilter" value={filter} onChange={setFilter} />
         <Select field="priceStatus" value={source} empty="All statuses" onChange={setSource} options={[...new Set(result.lines.map(line => line.status))]} />
       </div>
-      <Lines env={env} update={update} lines={result.lines.filter(line => (!source || line.status === source) &&
+      <Lines env={env} update={update} checkedAt={checkedAt} lines={result.lines.filter(line => (!source || line.status === source) &&
         [line.object, line.category, line.component, line.meter?.sku].join(' ').toLowerCase().includes(filter.toLowerCase()))} />
     </section>
   </>;

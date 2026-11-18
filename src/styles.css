@@ -183,3 +183,5 @@ dialog::backdrop{background:#17243b70}dialog p{margin:8px 0 12px}dialog ul{list-
 .coverage-family ul, .coverage-family p { margin-top: 6px; }
 .coverage-family ul { padding-inline-start: 18px; list-style: disc; }
 .coverage-family li { margin-block: 4px; }
+.retail-preview { background: var(--canvas); padding: 9px; border: 1px solid var(--border); border-radius: 7px; font-size: .84rem; }
+.retail-preview ul, .meter-tiers { list-style: disc; padding-inline-start: 18px; margin-top: 4px; }

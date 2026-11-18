@@ -9,6 +9,8 @@ on:
       - 'scripts/pricing.ts'
       - 'scripts/deploy.ts'
       - 'scripts/retail-mappings.ts'
+      - 'scripts/commercial-pricing.ts'
+      - 'src/offerings.ts'
       - 'src/catalogue.ts'
       - 'public/pricing/**'
       - 'tests/e2e/**'

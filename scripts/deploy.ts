@@ -66,14 +66,24 @@ async function builtAssets() {
   return assets;
 }
 
+function report(status: 'notice' | 'error', message: string) {
+  if (process.env.GITHUB_ACTIONS === 'true') {
+    const escaped = message.replaceAll('%', '%25').replaceAll('\r', '%0D').replaceAll('\n', '%0A');
+    console.log(`::${status} title=Cloudflare production::${escaped}`);
+  } else if (status === 'error') console.error(message);
+  else console.log(message);
+}
+
 async function waitForPublishedAssets(assets: ReadonlyMap<string, string>) {
   for (let attempt = 1; ; attempt++) {
     try {
       await verifyPublishedAssets(assets);
-      console.log(`Production HTML and pricing assets match this build at ${site}`);
+      report('notice', `Production HTML and pricing assets match this build at ${site}`);
       return;
     } catch (error) {
-      if (attempt === 6) throw error;
+      if (attempt === 6) {
+        throw new Error(`Post-deploy verification failed for ${site}: ${error instanceof Error ? error.message : String(error)}`, { cause: error });
+      }
       await delay(5_000);
     }
   }
@@ -84,13 +94,13 @@ if (process.argv[1] && pathToFileURL(process.argv[1]).href === import.meta.url) 
     if (process.argv.length !== 2) throw new Error('Production deploy uses the checked-in target. Use Wrangler directly for a dry run.');
     const name = await verifyWorker(await readFile(config, 'utf8'), process.env.CLOUDFLARE_ACCOUNT_ID, process.env.CLOUDFLARE_API_TOKEN);
     const assets = await builtAssets();
-    console.log(`Verified existing Worker ${site}`);
+    report('notice', `Verified existing Worker ${site}`);
     const deploy = spawnSync(process.execPath, [wrangler, 'deploy', '--config', config, '--name', name], { stdio: 'inherit' });
     if (deploy.error) throw deploy.error;
-    if (deploy.status === 0) await waitForPublishedAssets(assets);
-    else process.exitCode = deploy.status ?? 1;
+    if (deploy.status !== 0) throw new Error(`Wrangler failed after verifying the target Worker (exit ${deploy.status ?? deploy.signal ?? 'unknown'}). See the deploy step log for the Cloudflare response.`);
+    await waitForPublishedAssets(assets);
   } catch (error) {
-    console.error(error instanceof Error ? error.message : error);
+    report('error', error instanceof Error ? error.message : String(error));
     process.exitCode = 1;
   }
 }

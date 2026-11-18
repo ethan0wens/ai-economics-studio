@@ -5,6 +5,7 @@ on:
     paths:
       - '.github/workflows/pricing-preview.yml'
       - 'scripts/pricing.ts'
+      - 'scripts/deploy.ts'
       - 'scripts/retail-mappings.ts'
       - 'src/catalogue.ts'
       - 'public/pricing/**'

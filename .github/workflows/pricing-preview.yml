@@ -30,7 +30,16 @@ jobs:
           node-version: '24'
           cache: npm
       - run: npm ci
-      - run: npm run pricing:refresh && npm run pricing:validate
+      - name: Validate the live Azure response
+        run: |
+          if ! result=$(npm run --silent pricing:refresh 2>&1); then
+            result=${result//%/%25}
+            result=${result//$'\r'/%0D}
+            result=${result//$'\n'/%0A}
+            printf '::error title=Azure retail refresh rejected::%s\n' "$result"
+            exit 1
+          fi
+          npm run pricing:validate
       - name: Report verified preview catalogue
         run: |
           printf '### Read-only Azure retail preview\n\n' >> "$GITHUB_STEP_SUMMARY"

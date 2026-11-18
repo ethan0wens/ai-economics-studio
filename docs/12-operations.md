@@ -2,9 +2,9 @@
 
 ## GitHub and Cloudflare
 
-1. Configure a GitHub Actions environment called `production` restricted to `main`. Add `CLOUDFLARE_API_TOKEN` as a scoped Workers Scripts Edit secret and `CLOUDFLARE_ACCOUNT_ID` as a secret or environment variable.
-2. Confirm the name in `wrangler.jsonc` and the Workers Static Assets account and hostname. The configuration has no Worker entrypoint or runtime bindings.
-3. Merge through **Pull request checks**, then confirm **Deploy static studio** succeeds. In a clean browser check the application, successful downloads, responsive/keyboard operation and only same-origin requests. Verify the CSP/security headers and cache headers on HTML, hashed code and the price manifest.
+1. Configure a GitHub Actions environment called `production` restricted to `main`. Add `CLOUDFLARE_API_TOKEN` as a scoped Workers Scripts Edit secret and `CLOUDFLARE_ACCOUNT_ID` as an environment secret.
+2. Production targets the existing `ai-econmics-studio` Worker at `https://ai-econmics-studio.ethan0wens.workers.dev`. The deploy command checks the account subdomain and reads the Worker settings before invoking Wrangler. A wrong account, missing Worker, or denied lookup stops deployment. The configuration has no Worker entrypoint or runtime bindings.
+3. Merge through **Pull request checks**, then confirm **Deploy static studio** succeeds. In a clean browser check the application, successful downloads, responsive/keyboard operation and only same-origin requests. The deployment job also checks that public HTML, the pricing manifest and the current catalogue file match the build. Verify the CSP/security headers and cache headers on HTML, hashed code and the price manifest.
 4. Manually dispatch **Refresh and deploy retail prices** on `main`. It checks the curated public source, writes a validated catalogue commit, and deploys its own build. The workflow needs permission to push the catalogue commit. If branch protection prevents this, use an approved bot/PR or change the publication mechanism with repository owner review.
 5. Fetch the live `/pricing/manifest.json`. Check `catalogueId`, `lastCheckedAt`, record count, and the matching content-addressed asset. Confirm the verified resource meter appears in the studio and its unit/rate reconcile to the source. This is required for community release.
 

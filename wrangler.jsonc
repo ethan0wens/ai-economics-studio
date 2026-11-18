@@ -1,9 +1,10 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
-  "name": "ai-economics-studio",
+  "name": "ai-econmics-studio",
   "compatibility_date": "2026-11-18",
   "assets": {
     "directory": "./dist",
     "not_found_handling": "single-page-application"
-  }
+  },
+  "workers_dev": true
 }

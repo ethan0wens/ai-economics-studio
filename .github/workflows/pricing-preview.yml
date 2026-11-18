@@ -47,7 +47,7 @@ jobs:
           fi
           npm run pricing:validate
       - run: npm run typecheck && npm run lint && npm test && npm run build
-      - run: npx playwright install --with-deps chromium
+      - uses: ./.github/actions/setup-browser
       - run: npm run test:e2e
       - name: Report verified preview catalogue
         run: |

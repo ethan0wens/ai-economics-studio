@@ -28,7 +28,7 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npm run typecheck && npm run lint && npm test && npm run build
-      - run: npx playwright install --with-deps chromium
+      - uses: ./.github/actions/setup-browser
       - run: npm run test:e2e
       - run: npm run deploy
         env:

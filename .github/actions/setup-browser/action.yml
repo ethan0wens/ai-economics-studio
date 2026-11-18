@@ -1,0 +1,12 @@
+name: Set up Chromium checks
+description: Use the runner browser when installed, otherwise install Playwright Chromium.
+runs:
+  using: composite
+  steps:
+    - shell: bash
+      run: |
+        if browser=$(command -v google-chrome || command -v chromium); then
+          printf 'STUDIO_CHROMIUM=%s\n' "$browser" >> "$GITHUB_ENV"
+        else
+          npx playwright install --with-deps chromium
+        fi

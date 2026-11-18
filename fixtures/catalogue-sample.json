@@ -1,0 +1,37 @@
+{
+  "schemaVersion": "1.0.0",
+  "catalogueId": "fixture-catalogue-001",
+  "fixtureOnly": true,
+  "currency": "GBP",
+  "lastCheckedAt": "2026-11-18T00:00:00Z",
+  "records": [
+    {
+      "meterId": "fictional-input",
+      "provider": "microsoft",
+      "service": "Foundry test model",
+      "sku": "FICTIONAL-MODEL-NOT-A-REAL-SKU",
+      "region": "uksouth",
+      "priceType": "Consumption",
+      "unitLabel": "1M input tokens",
+      "quantityPerUnit": 1000000,
+      "retailPrice": "2.00",
+      "currency": "GBP",
+      "sourceUri": "https://learn.microsoft.com/en-us/rest/api/cost-management/retail-prices/azure-retail-prices",
+      "verificationState": "fixture-only"
+    },
+    {
+      "meterId": "fictional-output",
+      "provider": "microsoft",
+      "service": "Foundry test model",
+      "sku": "FICTIONAL-MODEL-NOT-A-REAL-SKU",
+      "region": "uksouth",
+      "priceType": "Consumption",
+      "unitLabel": "1M output tokens",
+      "quantityPerUnit": 1000000,
+      "retailPrice": "8.00",
+      "currency": "GBP",
+      "sourceUri": "https://learn.microsoft.com/en-us/rest/api/cost-management/retail-prices/azure-retail-prices",
+      "verificationState": "fixture-only"
+    }
+  ]
+}

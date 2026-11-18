@@ -1,0 +1,46 @@
+{
+  "fixtureOnly": true,
+  "currency": "GBP",
+  "cases": [
+    {
+      "id": "retail-discount-forecast",
+      "retailMonthly": "1000.00",
+      "agreement": { "mode": "retail-discount-percent", "discountPercent": 15 },
+      "globalForecastPercent": 20,
+      "expectedCurrentContract": "850.00",
+      "expectedProjectedRetail": "1200.00",
+      "expectedProjectedContract": "1020.00"
+    },
+    {
+      "id": "fixed-not-inflated",
+      "retailMonthly": "1000.00",
+      "agreement": { "mode": "fixed-price", "fixedPrice": "700.00" },
+      "globalForecastPercent": 20,
+      "applyToFixedContract": false,
+      "expectedCurrentContract": "700.00",
+      "expectedProjectedContract": "700.00"
+    },
+    {
+      "id": "fixed-explicit-inflation",
+      "retailMonthly": "1000.00",
+      "agreement": { "mode": "fixed-price", "fixedPrice": "700.00" },
+      "globalForecastPercent": 20,
+      "applyToFixedContract": true,
+      "expectedProjectedContract": "840.00"
+    },
+    {
+      "id": "missing-price-does-not-become-zero",
+      "retailMonthly": null,
+      "agreement": { "mode": "catalogue" },
+      "expectedStatus": "unknown",
+      "expectedAmount": null
+    },
+    {
+      "id": "explicit-zero-needs-reason",
+      "retailMonthly": null,
+      "agreement": { "mode": "intentional-zero", "reason": "Included in a customer-provided existing entitlement" },
+      "expectedCurrentContract": "0.00",
+      "expectedStatus": "intentional-zero"
+    }
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "schemaVersion": "1.0.0",
+  "fixtureOnly": true,
+  "id": "fixture-env-001",
+  "name": "Fictional HR and Finance Agents",
+  "currency": "GBP",
+  "region": "uksouth",
+  "catalogueRef": "fixture-catalogue-001",
+  "objects": [
+    {"id": "model-prod", "kind": "model-deployment", "name": "GPT Production", "provider": "microsoft", "region": "uksouth", "modelId": "FICTIONAL-MODEL-NOT-A-REAL-SKU", "deploymentMode": "payg"},
+    {"id": "agent-hr", "kind": "agent", "name": "HR Assistant", "platform": "foundry-agent-service", "modelSource": "deployment-ref", "monthlyExecutions": 1000, "inputTokensPerCall": 4000, "outputTokensPerCall": 800, "callsPerExecution": 1},
+    {"id": "agent-fin", "kind": "agent", "name": "Finance Assistant", "platform": "foundry-agent-service", "modelSource": "deployment-ref", "monthlyExecutions": 500, "inputTokensPerCall": 6000, "outputTokensPerCall": 1000, "callsPerExecution": 2},
+    {"id": "group-hr", "kind": "user-group", "name": "HR Team", "intendedUsers": 50, "monthlyActiveUsers": 35},
+    {"id": "resource-search", "kind": "supporting-resource", "name": "AI Search", "region": "uksouth"}
+  ],
+  "relationships": [
+    {"type": "agent-uses-deployment", "from": "agent-hr", "to": "model-prod"},
+    {"type": "agent-uses-deployment", "from": "agent-fin", "to": "model-prod"},
+    {"type": "group-can-access-agent", "from": "group-hr", "to": "agent-hr"},
+    {"type": "agent-uses-resource", "from": "agent-hr", "to": "resource-search"}
+  ],
+  "pricingOverrides": [],
+  "forecastSettings": {"globalPriceChangePercent": 0, "applyToFixedContract": false},
+  "notes": "All model names/rates are test-only; object shapes are conceptual and may evolve during implementation."
+}

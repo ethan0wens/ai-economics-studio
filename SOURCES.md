@@ -1,0 +1,13 @@
+# Price and compatibility coverage
+
+| Surface | Current coverage | Official evidence |
+| --- | --- | --- |
+| Azure infrastructure | The CI selector targets the non-Windows Dsv3 virtual machine product, `Standard_D2s_v3`, D2s v3 meter, standard untiered consumption, UK South, GBP, 1 Hour. A unique current response must match before a rate can be published. No successful live response is bundled. | [Azure Retail Prices API](https://learn.microsoft.com/en-us/rest/api/cost-management/retail-prices/azure-retail-prices), [Dsv3 sizes](https://learn.microsoft.com/en-us/azure/virtual-machines/sizes/general-purpose/dsv3-series) |
+| Foundry model inference and capacity | Separate input/output usage and provisioned capacity planning are available with explicit manual rates. Model version, region, deployment mode, token/capacity rates and agent feature eligibility remain unverified. | [Foundry connected models](https://learn.microsoft.com/en-us/azure/foundry/agents/how-to/connected-models) |
+| Copilot Studio | Platform-managed agents can model declared credits. Plan-specific rates, entitlement offsets and tool consumption require confirmation. Prompt BYOM does not imply primary-agent substitution or a second automatic inference charge. | [Copilot Studio licensing](https://learn.microsoft.com/en-us/microsoft-copilot-studio/requirements-licensing-subscriptions), [Prompt BYOM](https://learn.microsoft.com/en-us/microsoft-copilot-studio/bring-your-own-model-prompts) |
+| Microsoft licensing | Manual incremental/owned seat modelling. Microsoft 365, Copilot, Agent 365, bundled entitlements, and customer contract rates require independent review. | [Microsoft licensing](https://www.microsoft.com/licensing/) |
+| Governance | Deterministic advisory checks on declared controls. | [Zero Trust](https://learn.microsoft.com/en-us/security/zero-trust/), [Copilot Studio DLP](https://learn.microsoft.com/en-us/microsoft-copilot-studio/admin-data-loss-prevention), [Azure budgets](https://learn.microsoft.com/en-us/azure/cost-management-billing/costs/tutorial-acm-create-budgets) |
+
+The release starts with an unpublished bootstrap manifest. The live endpoint was inaccessible from the implementation environment. Mock responses exercise refresh mechanics and are kept outside production assets. Service references describe the billing context. They do not establish a specific SKU's availability, entitlement or customer price.
+
+When refreshing, the exact selector and source effective date are carried into the catalogue. An identity, tier, currency or unit change, missing meter, ambiguous current result, or movement over 50% stops publication for review. New scopes stay unknown until explicitly supported or manually priced.

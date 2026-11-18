@@ -1,5 +1,12 @@
 name: Refresh and deploy retail prices
 on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/refresh-pricing.yml'
+      - 'scripts/pricing.ts'
+      - 'scripts/retail-mappings.ts'
+      - 'src/catalogue.ts'
   schedule:
     - cron: '17 6 * * *'
   workflow_dispatch:

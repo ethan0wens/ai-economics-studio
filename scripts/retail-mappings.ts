@@ -18,10 +18,11 @@ export const mappings: readonly Mapping[] = [{
   service: 'Virtual Machines',
   region: 'uksouth',
   currency: 'GBP',
-  product: 'Virtual Machines Dsv3 Series',
+  product: 'Virtual Machines DSv3 Series',
   sku: 'D2s v3',
   armSku: 'Standard_D2s_v3',
   meter: 'D2s v3',
   unit: '1 Hour',
   quantityPerUnit: 1,
+  meterId: 'b0567895-dd0e-4342-8f0b-5fec01296fd4',
 }];

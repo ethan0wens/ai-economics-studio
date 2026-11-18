@@ -54,6 +54,7 @@ export async function ingest(mapping: Mapping, request: Fetcher = fetch, checked
   const first = target(mapping);
   const visited = new Set<string>();
   const exact: z.infer<typeof retailer>[] = [];
+  const nearby = new Set<string>();
   let next: URL | null = first;
   while (next) {
     if (next.origin !== origin || next.pathname !== pathname || next.username || next.password || visited.has(next.href) || visited.size >= 30) {
@@ -62,6 +63,14 @@ export async function ingest(mapping: Mapping, request: Fetcher = fetch, checked
     visited.add(next.href);
     const page = await retailPage(next, request);
     for (const row of page.Items) {
+      if (row.armSkuName === mapping.armSku && row.armRegionName === mapping.region && nearby.size < 12) {
+        const fields = ['serviceName', 'productName', 'skuName', 'meterName', 'type', 'unitOfMeasure',
+          'currencyCode', 'tierMinimumUnits', 'meterId', 'effectiveStartDate'];
+        nearby.add(fields.map(key => {
+          const value = row[key];
+          return typeof value === 'string' || typeof value === 'number' ? String(value).slice(0, 80) : '?';
+        }).join(' / '));
+      }
       if (row.serviceName !== mapping.service || row.armRegionName !== mapping.region || row.productName !== mapping.product ||
           row.skuName !== mapping.sku || row.armSkuName !== mapping.armSku || row.meterName !== mapping.meter ||
           row.type !== 'Consumption' || row.tierMinimumUnits !== 0 || (mapping.meterId && row.meterId !== mapping.meterId)) continue;
@@ -75,7 +84,8 @@ export async function ingest(mapping: Mapping, request: Fetcher = fetch, checked
   const selected = exact[0];
   if (!selected || new Set(exact.map(item => item.meterId)).size !== 1 ||
       exact.filter(item => Date.parse(item.effectiveStartDate) === Date.parse(selected.effectiveStartDate)).length !== 1) {
-    throw new Error(`Expected one exact current Azure meter for ${mapping.name}; found missing or ambiguous coverage.`);
+    const diagnostics = nearby.size ? ` Public candidates (service / product / SKU / meter / type / unit / currency / tier / ID / effective date): ${[...nearby].join('; ')}.` : ' The filtered API response contained no rows for the configured ARM SKU and region.';
+    throw new Error(`Expected one exact current Azure meter for ${mapping.name}; found ${exact.length} eligible rows.${diagnostics}`);
   }
   return {
     meterId: selected.meterId, currency: selected.currencyCode, sku: mapping.armSku, product: mapping.product,

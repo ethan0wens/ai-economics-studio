@@ -4,6 +4,8 @@ on:
     branches: [work]
     paths:
       - '.github/workflows/pricing-preview.yml'
+      - '.github/workflows/deploy.yml'
+      - '.github/workflows/refresh-pricing.yml'
       - 'scripts/pricing.ts'
       - 'scripts/deploy.ts'
       - 'scripts/retail-mappings.ts'

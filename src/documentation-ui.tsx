@@ -7,7 +7,8 @@ import { compatibilityLabels } from './compatibility';
 import { CatalogueHealth } from './catalogue-health-ui';
 import type { Catalogue } from './catalogue';
 import { startingArticles } from './help-links';
-import { routeHref } from './navigation';
+import { routeHref, technicalHref } from './navigation';
+import { DocumentationNavigation, RelatedTechnical, TechnicalDocumentation, technicalSearch } from './technical-ui';
 
 function searchArticles(query: string) {
   const terms = query.toLowerCase().trim().split(/\s+/).filter(Boolean);
@@ -23,7 +24,7 @@ function searchArticles(query: string) {
   }).filter(item => item.matches).sort((a, b) => b.score - a.score);
 }
 
-function Reference({ kind, catalogue }: { kind: Article['reference']; catalogue: Catalogue }) {
+export function Reference({ kind, catalogue }: { kind: Article['reference']; catalogue: Catalogue }) {
   const data = useMemo(() => documentationReference(catalogue), [catalogue]);
   const [query, setQuery] = useState('');
   const [page, setPage] = useState(0);
@@ -69,13 +70,23 @@ function Reference({ kind, catalogue }: { kind: Article['reference']; catalogue:
   </section>;
 }
 
-export function Documentation({ item, section, catalogue, hasWorkspace, back }: {
+export function Documentation(props: {
+  item?: string; technicalArticle?: string; section?: string; catalogue: Catalogue; hasWorkspace: boolean; back: () => void;
+}) {
+  if (props.item === 'technical') return <TechnicalDocumentation key={props.technicalArticle ?? 'technical-index'} item={props.technicalArticle} section={props.section}
+    hasWorkspace={props.hasWorkspace} back={props.back} catalogueReference={kind => <Reference key={kind} kind={kind} catalogue={props.catalogue} />} />;
+  return <UserDocumentation {...props} />;
+}
+
+function UserDocumentation({ item, section, catalogue, hasWorkspace, back }: {
   item?: string; section?: string; catalogue: Catalogue; hasWorkspace: boolean; back: () => void;
 }) {
   const article = articles.find(article => article.id === item);
   const [query, setQuery] = useState('');
   const [category, setCategory] = useState('');
   const results = searchArticles(query).filter(row => !category || row.article.topic === category);
+  const technicalResults = query.trim() && !category ? technicalSearch(query) : [];
+  const resultCount = results.length + technicalResults.length;
   const [copyNote, setCopyNote] = useState('');
   useEffect(() => {
     const frame = requestAnimationFrame(() => {
@@ -112,6 +123,7 @@ export function Documentation({ item, section, catalogue, hasWorkspace, back }: 
       <li key={href}><a href={href} target="_blank" rel="noreferrer">{label}</a></li>)}</ul></section>}
     <section className="doc-section"><h2>Related articles</h2><ul>{article.related.map(id => <li key={id}>
       <a href={routeHref('documentation', id)}>{articles.find(item => item.id === id)?.title}</a></li>)}</ul></section>
+    <RelatedTechnical guide={article.id} />
     <button className="link-button" onClick={() => void copyLink()}>Copy article link</button><span role="status">{copyNote}</span>
   </article>;
   if (item) return <div className="doc-index"><h1 id="doc-title" tabIndex={-1}>Article unavailable</h1>
@@ -121,6 +133,7 @@ export function Documentation({ item, section, catalogue, hasWorkspace, back }: 
 
   return <div className="doc-index">
     <header><h1 id="doc-title" tabIndex={-1}>Documentation</h1><p>Learn how to build an environment, understand its costs and share your estimate.</p></header>
+    <DocumentationNavigation area="guides" />
     <div className="doc-search panel padded">
       <label className="plain-label">Search documentation<span className="search"><Search size={16} aria-hidden="true" />
         <input onChange={event => setQuery(event.target.value)} type="search" value={query} placeholder="Try Copilot Credits, PTU or already owned" /></span></label>
@@ -129,11 +142,16 @@ export function Documentation({ item, section, catalogue, hasWorkspace, back }: 
       </select></label>
     </div>
     {query.trim() || category ? <>
-      <p className="muted" role="status">{results.length} {results.length === 1 ? 'result' : 'results'}</p>
+      <p className="muted" role="status">{resultCount} {resultCount === 1 ? 'result' : 'results'}</p>
       {results.length ? <ul className="doc-results">{results.map(({ article, trail }) => <li key={article.id}>
         <a href={routeHref('documentation', article.id, query.trim() && trail ? trail.id : undefined)}>{article.title}</a>
-        <p className="muted">{article.topic} · {trail?.title ?? article.intro}</p>
-      </li>)}</ul> : <p>Try a different term, or browse all topics.</p>}
+        <p className="muted">User Guide · {article.topic} · {trail?.title ?? article.intro}</p>
+      </li>)}</ul> : null}
+      {!!technicalResults.length && <ul className="doc-results">{technicalResults.map(({ article, heading }) => <li key={article.id}>
+        <a href={technicalHref(article.id, heading?.id)}>{article.title}</a>
+        <p className="muted">Technical Documentation · {article.sectionTitle} · {heading?.title ?? article.summary}</p>
+      </li>)}</ul>}
+      {resultCount === 0 && <p>Try a different term, or browse all topics.</p>}
       <button className="button" onClick={() => { setQuery(''); setCategory(''); }}>Clear search and filters</button>
     </> : <>
       <section className="doc-start"><h2>Start here</h2><ul>{startingArticles.map(id =>

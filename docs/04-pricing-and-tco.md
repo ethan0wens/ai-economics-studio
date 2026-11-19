@@ -1,5 +1,7 @@
 # 04 — Financial calculation engine and override precedence
 
+> See the [technical reference](technical/03-ledger-methodology.md) for current implementation and procedures. This document also records earlier design decisions.
+
 ## Principles
 
 Use a pure TypeScript calculation engine and decimal arithmetic, unit-labelled prices and a structured **cost ledger**. A cost ledger is computed from the environment, not stored as the source of truth. The same ledger feeds dashboard, PDF and exports. Costing must be **auditable and reproducible**, with currency, source and assumptions attached to each line.

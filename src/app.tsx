@@ -367,7 +367,7 @@ export default function App() {
           <Coverage catalogue={catalogue} result={result} select={id => selectObject(id)} />{sourcePanel}</>}
         <Suspense fallback={<p role="status">Loading…</p>}>
           {route.page === 'examples' && <Examples item={route.item} catalogue={catalogue} open={example => requestOpen({ kind: 'example', env: openExample(example) })} />}
-          {route.page === 'documentation' && <Documentation item={route.item} section={route.section} catalogue={catalogue} hasWorkspace={!!workspace}
+          {route.page === 'documentation' && <Documentation item={route.item} technicalArticle={route.technicalArticle} section={route.section} catalogue={catalogue} hasWorkspace={!!workspace}
             back={() => { restoreContext.current = true; navigate(workspaceRoute.current); }} />}
         </Suspense>
         <footer>{disclaimer}</footer>

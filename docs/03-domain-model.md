@@ -1,5 +1,7 @@
 # 03 — Versioned environment domain model
 
+> See the [technical reference](technical/02-environment-schema.md) for current implementation and procedures. This document also records earlier design decisions.
+
 ## Modeling philosophy
 
 All editable entities are **objects**, references are typed edges by stable IDs, not embedded object copies. Users create objects in **any order**. Objects have `draft | configured | invalid | unsupported` computed status, and a list of actionable validation messages; status should not be trusted when deserialized, but recomputed.

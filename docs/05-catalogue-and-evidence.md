@@ -1,5 +1,7 @@
 # 05 — Live pricing catalogue, verification and compatibility evidence
 
+> See the [technical reference](technical/05-catalogue-contract.md) for current implementation and procedures. This document also records earlier design decisions.
+
 ## Two separate content pipelines
 
 **A. Azure retail meter catalogue (automated daily)**: a GitHub Action accesses the public [Azure Retail Prices API](https://learn.microsoft.com/en-us/rest/api/cost-management/retail-prices/azure-retail-prices). It may request prices by `currencyCode=GBP` (when supported), service, `armRegionName`, SKU and `priceType`. Handle `NextPageLink` until completion, retries/backoff, throttling, source schema changes, dates and units. API is unauthenticated. Versioned canonical JSON is **generated and checked in CI**, then deployed as public static assets. Do not call this API from visitors' browsers.

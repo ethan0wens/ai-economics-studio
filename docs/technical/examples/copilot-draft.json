@@ -1,0 +1,17 @@
+{
+  "schemaVersion": "1.0.0",
+  "id": "documentation-copilot",
+  "name": "Illustrative Copilot Studio draft",
+  "description": "Illustrative quantities for documentation.",
+  "createdAt": "2026-11-19T12:00:00Z",
+  "updatedAt": "2026-11-19T12:00:00Z",
+  "region": "uksouth",
+  "currency": "GBP",
+  "objects": [
+    { "id": "agent", "kind": "agent", "name": "Example agent", "platform": "copilot-studio", "modelSource": "platform-managed", "credits": 12000 }
+  ],
+  "relationships": [],
+  "pricingOverrides": [],
+  "forecast": { "percent": 0, "applyToFixed": false, "exceptions": [] },
+  "disclaimer": "Independent community project. Not affiliated with or endorsed by Microsoft. Estimates depend on assumptions and are not invoices, quotes, licensing advice or compliance certifications."
+}

@@ -6,6 +6,7 @@ import { guides, helpTopics, startingArticles } from '../src/help-links';
 import { fieldHelp } from '../src/field-help';
 import { examples, openExample } from '../src/examples';
 import { validate } from './pricing';
+import { validateTechnicalDocs } from './technical-docs';
 
 const fail = (message: string) => { throw new Error(message); };
 const slug = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
@@ -48,3 +49,5 @@ if (ref.id !== pricing.manifest.catalogueId || ref.records !== pricing.manifest.
     ref.models.some(model => !slug.test(model.id) || !model.version) ||
     ref.regional.length !== ref.evidenceCounts.reduce((sum, status) => sum + status.total, 0)) fail('Documentation reference data does not reconcile to the validated snapshot.');
 console.log(`Documentation valid: ${articles.length} articles, ${topics.length} topics, ${Object.keys(helpTopics).length} contextual fields, ${ref.models.length} model configurations and ${ref.regional.length} regional evidence entries.`);
+const technical = await validateTechnicalDocs();
+console.log(`Technical documentation valid: ${technical.articles} articles in ${technical.sections} sections, ${technical.diagrams} diagrams and ${technical.examples} validated example environments.`);

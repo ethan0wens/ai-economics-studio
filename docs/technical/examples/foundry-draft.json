@@ -1,0 +1,22 @@
+{
+  "schemaVersion": "1.0.0",
+  "id": "documentation-foundry",
+  "name": "Illustrative Foundry draft",
+  "description": "Illustrative quantities for documentation.",
+  "createdAt": "2026-11-19T12:00:00Z",
+  "updatedAt": "2026-11-19T12:00:00Z",
+  "region": "uksouth",
+  "currency": "GBP",
+  "objects": [
+    { "id": "agent", "kind": "agent", "name": "Example assistant", "platform": "foundry-agent-service", "modelSource": "deployment-ref" },
+    { "id": "model", "kind": "model-deployment", "name": "Example model", "modelId": "gpt-4.1-mini", "mode": "payg" },
+    { "id": "usage", "kind": "usage-profile", "name": "Illustrative monthly usage", "executions": 1000, "calls": 1, "input": 1500, "output": 300 }
+  ],
+  "relationships": [
+    { "type": "agent-uses-deployment", "from": "agent", "to": "model" },
+    { "type": "agent-uses-usage", "from": "agent", "to": "usage" }
+  ],
+  "pricingOverrides": [],
+  "forecast": { "percent": 0, "applyToFixed": false, "exceptions": [] },
+  "disclaimer": "Independent community project. Not affiliated with or endorsed by Microsoft. Estimates depend on assumptions and are not invoices, quotes, licensing advice or compliance certifications."
+}

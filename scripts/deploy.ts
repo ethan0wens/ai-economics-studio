@@ -132,7 +132,7 @@ function publishCatalogue(application: string) {
 
 function liveBrowser(catalogueId: string | null) {
   const browser = spawnSync('npm', ['run', 'test:e2e', '--', '--retries=1', 'tests/e2e/field-help.spec.ts',
-    'tests/e2e/retail-first.spec.ts', 'tests/e2e/enterprise.spec.ts', 'tests/e2e/guided.spec.ts'], {
+    'tests/e2e/retail-first.spec.ts', 'tests/e2e/enterprise.spec.ts', 'tests/e2e/guided.spec.ts', 'tests/e2e/technical-docs.spec.ts'], {
     stdio: 'inherit', env: { ...cleanEnv, STUDIO_TEST_URL: site, STUDIO_EXPECTED_CATALOGUE_ID: catalogueId ?? undefined, STUDIO_CHECK_RELEASE_HEALTH: '1', STUDIO_CHECK_PUBLISHED_CATALOGUE: '1' },
   });
   if (browser.error) throw browser.error;

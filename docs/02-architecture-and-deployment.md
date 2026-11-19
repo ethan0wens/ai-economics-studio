@@ -1,5 +1,7 @@
 # 02 — Runtime, repository and deployment architecture
 
+> See the [technical reference](technical/01-system-architecture.md) for current implementation and procedures. This document also records earlier design decisions.
+
 ## Data flows and trust boundaries
 
 ```

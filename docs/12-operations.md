@@ -1,5 +1,7 @@
 # Operations
 
+> See the [technical reference](technical/06-build-and-deploy.md) for current implementation and procedures. This document also records earlier design decisions.
+
 ## GitHub and Cloudflare
 
 1. Configure a GitHub Actions environment called `production` restricted to `main`. Add `CLOUDFLARE_API_TOKEN` as a scoped Workers Scripts Edit secret and `CLOUDFLARE_ACCOUNT_ID` as an environment secret.

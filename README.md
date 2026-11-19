@@ -32,6 +32,10 @@ Use the [product language guide](docs/31-product-language.md) when editing the i
 
 See the [licensing and technical evidence guide](docs/18-licensing-and-technical-evidence.md), [enterprise financial reconciliations](docs/19-enterprise-financial-validation.md), [UK licensing review](docs/21-uk-licensing-gap-review.md) and [provisioned sizing and Foundry review](docs/22-ptu-and-foundry-review.md) for current coverage and test results. See [catalogue maintenance](docs/23-maintenance-automation.md) for schedules, source rules and recovery.
 
+## Technical documentation
+
+Read the [seven-section technical reference](docs/technical/README.md) for architecture, schemas, financial calculations, Microsoft evidence, catalogue maintenance, deployment and testing. The same articles are available in the studio under **Documentation → Technical Documentation**. Start with the [source traceability matrix](docs/technical/traceability.md) for an audit or the [maintenance guidance](docs/technical/maintenance.md) for a contribution.
+
 ## Locked architecture
 
 - **UI**: React + TypeScript + Vite, light-first Cloud Professional design system.

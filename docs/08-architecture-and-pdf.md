@@ -1,5 +1,7 @@
 # 08 — Architecture view and professional browser-generated PDF
 
+> See the [technical reference](technical/01-workspace-flow.md#diagrams-and-report-flow) for current implementation and procedures. This document also records earlier design decisions.
+
 ## Logical diagram — scope and semantics
 
 This is a **high-level logical/cost relationship diagram**, not Azure infrastructure topology, deployment configuration, network traffic map or security boundary verification. Derived from environment objects/typed references, not user-authored rectangles.

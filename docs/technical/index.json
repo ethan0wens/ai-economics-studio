@@ -1,0 +1,69 @@
+{
+  "sections": [
+    {
+      "id": "architecture",
+      "title": "Platform Architecture & System Design",
+      "summary": "Browser runtime, component boundaries and the environment-to-export lifecycle.",
+      "articles": [
+        { "id": "system-architecture", "file": "01-system-architecture.md", "title": "System architecture and trust boundaries", "summary": "Follow the static delivery path and see why evaluation runs in the browser.", "aliases": ["browser runtime", "static assets", "component architecture"], "related": ["workspace-flow", "security-and-operations"], "guides": ["privacy", "architecture-and-controls"] },
+        { "id": "workspace-flow", "file": "01-workspace-flow.md", "title": "From workspace changes to exports", "summary": "Trace the React component tree, derived ledger, diagrams, JSON and PDF.", "aliases": ["guided builder", "advanced editor", "environment lifecycle"], "related": ["environment-schema", "relationships-and-files", "ledger-methodology"], "guides": ["guided-and-advanced", "save-and-reopen"] }
+      ]
+    },
+    {
+      "id": "configuration",
+      "title": "Environment Data Model & Configuration",
+      "summary": "The versioned environment schema, object fields, relationships and import contract.",
+      "articles": [
+        { "id": "environment-schema", "file": "02-environment-schema.md", "title": "Environment schema and object fields", "summary": "Read the top-level contract and the full field reference for every object kind.", "aliases": ["zod", "data model", "object reference", "schema"], "related": ["relationships-and-files", "interfaces-and-troubleshooting"], "guides": ["environment-file"], "reference": "schema" },
+        { "id": "relationships-and-files", "file": "02-relationships-and-files.md", "title": "Relationships, drafts and versioned files", "summary": "Check cardinality, links and the exact rules for importing and exporting environments.", "aliases": ["json schema", "graph", "migration", "source snapshot"], "related": ["environment-schema", "workspace-flow", "verification-and-tests"], "guides": ["save-and-reopen", "share-and-connect"], "reference": "relationships" }
+      ]
+    },
+    {
+      "id": "finance",
+      "title": "Financial Engine & TCO Methodology",
+      "summary": "Auditable quantities, price precedence, rounding, licence expenditure and worked reconciliations.",
+      "articles": [
+        { "id": "ledger-methodology", "file": "03-ledger-methodology.md", "title": "Ledger quantities and cost methodology", "summary": "Calculate tokens, credits, resource usage and capacity, then reconcile monthly and annual costs.", "aliases": ["TCO", "unknown pricing", "ledger", "shared capacity", "rounding"], "related": ["agreements-and-licences", "worked-reconciliations", "foundry-and-azure"], "guides": ["read-your-estimate", "missing-rate-or-volume", "billing-units"] },
+        { "id": "agreements-and-licences", "file": "03-agreements-and-licences.md", "title": "Contracts, forecasts and licence expenditure", "summary": "Trace override precedence, existing spend, distinct seats and dated licence replacement.", "aliases": ["contract override", "price forecast", "retail discount", "incremental spend"], "related": ["ledger-methodology", "worked-reconciliations", "copilot-and-licensing"], "guides": ["agreements-and-manual-rates", "existing-and-new-spend", "forecast-scenarios"] },
+        { "id": "worked-reconciliations", "file": "03-worked-reconciliations.md", "title": "Worked financial reconciliations", "summary": "Follow six independently calculated scenarios and compare them with executable tests.", "aliases": ["financial reconciliation", "worked examples", "fictional pricing"], "related": ["ledger-methodology", "agreements-and-licences", "verification-and-tests"], "guides": ["example-foundry-assistant", "example-copilot-agent", "example-existing-licensing", "example-shared-deployment"] }
+      ]
+    },
+    {
+      "id": "microsoft",
+      "title": "Microsoft AI Services & Licensing",
+      "summary": "What the studio can model, the Microsoft evidence behind it and customer checks.",
+      "articles": [
+        { "id": "foundry-and-azure", "file": "04-foundry-and-azure.md", "title": "Microsoft Foundry and Azure supporting services", "summary": "Review model identity, PTU sizing, deployment evidence and Azure resource billing units.", "aliases": ["PTU", "model availability", "cached input", "Azure AI Search"], "related": ["ledger-methodology", "catalogue-contract", "limitations"], "guides": ["ptu-and-reservations", "deployment-availability", "model-evidence", "supporting-services"], "reference": "models" },
+        { "id": "copilot-and-licensing", "file": "04-copilot-and-licensing.md", "title": "Copilot Studio and Microsoft licensing evidence", "summary": "Understand credit consumption, prepaid allocations, UK offers and licence prerequisites.", "aliases": ["Copilot Credits", "prepaid capacity", "Microsoft 365", "Entra", "Defender", "Purview", "Agent 365"], "related": ["agreements-and-licences", "catalogue-contract"], "guides": ["copilot-credits", "licence-evidence", "licences-and-groups"] }
+      ]
+    },
+    {
+      "id": "catalogue",
+      "title": "Pricing Catalogue, Evidence & Automation",
+      "summary": "Immutable snapshot contracts, official sources, ingestion and verification procedures.",
+      "articles": [
+        { "id": "catalogue-contract", "file": "05-catalogue-contract.md", "title": "Catalogue formats, provenance and live coverage", "summary": "Read the manifest and billing identity, then inspect the currently applied inventory.", "aliases": ["content-addressed", "billing units", "evidence freshness", "SHA-256"], "related": ["catalogue-maintenance", "foundry-and-azure", "relationships-and-files"], "guides": ["pricing-sources", "coverage-and-freshness", "billing-units"], "reference": "coverage" },
+        { "id": "catalogue-maintenance", "file": "05-catalogue-maintenance.md", "title": "Catalogue refresh and maintenance runbook", "summary": "Operate the retail and evidence pipeline and recover from a rejected publication.", "aliases": ["catalogue refresh", "Azure Retail Prices API", "missing tariff", "mapping"], "related": ["catalogue-contract", "build-and-deploy", "security-and-operations"], "guides": ["coverage-and-freshness", "missing-rate-or-volume"] }
+      ]
+    },
+    {
+      "id": "operations",
+      "title": "Deployment, Security & Operations",
+      "summary": "Local setup, GitHub release gates, Cloudflare routing and incident response.",
+      "articles": [
+        { "id": "build-and-deploy", "file": "06-build-and-deploy.md", "title": "Local development and Cloudflare deployment", "summary": "Run the application, review workflow triggers and trace a verified production release.", "aliases": ["Cloudflare deployment", "wrangler", "GitHub Actions", "production secrets"], "related": ["security-and-operations", "catalogue-maintenance", "verification-and-tests"], "guides": ["architecture-and-controls"], "reference": "commands" },
+        { "id": "security-and-operations", "file": "06-security-and-operations.md", "title": "Security, privacy and release recovery", "summary": "Inspect the content policy, understand data boundaries and restore a known-good version.", "aliases": ["CSP", "rollback", "incident response", "browser privacy"], "related": ["build-and-deploy", "catalogue-maintenance", "limitations"], "guides": ["privacy", "limits-of-an-estimate"] }
+      ]
+    },
+    {
+      "id": "reference",
+      "title": "Testing, Validation & Technical Reference",
+      "summary": "Executable verification, core interfaces, troubleshooting and the limitations register.",
+      "articles": [
+        { "id": "verification-and-tests", "file": "07-verification-and-tests.md", "title": "Verification, validation and financial regression", "summary": "Choose the right test layer, reproduce expected results and add a safe regression scenario.", "aliases": ["financial reconciliation", "Vitest", "Playwright", "docs validate"], "related": ["worked-reconciliations", "interfaces-and-troubleshooting", "build-and-deploy"], "guides": ["read-your-estimate"] },
+        { "id": "interfaces-and-troubleshooting", "file": "07-interfaces-and-troubleshooting.md", "title": "Core interfaces and troubleshooting", "summary": "Locate the key TypeScript contracts and diagnose failures from imports to production.", "aliases": ["TypeScript", "broken import", "PDF error", "documentation links", "unknown prices"], "related": ["environment-schema", "catalogue-maintenance", "verification-and-tests", "limitations"], "guides": ["import-or-export-problems", "unexpected-total"] },
+        { "id": "limitations", "file": "07-limitations.md", "title": "Limitations and independent review", "summary": "Separate supported modelling, modelling assumptions and gaps in external evidence.", "aliases": ["unsupported", "eligibility", "evidence gaps", "technical limitations"], "related": ["ledger-methodology", "foundry-and-azure", "copilot-and-licensing", "security-and-operations"], "guides": ["limits-of-an-estimate", "estimate-readiness"] }
+      ]
+    }
+  ]
+}

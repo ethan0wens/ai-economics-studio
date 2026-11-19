@@ -2,7 +2,7 @@ import { useEffect, useState, type ReactNode } from 'react';
 import { BookOpen, ChevronLeft, Search } from 'lucide-react';
 import { articles as userGuides } from './documentation-content';
 import { technicalArticles } from './technical-library';
-import { technicalEntries, technicalSections } from './technical-content';
+import { supportingReferences, technicalEntries, technicalSections } from './technical-content';
 import { routeHref, technicalHref } from './navigation';
 import { ReadingRegion, TechnicalMarkdown } from './technical-markdown';
 import { environmentReference, verificationCommands } from './technical-reference';
@@ -138,6 +138,12 @@ export function TechnicalDocumentation({ item, section, hasWorkspace, back, cata
           <p className="muted">{article.summary}</p>
         </li>)}</ul>
       </section>)}</div>
+      <section className="panel padded technical-section" aria-labelledby="doc-supporting">
+        <h2 id="doc-supporting" tabIndex={-1}>Supporting references</h2>
+        <ul>{supportingReferences.map(article => <li key={article.id}>
+          <a href={technicalHref(article.id)}>{article.title}</a><p className="muted">{article.summary}</p>
+        </li>)}</ul>
+      </section>
     </>}
   </div>;
 }

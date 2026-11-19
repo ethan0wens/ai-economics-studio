@@ -32,7 +32,7 @@ export function CatalogueHealth({ manifest }: { manifest: Manifest }) {
     .sort((a, b) => a.date.localeCompare(b.date)) ?? [];
   return <section className="panel padded" aria-labelledby="catalogue-health-title">
     <h2 id="catalogue-health-title">Catalogue health</h2>
-    <p className="muted">Latest Azure refresh {date(manifest.lastCheckedAt)}. Catalogue {short(manifest.catalogueId)}. <a href={runs} target="_blank" rel="noreferrer">View update history</a>.</p>
+    <p className="muted">Latest Azure refresh {date(manifest.lastCheckedAt)}. Catalogue {short(manifest.catalogueId)}. <a href={runs} target="_blank" rel="noreferrer">GitHub Actions run history</a>.</p>
     {matched ? <>
       <p>Published application {short(data.release.application)} · previous release {short(data.release.previous.application ?? data.release.previous.cloudflareVersion)}</p>
       <div className="coverage-filters">{reviewGroups.map(group => {
@@ -47,7 +47,7 @@ export function CatalogueHealth({ manifest }: { manifest: Manifest }) {
       {data.maintenance.unresolved.length > 0 && <details className="coverage-family">
         <summary>Unresolved evidence ({data.maintenance.unresolved.length})</summary>
         <ul>{data.maintenance.unresolved.slice(0, 12).map(row => <li key={`${row.group}|${row.id}|${row.kind}`}>
-          {names[row.group]} · {row.id} · {row.detail} <a href={row.source} target="_blank" rel="noreferrer">Official source</a>
+          {names[row.group]} · {row.id} · {row.detail} <a href={row.source} target="_blank" rel="noreferrer" aria-description="External Microsoft evidence">Official source</a>
         </li>)}</ul>
         <a href={`${import.meta.env.BASE_URL}pricing/health.json`}>Open the full JSON report</a>
       </details>}

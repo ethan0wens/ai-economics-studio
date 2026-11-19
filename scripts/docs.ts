@@ -1,8 +1,9 @@
+import { readdir, readFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
 import { articles, topics } from '../src/documentation-content';
 import { documentationReference } from '../src/documentation-reference';
 import { destinations } from '../src/navigation';
-import { guides, helpTopics, startingArticles } from '../src/help-links';
+import { helpTopics, startingArticles } from '../src/help-links';
 import { fieldHelp } from '../src/field-help';
 import { examples, openExample } from '../src/examples';
 import { validate } from './pricing';
@@ -29,11 +30,19 @@ for (const article of articles) {
     if (url.protocol !== 'https:' || !['learn.microsoft.com', 'www.microsoft.com', 'azure.microsoft.com'].includes(url.hostname)) fail(`Invalid source in ${article.id}: ${source}`);
   }
 }
-for (const [field, [id, anchor]] of Object.entries(helpTopics)) {
-  if (!Object.hasOwn(fieldHelp, field) || !ids.get(id)?.sections.some(section => section.id === anchor)) fail(`Broken field help: ${field} → ${id}#${anchor}`);
+for (const field of Object.keys(fieldHelp)) if (!Object.hasOwn(helpTopics, field)) fail(`Missing field documentation: ${field}`);
+for (const { source } of Object.values(fieldHelp)) {
+  if (!source) continue;
+  const url = new URL(source.href);
+  if (url.protocol !== 'https:' || !['learn.microsoft.com', 'www.microsoft.com', 'azure.microsoft.com'].includes(url.hostname)) {
+    fail(`Field evidence must point to an official Microsoft source: ${source.href}`);
+  }
 }
-for (const [guide, [id, anchor]] of Object.entries(guides)) {
-  if (!ids.get(id)?.sections.some(section => section.id === anchor)) fail(`Broken contextual guide: ${guide} → ${id}#${anchor}`);
+for (const path of (await readdir(resolve('src'))).filter(name => /\.tsx?$/.test(name))) {
+  const source = await readFile(resolve('src', path), 'utf8');
+  if (/https:\/\/github\.com\/[^'"`\s]+\.md(?:[#?][^'"`\s]*)?/i.test(source)) {
+    fail(`Application guidance must resolve inside Documentation: ${path}`);
+  }
 }
 for (const id of startingArticles) if (!ids.has(id)) fail(`Missing starting article: ${id}`);
 for (const example of examples) {

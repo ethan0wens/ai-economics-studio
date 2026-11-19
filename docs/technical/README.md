@@ -55,6 +55,8 @@ Executable verification, core interfaces, troubleshooting and the limitations re
 
 ## Maintaining this reference
 
-- [Documentation audit](audit.md)
-- [Source traceability matrix](traceability.md)
-- [Documentation maintenance](maintenance.md)
+- [Technical documentation audit](audit.md). Read the baseline coverage matrix, authority decisions and open evidence gaps.
+- [Source traceability](traceability.md). Follow the implementation files, evidence and tests behind each reference section.
+- [Maintaining the technical documentation](maintenance.md). Maintain links, references, examples and contributor checks.
+- [Product language guide](../31-product-language.md). Use the Studio's British English conventions, financial terms and warning patterns.
+- [Contributing](../../CONTRIBUTING.md). Prepare a contribution with reviewed evidence and appropriate tests.

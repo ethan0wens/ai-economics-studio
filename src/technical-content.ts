@@ -11,13 +11,17 @@ const entry = z.strictObject({
   related: z.array(id).min(1), guides: z.array(id).min(1),
   reference: z.enum(['schema', 'relationships', 'models', 'coverage', 'commands']).optional(),
 });
-const indexSchema = z.strictObject({ sections: z.array(z.strictObject({
+const indexSchema = z.strictObject({
+  supporting: z.array(entry.extend({ file: z.string().regex(/^(?:[a-z0-9-]+\.md|\.\.\/31-product-language\.md|\.\.\/\.\.\/CONTRIBUTING\.md)$/) })).min(1),
+  sections: z.array(z.strictObject({
   id, title: label, summary: label, articles: z.array(entry).min(1),
 })).length(7) });
 
-export const { sections: technicalSections } = indexSchema.parse(index);
-export const technicalEntries = technicalSections.flatMap(section =>
+export const { sections: technicalSections, supporting: supportingReferences } = indexSchema.parse(index);
+const numberedChapters = technicalSections.flatMap(section =>
   section.articles.map(article => ({ ...article, section: section.id, sectionTitle: section.title })));
+export const technicalEntries = [...numberedChapters,
+  ...supportingReferences.map(article => ({ ...article, section: 'supporting', sectionTitle: 'Supporting references' }))];
 export type TechnicalEntry = typeof technicalEntries[number];
 
 export function headingId(text: string) {
@@ -42,17 +46,28 @@ export const allowedTechnicalSources = ['learn.microsoft.com', 'www.microsoft.co
   'ai-econmics-studio.ethan0wens.workers.dev'];
 export const documentLocation = (file: string) => new URL(`/docs/technical/${file}`, virtualRoot);
 
-export function technicalLink(href: string, file: string) {
+export type TechnicalLink = { href: string; kind: 'internal' | 'implementation' | 'evidence' };
+function implementationPath(path: string) {
+  return /^\/(?:src|scripts|tests|fixtures|catalogue|\.github|docs\/technical\/examples)\/[^?#]+\.(?:tsx?|jsonc?|ya?ml)$/.test(path) ||
+    /^\/(?:package(?:-lock)?\.json|wrangler\.jsonc|vite\.config\.ts|playwright\.config\.ts|index\.html|public\/_headers|docs\/technical\/(?:index|sources)\.json)$/.test(path);
+}
+
+export function technicalLink(href: string, file: string): TechnicalLink | undefined {
+  if (!href.trim()) return;
+  if (href.startsWith('#/')) return { href, kind: 'internal' };
   const target = new URL(href, documentLocation(file));
   if (target.origin === virtualRoot) {
-    const article = technicalEntries.find(entry => target.pathname === `/docs/technical/${entry.file}`);
-    if (article) return technicalHref(article.id, target.hash ? decodeURIComponent(target.hash.slice(1)) : undefined);
-    if (target.pathname === '/docs/technical/README.md') return technicalHref();
-    return repo + target.pathname.slice(1) + target.hash;
+    const article = technicalEntries.find(entry => target.pathname === documentLocation(entry.file).pathname);
+    if (article) return { href: technicalHref(article.id, target.hash ? decodeURIComponent(target.hash.slice(1)) : undefined), kind: 'internal' };
+    if (target.pathname === '/docs/technical/README.md') return { href: technicalHref(), kind: 'internal' };
+    if (implementationPath(target.pathname)) return { href: repo + target.pathname.slice(1) + target.hash, kind: 'implementation' };
+    return;
   }
-  if (target.protocol === 'https:' && allowedTechnicalSources.includes(target.hostname)) {
-    return target.hostname === 'ai-econmics-studio.ethan0wens.workers.dev' && target.hash.startsWith('#/documentation')
-      ? target.hash : target.href;
+  if (target.protocol !== 'https:' || !allowedTechnicalSources.includes(target.hostname)) return;
+  if (target.hostname === 'ai-econmics-studio.ethan0wens.workers.dev') return { href: target.hash || '#/', kind: 'internal' };
+  if (target.hostname === 'github.com') {
+    if (!target.href.startsWith(repo) || !implementationPath('/' + target.href.slice(repo.length).split('#')[0])) return;
+    return { href: target.href, kind: 'implementation' };
   }
-  return undefined;
+  return { href: target.href, kind: 'evidence' };
 }

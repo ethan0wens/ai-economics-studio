@@ -34,7 +34,7 @@ export function Inspector({ item, env, catalogue, result, update, select, remove
 }) {
   const panel = useRef<HTMLElement>(null);
   const [tab, setTab] = useState<string>(focus?.section ?? 'Configuration');
-  const [level, setLevel] = useState<Level>(focus?.field ? 'Advanced' : 'Essential');
+  const [level, setLevel] = useState<Level>(focus?.level ?? (focus?.field ? 'Advanced' : 'Essential'));
   useEffect(() => {
     const field = focus?.field ? panel.current?.querySelector<HTMLElement>(`[data-field="${focus.field}"] :is(input, select, textarea)`) : undefined;
     const heading = panel.current?.querySelector<HTMLElement>('#inspector-title');
@@ -101,11 +101,11 @@ export function Inspector({ item, env, catalogue, result, update, select, remove
       }} />
       {activeOffer && <div className="retail-preview">
         <strong>Microsoft retail pricing</strong>
-        {activeOffer.evidence && <p><a href={activeOffer.evidence} target="_blank" rel="noreferrer">Microsoft product guidance</a></p>}
+        {activeOffer.evidence && <p><a href={activeOffer.evidence} target="_blank" rel="noreferrer" aria-description="External Microsoft evidence">Microsoft product guidance</a></p>}
         <ul>{activeOffer.components.map(part => {
           const rate = resolveOffering(catalogue.records, activeOffer, part.id, env.currency, new Date().toISOString());
           return <li key={part.id}>{part.label} · {rate
-            ? <a href={rate.source} target="_blank" rel="noreferrer">{rate.tiers ? 'Graduated usage bands' : `${rate.currency} ${rate.price} per ${part.unit === '1K' ? '1,000 tokens' : part.unit === '1' ? 'credit' : part.unit}`}</a>
+            ? <a href={rate.source} target="_blank" rel="noreferrer" aria-description="External Microsoft evidence">{rate.tiers ? 'Graduated usage bands' : `${rate.currency} ${rate.price} per ${part.unit === '1K' ? '1,000 tokens' : part.unit === '1' ? 'credit' : part.unit}`}</a>
             : unavailablePrice}</li>;
         })}</ul>
       </div>}
@@ -248,7 +248,7 @@ export function Inspector({ item, env, catalogue, result, update, select, remove
   const selectedLevel = visibleLevels.includes(level) ? level : level === 'Advanced' ? 'Detailed' : 'Essential';
   const sections = ['Configuration', ...(item.kind === 'agent' || item.kind === 'model-deployment' ? ['Usage'] : []), 'Dependencies', 'Costs'];
 
-  return <aside ref={panel} className="panel inspector" aria-labelledby="inspector-title">
+  return <aside ref={panel} className="panel inspector" aria-labelledby="inspector-title" data-active-section={tab} data-active-level={level}>
     <header className="inspector-header"><span className="subtle-label">{kindLabels[item.kind]}</span><h2 id="inspector-title" tabIndex={-1}>{item.name}</h2>
       <div className="inspector-badges">
         {missing.length > 0 && <span className="status warning">Draft · {missing.length} {missing.length === 1 ? 'input' : 'inputs'} needed</span>}

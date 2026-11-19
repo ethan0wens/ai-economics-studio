@@ -1,6 +1,6 @@
-import { guides } from './help-links';
-import { routeHref } from './navigation';
+import { documentationHref, guides } from './help-links';
 
-export function LearnMore({ guide, children }: { guide: keyof typeof guides; children: string }) {
-  return <a className="learn-more" href={routeHref('documentation', ...guides[guide])}>{children}</a>;
+export function LearnMore({ guide, children }: { guide: keyof typeof guides; children?: string }) {
+  const target = guides[guide];
+  return <a className="learn-more" href={documentationHref(target)}>{children ?? target.label ?? 'Learn more in Documentation'}</a>;
 }

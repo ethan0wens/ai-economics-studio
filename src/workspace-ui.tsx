@@ -1,3 +1,4 @@
+import { LearnMore } from './learn-more';
 import { useEffect, useRef, useState, type ReactNode } from 'react';
 import { ArrowDownToLine, ArrowRight, BookOpen, Boxes, ChartNoAxesCombined, Cloud, FileText, GitFork, House, Menu, ShieldCheck, Workflow, X } from 'lucide-react';
 import type { Environment } from './domain';
@@ -104,6 +105,6 @@ export function Home({ env, status, create, resume, importFile, error }: {
     </ul>
     <div className="welcome-examples"><div><h2>Explore an example</h2><p>See how it works with a ready-made AI environment.</p></div>
       <a className="button" href={routeHref('examples')}>Explore examples <ArrowRight size={16} aria-hidden="true" /></a></div>
-    <p className="privacy-copy">No account required. Your environment stays in this browser tab until you leave or reload. Export it to keep a copy. <a href={routeHref('documentation', 'privacy')}>Privacy and storage</a></p>
+    <p className="privacy-copy">No account required. Your environment stays in this browser tab until you leave or reload. Export it to keep a copy. <LearnMore guide="privacy" /></p>
   </div>;
 }

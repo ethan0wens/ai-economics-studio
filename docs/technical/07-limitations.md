@@ -16,7 +16,7 @@ Use the studio to explain a planning model, its inputs and the cost evidence tha
 | Runtime and files | In-browser processing with explicit JSON import/export and locally rendered diagrams and PDF. | Manage copies securely. JSON has a size/depth limit and a literal schema version. Large diagrams, unusual glyphs and device/browser constraints can affect PDF presentation. |
 | Security and governance | Same-origin delivery, CSP, scoped production secrets, and advisory findings from declarations. | Confirm provider infrastructure policies and customer controls. This documentation contains no independent penetration test, legal assurance or compliance certification. |
 
-See [official sources and review scope](../../SOURCES.md), [catalogue coverage](05-catalogue-contract.md#coverage-and-freshness) and [technical tests](07-verification-and-tests.md).
+See [official sources and review scope](05-catalogue-contract.md#exact-price-identity), [catalogue coverage](05-catalogue-contract.md#coverage-and-freshness) and [technical tests](07-verification-and-tests.md).
 
 ## Assumptions and future considerations
 

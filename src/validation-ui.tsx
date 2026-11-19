@@ -19,7 +19,7 @@ export function EvidenceFindings({ items, label, name, select }: {
     <ul className="findings">{items.map((item, i) => <li key={`${item.id}:${item.rule ?? item.title}:${i}`}>
       {name && select && <><button className="link-button" onClick={() => select(item.id)}>{name(item.id)}</button> · </>}
       <strong>{item.title}</strong> · {findingStatus(item)}
-      <p className="muted">{item.detail} {item.source && <a href={item.source} target="_blank" rel="noreferrer">Microsoft evidence</a>}
+      <p className="muted">{item.detail} {item.source && <a href={item.source} target="_blank" rel="noreferrer" aria-description="External Microsoft evidence">Microsoft evidence</a>}
         {item.verifiedOn && <small> · Reviewed {item.verifiedOn}</small>}</p>
     </li>)}</ul>
   </details>;

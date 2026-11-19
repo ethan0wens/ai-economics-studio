@@ -1,7 +1,7 @@
 import { lazy, Suspense, useEffect, useMemo, useRef, useState } from 'react';
 import { Activity, ArrowDownToLine, ArrowRight, Boxes, ChevronRight, Cloud, Cpu, FileText, Gauge, Plus, ShieldCheck, Users } from 'lucide-react';
 import { blankEnvironment, cloneEnvironment, disclaimer, environmentSchema, importEnvironment, kindLabels, maxBytes, maxObjects, removeObject, type Environment, type Kind } from './domain';
-import { emptyCatalogue, loadCatalogue, retailDocs, type Catalogue } from './catalogue';
+import { emptyCatalogue, loadCatalogue, type Catalogue } from './catalogue';
 import { formatMoney, governance, ledger, summarize, type Ledger } from './ledger';
 import { Coverage } from './coverage-ui';
 import { Inspector } from './inspector';
@@ -117,7 +117,7 @@ export default function App() {
   const main = useRef<HTMLElement>(null);
   const workspaceRoute = useRef<Destination>('builder');
   const navigationStarted = useRef(false);
-  const contextField = useRef<string | undefined>(undefined);
+  const contextField = useRef<Pick<EditTarget, 'field' | 'line' | 'section' | 'level'> | undefined>(undefined);
   const restoreContext = useRef(false);
   const previousPage = useRef<Destination>(route.page);
   const result = useMemo(() => ledger(env, catalogue.records, undefined, catalogue.inventory), [env, catalogue]);
@@ -131,28 +131,55 @@ export default function App() {
     Recalculated with the applied catalogue · {formatMoney(snapshotCurrent, env.currency)} known · {result.summary.current.incomplete} incomplete.</p>;
 
   useEffect(() => {
+    function remember(target: Element | null) {
+      const inspector = target?.closest<HTMLElement>('.inspector');
+      contextField.current = {
+        field: target?.closest<HTMLElement>('[data-field]')?.dataset.field as EditTarget['field'],
+        section: inspector?.dataset.activeSection as EditTarget['section'],
+        level: inspector?.dataset.activeLevel as EditTarget['level'],
+        line: target?.closest<HTMLElement>('[data-line]')?.dataset.line,
+      };
+    }
+    function helpClick(event: MouseEvent) {
+      if (previousPage.current !== 'documentation' && event.target instanceof Element &&
+          event.target.closest('a[href^="#/documentation"]')) remember(event.target);
+    }
     function routeChange() {
-      const focus = document.activeElement?.closest<HTMLElement>('[data-field]');
       const next = currentRoute();
-      if (next.page === 'documentation' && previousPage.current !== 'documentation') contextField.current = focus?.dataset.field;
+      if (next.page === 'documentation' && previousPage.current !== 'documentation') {
+        if (!contextField.current) remember(document.activeElement);
+        setModal(null);
+      } else if (next.page !== 'documentation' && !restoreContext.current) contextField.current = undefined;
       navigationStarted.current = true;
       setRoute(next);
     }
     window.addEventListener('hashchange', routeChange);
-    return () => window.removeEventListener('hashchange', routeChange);
+    document.addEventListener('click', helpClick, true);
+    return () => {
+      window.removeEventListener('hashchange', routeChange);
+      document.removeEventListener('click', helpClick, true);
+    };
   }, []);
   useEffect(() => {
     const from = previousPage.current;
     previousPage.current = route.page;
     if (!publicViews.has(route.page)) workspaceRoute.current = route.page;
     if (!navigationStarted.current) return;
-    if (target && ((route.page === 'builder' && !target.line) || (route.page === 'costs' && target.line))) return;
+    if (!restoreContext.current && target && ((route.page === 'builder' && !target.line) || (route.page === 'costs' && target.line))) return;
     if (route.section && route.page === 'documentation') return;
     const frame = requestAnimationFrame(() => {
-      if (from === 'documentation' && route.page === 'builder' && restoreContext.current && contextField.current) {
+      if (from === 'documentation' && restoreContext.current && contextField.current) {
+        const { field, line } = contextField.current;
+        const row = line ? main.current?.querySelector<HTMLElement>(`[data-line="${CSS.escape(line)}"]`) : main.current;
+        const input = field ? row?.querySelector<HTMLElement>(`[data-field="${CSS.escape(field)}"] :is(input,select,textarea)`)
+          : line ? row?.querySelector<HTMLElement>('summary') : null;
+        contextField.current = undefined;
         restoreContext.current = false;
-        const field = main.current?.querySelector<HTMLElement>(`[data-field="${CSS.escape(contextField.current)}"] :is(input,select,textarea)`);
-        if (field) { field.focus(); return; }
+        if (input) {
+          for (let details = input.closest('details'); details; details = details.parentElement?.closest('details') ?? null) details.open = true;
+          input.focus();
+          return;
+        }
       }
       restoreContext.current = false;
       const heading = main.current?.querySelector('h1');
@@ -181,6 +208,15 @@ export default function App() {
     const timer = setTimeout(() => setToast(''), 4500);
     return () => clearTimeout(timer);
   }, [toast]);
+
+  function backFromDocumentation() {
+    restoreContext.current = true;
+    const context = contextField.current;
+    if (workspaceRoute.current === 'builder' && mode === 'advanced' && selected && context?.section) {
+      setTarget({ id: selected, field: context.field, section: context.section, level: context.level });
+    }
+    navigate(workspaceRoute.current);
+  }
 
   function navigate(page: Destination) {
     if (window.location.hash !== routeHref(page)) window.location.hash = routeHref(page);
@@ -268,7 +304,7 @@ export default function App() {
     <div><span className="tile blue"><Cloud size={17} aria-hidden="true" /></span><div><strong>Microsoft pricing catalogue</strong>
       <small>{catalogue.manifest.catalogueId ? `${catalogue.records.length} published rates · ${catalogue.manifest.lastCheckedAt ?? 'Check time unavailable'}` : 'No verified retail data published'}
         {catalogue.manifest.lastCheckedAt && Date.now() - Date.parse(catalogue.manifest.lastCheckedAt) > 7 * 86400000 ? ' · Stale' : ''}</small></div></div>
-    <div className="actions"><a href={retailDocs} target="_blank" rel="noreferrer">Source documentation</a><button className="button" onClick={refreshCatalogue}>Check for updates</button></div>
+    <div className="actions"><LearnMore guide="catalogue" /><button className="button" onClick={refreshCatalogue}>Check for updates</button></div>
     {catalogueNote && <p role="status">{catalogueNote}</p>}
     {candidate && <button className="button primary" onClick={() => {
       setCatalogue(candidate); setCandidate(undefined); setEstimateChanged(exported); setCatalogueNote('Catalogue applied. Your customer pricing agreements and forecast assumptions still apply.');
@@ -340,7 +376,7 @@ export default function App() {
           <p className="muted">{advice.length} advisory checks based on the controls you entered. Ruleset 1.0.0.</p>
           {!advice.length && <a href={routeHref('builder')}>Add an agent to assess controls</a>}
           {advice.map(item => <article className="finding" key={item.id + item.control}><div><button className="link-button" onClick={() => selectObject(item.id)}>{item.object}</button>
-            <h3>{item.title}</h3><p>{item.why}</p><a href={item.source} target="_blank" rel="noreferrer">Microsoft guidance</a></div>
+            <h3>{item.title}</h3><p>{item.why}</p><a href={item.source} target="_blank" rel="noreferrer" aria-description="External Microsoft evidence">Microsoft guidance</a></div>
             <span className="status warning">{item.status} · {item.critical ? 'High priority' : 'Advisory'}</span></article>)}
         </section>}
         {workspace && route.page === 'reports' && <div className="page-stack">
@@ -355,7 +391,7 @@ export default function App() {
               {!env.objects.length && <p className="muted">Add an agent or billable item to generate a report.</p>}
             </section>
             <section className="panel padded report-options"><h2>Editable environment file</h2>
-              <p>Export a JSON copy to keep editing later. It includes your configuration, links and pricing assumptions.</p>
+              <p>Export a JSON copy to keep editing later. It includes your configuration, links and pricing assumptions.</p><LearnMore guide="exports" />
               <div className="actions"><button className="button" onClick={exportJson}>Export JSON</button>
                 <button className="button" onClick={() => imported.current?.click()}>Import JSON</button>
                 <FieldHelp field="importFile" label="Import JSON" requirement="Optional" /></div>
@@ -368,7 +404,7 @@ export default function App() {
         <Suspense fallback={<p role="status">Loading…</p>}>
           {route.page === 'examples' && <Examples item={route.item} catalogue={catalogue} open={example => requestOpen({ kind: 'example', env: openExample(example) })} />}
           {route.page === 'documentation' && <Documentation item={route.item} technicalArticle={route.technicalArticle} section={route.section} catalogue={catalogue} hasWorkspace={!!workspace}
-            back={() => { restoreContext.current = true; navigate(workspaceRoute.current); }} />}
+            back={backFromDocumentation} />}
         </Suspense>
         <footer>{disclaimer}</footer>
       </main>

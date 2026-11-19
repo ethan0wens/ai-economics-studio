@@ -58,7 +58,7 @@ function ModelSetup({ env, agent, model, catalogue, update, advanced, generated,
   const current = inventory.find(offer => offer.id === model?.offeringId);
   const preview = current?.components.map(part => {
     const record = resolveOffering(catalogue.records, current, part.id, env.currency, new Date().toISOString());
-    return <li key={part.id}>{part.label} · {record ? <a href={record.source} target="_blank" rel="noreferrer">{record.currency} {record.price} / {part.unit}</a> : unavailablePrice}</li>;
+    return <li key={part.id}>{part.label} · {record ? <a href={record.source} target="_blank" rel="noreferrer" aria-description="External Microsoft evidence">{record.currency} {record.price} / {part.unit}</a> : unavailablePrice}</li>;
   });
   const findings = model && deploymentFindings(model, new Date().toISOString());
   function createModel() {

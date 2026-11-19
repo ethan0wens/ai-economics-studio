@@ -13,8 +13,13 @@ function inline(tokens: Token[], file: string): ReactNode {
       case 'del': return <del key={index}>{inline(token.tokens, file)}</del>;
       case 'br': return <br key={index} />;
       case 'link': {
-        const href = technicalLink(token.href, file);
-        return href ? <a key={index} href={href}>{inline(token.tokens, file)}</a> : token.text;
+        const link = technicalLink(token.href, file);
+        if (!link) return token.text;
+        const description = link.kind === 'implementation' ? 'Implementation source on GitHub' : link.kind === 'evidence' ? 'External source' : undefined;
+        return <Fragment key={index}><a href={link.href} aria-description={description}
+          target={description ? '_blank' : undefined} rel={description ? 'noreferrer' : undefined}>{inline(token.tokens, file)}</a>
+          {description && <small className="doc-link-kind" aria-hidden="true"> · {link.kind === 'implementation' ? 'source' : 'external'}</small>}
+        </Fragment>;
       }
       default: return null;
     }

@@ -65,5 +65,92 @@
         { "id": "limitations", "file": "07-limitations.md", "title": "Limitations and independent review", "summary": "Separate supported modelling, modelling assumptions and gaps in external evidence.", "aliases": ["unsupported", "eligibility", "evidence gaps", "technical limitations"], "related": ["ledger-methodology", "foundry-and-azure", "copilot-and-licensing", "security-and-operations"], "guides": ["limits-of-an-estimate", "estimate-readiness"] }
       ]
     }
+  ],
+  "supporting": [
+    {
+      "id": "documentation-audit",
+      "file": "audit.md",
+      "title": "Technical documentation audit",
+      "summary": "Read the baseline coverage matrix, authority decisions and open evidence gaps.",
+      "aliases": [
+        "audit",
+        "coverage matrix"
+      ],
+      "related": [
+        "system-architecture",
+        "limitations"
+      ],
+      "guides": [
+        "limits-of-an-estimate"
+      ]
+    },
+    {
+      "id": "source-traceability",
+      "file": "traceability.md",
+      "title": "Source traceability",
+      "summary": "Follow the implementation files, evidence and tests behind each reference section.",
+      "aliases": [
+        "source code matrix",
+        "verification links"
+      ],
+      "related": [
+        "verification-and-tests",
+        "interfaces-and-troubleshooting"
+      ],
+      "guides": [
+        "read-your-estimate"
+      ]
+    },
+    {
+      "id": "documentation-maintenance",
+      "file": "maintenance.md",
+      "title": "Maintaining the technical documentation",
+      "summary": "Maintain links, references, examples and contributor checks.",
+      "aliases": [
+        "authoring",
+        "documentation checks"
+      ],
+      "related": [
+        "source-traceability",
+        "contributing"
+      ],
+      "guides": [
+        "quickstart"
+      ]
+    },
+    {
+      "id": "product-language",
+      "file": "../31-product-language.md",
+      "title": "Product language guide",
+      "summary": "Use the Studio's British English conventions, financial terms and warning patterns.",
+      "aliases": [
+        "editorial",
+        "copy terminology"
+      ],
+      "related": [
+        "documentation-maintenance",
+        "ledger-methodology"
+      ],
+      "guides": [
+        "read-your-estimate"
+      ]
+    },
+    {
+      "id": "contributing",
+      "file": "../../CONTRIBUTING.md",
+      "title": "Contributing",
+      "summary": "Prepare a contribution with reviewed evidence and appropriate tests.",
+      "aliases": [
+        "contributor workflow",
+        "pull requests"
+      ],
+      "related": [
+        "documentation-maintenance",
+        "verification-and-tests"
+      ],
+      "guides": [
+        "quickstart"
+      ]
+    }
   ]
 }

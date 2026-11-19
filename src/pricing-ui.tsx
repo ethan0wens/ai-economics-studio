@@ -125,7 +125,7 @@ export function Lines({ lines, env, update, compact = false, checkedAt, focusLin
         {line.entitledCredits && <p>{line.entitledCredits} credits reconciled under the customer-declared allowance before pack allocation.</p>}
         <dl className="rate-grid">{bases.map(basis => <div key={basis}><dt>{basisNames[basis]}</dt><dd>{formatMoney(line.amounts[basis], env.currency)}</dd>
           <small>{line.rates[basis] === null ? 'Rate unavailable' : `${line.currency} ${line.rates[basis]} ${line.source?.tiers ? 'blended per billed unit' : 'per billed unit'}`}</small></div>)}</dl>
-        {line.source && <p><a href={line.source.source} target="_blank" rel="noreferrer">{line.source.verification === 'azure-retail-api' ? 'Azure Retail Prices API' : 'Microsoft published offer'}</a>
+        {line.source && <p><a href={line.source.source} target="_blank" rel="noreferrer" aria-description="External Microsoft evidence">{line.source.verification === 'azure-retail-api' ? 'Azure Retail Prices API' : 'Microsoft published offer'}</a>
           {line.source.review ? ` · reviewed ${line.source.review.checkedAt.slice(0, 10)}. ${line.source.review.terms}` : ` · source effective ${line.source.effectiveAt.slice(0, 10)} · verified ${checkedAt?.slice(0, 10) ?? 'date unavailable'}`}</p>}
         {line.source && <details className="price-more">
           <summary>Advanced meter details</summary>

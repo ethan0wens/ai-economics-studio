@@ -2,6 +2,8 @@
 
 Source links use stable files and list the maintained symbols. Use the linked tests, fixtures and dated evidence to verify the claim in context. Generate this table from sources.json using the documentation index command.
 
+## Implementation and verification matrix
+
 | Topic | Technical articles | Implementation and evidence | Verification |
 | --- | --- | --- | --- |
 | Workspace ownership, graph and local exports | [System architecture and trust boundaries](01-system-architecture.md) · [From workspace changes to exports](01-workspace-flow.md) | [src/app.tsx](../../src/app.tsx) (`App`) · [src/navigation.ts](../../src/navigation.ts) (`currentRoute`, `technicalHref`) · [src/graph.ts](../../src/graph.ts) (`logicalGraph`) · [src/report.ts](../../src/report.ts) (`report`) | [tests/e2e/studio.spec.ts](../../tests/e2e/studio.spec.ts) · [tests/e2e/guided.spec.ts](../../tests/e2e/guided.spec.ts) · [tests/e2e/enterprise.spec.ts](../../tests/e2e/enterprise.spec.ts) |

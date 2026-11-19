@@ -32,4 +32,4 @@ The [ledger suite](../../tests/ledger.test.ts) exercises discount and current ve
 
 ## Security and accessibility verification
 
-Browser coverage exercises keyboard controls, modal focus, narrow layouts, explicit import/export and customer-data boundaries. Accessible names and scrollable code/table regions help users navigate at small widths. Targeted checks cover the most important paths. Service-side metadata, full browser compatibility, complete WCAG conformance and external security audit remain independent concerns. See [known limitations](07-limitations.md) and [acceptance policy](../09-acceptance-and-release.md).
+Browser coverage exercises keyboard controls, modal focus, narrow layouts, explicit import/export and customer-data boundaries. Accessible names and scrollable code/table regions help users navigate at small widths. Targeted checks cover the most important paths. Service-side metadata, full browser compatibility, complete WCAG conformance and external security audit remain independent concerns. See [known limitations](07-limitations.md) and [production verification](06-build-and-deploy.md#production-verification).

@@ -55,7 +55,7 @@ export function Reference({ kind, catalogue }: { kind: Article['reference']; cat
         <thead><tr><th scope="col">Model and version</th><th scope="col">Mode and actual region</th><th scope="col">Status</th></tr></thead>
         <tbody>{cells.slice(0, 20).map(row => <tr key={`${row.model}|${row.version}|${row.sku}|${row.region}`}>
           <th scope="row">{row.model} · {row.version}</th><td>{row.sku} · {regionName(row.region)}</td>
-          <td><a href={row.source} target="_blank" rel="noreferrer">{compatibilityLabels[row.status]}</a><br /><small>Reviewed {row.reviewed}</small></td></tr>)}</tbody></table></div>}
+          <td><a href={row.source} target="_blank" rel="noreferrer" aria-description="External Microsoft evidence">{compatibilityLabels[row.status]}</a><br /><small>Reviewed {row.reviewed}</small></td></tr>)}</tbody></table></div>}
     </section>;
   }
   return <section className="doc-reference"><h2>Public pricing coverage</h2>{stamp}<p>{data.records} published price records.</p>
@@ -119,8 +119,8 @@ function UserDocumentation({ item, section, catalogue, hasWorkspace, back }: {
     </section>)}
     {article.reference && <Reference key={article.id} kind={article.reference} catalogue={catalogue} />}
     {article.tool && <a className="button primary" href={routeHref(article.tool.page, article.tool.item)}>{article.tool.label}</a>}
-    {article.sources && <section className="doc-section"><h2>Microsoft sources</h2><ul>{article.sources.map(([label, href]) =>
-      <li key={href}><a href={href} target="_blank" rel="noreferrer">{label}</a></li>)}</ul></section>}
+    {article.sources && <section className="doc-section"><h2>External Microsoft sources</h2><ul>{article.sources.map(([label, href]) =>
+      <li key={href}><a href={href} target="_blank" rel="noreferrer" aria-description="External Microsoft evidence">{label}</a></li>)}</ul></section>}
     <section className="doc-section"><h2>Related articles</h2><ul>{article.related.map(id => <li key={id}>
       <a href={routeHref('documentation', id)}>{articles.find(item => item.id === id)?.title}</a></li>)}</ul></section>
     <RelatedTechnical guide={article.id} />
@@ -161,6 +161,6 @@ function UserDocumentation({ item, section, catalogue, hasWorkspace, back }: {
           <ul>{articles.filter(article => article.topic === topic).map(article =>
             <li key={article.id}><a href={routeHref('documentation', article.id)}>{article.title}</a></li>)}</ul></details>)}</div></section>
     </>}
-    <div className="doc-meta"><span>{documentationVersion}</span><a href="https://github.com/ethan0wens/ai-economics-studio" target="_blank" rel="noreferrer">Project and sources</a></div>
+    <div className="doc-meta"><span>{documentationVersion}</span><a href="https://github.com/ethan0wens/ai-economics-studio" target="_blank" rel="noreferrer">Source repository on GitHub</a></div>
   </div>;
 }

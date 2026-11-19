@@ -10,7 +10,7 @@ import { LearnMore } from './learn-more';
 import { linkedObject } from './guided-state';
 import { costExplanation, regionName } from './presentation';
 
-export type EditTarget = { id: string; field?: FieldId; section?: 'Configuration' | 'Usage' | 'Dependencies' | 'Costs'; line?: string };
+export type EditTarget = { id: string; field?: FieldId; section?: 'Configuration' | 'Usage' | 'Dependencies' | 'Costs'; level?: 'Essential' | 'Detailed' | 'Advanced'; line?: string };
 
 const actions: Partial<Record<FieldId, string>> = {
   executions: 'Enter how often the agent will run each month', calls: 'Enter model requests per run',
@@ -128,7 +128,7 @@ export function EstimateReadiness({ env, result, edit }: { env: Environment; res
     <li key={`${item.key}:${index}`}><div>
       <strong>{item.title}</strong><p className="muted">{item.name}{item.status ? ` · ${item.status}` : ''}</p>
       {item.detail && <p>{item.detail}</p>}
-      {item.source && <a href={item.source} target="_blank" rel="noreferrer">Microsoft evidence{item.date ? ` · reviewed ${item.date}` : ''}</a>}
+      {item.source && <a href={item.source} target="_blank" rel="noreferrer" aria-description="External Microsoft evidence">Microsoft evidence{item.date ? ` · reviewed ${item.date}` : ''}</a>}
     </div><button className="button" onClick={() => edit(item.target)} aria-label={`Resolve ${item.title.toLowerCase()} for ${item.name}`}>
       Review <ArrowRight size={15} aria-hidden="true" /></button></li>)}</ul>;
   return <section className="panel padded readiness" aria-labelledby="readiness-title">

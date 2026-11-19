@@ -7,7 +7,8 @@ import { z } from 'zod';
 import { articles as guides } from '../src/documentation-content';
 import { importEnvironment } from '../src/domain';
 import { currentRoute } from '../src/navigation';
-import { documentLocation, headingId, slug, technicalArticle, technicalEntries, technicalLink, technicalSections } from '../src/technical-content';
+import { documentationHref, guides as contextualGuides, helpTopics } from '../src/help-links';
+import { documentLocation, headingId, slug, supportingReferences, technicalArticle, technicalEntries, technicalLink, technicalSections } from '../src/technical-content';
 import { environmentReference, verificationCommands } from '../src/technical-reference';
 import matrix from '../docs/technical/sources.json' with { type: 'json' };
 
@@ -39,9 +40,7 @@ function indexMarkdown() {
       ...section.articles.map(article => `- [${article.title}](${article.file}). ${article.summary}`), '',
     ]),
     '## Maintaining this reference', '',
-    '- [Documentation audit](audit.md)',
-    '- [Source traceability matrix](traceability.md)',
-    '- [Documentation maintenance](maintenance.md)', '',
+    ...supportingReferences.map(entry => `- [${entry.title}](${entry.file}). ${entry.summary}`), '',
   ].join('\n');
 }
 function traceabilityMarkdown() {
@@ -49,6 +48,7 @@ function traceabilityMarkdown() {
   return [
     '# Source traceability', '',
     'Source links use stable files and list the maintained symbols. Use the linked tests, fixtures and dated evidence to verify the claim in context. Generate this table from sources.json using the documentation index command.', '',
+    '## Implementation and verification matrix', '',
     '| Topic | Technical articles | Implementation and evidence | Verification |', '| --- | --- | --- | --- |',
     ...rows.map(row => {
       const sources = Object.entries(row.sources).map(([path, symbols]) => `[${path}](../../${path})${symbols.length ? ' (' + symbols.map(name => `\`${name}\``).join(', ') + ')' : ''}`);
@@ -65,25 +65,27 @@ export async function validateTechnicalDocs() {
   const guideByID = new Map(guides.map(guide => [guide.id, guide]));
   const sections = new Set(technicalSections.map(section => section.id));
   const names = await readdir(pathInRepo(folder));
-  const markdownFiles = names.filter(name => /^0.*\.md$/.test(name));
+  const markdownFiles = names.filter(name => name !== 'README.md' && name.endsWith('.md'));
   if (sections.size !== technicalSections.length || byID.size !== articles.length ||
-    byFile.size !== articles.length || articles.length !== markdownFiles.length || byID.has('technical') ||
+    byFile.size !== articles.length || articles.filter(article => !article.file.startsWith('../')).length !== markdownFiles.length || byID.has('technical') ||
     guideByID.has('technical') || [...byID.keys()].some(id => sections.has(id)) ||
     technicalSections.some((section, index) => section.articles.some(article => !article.file.startsWith(`0${index + 1}-`))) ||
     markdownFiles.some(name => !byFile.has(name))) throw new Error('Technical navigation and Markdown files disagree.');
 
   async function validateLink(href: string, source: string) {
-    const rendered = technicalLink(href, source);
-    if (!rendered || !href.trim()) throw new Error(`Invalid documentation source in ${source}: ${href}`);
+    const link = technicalLink(href, source);
+    if (!link) throw new Error(`Unregistered documentation link or unsupported source in ${source}: ${href}`);
+    const rendered = link.href;
     const base = documentLocation(source);
     const url = new URL(href, base);
     if (rendered.startsWith('#/documentation')) {
       const route = currentRoute(rendered);
+      if (route.page !== 'documentation') throw new Error(`Invalid Documentation route in ${source}: ${href}`);
       if (route.item === 'technical') {
         const article = route.technicalArticle && byID.get(route.technicalArticle);
         if ((route.technicalArticle && !article) ||
           (route.section && !(article ? article.headings.some(heading => heading.id === route.section) ||
-            (route.section === 'generated-reference' && article.reference) : sections.has(route.section)))) {
+            (route.section === 'generated-reference' && article.reference) : sections.has(route.section) || route.section === 'supporting'))) {
           throw new Error(`Broken technical link in ${source}: ${href}`);
         }
       } else {
@@ -94,7 +96,7 @@ export async function validateTechnicalDocs() {
         }
       }
     }
-    if (url.origin !== base.origin) return;
+    if (href.startsWith('#/') || url.origin !== base.origin) return;
     const path = decodeURIComponent(url.pathname).slice(1);
     const contents = await file(path);
     if (url.hash && path.endsWith('.md')) {
@@ -104,10 +106,14 @@ export async function validateTechnicalDocs() {
     }
   }
 
+  for (const [key, link] of [...Object.entries(helpTopics), ...Object.entries(contextualGuides)]) {
+    await validateLink(documentationHref(link), `help registry (${key})`);
+  }
+
   let diagramCount = 0;
   for (const article of articles) {
     const headings = article.headings.map(heading => heading.id);
-    if (headings.length < 2 || new Set(headings).size !== headings.length || headings.includes('generated-reference') ||
+    if (headings.length < (article.section === 'supporting' ? 1 : 2) || new Set(headings).size !== headings.length || headings.includes('generated-reference') ||
       article.headings.some(heading => !slug.test(heading.id) || ![2, 3].includes(heading.depth)) ||
       new Set(article.related).size !== article.related.length || new Set(article.guides).size !== article.guides.length ||
       article.related.some(id => id === article.id || !byID.has(id)) || article.guides.some(id => !guideByID.has(id))) {
@@ -144,7 +150,7 @@ export async function validateTechnicalDocs() {
     await validateLink(`examples/${name}`, '02-relationships-and-files.md');
   }
   const covered = new Set(rows.flatMap(row => row.articles));
-  if (covered.size !== byID.size || [...covered].some(id => !byID.has(id))) throw new Error('The traceability matrix must cover every technical article.');
+  if (covered.size !== articles.length - supportingReferences.length || [...covered].some(id => !byID.has(id) || byID.get(id)?.section === 'supporting')) throw new Error('The traceability matrix must cover every technical article.');
   for (const row of rows) {
     for (const [path, symbols] of Object.entries(row.sources)) {
       const contents = await file(path);

@@ -5,6 +5,7 @@ import { applicableOffering, copilotPack, offeringMeter, offerings, type Compone
 import { microsoft } from './microsoft';
 import { technical } from './compatibility';
 import { licensing, type LicensingFinding } from './entitlements';
+import { deployedIdentity, reservationPlan, type Usage } from './provisioned';
 
 const Money = Decimal.clone({ precision: 50, rounding: Decimal.ROUND_HALF_UP });
 const zero = () => new Money(0);
@@ -41,7 +42,12 @@ export type Line = {
   id: string; objectId: string; pricingOwner: string; object: string; category: Category; component: string; fixed: boolean;
   meter?: Meter; quantity: string | null; currency: string; amounts: Values; rates: Values;
   source?: RetailRecord; status: string; reason?: string; agreement?: Override; scenario: number;
+  retailQuantity?: string;
   allocatesTo: string[]; includedCredits?: string; entitledCredits?: string; allocation?: { agentId: string; amount: string }[];
+};
+export type CapacityComparison = {
+  id: string; name: string; current: string | null; payg: string | null; difference: string | null;
+  offering: string; reason?: string; detail?: string; sources: RetailRecord[];
 };
 
 export function summarize(lines: Line[], code = 'GBP') {
@@ -61,6 +67,7 @@ export function formatMoney(value: string | null, currency: string) {
 
 export function ledger(env: Environment, records: RetailRecord[], at = new Date().toISOString(), inventory: readonly Offering[] = offerings) {
   const lines: Line[] = [];
+  const capacityComparisons: CapacityComparison[] = [];
   const issues: { id: string; message: string }[] = [];
   const objects = new Map(env.objects.map(item => [item.id, item]));
   const code = env.currency;
@@ -75,6 +82,7 @@ export function ledger(env: Environment, records: RetailRecord[], at = new Date(
     meter?: Meter; quantity?: Decimal | number; reason?: string; fixed?: boolean; existing?: boolean;
     owner?: string; allocatesTo?: string[]; allowRetail?: boolean;
     offer?: Offering; componentId?: Component; includedCredits?: Decimal; entitledCredits?: Decimal;
+    retailQuantity?: Decimal; reservedUsage?: boolean;
   } = {}) => {
     const { meter, quantity, reason, fixed = false, existing, owner = object.id, allocatesTo = [], allowRetail = false, offer, componentId, includedCredits, entitledCredits } = options;
     const matches = (rule: {meter: Meter}) => meter && meterKey(rule.meter) === meterKey(meter);
@@ -94,15 +102,17 @@ export function ledger(env: Environment, records: RetailRecord[], at = new Date(
       ? graduatedAmount(quantity, source).times(source.quantityPerUnit).div(quantity).toFixed() : source?.price;
     const rate = financialRates(blended, agreement, scenario, exception?.applyToFixed ?? env.forecast.applyToFixed);
     const fullyCovered = ((includedCredits?.gt(0) || entitledCredits?.gt(0)) ?? false) && quantity !== undefined && new Money(quantity).isZero();
-    const amounts = (value: Decimal | null) => value === null || quantity === undefined || !meter ? null : new Money(quantity).div(meter.quantityPerUnit).times(value).toFixed(digits);
-    const retail = existing ? zero().toFixed(digits) : amounts(rate.baseline);
-    const current = existing || fullyCovered ? zero().toFixed(digits) : amounts(rate.current);
-    const forecast = existing || fullyCovered ? zero().toFixed(digits) : amounts(rate.future);
+    const amounts = (value: Decimal | null, units = quantity) => value === null || units === undefined || !meter ? null : new Money(units).div(meter.quantityPerUnit).times(value).toFixed(digits);
+    const reserved = options.reservedUsage && quantity !== undefined && new Money(quantity).isZero();
+    const retail = existing ? zero().toFixed(digits) : amounts(rate.baseline, options.retailQuantity);
+    const current = existing || fullyCovered || reserved ? zero().toFixed(digits) : amounts(rate.current);
+    const forecast = existing || fullyCovered || reserved ? zero().toFixed(digits) : amounts(rate.future);
     lines.push({
       id: `${object.id}:${component}`, objectId: object.id, pricingOwner: owner, object: object.name, category, component, meter, fixed,
       quantity: quantity?.toString() ?? null, currency: code, amounts: { retail, current, forecast },
+      retailQuantity: options.retailQuantity?.toFixed(),
       rates: { retail: rate.baseline?.toFixed() ?? null, current: existing ? '0' : rate.current?.toFixed() ?? null, forecast: existing ? '0' : rate.future?.toFixed() ?? null },
-      status: existing ? 'Already owned' : fullyCovered ? entitledCredits?.gt(0) ? 'Covered by declared entitlement or packs' : 'Covered by linked packs' : current === null ? 'Unknown' : agreement?.mode === 'intentional-zero' ? 'Intentional zero' : agreement?.mode && agreement.mode !== 'retail' ? 'User agreement' : 'Microsoft retail',
+      status: existing ? 'Already owned' : reserved ? 'Covered by declared reservation' : fullyCovered ? entitledCredits?.gt(0) ? 'Covered by declared entitlement or packs' : 'Covered by linked packs' : current === null ? 'Unknown' : agreement?.mode === 'intentional-zero' ? 'Intentional zero' : agreement?.mode && agreement.mode !== 'retail' ? 'User agreement' : 'Microsoft retail',
       reason: reason ?? (current === null ? (quantity === undefined ? 'Enter monthly usage.' : 'No current verified rate matches this configuration. Review the catalogue or enter an evidenced contract amount.') : undefined),
       source, agreement, scenario, allocatesTo, includedCredits: includedCredits?.toFixed(), entitledCredits: entitledCredits?.toFixed(),
     });
@@ -179,6 +189,14 @@ export function ledger(env: Environment, records: RetailRecord[], at = new Date(
 
   const deploymentBlocked = (id: string) => technicalFindings.some(finding => finding.id === id && finding.status === 'incompatible');
   const usageReferences = new Map<string, number>();
+  const reservationReferences = new Map<string, number>();
+  for (const object of env.objects) {
+    if (object.kind !== 'model-deployment' || object.mode !== 'provisioned') continue;
+    const reference = object.reservation?.reference?.toLowerCase();
+    if (reference && reservationPlan(object, object.region ?? env.region, code, at).state !== 'inactive') {
+      reservationReferences.set(reference, (reservationReferences.get(reference) ?? 0) + 1);
+    }
+  }
   for (const edge of env.relationships) {
     if (edge.type === 'agent-uses-usage') usageReferences.set(edge.to, (usageReferences.get(edge.to) ?? 0) + 1);
   }
@@ -264,6 +282,7 @@ export function ledger(env: Environment, records: RetailRecord[], at = new Date(
         }
         if (object.mode === 'provisioned') {
           const shares = new Map<string, Decimal>();
+          const profiles = new Map<string, Usage>();
           const linked = env.relationships.filter(edge => ['agent-uses-deployment', 'agent-uses-prompt-model'].includes(edge.type) &&
             edge.to === object.id && objects.get(edge.from)?.kind === 'agent');
           const agents = linked.flatMap(edge => {
@@ -274,6 +293,7 @@ export function ledger(env: Environment, records: RetailRecord[], at = new Date(
               !technicalFindings.some(finding => finding.id === agent.id && finding.related === object.id && finding.status === 'incompatible');
             if (!foundry && !prompt) return [];
             const { profile: usage, duplicate } = usageFor(agent.id);
+            if (usage) profiles.set(agent.id, usage);
             if (duplicate && object.allocationBasis) note(agent.id, 'Use one profile per agent to allocate shared provisioned cost by input tokens.');
             if (usage && usage.executions !== undefined && usage.calls !== undefined && usage.input !== undefined) {
               shares.set(agent.id, new Money(usage.executions).times(usage.calls).times(Money.sum(usage.input, usage.cachedInput ?? 0)).times(new Money(usage.retries ?? 0).div(100).plus(1)));
@@ -285,14 +305,36 @@ export function ledger(env: Environment, records: RetailRecord[], at = new Date(
           const region = object.region ?? env.region;
           const custom = assumedMeter(`model-capacity${object.modelVersion ? ':' + object.modelVersion : ''}`, sku, region, 'capacity-unit hour');
           const manual = object.capacityMeter;
+          const first = lines.length;
+          const invalid = technicalFindings.find(finding => finding.id === object.id && finding.status === 'incompatible');
+          const full = invalid || object.capacity === undefined || object.billableHours === undefined
+            ? undefined : new Money(object.capacity).times(object.billableHours);
+          const reference = object.reservation?.reference?.toLowerCase();
+          const plan = reservationPlan(object, region, code, at);
+          const reservation = reference && (reservationReferences.get(reference) ?? 0) > 1 && plan.state !== 'inactive'
+            ? { state: 'unresolved' as const, reason: 'This reservation allocation reference appears on multiple deployments. Declare disjoint allocations before applying coverage.' }
+            : plan;
+          const uncovered = reservation.state === 'active' ? full?.minus(reservation.covered) : reservation.state === 'unresolved' ? undefined : full;
           bill(object, 'Inference', 'Shared provisioned capacity', {
             meter: (offer && offeringMeter(offer, 'capacity')) ?? (manual?.sku === sku && manual.region === region && !object.offeringId ? manual : custom),
-            quantity: object.capacity === undefined || object.billableHours === undefined ? undefined : new Money(object.capacity).times(object.billableHours),
+            quantity: uncovered, retailQuantity: reservation.state === 'active' || reservation.state === 'unresolved' ? full : undefined,
+            reservedUsage: reservation.state === 'active',
+            reason: invalid?.detail ?? ('reason' in reservation ? reservation.reason : reservation.state === 'active' ? 'Current quantity is the uncovered PTU-hours. Retail compares the same deployment without a reservation.' : undefined),
             fixed: true, allocatesTo: agents, offer, componentId: 'capacity',
           });
-          const line = lines.at(-1)!;
+          if (reservation.state === 'active' || reservation.state === 'unresolved') {
+            const amount = reservation.state === 'active' && !invalid ? reservation.monthly.toFixed(digits) : null;
+            lines.push({
+              id: `${object.id}:Provisioned reservation commitment`, objectId: object.id, object: object.name, pricingOwner: object.id,
+              category: 'Inference', component: 'Provisioned reservation commitment', fixed: true, currency: code,
+              quantity: amount === null ? null : '1', amounts: { retail: zero().toFixed(digits), current: amount, forecast: amount },
+              rates: { retail: null, current: amount, forecast: amount }, status: amount === null ? 'Unknown' : 'Customer reservation',
+              reason: invalid?.detail ?? ('detail' in reservation ? reservation.detail : reservation.reason), scenario: 0, allocatesTo: agents,
+            });
+          }
+          const charges = lines.slice(first);
           const total = agents.reduce((sum, agent) => sum.plus(shares.get(agent) ?? 0), zero());
-          if (object.allocationBasis && line.amounts.current !== null && agents.every(agent => shares.has(agent)) && total.gt(0)) {
+          for (const line of charges) if (object.allocationBasis && line.amounts.current !== null && agents.every(agent => shares.has(agent)) && total.gt(0)) {
             let cumulative = zero();
             let allocated = zero();
             line.allocation = agents.map(agentId => {
@@ -302,6 +344,48 @@ export function ledger(env: Environment, records: RetailRecord[], at = new Date(
               allocated = rounded;
               return { agentId, amount };
             });
+          }
+          if (object.comparisonOfferingId) {
+            const target = inventory.find(item => item.id === object.comparisonOfferingId);
+            const identity = deployedIdentity(object);
+            const current = charges.some(line => line.amounts.current === null) ? null : summarize(charges, code).current.known;
+            const comparison: CapacityComparison = { id: object.id, name: object.name, current, payg: null, difference: null,
+              offering: target?.name ?? 'Unavailable tariff', sources: [] };
+            const demand = { requests: zero(), input: zero(), cached: zero(), output: zero() };
+            if (target?.kind !== 'model-deployment' || target.model.mode !== 'payg' || target.selectable === false ||
+                target.model.id.toLowerCase() !== identity.model || target.model.version !== identity.version || target.currency !== code) {
+              comparison.reason = 'Select a PAYG tariff for the same exact model and version in the environment currency.';
+            } else if (!agents.length || agents.some(id => {
+              const profile = profiles.get(id);
+              return !profile || profile.executions === undefined || profile.calls === undefined || profile.input === undefined || profile.output === undefined;
+            })) comparison.reason = 'Provide one complete and distinct monthly usage profile per linked agent.';
+            else {
+              const workloads = [...profiles.values()].map(profile => {
+                const requests = new Money(profile.executions!).times(profile.calls!).times(new Money(profile.retries ?? 0).div(100).plus(1));
+                return { requests, input: requests.times(profile.input!), cached: requests.times(profile.cachedInput ?? 0), output: requests.times(profile.output!) };
+              });
+              for (const workload of workloads) {
+                const { requests } = workload;
+                demand.requests = demand.requests.plus(requests);
+                demand.input = demand.input.plus(workload.input);
+                demand.cached = demand.cached.plus(workload.cached);
+                demand.output = demand.output.plus(workload.output);
+              }
+              const amounts = (['input', 'cached', 'output'] as const).flatMap(component => {
+                if (component === 'cached' && demand.cached.isZero()) return [];
+                const rate = resolveOffering(records, target, component, code, at);
+                if (!rate) return [null];
+                comparison.sources.push(rate);
+                return workloads.map(workload => graduatedAmount(workload[component], rate).toDecimalPlaces(digits));
+              });
+              comparison.detail = `${demand.requests.toFixed()} requests per month · ${demand.input.toFixed()} uncached input tokens · ${demand.cached.toFixed()} cached input tokens · ${demand.output.toFixed()} output tokens · Peak input/output TPM ${object.peakInputTpm ?? 'unverified'}/${object.peakOutputTpm ?? 'unverified'}. Tariff billing region ${target.region}.`;
+              if (amounts.some(value => value === null)) comparison.reason = 'The alternative lacks a current verified rate for one or more required token components.';
+              else {
+                comparison.payg = Money.sum(...amounts as Decimal[]).toFixed(digits);
+                comparison.difference = current === null ? null : new Money(current).minus(comparison.payg).toFixed(digits);
+              }
+            }
+            capacityComparisons.push(comparison);
           }
         }
         break;
@@ -365,7 +449,7 @@ export function ledger(env: Environment, records: RetailRecord[], at = new Date(
     proposed: asTotal(retained.plus(incremental.known), licencePlan.retainedMissing + incremental.incomplete),
     proposedEnvironment: asTotal(retained.plus(summary.current.known), licencePlan.retainedMissing + summary.current.incomplete),
   };
-  return { lines, summary, issues, technicalFindings, licensingFindings, licenceEstate, assessedAt: at };
+  return { lines, summary, issues, technicalFindings, licensingFindings, licenceEstate, capacityComparisons, assessedAt: at };
 }
 export type Ledger = ReturnType<typeof ledger>;
 

@@ -62,6 +62,12 @@ test('every registered field is reachable with an accessible help trigger', asyn
     if (['agent', 'model-deployment'].includes(object.kind)) {
       await inspector.getByRole('button', { name: 'Usage', exact: true }).click();
       await inspect();
+      if (object.id === 'model' && object.kind === 'model-deployment') {
+        const toggle = inspector.getByLabel('Apply a customer reservation', { exact: true });
+        await toggle.check();
+        await inspect();
+        await toggle.uncheck();
+      }
       if (object.id === 'copilot') {
         await inspector.getByLabel('Copilot credit input method', { exact: true }).selectOption('breakdown');
         await inspector.getByLabel('Apply declared included usage', { exact: true }).check();

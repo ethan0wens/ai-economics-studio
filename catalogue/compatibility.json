@@ -51,630 +51,225 @@
         "responses",
         "function-calling"
       ]
+    },
+    {
+      "id": "gpt-5-2025-08-07-features",
+      "status": "compatible",
+      "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
+      "condition": "Microsoft documents the following capabilities at the model version level. Agent and feature-specific API requirements are separate.",
+      "verifiedOn": "2026-11-19",
+      "reviewBy": "2027-01-17",
+      "models": [
+        "gpt-5"
+      ],
+      "version": "2025-08-07",
+      "input": [
+        "text",
+        "image"
+      ],
+      "output": [
+        "text"
+      ],
+      "features": [
+        "chat-completions",
+        "responses",
+        "structured-outputs",
+        "function-calling"
+      ]
+    },
+    {
+      "id": "gpt-5-mini-2025-08-07-features",
+      "status": "compatible",
+      "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
+      "condition": "Microsoft documents the following capabilities at the model version level. Agent and feature-specific API requirements are separate.",
+      "verifiedOn": "2026-11-19",
+      "reviewBy": "2027-01-17",
+      "models": [
+        "gpt-5-mini"
+      ],
+      "version": "2025-08-07",
+      "input": [
+        "text",
+        "image"
+      ],
+      "output": [
+        "text"
+      ],
+      "features": [
+        "chat-completions",
+        "responses",
+        "structured-outputs",
+        "function-calling"
+      ]
+    },
+    {
+      "id": "gpt-5-nano-2025-08-07-features",
+      "status": "compatible",
+      "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
+      "condition": "Microsoft documents the following capabilities at the model version level. Agent and feature-specific API requirements are separate.",
+      "verifiedOn": "2026-11-19",
+      "reviewBy": "2027-01-17",
+      "models": [
+        "gpt-5-nano"
+      ],
+      "version": "2025-08-07",
+      "input": [
+        "text",
+        "image"
+      ],
+      "output": [
+        "text"
+      ],
+      "features": [
+        "chat-completions",
+        "responses",
+        "structured-outputs",
+        "function-calling"
+      ]
+    },
+    {
+      "id": "gpt-4o-mini-transcribe-2025-03-20-features",
+      "status": "compatible",
+      "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
+      "condition": "Microsoft documents the following capabilities at the model version level. Agent and feature-specific API requirements are separate.",
+      "verifiedOn": "2026-11-19",
+      "reviewBy": "2027-01-17",
+      "models": [
+        "gpt-4o-mini-transcribe"
+      ],
+      "version": "2025-03-20",
+      "input": [
+        "audio"
+      ],
+      "output": [
+        "text"
+      ],
+      "features": [
+        "audio-transcriptions"
+      ]
+    },
+    {
+      "id": "gpt-4o-mini-transcribe-2025-12-15-features",
+      "status": "compatible",
+      "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
+      "condition": "Microsoft documents the following capabilities at the model version level. Agent and feature-specific API requirements are separate.",
+      "verifiedOn": "2026-11-19",
+      "reviewBy": "2027-01-17",
+      "models": [
+        "gpt-4o-mini-transcribe"
+      ],
+      "version": "2025-12-15",
+      "input": [
+        "audio"
+      ],
+      "output": [
+        "text"
+      ],
+      "features": [
+        "audio-transcriptions"
+      ]
+    },
+    {
+      "id": "text-embedding-3-small-1-features",
+      "status": "compatible",
+      "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
+      "condition": "Microsoft documents the following capabilities at the model version level. Agent and feature-specific API requirements are separate.",
+      "verifiedOn": "2026-11-19",
+      "reviewBy": "2027-01-17",
+      "models": [
+        "text-embedding-3-small"
+      ],
+      "version": "1",
+      "input": [
+        "text"
+      ],
+      "output": [
+        "embedding"
+      ],
+      "features": [
+        "embeddings"
+      ]
+    },
+    {
+      "id": "text-embedding-3-large-1-features",
+      "status": "compatible",
+      "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
+      "condition": "Microsoft documents the following capabilities at the model version level. Agent and feature-specific API requirements are separate.",
+      "verifiedOn": "2026-11-19",
+      "reviewBy": "2027-01-17",
+      "models": [
+        "text-embedding-3-large"
+      ],
+      "version": "1",
+      "input": [
+        "text"
+      ],
+      "output": [
+        "embedding"
+      ],
+      "features": [
+        "embeddings"
+      ]
+    },
+    {
+      "id": "gpt-5.4-2026-03-05-features",
+      "status": "compatible",
+      "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
+      "condition": "Microsoft documents text and image processing, function calling, structured outputs and the supported APIs for this exact version. Agent support is separate.",
+      "verifiedOn": "2026-11-19",
+      "reviewBy": "2027-01-17",
+      "models": [
+        "gpt-5.4"
+      ],
+      "version": "2026-03-05",
+      "input": [
+        "text",
+        "image"
+      ],
+      "output": [
+        "text"
+      ],
+      "features": [
+        "chat-completions",
+        "responses",
+        "structured-outputs",
+        "function-calling"
+      ]
+    },
+    {
+      "id": "gpt-5.4-mini-2026-03-17-features",
+      "status": "compatible",
+      "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
+      "condition": "Microsoft documents text and image processing, function calling, structured outputs and the supported APIs for this exact version. Agent support is separate.",
+      "verifiedOn": "2026-11-19",
+      "reviewBy": "2027-01-17",
+      "models": [
+        "gpt-5.4-mini"
+      ],
+      "version": "2026-03-17",
+      "input": [
+        "text",
+        "image"
+      ],
+      "output": [
+        "text"
+      ],
+      "features": [
+        "chat-completions",
+        "responses",
+        "structured-outputs",
+        "function-calling"
+      ]
     }
   ],
   "regions": [
     {
-      "id": "gpt41-global",
-      "status": "compatible",
-      "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#global-standard",
-      "condition": "Microsoft lists this model version and deployment SKU in the selected resource region. Verify customer quota and capacity before deployment.",
-      "verifiedOn": "2026-11-19",
-      "reviewBy": "2027-01-17",
-      "models": [
-        "gpt-4.1",
-        "gpt-4.1-mini",
-        "gpt-4.1-nano"
-      ],
-      "version": "2025-04-14",
-      "sku": "GlobalStandard",
-      "regions": [
-        "eastus2",
-        "uksouth",
-        "westeurope"
-      ]
-    },
-    {
-      "id": "gpt4o-global-0513",
-      "status": "compatible",
-      "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#global-standard",
-      "condition": "Microsoft lists this model version and deployment SKU in the selected resource region. Verify customer quota and capacity before deployment.",
-      "verifiedOn": "2026-11-19",
-      "reviewBy": "2027-01-17",
-      "models": [
-        "gpt-4o"
-      ],
-      "version": "2024-05-13",
-      "sku": "GlobalStandard",
-      "regions": [
-        "eastus2",
-        "uksouth",
-        "westeurope"
-      ]
-    },
-    {
-      "id": "gpt4o-global-0806",
-      "status": "compatible",
-      "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#global-standard",
-      "condition": "Microsoft lists this model version and deployment SKU in the selected resource region. Verify customer quota and capacity before deployment.",
-      "verifiedOn": "2026-11-19",
-      "reviewBy": "2027-01-17",
-      "models": [
-        "gpt-4o"
-      ],
-      "version": "2024-08-06",
-      "sku": "GlobalStandard",
-      "regions": [
-        "eastus2",
-        "uksouth",
-        "westeurope"
-      ]
-    },
-    {
-      "id": "gpt4o-global-1120",
-      "status": "compatible",
-      "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#global-standard",
-      "condition": "Microsoft lists this model version and deployment SKU in the selected resource region. Verify customer quota and capacity before deployment.",
-      "verifiedOn": "2026-11-19",
-      "reviewBy": "2027-01-17",
-      "models": [
-        "gpt-4o"
-      ],
-      "version": "2024-11-20",
-      "sku": "GlobalStandard",
-      "regions": [
-        "eastus2",
-        "uksouth",
-        "westeurope"
-      ]
-    },
-    {
-      "id": "gpt4o-mini-global",
-      "status": "compatible",
-      "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#global-standard",
-      "condition": "Microsoft lists this model version and deployment SKU in the selected resource region. Verify customer quota and capacity before deployment.",
-      "verifiedOn": "2026-11-19",
-      "reviewBy": "2027-01-17",
-      "models": [
-        "gpt-4o-mini"
-      ],
-      "version": "2024-07-18",
-      "sku": "GlobalStandard",
-      "regions": [
-        "eastus2",
-        "uksouth",
-        "westeurope"
-      ]
-    },
-    {
-      "id": "gpt41-data-zone",
-      "status": "compatible",
-      "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#data-zone-standard",
-      "condition": "Microsoft lists the model/version, deployment SKU and resource region. Confirm the subscription’s model quota separately.",
-      "verifiedOn": "2026-11-19",
-      "reviewBy": "2027-01-17",
-      "models": [
-        "gpt-4.1",
-        "gpt-4.1-mini",
-        "gpt-4.1-nano"
-      ],
-      "version": "2025-04-14",
-      "sku": "DataZoneStandard",
-      "regions": [
-        "eastus2",
-        "westeurope"
-      ]
-    },
-    {
-      "id": "gpt41-global-provisioned",
-      "status": "conditional",
-      "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#global-provisioned-managed",
-      "condition": "Microsoft lists the model/version, deployment SKU and resource region. Confirm subscription quota and deployable capacity.",
-      "verifiedOn": "2026-11-19",
-      "reviewBy": "2027-01-17",
-      "models": [
-        "gpt-4.1",
-        "gpt-4.1-mini",
-        "gpt-4.1-nano"
-      ],
-      "version": "2025-04-14",
-      "sku": "GlobalProvisionedManaged",
-      "regions": [
-        "eastus2",
-        "uksouth",
-        "westeurope"
-      ]
-    },
-    {
-      "id": "gpt4o0513-data-zone",
-      "status": "compatible",
-      "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#data-zone-standard",
-      "condition": "Microsoft lists the model/version, deployment SKU and resource region. Confirm the subscription’s model quota separately.",
-      "verifiedOn": "2026-11-19",
-      "reviewBy": "2027-01-17",
-      "models": [
-        "gpt-4o"
-      ],
-      "version": "2024-05-13",
-      "sku": "DataZoneStandard",
-      "regions": [
-        "eastus2",
-        "westeurope"
-      ]
-    },
-    {
-      "id": "gpt4o0513-global-provisioned",
-      "status": "conditional",
-      "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#global-provisioned-managed",
-      "condition": "Microsoft lists the model/version, deployment SKU and resource region. Confirm subscription quota and deployable capacity.",
-      "verifiedOn": "2026-11-19",
-      "reviewBy": "2027-01-17",
-      "models": [
-        "gpt-4o"
-      ],
-      "version": "2024-05-13",
-      "sku": "GlobalProvisionedManaged",
-      "regions": [
-        "eastus2",
-        "uksouth",
-        "westeurope"
-      ]
-    },
-    {
-      "id": "gpt4o0806-data-zone",
-      "status": "compatible",
-      "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#data-zone-standard",
-      "condition": "Microsoft lists the model/version, deployment SKU and resource region. Confirm the subscription’s model quota separately.",
-      "verifiedOn": "2026-11-19",
-      "reviewBy": "2027-01-17",
-      "models": [
-        "gpt-4o"
-      ],
-      "version": "2024-08-06",
-      "sku": "DataZoneStandard",
-      "regions": [
-        "eastus2",
-        "westeurope"
-      ]
-    },
-    {
-      "id": "gpt4o0806-global-provisioned",
-      "status": "conditional",
-      "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#global-provisioned-managed",
-      "condition": "Microsoft lists the model/version, deployment SKU and resource region. Confirm subscription quota and deployable capacity.",
-      "verifiedOn": "2026-11-19",
-      "reviewBy": "2027-01-17",
-      "models": [
-        "gpt-4o"
-      ],
-      "version": "2024-08-06",
-      "sku": "GlobalProvisionedManaged",
-      "regions": [
-        "eastus2",
-        "uksouth",
-        "westeurope"
-      ]
-    },
-    {
-      "id": "gpt4o1120-data-zone",
-      "status": "compatible",
-      "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#data-zone-standard",
-      "condition": "Microsoft lists the model/version, deployment SKU and resource region. Confirm the subscription’s model quota separately.",
-      "verifiedOn": "2026-11-19",
-      "reviewBy": "2027-01-17",
-      "models": [
-        "gpt-4o"
-      ],
-      "version": "2024-11-20",
-      "sku": "DataZoneStandard",
-      "regions": [
-        "eastus2",
-        "westeurope"
-      ]
-    },
-    {
-      "id": "gpt4o1120-global-provisioned",
-      "status": "conditional",
-      "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#global-provisioned-managed",
-      "condition": "Microsoft lists the model/version, deployment SKU and resource region. Confirm subscription quota and deployable capacity.",
-      "verifiedOn": "2026-11-19",
-      "reviewBy": "2027-01-17",
-      "models": [
-        "gpt-4o"
-      ],
-      "version": "2024-11-20",
-      "sku": "GlobalProvisionedManaged",
-      "regions": [
-        "eastus2",
-        "uksouth",
-        "westeurope"
-      ]
-    },
-    {
-      "id": "gpt4omini-data-zone",
-      "status": "compatible",
-      "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#data-zone-standard",
-      "condition": "Microsoft lists the model/version, deployment SKU and resource region. Confirm the subscription’s model quota separately.",
-      "verifiedOn": "2026-11-19",
-      "reviewBy": "2027-01-17",
-      "models": [
-        "gpt-4o-mini"
-      ],
-      "version": "2024-07-18",
-      "sku": "DataZoneStandard",
-      "regions": [
-        "eastus2",
-        "westeurope"
-      ]
-    },
-    {
-      "id": "gpt4omini-global-provisioned",
-      "status": "conditional",
-      "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#global-provisioned-managed",
-      "condition": "Microsoft lists the model/version, deployment SKU and resource region. Confirm subscription quota and deployable capacity.",
-      "verifiedOn": "2026-11-19",
-      "reviewBy": "2027-01-17",
-      "models": [
-        "gpt-4o-mini"
-      ],
-      "version": "2024-07-18",
-      "sku": "GlobalProvisionedManaged",
-      "regions": [
-        "eastus2",
-        "uksouth",
-        "westeurope"
-      ]
-    },
-    {
-      "id": "deepseek32-global",
-      "status": "compatible",
-      "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#global-standard",
-      "condition": "Microsoft lists the model/version, deployment SKU and resource region. Confirm the subscription’s model quota separately.",
-      "verifiedOn": "2026-11-19",
-      "reviewBy": "2027-01-17",
-      "models": [
-        "deepseek-v3.2"
-      ],
-      "version": "1",
-      "sku": "GlobalStandard",
-      "regions": [
-        "eastus2",
-        "uksouth",
-        "westeurope"
-      ]
-    },
-    {
-      "id": "deepseek32-global-provisioned",
-      "status": "conditional",
-      "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#global-provisioned-managed",
-      "condition": "Microsoft lists the model/version, deployment SKU and resource region. Confirm subscription quota and deployable capacity.",
-      "verifiedOn": "2026-11-19",
-      "reviewBy": "2027-01-17",
-      "models": [
-        "deepseek-v3.2"
-      ],
-      "version": "1",
-      "sku": "GlobalProvisionedManaged",
-      "regions": [
-        "eastus2",
-        "uksouth",
-        "westeurope"
-      ]
-    },
-    {
-      "id": "gpt41-regional-east",
-      "status": "compatible",
-      "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#standardregional",
-      "condition": "Microsoft lists the model/version, deployment SKU and resource region. Confirm the subscription’s model quota separately.",
-      "verifiedOn": "2026-11-19",
-      "reviewBy": "2027-01-17",
-      "models": [
-        "gpt-4.1"
-      ],
-      "version": "2025-04-14",
-      "sku": "Standard",
-      "regions": [
-        "eastus2"
-      ]
-    },
-    {
-      "id": "gpt41-regional-europe",
-      "status": "incompatible",
-      "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#standardregional",
-      "condition": "Microsoft’s matrix marks this exact model version unavailable for this deployment SKU and region.",
-      "verifiedOn": "2026-11-19",
-      "reviewBy": "2027-01-17",
-      "models": [
-        "gpt-4.1"
-      ],
-      "version": "2025-04-14",
-      "sku": "Standard",
-      "regions": [
-        "uksouth",
-        "westeurope"
-      ]
-    },
-    {
-      "id": "gpt41-mini-regional",
-      "status": "compatible",
-      "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#standardregional",
-      "condition": "Microsoft lists the model/version, deployment SKU and resource region. Confirm the subscription’s model quota separately.",
-      "verifiedOn": "2026-11-19",
-      "reviewBy": "2027-01-17",
-      "models": [
-        "gpt-4.1-mini"
-      ],
-      "version": "2025-04-14",
-      "sku": "Standard",
-      "regions": [
-        "eastus2",
-        "uksouth",
-        "westeurope"
-      ]
-    },
-    {
-      "id": "gpt4o0513-regional-east",
-      "status": "compatible",
-      "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#standardregional",
-      "condition": "Microsoft lists the model/version, deployment SKU and resource region. Confirm the subscription’s model quota separately.",
-      "verifiedOn": "2026-11-19",
-      "reviewBy": "2027-01-17",
-      "models": [
-        "gpt-4o"
-      ],
-      "version": "2024-05-13",
-      "sku": "Standard",
-      "regions": [
-        "eastus2"
-      ]
-    },
-    {
-      "id": "gpt4o0513-regional-west-unavailable",
-      "status": "incompatible",
-      "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#standardregional",
-      "condition": "Microsoft’s matrix marks this exact model version unavailable for this deployment SKU and region.",
-      "verifiedOn": "2026-11-19",
-      "reviewBy": "2027-01-17",
-      "models": [
-        "gpt-4o"
-      ],
-      "version": "2024-05-13",
-      "sku": "Standard",
-      "regions": [
-        "westeurope"
-      ]
-    },
-    {
-      "id": "gpt4o0513-regional-uk-unavailable",
-      "status": "incompatible",
-      "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#standardregional",
-      "condition": "Microsoft’s matrix marks this exact model version unavailable for this deployment SKU and region.",
-      "verifiedOn": "2026-11-19",
-      "reviewBy": "2027-01-17",
-      "models": [
-        "gpt-4o"
-      ],
-      "version": "2024-05-13",
-      "sku": "Standard",
-      "regions": [
-        "uksouth"
-      ]
-    },
-    {
-      "id": "gpt4o0806-regional-east",
-      "status": "compatible",
-      "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#standardregional",
-      "condition": "Microsoft lists the model/version, deployment SKU and resource region. Confirm the subscription’s model quota separately.",
-      "verifiedOn": "2026-11-19",
-      "reviewBy": "2027-01-17",
-      "models": [
-        "gpt-4o"
-      ],
-      "version": "2024-08-06",
-      "sku": "Standard",
-      "regions": [
-        "eastus2"
-      ]
-    },
-    {
-      "id": "gpt4o0806-regional-west-unavailable",
-      "status": "incompatible",
-      "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#standardregional",
-      "condition": "Microsoft’s matrix marks this exact model version unavailable for this deployment SKU and region.",
-      "verifiedOn": "2026-11-19",
-      "reviewBy": "2027-01-17",
-      "models": [
-        "gpt-4o"
-      ],
-      "version": "2024-08-06",
-      "sku": "Standard",
-      "regions": [
-        "westeurope"
-      ]
-    },
-    {
-      "id": "gpt4o0806-regional-uk-unavailable",
-      "status": "incompatible",
-      "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#standardregional",
-      "condition": "Microsoft’s matrix marks this exact model version unavailable for this deployment SKU and region.",
-      "verifiedOn": "2026-11-19",
-      "reviewBy": "2027-01-17",
-      "models": [
-        "gpt-4o"
-      ],
-      "version": "2024-08-06",
-      "sku": "Standard",
-      "regions": [
-        "uksouth"
-      ]
-    },
-    {
-      "id": "gpt4o1120-regional-east",
-      "status": "compatible",
-      "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#standardregional",
-      "condition": "Microsoft lists the model/version, deployment SKU and resource region. Confirm the subscription’s model quota separately.",
-      "verifiedOn": "2026-11-19",
-      "reviewBy": "2027-01-17",
-      "models": [
-        "gpt-4o"
-      ],
-      "version": "2024-11-20",
-      "sku": "Standard",
-      "regions": [
-        "eastus2"
-      ]
-    },
-    {
-      "id": "gpt4o1120-regional-west-unavailable",
-      "status": "incompatible",
-      "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#standardregional",
-      "condition": "Microsoft’s matrix marks this exact model version unavailable for this deployment SKU and region.",
-      "verifiedOn": "2026-11-19",
-      "reviewBy": "2027-01-17",
-      "models": [
-        "gpt-4o"
-      ],
-      "version": "2024-11-20",
-      "sku": "Standard",
-      "regions": [
-        "westeurope"
-      ]
-    },
-    {
-      "id": "gpt4o1120-regional-uk",
-      "status": "compatible",
-      "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#standardregional",
-      "condition": "Microsoft lists the model/version, deployment SKU and resource region. Confirm the subscription’s model quota separately.",
-      "verifiedOn": "2026-11-19",
-      "reviewBy": "2027-01-17",
-      "models": [
-        "gpt-4o"
-      ],
-      "version": "2024-11-20",
-      "sku": "Standard",
-      "regions": [
-        "uksouth"
-      ]
-    },
-    {
-      "id": "gpt4omini-regional-east",
-      "status": "compatible",
-      "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#standardregional",
-      "condition": "Microsoft lists the model/version, deployment SKU and resource region. Confirm the subscription’s model quota separately.",
-      "verifiedOn": "2026-11-19",
-      "reviewBy": "2027-01-17",
-      "models": [
-        "gpt-4o-mini"
-      ],
-      "version": "2024-07-18",
-      "sku": "Standard",
-      "regions": [
-        "eastus2"
-      ]
-    },
-    {
-      "id": "gpt4omini-regional-west-unavailable",
-      "status": "incompatible",
-      "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#standardregional",
-      "condition": "Microsoft’s matrix marks this exact model version unavailable for this deployment SKU and region.",
-      "verifiedOn": "2026-11-19",
-      "reviewBy": "2027-01-17",
-      "models": [
-        "gpt-4o-mini"
-      ],
-      "version": "2024-07-18",
-      "sku": "Standard",
-      "regions": [
-        "westeurope"
-      ]
-    },
-    {
-      "id": "gpt4omini-regional-uk-unavailable",
-      "status": "incompatible",
-      "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#standardregional",
-      "condition": "Microsoft’s matrix marks this exact model version unavailable for this deployment SKU and region.",
-      "verifiedOn": "2026-11-19",
-      "reviewBy": "2027-01-17",
-      "models": [
-        "gpt-4o-mini"
-      ],
-      "version": "2024-07-18",
-      "sku": "Standard",
-      "regions": [
-        "uksouth"
-      ]
-    },
-    {
-      "id": "gpt41-data-zone-provisioned",
-      "status": "conditional",
-      "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#data-zone-provisioned-managed",
-      "condition": "Microsoft lists the model/version, deployment SKU and resource region. Confirm subscription quota and deployable capacity.",
-      "verifiedOn": "2026-11-19",
-      "reviewBy": "2027-01-17",
-      "models": [
-        "gpt-4.1",
-        "gpt-4.1-mini",
-        "gpt-4.1-nano"
-      ],
-      "version": "2025-04-14",
-      "sku": "DataZoneProvisionedManaged",
-      "regions": [
-        "eastus2",
-        "westeurope"
-      ]
-    },
-    {
-      "id": "gpt4o0513-data-zone-provisioned-east",
-      "status": "conditional",
-      "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#data-zone-provisioned-managed",
-      "condition": "Microsoft lists the model/version, deployment SKU and resource region. Confirm subscription quota and deployable capacity.",
-      "verifiedOn": "2026-11-19",
-      "reviewBy": "2027-01-17",
-      "models": [
-        "gpt-4o"
-      ],
-      "version": "2024-05-13",
-      "sku": "DataZoneProvisionedManaged",
-      "regions": [
-        "eastus2"
-      ]
-    },
-    {
-      "id": "gpt4o0806-data-zone-provisioned-east",
-      "status": "conditional",
-      "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#data-zone-provisioned-managed",
-      "condition": "Microsoft lists the model/version, deployment SKU and resource region. Confirm subscription quota and deployable capacity.",
-      "verifiedOn": "2026-11-19",
-      "reviewBy": "2027-01-17",
-      "models": [
-        "gpt-4o"
-      ],
-      "version": "2024-08-06",
-      "sku": "DataZoneProvisionedManaged",
-      "regions": [
-        "eastus2"
-      ]
-    },
-    {
-      "id": "gpt4omini-data-zone-provisioned",
-      "status": "conditional",
-      "models": [
-        "gpt-4o-mini"
-      ],
-      "version": "2024-07-18",
-      "sku": "DataZoneProvisionedManaged",
-      "regions": [
-        "eastus2",
-        "westeurope"
-      ],
-      "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#data-zone-provisioned-managed",
-      "condition": "Microsoft lists this exact deployment in the selected resource region. Confirm current subscription quota, model minimum PTUs and deployable capacity.",
-      "verifiedOn": "2026-11-19",
-      "reviewBy": "2027-01-17"
-    },
-    {
       "id": "deepseek32-data-zone-provisioned",
       "status": "conditional",
+      "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#data-zone-provisioned-managed",
+      "condition": "Microsoft lists this exact provisioned model and deployment region. Confirm tenant quota, capacity and sizing before planning rollout.",
+      "verifiedOn": "2026-11-19",
+      "reviewBy": "2027-01-17",
       "models": [
         "deepseek-v3.2"
       ],
@@ -683,11 +278,7 @@
       "regions": [
         "eastus2",
         "westeurope"
-      ],
-      "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#data-zone-provisioned-managed",
-      "condition": "Microsoft lists this exact deployment in the selected resource region. Confirm current subscription quota, model minimum PTUs and deployable capacity.",
-      "verifiedOn": "2026-11-19",
-      "reviewBy": "2027-01-17"
+      ]
     },
     {
       "id": "deepseek32-data-zone",
@@ -707,77 +298,871 @@
       "reviewBy": "2027-01-17"
     },
     {
-      "id": "gpt41-regional-provisioned-east",
+      "id": "deepseek32-global-provisioned",
       "status": "conditional",
+      "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#global-provisioned-managed",
+      "condition": "Microsoft lists this exact provisioned model and deployment region. Confirm tenant quota, capacity and sizing before planning rollout.",
+      "verifiedOn": "2026-11-19",
+      "reviewBy": "2027-01-17",
       "models": [
-        "gpt-4.1",
-        "gpt-4.1-mini",
+        "deepseek-v3.2"
+      ],
+      "version": "1",
+      "sku": "GlobalProvisionedManaged",
+      "regions": [
+        "eastus2",
+        "uksouth",
+        "westeurope"
+      ]
+    },
+    {
+      "id": "deepseek32-global",
+      "status": "compatible",
+      "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#global-standard",
+      "condition": "Microsoft lists this exact model version and deployment type in this region. Verify customer quota separately.",
+      "verifiedOn": "2026-11-19",
+      "reviewBy": "2027-01-17",
+      "models": [
+        "deepseek-v3.2"
+      ],
+      "version": "1",
+      "sku": "GlobalStandard",
+      "regions": [
+        "eastus2",
+        "uksouth",
+        "westeurope"
+      ]
+    },
+    {
+      "id": "gpt-4-1-2025-04-14-datazoneprovisionedmanaged-conditional",
+      "status": "conditional",
+      "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#data-zone-provisioned-managed",
+      "condition": "Microsoft lists this exact provisioned model and deployment region. Confirm tenant quota, capacity and sizing before planning rollout.",
+      "verifiedOn": "2026-11-19",
+      "reviewBy": "2027-01-17",
+      "models": [
+        "gpt-4.1"
+      ],
+      "version": "2025-04-14",
+      "sku": "DataZoneProvisionedManaged",
+      "regions": [
+        "eastus2",
+        "westeurope"
+      ]
+    },
+    {
+      "id": "gpt-4-1-2025-04-14-datazonestandard-compatible",
+      "status": "compatible",
+      "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#data-zone-standard",
+      "condition": "Microsoft lists this exact model version and deployment type in this region. Verify customer quota separately.",
+      "verifiedOn": "2026-11-19",
+      "reviewBy": "2027-01-17",
+      "models": [
+        "gpt-4.1"
+      ],
+      "version": "2025-04-14",
+      "sku": "DataZoneStandard",
+      "regions": [
+        "eastus2",
+        "westeurope"
+      ]
+    },
+    {
+      "id": "gpt-4-1-2025-04-14-globalprovisionedmanaged-conditional",
+      "status": "conditional",
+      "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#global-provisioned-managed",
+      "condition": "Microsoft lists this exact provisioned model and deployment region. Confirm tenant quota, capacity and sizing before planning rollout.",
+      "verifiedOn": "2026-11-19",
+      "reviewBy": "2027-01-17",
+      "models": [
+        "gpt-4.1"
+      ],
+      "version": "2025-04-14",
+      "sku": "GlobalProvisionedManaged",
+      "regions": [
+        "eastus2",
+        "uksouth",
+        "westeurope"
+      ]
+    },
+    {
+      "id": "gpt-4-1-2025-04-14-globalstandard-compatible",
+      "status": "compatible",
+      "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#global-standard",
+      "condition": "Microsoft lists this exact model version and deployment type in this region. Verify customer quota separately.",
+      "verifiedOn": "2026-11-19",
+      "reviewBy": "2027-01-17",
+      "models": [
+        "gpt-4.1"
+      ],
+      "version": "2025-04-14",
+      "sku": "GlobalStandard",
+      "regions": [
+        "eastus2",
+        "uksouth",
+        "westeurope"
+      ]
+    },
+    {
+      "id": "gpt-4-1-2025-04-14-provisionedmanaged-conditional",
+      "status": "conditional",
+      "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#regional-provisioned-managed",
+      "condition": "Microsoft lists this exact provisioned model and deployment region. Confirm tenant quota, capacity and sizing before planning rollout.",
+      "verifiedOn": "2026-11-19",
+      "reviewBy": "2027-01-17",
+      "models": [
+        "gpt-4.1"
+      ],
+      "version": "2025-04-14",
+      "sku": "ProvisionedManaged",
+      "regions": [
+        "eastus2",
+        "uksouth"
+      ]
+    },
+    {
+      "id": "gpt-4-1-2025-04-14-provisionedmanaged-incompatible",
+      "status": "incompatible",
+      "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#regional-provisioned-managed",
+      "condition": "Microsoft marks this exact model version and deployment type unavailable in the selected region.",
+      "verifiedOn": "2026-11-19",
+      "reviewBy": "2027-01-17",
+      "models": [
+        "gpt-4.1"
+      ],
+      "version": "2025-04-14",
+      "sku": "ProvisionedManaged",
+      "regions": [
+        "westeurope"
+      ]
+    },
+    {
+      "id": "gpt41-regional-east",
+      "status": "compatible",
+      "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#regional-standard",
+      "condition": "Microsoft lists this exact model version and deployment type in this region. Verify customer quota separately.",
+      "verifiedOn": "2026-11-19",
+      "reviewBy": "2027-01-17",
+      "models": [
+        "gpt-4.1"
+      ],
+      "version": "2025-04-14",
+      "sku": "Standard",
+      "regions": [
+        "eastus2"
+      ]
+    },
+    {
+      "id": "gpt41-regional-europe",
+      "status": "incompatible",
+      "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#regional-standard",
+      "condition": "Microsoft marks this exact model version and deployment type unavailable in the selected region.",
+      "verifiedOn": "2026-11-19",
+      "reviewBy": "2027-01-17",
+      "models": [
+        "gpt-4.1"
+      ],
+      "version": "2025-04-14",
+      "sku": "Standard",
+      "regions": [
+        "uksouth",
+        "westeurope"
+      ]
+    },
+    {
+      "id": "gpt-4-1-mini-2025-04-14-datazoneprovisionedmanaged-conditional",
+      "status": "conditional",
+      "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#data-zone-provisioned-managed",
+      "condition": "Microsoft lists this exact provisioned model and deployment region. Confirm tenant quota, capacity and sizing before planning rollout.",
+      "verifiedOn": "2026-11-19",
+      "reviewBy": "2027-01-17",
+      "models": [
+        "gpt-4.1-mini"
+      ],
+      "version": "2025-04-14",
+      "sku": "DataZoneProvisionedManaged",
+      "regions": [
+        "eastus2",
+        "westeurope"
+      ]
+    },
+    {
+      "id": "gpt-4-1-mini-2025-04-14-datazonestandard-compatible",
+      "status": "compatible",
+      "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#data-zone-standard",
+      "condition": "Microsoft lists this exact model version and deployment type in this region. Verify customer quota separately.",
+      "verifiedOn": "2026-11-19",
+      "reviewBy": "2027-01-17",
+      "models": [
+        "gpt-4.1-mini"
+      ],
+      "version": "2025-04-14",
+      "sku": "DataZoneStandard",
+      "regions": [
+        "eastus2",
+        "westeurope"
+      ]
+    },
+    {
+      "id": "gpt-4-1-mini-2025-04-14-globalprovisionedmanaged-conditional",
+      "status": "conditional",
+      "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#global-provisioned-managed",
+      "condition": "Microsoft lists this exact provisioned model and deployment region. Confirm tenant quota, capacity and sizing before planning rollout.",
+      "verifiedOn": "2026-11-19",
+      "reviewBy": "2027-01-17",
+      "models": [
+        "gpt-4.1-mini"
+      ],
+      "version": "2025-04-14",
+      "sku": "GlobalProvisionedManaged",
+      "regions": [
+        "eastus2",
+        "uksouth",
+        "westeurope"
+      ]
+    },
+    {
+      "id": "gpt-4-1-mini-2025-04-14-globalstandard-compatible",
+      "status": "compatible",
+      "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#global-standard",
+      "condition": "Microsoft lists this exact model version and deployment type in this region. Verify customer quota separately.",
+      "verifiedOn": "2026-11-19",
+      "reviewBy": "2027-01-17",
+      "models": [
+        "gpt-4.1-mini"
+      ],
+      "version": "2025-04-14",
+      "sku": "GlobalStandard",
+      "regions": [
+        "eastus2",
+        "uksouth",
+        "westeurope"
+      ]
+    },
+    {
+      "id": "gpt-4-1-mini-2025-04-14-provisionedmanaged-conditional",
+      "status": "conditional",
+      "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#regional-provisioned-managed",
+      "condition": "Microsoft lists this exact provisioned model and deployment region. Confirm tenant quota, capacity and sizing before planning rollout.",
+      "verifiedOn": "2026-11-19",
+      "reviewBy": "2027-01-17",
+      "models": [
+        "gpt-4.1-mini"
+      ],
+      "version": "2025-04-14",
+      "sku": "ProvisionedManaged",
+      "regions": [
+        "eastus2",
+        "uksouth"
+      ]
+    },
+    {
+      "id": "gpt-4-1-mini-2025-04-14-provisionedmanaged-incompatible",
+      "status": "incompatible",
+      "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#regional-provisioned-managed",
+      "condition": "Microsoft marks this exact model version and deployment type unavailable in the selected region.",
+      "verifiedOn": "2026-11-19",
+      "reviewBy": "2027-01-17",
+      "models": [
+        "gpt-4.1-mini"
+      ],
+      "version": "2025-04-14",
+      "sku": "ProvisionedManaged",
+      "regions": [
+        "westeurope"
+      ]
+    },
+    {
+      "id": "gpt41-mini-regional",
+      "status": "compatible",
+      "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#regional-standard",
+      "condition": "Microsoft lists this exact model version and deployment type in this region. Verify customer quota separately.",
+      "verifiedOn": "2026-11-19",
+      "reviewBy": "2027-01-17",
+      "models": [
+        "gpt-4.1-mini"
+      ],
+      "version": "2025-04-14",
+      "sku": "Standard",
+      "regions": [
+        "eastus2",
+        "uksouth",
+        "westeurope"
+      ]
+    },
+    {
+      "id": "gpt-4-1-nano-2025-04-14-datazoneprovisionedmanaged-conditional",
+      "status": "conditional",
+      "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#data-zone-provisioned-managed",
+      "condition": "Microsoft lists this exact provisioned model and deployment region. Confirm tenant quota, capacity and sizing before planning rollout.",
+      "verifiedOn": "2026-11-19",
+      "reviewBy": "2027-01-17",
+      "models": [
+        "gpt-4.1-nano"
+      ],
+      "version": "2025-04-14",
+      "sku": "DataZoneProvisionedManaged",
+      "regions": [
+        "eastus2",
+        "westeurope"
+      ]
+    },
+    {
+      "id": "gpt-4-1-nano-2025-04-14-datazonestandard-compatible",
+      "status": "compatible",
+      "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#data-zone-standard",
+      "condition": "Microsoft lists this exact model version and deployment type in this region. Verify customer quota separately.",
+      "verifiedOn": "2026-11-19",
+      "reviewBy": "2027-01-17",
+      "models": [
+        "gpt-4.1-nano"
+      ],
+      "version": "2025-04-14",
+      "sku": "DataZoneStandard",
+      "regions": [
+        "eastus2",
+        "westeurope"
+      ]
+    },
+    {
+      "id": "gpt-4-1-nano-2025-04-14-globalprovisionedmanaged-conditional",
+      "status": "conditional",
+      "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#global-provisioned-managed",
+      "condition": "Microsoft lists this exact provisioned model and deployment region. Confirm tenant quota, capacity and sizing before planning rollout.",
+      "verifiedOn": "2026-11-19",
+      "reviewBy": "2027-01-17",
+      "models": [
+        "gpt-4.1-nano"
+      ],
+      "version": "2025-04-14",
+      "sku": "GlobalProvisionedManaged",
+      "regions": [
+        "eastus2",
+        "uksouth",
+        "westeurope"
+      ]
+    },
+    {
+      "id": "gpt-4-1-nano-2025-04-14-globalstandard-compatible",
+      "status": "compatible",
+      "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#global-standard",
+      "condition": "Microsoft lists this exact model version and deployment type in this region. Verify customer quota separately.",
+      "verifiedOn": "2026-11-19",
+      "reviewBy": "2027-01-17",
+      "models": [
+        "gpt-4.1-nano"
+      ],
+      "version": "2025-04-14",
+      "sku": "GlobalStandard",
+      "regions": [
+        "eastus2",
+        "uksouth",
+        "westeurope"
+      ]
+    },
+    {
+      "id": "gpt-4-1-nano-2025-04-14-provisionedmanaged-conditional",
+      "status": "conditional",
+      "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#regional-provisioned-managed",
+      "condition": "Microsoft lists this exact provisioned model and deployment region. Confirm tenant quota, capacity and sizing before planning rollout.",
+      "verifiedOn": "2026-11-19",
+      "reviewBy": "2027-01-17",
+      "models": [
         "gpt-4.1-nano"
       ],
       "version": "2025-04-14",
       "sku": "ProvisionedManaged",
       "regions": [
         "eastus2"
-      ],
-      "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#regional-provisioned-managed",
-      "condition": "Microsoft lists this exact deployment in the selected resource region. Confirm current subscription quota, model minimum PTUs and deployable capacity.",
-      "verifiedOn": "2026-11-19",
-      "reviewBy": "2027-01-17"
+      ]
     },
     {
-      "id": "gpt41-regional-provisioned-uk",
-      "status": "conditional",
+      "id": "gpt-4-1-nano-2025-04-14-provisionedmanaged-incompatible",
+      "status": "incompatible",
+      "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#regional-provisioned-managed",
+      "condition": "Microsoft marks this exact model version and deployment type unavailable in the selected region.",
+      "verifiedOn": "2026-11-19",
+      "reviewBy": "2027-01-17",
       "models": [
-        "gpt-4.1",
-        "gpt-4.1-mini"
+        "gpt-4.1-nano"
       ],
       "version": "2025-04-14",
       "sku": "ProvisionedManaged",
       "regions": [
-        "uksouth"
-      ],
-      "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#regional-provisioned-managed",
-      "condition": "Microsoft lists this exact deployment in the selected resource region. Confirm current subscription quota, model minimum PTUs and deployable capacity.",
-      "verifiedOn": "2026-11-19",
-      "reviewBy": "2027-01-17"
+        "uksouth",
+        "westeurope"
+      ]
     },
     {
-      "id": "gpt41-regional-provisioned-west",
-      "status": "incompatible",
+      "id": "gpt-4o-2024-05-13-datazoneprovisionedmanaged-conditional",
+      "status": "conditional",
+      "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#data-zone-provisioned-managed",
+      "condition": "Microsoft lists this exact provisioned model and deployment region. Confirm tenant quota, capacity and sizing before planning rollout.",
+      "verifiedOn": "2026-11-19",
+      "reviewBy": "2027-01-17",
       "models": [
-        "gpt-4.1",
-        "gpt-4.1-mini",
-        "gpt-4.1-nano"
+        "gpt-4o"
       ],
-      "version": "2025-04-14",
+      "version": "2024-05-13",
+      "sku": "DataZoneProvisionedManaged",
+      "regions": [
+        "eastus2",
+        "westeurope"
+      ]
+    },
+    {
+      "id": "gpt4o0513-data-zone",
+      "status": "compatible",
+      "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#data-zone-standard",
+      "condition": "Microsoft lists this exact model version and deployment type in this region. Verify customer quota separately.",
+      "verifiedOn": "2026-11-19",
+      "reviewBy": "2027-01-17",
+      "models": [
+        "gpt-4o"
+      ],
+      "version": "2024-05-13",
+      "sku": "DataZoneStandard",
+      "regions": [
+        "eastus2",
+        "westeurope"
+      ]
+    },
+    {
+      "id": "gpt4o0513-global-provisioned",
+      "status": "conditional",
+      "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#global-provisioned-managed",
+      "condition": "Microsoft lists this exact provisioned model and deployment region. Confirm tenant quota, capacity and sizing before planning rollout.",
+      "verifiedOn": "2026-11-19",
+      "reviewBy": "2027-01-17",
+      "models": [
+        "gpt-4o"
+      ],
+      "version": "2024-05-13",
+      "sku": "GlobalProvisionedManaged",
+      "regions": [
+        "eastus2",
+        "uksouth",
+        "westeurope"
+      ]
+    },
+    {
+      "id": "gpt4o-global-0513",
+      "status": "compatible",
+      "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#global-standard",
+      "condition": "Microsoft lists this exact model version and deployment type in this region. Verify customer quota separately.",
+      "verifiedOn": "2026-11-19",
+      "reviewBy": "2027-01-17",
+      "models": [
+        "gpt-4o"
+      ],
+      "version": "2024-05-13",
+      "sku": "GlobalStandard",
+      "regions": [
+        "eastus2",
+        "uksouth",
+        "westeurope"
+      ]
+    },
+    {
+      "id": "gpt-4o-2024-05-13-provisionedmanaged-conditional",
+      "status": "conditional",
+      "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#regional-provisioned-managed",
+      "condition": "Microsoft lists this exact provisioned model and deployment region. Confirm tenant quota, capacity and sizing before planning rollout.",
+      "verifiedOn": "2026-11-19",
+      "reviewBy": "2027-01-17",
+      "models": [
+        "gpt-4o"
+      ],
+      "version": "2024-05-13",
+      "sku": "ProvisionedManaged",
+      "regions": [
+        "eastus2",
+        "uksouth"
+      ]
+    },
+    {
+      "id": "gpt-4o-2024-05-13-provisionedmanaged-incompatible",
+      "status": "incompatible",
+      "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#regional-provisioned-managed",
+      "condition": "Microsoft marks this exact model version and deployment type unavailable in the selected region.",
+      "verifiedOn": "2026-11-19",
+      "reviewBy": "2027-01-17",
+      "models": [
+        "gpt-4o"
+      ],
+      "version": "2024-05-13",
       "sku": "ProvisionedManaged",
       "regions": [
         "westeurope"
-      ],
-      "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#regional-provisioned-managed",
-      "condition": "Microsoft’s matrix marks this exact model version unavailable for this deployment SKU and region.",
-      "verifiedOn": "2026-11-19",
-      "reviewBy": "2027-01-17"
+      ]
     },
     {
-      "id": "gpt41nano-regional-provisioned-uk",
-      "status": "incompatible",
+      "id": "gpt4o0513-regional-east",
+      "status": "compatible",
+      "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#regional-standard",
+      "condition": "Microsoft lists this exact model version and deployment type in this region. Verify customer quota separately.",
+      "verifiedOn": "2026-11-19",
+      "reviewBy": "2027-01-17",
       "models": [
-        "gpt-4.1-nano"
+        "gpt-4o"
       ],
-      "version": "2025-04-14",
+      "version": "2024-05-13",
+      "sku": "Standard",
+      "regions": [
+        "eastus2"
+      ]
+    },
+    {
+      "id": "gpt-4o-2024-05-13-standard-incompatible",
+      "status": "incompatible",
+      "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#regional-standard",
+      "condition": "Microsoft marks this exact model version and deployment type unavailable in the selected region.",
+      "verifiedOn": "2026-11-19",
+      "reviewBy": "2027-01-17",
+      "models": [
+        "gpt-4o"
+      ],
+      "version": "2024-05-13",
+      "sku": "Standard",
+      "regions": [
+        "uksouth",
+        "westeurope"
+      ]
+    },
+    {
+      "id": "gpt-4o-2024-08-06-datazoneprovisionedmanaged-conditional",
+      "status": "conditional",
+      "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#data-zone-provisioned-managed",
+      "condition": "Microsoft lists this exact provisioned model and deployment region. Confirm tenant quota, capacity and sizing before planning rollout.",
+      "verifiedOn": "2026-11-19",
+      "reviewBy": "2027-01-17",
+      "models": [
+        "gpt-4o"
+      ],
+      "version": "2024-08-06",
+      "sku": "DataZoneProvisionedManaged",
+      "regions": [
+        "eastus2",
+        "westeurope"
+      ]
+    },
+    {
+      "id": "gpt4o0806-data-zone",
+      "status": "compatible",
+      "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#data-zone-standard",
+      "condition": "Microsoft lists this exact model version and deployment type in this region. Verify customer quota separately.",
+      "verifiedOn": "2026-11-19",
+      "reviewBy": "2027-01-17",
+      "models": [
+        "gpt-4o"
+      ],
+      "version": "2024-08-06",
+      "sku": "DataZoneStandard",
+      "regions": [
+        "eastus2",
+        "westeurope"
+      ]
+    },
+    {
+      "id": "gpt4o0806-global-provisioned",
+      "status": "conditional",
+      "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#global-provisioned-managed",
+      "condition": "Microsoft lists this exact provisioned model and deployment region. Confirm tenant quota, capacity and sizing before planning rollout.",
+      "verifiedOn": "2026-11-19",
+      "reviewBy": "2027-01-17",
+      "models": [
+        "gpt-4o"
+      ],
+      "version": "2024-08-06",
+      "sku": "GlobalProvisionedManaged",
+      "regions": [
+        "eastus2",
+        "uksouth",
+        "westeurope"
+      ]
+    },
+    {
+      "id": "gpt4o-global-0806",
+      "status": "compatible",
+      "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#global-standard",
+      "condition": "Microsoft lists this exact model version and deployment type in this region. Verify customer quota separately.",
+      "verifiedOn": "2026-11-19",
+      "reviewBy": "2027-01-17",
+      "models": [
+        "gpt-4o"
+      ],
+      "version": "2024-08-06",
+      "sku": "GlobalStandard",
+      "regions": [
+        "eastus2",
+        "uksouth",
+        "westeurope"
+      ]
+    },
+    {
+      "id": "gpt-4o-2024-08-06-provisionedmanaged-conditional",
+      "status": "conditional",
+      "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#regional-provisioned-managed",
+      "condition": "Microsoft lists this exact provisioned model and deployment region. Confirm tenant quota, capacity and sizing before planning rollout.",
+      "verifiedOn": "2026-11-19",
+      "reviewBy": "2027-01-17",
+      "models": [
+        "gpt-4o"
+      ],
+      "version": "2024-08-06",
       "sku": "ProvisionedManaged",
       "regions": [
+        "eastus2",
         "uksouth"
-      ],
+      ]
+    },
+    {
+      "id": "gpt-4o-2024-08-06-provisionedmanaged-incompatible",
+      "status": "incompatible",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#regional-provisioned-managed",
-      "condition": "Microsoft’s matrix marks this exact model version unavailable for this deployment SKU and region.",
+      "condition": "Microsoft marks this exact model version and deployment type unavailable in the selected region.",
       "verifiedOn": "2026-11-19",
-      "reviewBy": "2027-01-17"
+      "reviewBy": "2027-01-17",
+      "models": [
+        "gpt-4o"
+      ],
+      "version": "2024-08-06",
+      "sku": "ProvisionedManaged",
+      "regions": [
+        "westeurope"
+      ]
+    },
+    {
+      "id": "gpt4o0806-regional-east",
+      "status": "compatible",
+      "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#regional-standard",
+      "condition": "Microsoft lists this exact model version and deployment type in this region. Verify customer quota separately.",
+      "verifiedOn": "2026-11-19",
+      "reviewBy": "2027-01-17",
+      "models": [
+        "gpt-4o"
+      ],
+      "version": "2024-08-06",
+      "sku": "Standard",
+      "regions": [
+        "eastus2"
+      ]
+    },
+    {
+      "id": "gpt-4o-2024-08-06-standard-incompatible",
+      "status": "incompatible",
+      "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#regional-standard",
+      "condition": "Microsoft marks this exact model version and deployment type unavailable in the selected region.",
+      "verifiedOn": "2026-11-19",
+      "reviewBy": "2027-01-17",
+      "models": [
+        "gpt-4o"
+      ],
+      "version": "2024-08-06",
+      "sku": "Standard",
+      "regions": [
+        "uksouth",
+        "westeurope"
+      ]
+    },
+    {
+      "id": "gpt-4o-2024-11-20-datazoneprovisionedmanaged-conditional",
+      "status": "conditional",
+      "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#data-zone-provisioned-managed",
+      "condition": "Microsoft lists this exact provisioned model and deployment region. Confirm tenant quota, capacity and sizing before planning rollout.",
+      "verifiedOn": "2026-11-19",
+      "reviewBy": "2027-01-17",
+      "models": [
+        "gpt-4o"
+      ],
+      "version": "2024-11-20",
+      "sku": "DataZoneProvisionedManaged",
+      "regions": [
+        "eastus2",
+        "westeurope"
+      ]
+    },
+    {
+      "id": "gpt4o1120-data-zone",
+      "status": "compatible",
+      "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#data-zone-standard",
+      "condition": "Microsoft lists this exact model version and deployment type in this region. Verify customer quota separately.",
+      "verifiedOn": "2026-11-19",
+      "reviewBy": "2027-01-17",
+      "models": [
+        "gpt-4o"
+      ],
+      "version": "2024-11-20",
+      "sku": "DataZoneStandard",
+      "regions": [
+        "eastus2",
+        "westeurope"
+      ]
+    },
+    {
+      "id": "gpt4o1120-global-provisioned",
+      "status": "conditional",
+      "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#global-provisioned-managed",
+      "condition": "Microsoft lists this exact provisioned model and deployment region. Confirm tenant quota, capacity and sizing before planning rollout.",
+      "verifiedOn": "2026-11-19",
+      "reviewBy": "2027-01-17",
+      "models": [
+        "gpt-4o"
+      ],
+      "version": "2024-11-20",
+      "sku": "GlobalProvisionedManaged",
+      "regions": [
+        "eastus2",
+        "uksouth",
+        "westeurope"
+      ]
+    },
+    {
+      "id": "gpt4o-global-1120",
+      "status": "compatible",
+      "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#global-standard",
+      "condition": "Microsoft lists this exact model version and deployment type in this region. Verify customer quota separately.",
+      "verifiedOn": "2026-11-19",
+      "reviewBy": "2027-01-17",
+      "models": [
+        "gpt-4o"
+      ],
+      "version": "2024-11-20",
+      "sku": "GlobalStandard",
+      "regions": [
+        "eastus2",
+        "uksouth",
+        "westeurope"
+      ]
+    },
+    {
+      "id": "gpt-4o-2024-11-20-provisionedmanaged-conditional",
+      "status": "conditional",
+      "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#regional-provisioned-managed",
+      "condition": "Microsoft lists this exact provisioned model and deployment region. Confirm tenant quota, capacity and sizing before planning rollout.",
+      "verifiedOn": "2026-11-19",
+      "reviewBy": "2027-01-17",
+      "models": [
+        "gpt-4o"
+      ],
+      "version": "2024-11-20",
+      "sku": "ProvisionedManaged",
+      "regions": [
+        "eastus2",
+        "uksouth",
+        "westeurope"
+      ]
+    },
+    {
+      "id": "gpt-4o-2024-11-20-standard-compatible",
+      "status": "compatible",
+      "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#regional-standard",
+      "condition": "Microsoft lists this exact model version and deployment type in this region. Verify customer quota separately.",
+      "verifiedOn": "2026-11-19",
+      "reviewBy": "2027-01-17",
+      "models": [
+        "gpt-4o"
+      ],
+      "version": "2024-11-20",
+      "sku": "Standard",
+      "regions": [
+        "eastus2",
+        "uksouth"
+      ]
+    },
+    {
+      "id": "gpt4o1120-regional-west-unavailable",
+      "status": "incompatible",
+      "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#regional-standard",
+      "condition": "Microsoft marks this exact model version and deployment type unavailable in the selected region.",
+      "verifiedOn": "2026-11-19",
+      "reviewBy": "2027-01-17",
+      "models": [
+        "gpt-4o"
+      ],
+      "version": "2024-11-20",
+      "sku": "Standard",
+      "regions": [
+        "westeurope"
+      ]
+    },
+    {
+      "id": "gpt4omini-data-zone-provisioned",
+      "status": "conditional",
+      "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#data-zone-provisioned-managed",
+      "condition": "Microsoft lists this exact provisioned model and deployment region. Confirm tenant quota, capacity and sizing before planning rollout.",
+      "verifiedOn": "2026-11-19",
+      "reviewBy": "2027-01-17",
+      "models": [
+        "gpt-4o-mini"
+      ],
+      "version": "2024-07-18",
+      "sku": "DataZoneProvisionedManaged",
+      "regions": [
+        "eastus2",
+        "westeurope"
+      ]
+    },
+    {
+      "id": "gpt4omini-data-zone",
+      "status": "compatible",
+      "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#data-zone-standard",
+      "condition": "Microsoft lists this exact model version and deployment type in this region. Verify customer quota separately.",
+      "verifiedOn": "2026-11-19",
+      "reviewBy": "2027-01-17",
+      "models": [
+        "gpt-4o-mini"
+      ],
+      "version": "2024-07-18",
+      "sku": "DataZoneStandard",
+      "regions": [
+        "eastus2",
+        "westeurope"
+      ]
+    },
+    {
+      "id": "gpt4omini-global-provisioned",
+      "status": "conditional",
+      "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#global-provisioned-managed",
+      "condition": "Microsoft lists this exact provisioned model and deployment region. Confirm tenant quota, capacity and sizing before planning rollout.",
+      "verifiedOn": "2026-11-19",
+      "reviewBy": "2027-01-17",
+      "models": [
+        "gpt-4o-mini"
+      ],
+      "version": "2024-07-18",
+      "sku": "GlobalProvisionedManaged",
+      "regions": [
+        "eastus2",
+        "uksouth",
+        "westeurope"
+      ]
+    },
+    {
+      "id": "gpt4o-mini-global",
+      "status": "compatible",
+      "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#global-standard",
+      "condition": "Microsoft lists this exact model version and deployment type in this region. Verify customer quota separately.",
+      "verifiedOn": "2026-11-19",
+      "reviewBy": "2027-01-17",
+      "models": [
+        "gpt-4o-mini"
+      ],
+      "version": "2024-07-18",
+      "sku": "GlobalStandard",
+      "regions": [
+        "eastus2",
+        "uksouth",
+        "westeurope"
+      ]
     },
     {
       "id": "gpt4omini-regional-provisioned",
       "status": "conditional",
+      "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#regional-provisioned-managed",
+      "condition": "Microsoft lists this exact provisioned model and deployment region. Confirm tenant quota, capacity and sizing before planning rollout.",
+      "verifiedOn": "2026-11-19",
+      "reviewBy": "2027-01-17",
       "models": [
         "gpt-4o-mini"
       ],
@@ -786,15 +1171,15 @@
       "regions": [
         "eastus2",
         "uksouth"
-      ],
-      "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#regional-provisioned-managed",
-      "condition": "Microsoft lists this exact deployment in the selected resource region. Confirm current subscription quota, model minimum PTUs and deployable capacity.",
-      "verifiedOn": "2026-11-19",
-      "reviewBy": "2027-01-17"
+      ]
     },
     {
       "id": "gpt4omini-regional-provisioned-west",
       "status": "incompatible",
+      "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#regional-provisioned-managed",
+      "condition": "Microsoft marks this exact model version and deployment type unavailable in the selected region.",
+      "verifiedOn": "2026-11-19",
+      "reviewBy": "2027-01-17",
       "models": [
         "gpt-4o-mini"
       ],
@@ -802,11 +1187,1982 @@
       "sku": "ProvisionedManaged",
       "regions": [
         "westeurope"
-      ],
-      "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#regional-provisioned-managed",
-      "condition": "Microsoft’s matrix marks this exact model version unavailable for this deployment SKU and region.",
+      ]
+    },
+    {
+      "id": "gpt4omini-regional-east",
+      "status": "compatible",
+      "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#regional-standard",
+      "condition": "Microsoft lists this exact model version and deployment type in this region. Verify customer quota separately.",
       "verifiedOn": "2026-11-19",
-      "reviewBy": "2027-01-17"
+      "reviewBy": "2027-01-17",
+      "models": [
+        "gpt-4o-mini"
+      ],
+      "version": "2024-07-18",
+      "sku": "Standard",
+      "regions": [
+        "eastus2"
+      ]
+    },
+    {
+      "id": "gpt-4o-mini-2024-07-18-standard-incompatible",
+      "status": "incompatible",
+      "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#regional-standard",
+      "condition": "Microsoft marks this exact model version and deployment type unavailable in the selected region.",
+      "verifiedOn": "2026-11-19",
+      "reviewBy": "2027-01-17",
+      "models": [
+        "gpt-4o-mini"
+      ],
+      "version": "2024-07-18",
+      "sku": "Standard",
+      "regions": [
+        "uksouth",
+        "westeurope"
+      ]
+    },
+    {
+      "id": "gpt-4o-mini-transcribe-2025-03-20-globalstandard-compatible",
+      "status": "compatible",
+      "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#global-standard",
+      "condition": "Microsoft lists this exact model version and deployment type in this region. Verify customer quota separately.",
+      "verifiedOn": "2026-11-19",
+      "reviewBy": "2027-01-17",
+      "models": [
+        "gpt-4o-mini-transcribe"
+      ],
+      "version": "2025-03-20",
+      "sku": "GlobalStandard",
+      "regions": [
+        "eastus2"
+      ]
+    },
+    {
+      "id": "gpt-4o-mini-transcribe-2025-03-20-globalstandard-incompatible",
+      "status": "incompatible",
+      "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#global-standard",
+      "condition": "Microsoft marks this exact model version and deployment type unavailable in the selected region.",
+      "verifiedOn": "2026-11-19",
+      "reviewBy": "2027-01-17",
+      "models": [
+        "gpt-4o-mini-transcribe"
+      ],
+      "version": "2025-03-20",
+      "sku": "GlobalStandard",
+      "regions": [
+        "uksouth",
+        "westeurope"
+      ]
+    },
+    {
+      "id": "gpt-4o-mini-transcribe-2025-12-15-globalstandard-compatible",
+      "status": "compatible",
+      "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#global-standard",
+      "condition": "Microsoft lists this exact model version and deployment type in this region. Verify customer quota separately.",
+      "verifiedOn": "2026-11-19",
+      "reviewBy": "2027-01-17",
+      "models": [
+        "gpt-4o-mini-transcribe"
+      ],
+      "version": "2025-12-15",
+      "sku": "GlobalStandard",
+      "regions": [
+        "eastus2"
+      ]
+    },
+    {
+      "id": "gpt-4o-mini-transcribe-2025-12-15-globalstandard-incompatible",
+      "status": "incompatible",
+      "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#global-standard",
+      "condition": "Microsoft marks this exact model version and deployment type unavailable in the selected region.",
+      "verifiedOn": "2026-11-19",
+      "reviewBy": "2027-01-17",
+      "models": [
+        "gpt-4o-mini-transcribe"
+      ],
+      "version": "2025-12-15",
+      "sku": "GlobalStandard",
+      "regions": [
+        "uksouth",
+        "westeurope"
+      ]
+    },
+    {
+      "id": "gpt-4o-mini-tts-2025-03-20-globalstandard-compatible",
+      "status": "compatible",
+      "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#global-standard",
+      "condition": "Microsoft lists this exact model version and deployment type in this region. Verify customer quota separately.",
+      "verifiedOn": "2026-11-19",
+      "reviewBy": "2027-01-17",
+      "models": [
+        "gpt-4o-mini-tts"
+      ],
+      "version": "2025-03-20",
+      "sku": "GlobalStandard",
+      "regions": [
+        "eastus2"
+      ]
+    },
+    {
+      "id": "gpt-4o-mini-tts-2025-12-15-globalstandard-compatible",
+      "status": "compatible",
+      "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#global-standard",
+      "condition": "Microsoft lists this exact model version and deployment type in this region. Verify customer quota separately.",
+      "verifiedOn": "2026-11-19",
+      "reviewBy": "2027-01-17",
+      "models": [
+        "gpt-4o-mini-tts"
+      ],
+      "version": "2025-12-15",
+      "sku": "GlobalStandard",
+      "regions": [
+        "eastus2"
+      ]
+    },
+    {
+      "id": "gpt-5-2025-08-07-datazoneprovisionedmanaged-conditional",
+      "status": "conditional",
+      "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#data-zone-provisioned-managed",
+      "condition": "Microsoft lists this exact provisioned model and deployment region. Confirm tenant quota, capacity and sizing before planning rollout.",
+      "verifiedOn": "2026-11-19",
+      "reviewBy": "2027-01-17",
+      "models": [
+        "gpt-5"
+      ],
+      "version": "2025-08-07",
+      "sku": "DataZoneProvisionedManaged",
+      "regions": [
+        "eastus2",
+        "westeurope"
+      ]
+    },
+    {
+      "id": "gpt-5-2025-08-07-datazonestandard-compatible",
+      "status": "compatible",
+      "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#data-zone-standard",
+      "condition": "Microsoft lists this exact model version and deployment type in this region. Verify customer quota separately.",
+      "verifiedOn": "2026-11-19",
+      "reviewBy": "2027-01-17",
+      "models": [
+        "gpt-5"
+      ],
+      "version": "2025-08-07",
+      "sku": "DataZoneStandard",
+      "regions": [
+        "eastus2",
+        "westeurope"
+      ]
+    },
+    {
+      "id": "gpt-5-2025-08-07-globalprovisionedmanaged-conditional",
+      "status": "conditional",
+      "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#global-provisioned-managed",
+      "condition": "Microsoft lists this exact provisioned model and deployment region. Confirm tenant quota, capacity and sizing before planning rollout.",
+      "verifiedOn": "2026-11-19",
+      "reviewBy": "2027-01-17",
+      "models": [
+        "gpt-5"
+      ],
+      "version": "2025-08-07",
+      "sku": "GlobalProvisionedManaged",
+      "regions": [
+        "eastus2",
+        "uksouth",
+        "westeurope"
+      ]
+    },
+    {
+      "id": "gpt-5-2025-08-07-globalstandard-compatible",
+      "status": "compatible",
+      "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#global-standard",
+      "condition": "Microsoft lists this exact model version and deployment type in this region. Verify customer quota separately.",
+      "verifiedOn": "2026-11-19",
+      "reviewBy": "2027-01-17",
+      "models": [
+        "gpt-5"
+      ],
+      "version": "2025-08-07",
+      "sku": "GlobalStandard",
+      "regions": [
+        "eastus2",
+        "uksouth",
+        "westeurope"
+      ]
+    },
+    {
+      "id": "gpt-5-2025-08-07-provisionedmanaged-conditional",
+      "status": "conditional",
+      "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#regional-provisioned-managed",
+      "condition": "Microsoft lists this exact provisioned model and deployment region. Confirm tenant quota, capacity and sizing before planning rollout.",
+      "verifiedOn": "2026-11-19",
+      "reviewBy": "2027-01-17",
+      "models": [
+        "gpt-5"
+      ],
+      "version": "2025-08-07",
+      "sku": "ProvisionedManaged",
+      "regions": [
+        "eastus2",
+        "uksouth"
+      ]
+    },
+    {
+      "id": "gpt-5-2025-08-07-provisionedmanaged-incompatible",
+      "status": "incompatible",
+      "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#regional-provisioned-managed",
+      "condition": "Microsoft marks this exact model version and deployment type unavailable in the selected region.",
+      "verifiedOn": "2026-11-19",
+      "reviewBy": "2027-01-17",
+      "models": [
+        "gpt-5"
+      ],
+      "version": "2025-08-07",
+      "sku": "ProvisionedManaged",
+      "regions": [
+        "westeurope"
+      ]
+    },
+    {
+      "id": "gpt-5-mini-2025-08-07-datazoneprovisionedmanaged-conditional",
+      "status": "conditional",
+      "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#data-zone-provisioned-managed",
+      "condition": "Microsoft lists this exact provisioned model and deployment region. Confirm tenant quota, capacity and sizing before planning rollout.",
+      "verifiedOn": "2026-11-19",
+      "reviewBy": "2027-01-17",
+      "models": [
+        "gpt-5-mini"
+      ],
+      "version": "2025-08-07",
+      "sku": "DataZoneProvisionedManaged",
+      "regions": [
+        "eastus2",
+        "westeurope"
+      ]
+    },
+    {
+      "id": "gpt-5-mini-2025-08-07-datazonestandard-compatible",
+      "status": "compatible",
+      "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#data-zone-standard",
+      "condition": "Microsoft lists this exact model version and deployment type in this region. Verify customer quota separately.",
+      "verifiedOn": "2026-11-19",
+      "reviewBy": "2027-01-17",
+      "models": [
+        "gpt-5-mini"
+      ],
+      "version": "2025-08-07",
+      "sku": "DataZoneStandard",
+      "regions": [
+        "eastus2",
+        "westeurope"
+      ]
+    },
+    {
+      "id": "gpt-5-mini-2025-08-07-globalprovisionedmanaged-conditional",
+      "status": "conditional",
+      "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#global-provisioned-managed",
+      "condition": "Microsoft lists this exact provisioned model and deployment region. Confirm tenant quota, capacity and sizing before planning rollout.",
+      "verifiedOn": "2026-11-19",
+      "reviewBy": "2027-01-17",
+      "models": [
+        "gpt-5-mini"
+      ],
+      "version": "2025-08-07",
+      "sku": "GlobalProvisionedManaged",
+      "regions": [
+        "eastus2",
+        "uksouth",
+        "westeurope"
+      ]
+    },
+    {
+      "id": "gpt-5-mini-2025-08-07-globalstandard-compatible",
+      "status": "compatible",
+      "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#global-standard",
+      "condition": "Microsoft lists this exact model version and deployment type in this region. Verify customer quota separately.",
+      "verifiedOn": "2026-11-19",
+      "reviewBy": "2027-01-17",
+      "models": [
+        "gpt-5-mini"
+      ],
+      "version": "2025-08-07",
+      "sku": "GlobalStandard",
+      "regions": [
+        "eastus2",
+        "uksouth",
+        "westeurope"
+      ]
+    },
+    {
+      "id": "gpt-5-mini-2025-08-07-provisionedmanaged-conditional",
+      "status": "conditional",
+      "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#regional-provisioned-managed",
+      "condition": "Microsoft lists this exact provisioned model and deployment region. Confirm tenant quota, capacity and sizing before planning rollout.",
+      "verifiedOn": "2026-11-19",
+      "reviewBy": "2027-01-17",
+      "models": [
+        "gpt-5-mini"
+      ],
+      "version": "2025-08-07",
+      "sku": "ProvisionedManaged",
+      "regions": [
+        "eastus2",
+        "uksouth"
+      ]
+    },
+    {
+      "id": "gpt-5-mini-2025-08-07-provisionedmanaged-incompatible",
+      "status": "incompatible",
+      "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#regional-provisioned-managed",
+      "condition": "Microsoft marks this exact model version and deployment type unavailable in the selected region.",
+      "verifiedOn": "2026-11-19",
+      "reviewBy": "2027-01-17",
+      "models": [
+        "gpt-5-mini"
+      ],
+      "version": "2025-08-07",
+      "sku": "ProvisionedManaged",
+      "regions": [
+        "westeurope"
+      ]
+    },
+    {
+      "id": "gpt-5-nano-2025-08-07-datazonestandard-compatible",
+      "status": "compatible",
+      "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#data-zone-standard",
+      "condition": "Microsoft lists this exact model version and deployment type in this region. Verify customer quota separately.",
+      "verifiedOn": "2026-11-19",
+      "reviewBy": "2027-01-17",
+      "models": [
+        "gpt-5-nano"
+      ],
+      "version": "2025-08-07",
+      "sku": "DataZoneStandard",
+      "regions": [
+        "eastus2",
+        "westeurope"
+      ]
+    },
+    {
+      "id": "gpt-5-nano-2025-08-07-globalstandard-compatible",
+      "status": "compatible",
+      "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#global-standard",
+      "condition": "Microsoft lists this exact model version and deployment type in this region. Verify customer quota separately.",
+      "verifiedOn": "2026-11-19",
+      "reviewBy": "2027-01-17",
+      "models": [
+        "gpt-5-nano"
+      ],
+      "version": "2025-08-07",
+      "sku": "GlobalStandard",
+      "regions": [
+        "eastus2",
+        "uksouth",
+        "westeurope"
+      ]
+    },
+    {
+      "id": "gpt-5-1-2025-11-13-datazoneprovisionedmanaged-conditional",
+      "status": "conditional",
+      "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#data-zone-provisioned-managed",
+      "condition": "Microsoft lists this exact provisioned model and deployment region. Confirm tenant quota, capacity and sizing before planning rollout.",
+      "verifiedOn": "2026-11-19",
+      "reviewBy": "2027-01-17",
+      "models": [
+        "gpt-5.1"
+      ],
+      "version": "2025-11-13",
+      "sku": "DataZoneProvisionedManaged",
+      "regions": [
+        "eastus2",
+        "westeurope"
+      ]
+    },
+    {
+      "id": "gpt-5-1-2025-11-13-datazonestandard-compatible",
+      "status": "compatible",
+      "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#data-zone-standard",
+      "condition": "Microsoft lists this exact model version and deployment type in this region. Verify customer quota separately.",
+      "verifiedOn": "2026-11-19",
+      "reviewBy": "2027-01-17",
+      "models": [
+        "gpt-5.1"
+      ],
+      "version": "2025-11-13",
+      "sku": "DataZoneStandard",
+      "regions": [
+        "eastus2"
+      ]
+    },
+    {
+      "id": "gpt-5-1-2025-11-13-datazonestandard-incompatible",
+      "status": "incompatible",
+      "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#data-zone-standard",
+      "condition": "Microsoft marks this exact model version and deployment type unavailable in the selected region.",
+      "verifiedOn": "2026-11-19",
+      "reviewBy": "2027-01-17",
+      "models": [
+        "gpt-5.1"
+      ],
+      "version": "2025-11-13",
+      "sku": "DataZoneStandard",
+      "regions": [
+        "westeurope"
+      ]
+    },
+    {
+      "id": "gpt-5-1-2025-11-13-globalprovisionedmanaged-conditional",
+      "status": "conditional",
+      "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#global-provisioned-managed",
+      "condition": "Microsoft lists this exact provisioned model and deployment region. Confirm tenant quota, capacity and sizing before planning rollout.",
+      "verifiedOn": "2026-11-19",
+      "reviewBy": "2027-01-17",
+      "models": [
+        "gpt-5.1"
+      ],
+      "version": "2025-11-13",
+      "sku": "GlobalProvisionedManaged",
+      "regions": [
+        "eastus2",
+        "uksouth",
+        "westeurope"
+      ]
+    },
+    {
+      "id": "gpt-5-1-2025-11-13-globalstandard-compatible",
+      "status": "compatible",
+      "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#global-standard",
+      "condition": "Microsoft lists this exact model version and deployment type in this region. Verify customer quota separately.",
+      "verifiedOn": "2026-11-19",
+      "reviewBy": "2027-01-17",
+      "models": [
+        "gpt-5.1"
+      ],
+      "version": "2025-11-13",
+      "sku": "GlobalStandard",
+      "regions": [
+        "eastus2",
+        "uksouth",
+        "westeurope"
+      ]
+    },
+    {
+      "id": "gpt-5-1-2025-11-13-provisionedmanaged-conditional",
+      "status": "conditional",
+      "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#regional-provisioned-managed",
+      "condition": "Microsoft lists this exact provisioned model and deployment region. Confirm tenant quota, capacity and sizing before planning rollout.",
+      "verifiedOn": "2026-11-19",
+      "reviewBy": "2027-01-17",
+      "models": [
+        "gpt-5.1"
+      ],
+      "version": "2025-11-13",
+      "sku": "ProvisionedManaged",
+      "regions": [
+        "eastus2",
+        "uksouth"
+      ]
+    },
+    {
+      "id": "gpt-5-1-2025-11-13-provisionedmanaged-incompatible",
+      "status": "incompatible",
+      "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#regional-provisioned-managed",
+      "condition": "Microsoft marks this exact model version and deployment type unavailable in the selected region.",
+      "verifiedOn": "2026-11-19",
+      "reviewBy": "2027-01-17",
+      "models": [
+        "gpt-5.1"
+      ],
+      "version": "2025-11-13",
+      "sku": "ProvisionedManaged",
+      "regions": [
+        "westeurope"
+      ]
+    },
+    {
+      "id": "gpt-5-1-2025-11-13-standard-compatible",
+      "status": "compatible",
+      "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#regional-standard",
+      "condition": "Microsoft lists this exact model version and deployment type in this region. Verify customer quota separately.",
+      "verifiedOn": "2026-11-19",
+      "reviewBy": "2027-01-17",
+      "models": [
+        "gpt-5.1"
+      ],
+      "version": "2025-11-13",
+      "sku": "Standard",
+      "regions": [
+        "eastus2"
+      ]
+    },
+    {
+      "id": "gpt-5-1-2025-11-13-standard-incompatible",
+      "status": "incompatible",
+      "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#regional-standard",
+      "condition": "Microsoft marks this exact model version and deployment type unavailable in the selected region.",
+      "verifiedOn": "2026-11-19",
+      "reviewBy": "2027-01-17",
+      "models": [
+        "gpt-5.1"
+      ],
+      "version": "2025-11-13",
+      "sku": "Standard",
+      "regions": [
+        "uksouth",
+        "westeurope"
+      ]
+    },
+    {
+      "id": "gpt-5-2-2025-12-11-datazoneprovisionedmanaged-conditional",
+      "status": "conditional",
+      "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#data-zone-provisioned-managed",
+      "condition": "Microsoft lists this exact provisioned model and deployment region. Confirm tenant quota, capacity and sizing before planning rollout.",
+      "verifiedOn": "2026-11-19",
+      "reviewBy": "2027-01-17",
+      "models": [
+        "gpt-5.2"
+      ],
+      "version": "2025-12-11",
+      "sku": "DataZoneProvisionedManaged",
+      "regions": [
+        "eastus2",
+        "westeurope"
+      ]
+    },
+    {
+      "id": "gpt-5-2-2025-12-11-datazonestandard-compatible",
+      "status": "compatible",
+      "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#data-zone-standard",
+      "condition": "Microsoft lists this exact model version and deployment type in this region. Verify customer quota separately.",
+      "verifiedOn": "2026-11-19",
+      "reviewBy": "2027-01-17",
+      "models": [
+        "gpt-5.2"
+      ],
+      "version": "2025-12-11",
+      "sku": "DataZoneStandard",
+      "regions": [
+        "eastus2"
+      ]
+    },
+    {
+      "id": "gpt-5-2-2025-12-11-globalprovisionedmanaged-conditional",
+      "status": "conditional",
+      "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#global-provisioned-managed",
+      "condition": "Microsoft lists this exact provisioned model and deployment region. Confirm tenant quota, capacity and sizing before planning rollout.",
+      "verifiedOn": "2026-11-19",
+      "reviewBy": "2027-01-17",
+      "models": [
+        "gpt-5.2"
+      ],
+      "version": "2025-12-11",
+      "sku": "GlobalProvisionedManaged",
+      "regions": [
+        "eastus2",
+        "uksouth",
+        "westeurope"
+      ]
+    },
+    {
+      "id": "gpt-5-2-2025-12-11-globalstandard-compatible",
+      "status": "compatible",
+      "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#global-standard",
+      "condition": "Microsoft lists this exact model version and deployment type in this region. Verify customer quota separately.",
+      "verifiedOn": "2026-11-19",
+      "reviewBy": "2027-01-17",
+      "models": [
+        "gpt-5.2"
+      ],
+      "version": "2025-12-11",
+      "sku": "GlobalStandard",
+      "regions": [
+        "eastus2",
+        "uksouth",
+        "westeurope"
+      ]
+    },
+    {
+      "id": "gpt-5-2-2025-12-11-provisionedmanaged-conditional",
+      "status": "conditional",
+      "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#regional-provisioned-managed",
+      "condition": "Microsoft lists this exact provisioned model and deployment region. Confirm tenant quota, capacity and sizing before planning rollout.",
+      "verifiedOn": "2026-11-19",
+      "reviewBy": "2027-01-17",
+      "models": [
+        "gpt-5.2"
+      ],
+      "version": "2025-12-11",
+      "sku": "ProvisionedManaged",
+      "regions": [
+        "uksouth"
+      ]
+    },
+    {
+      "id": "gpt-5-2-2025-12-11-provisionedmanaged-incompatible",
+      "status": "incompatible",
+      "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#regional-provisioned-managed",
+      "condition": "Microsoft marks this exact model version and deployment type unavailable in the selected region.",
+      "verifiedOn": "2026-11-19",
+      "reviewBy": "2027-01-17",
+      "models": [
+        "gpt-5.2"
+      ],
+      "version": "2025-12-11",
+      "sku": "ProvisionedManaged",
+      "regions": [
+        "eastus2",
+        "westeurope"
+      ]
+    },
+    {
+      "id": "gpt-5-4-2026-03-05-datazoneprovisionedmanaged-conditional",
+      "status": "conditional",
+      "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#data-zone-provisioned-managed",
+      "condition": "Microsoft lists this exact provisioned model and deployment region. Confirm tenant quota, capacity and sizing before planning rollout.",
+      "verifiedOn": "2026-11-19",
+      "reviewBy": "2027-01-17",
+      "models": [
+        "gpt-5.4"
+      ],
+      "version": "2026-03-05",
+      "sku": "DataZoneProvisionedManaged",
+      "regions": [
+        "eastus2",
+        "westeurope"
+      ]
+    },
+    {
+      "id": "gpt-5-4-2026-03-05-datazonestandard-compatible",
+      "status": "compatible",
+      "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#data-zone-standard",
+      "condition": "Microsoft lists this exact model version and deployment type in this region. Verify customer quota separately.",
+      "verifiedOn": "2026-11-19",
+      "reviewBy": "2027-01-17",
+      "models": [
+        "gpt-5.4"
+      ],
+      "version": "2026-03-05",
+      "sku": "DataZoneStandard",
+      "regions": [
+        "eastus2",
+        "westeurope"
+      ]
+    },
+    {
+      "id": "gpt-5-4-2026-03-05-globalprovisionedmanaged-conditional",
+      "status": "conditional",
+      "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#global-provisioned-managed",
+      "condition": "Microsoft lists this exact provisioned model and deployment region. Confirm tenant quota, capacity and sizing before planning rollout.",
+      "verifiedOn": "2026-11-19",
+      "reviewBy": "2027-01-17",
+      "models": [
+        "gpt-5.4"
+      ],
+      "version": "2026-03-05",
+      "sku": "GlobalProvisionedManaged",
+      "regions": [
+        "eastus2",
+        "uksouth",
+        "westeurope"
+      ]
+    },
+    {
+      "id": "gpt-5-4-2026-03-05-globalstandard-compatible",
+      "status": "compatible",
+      "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#global-standard",
+      "condition": "Microsoft lists this exact model version and deployment type in this region. Verify customer quota separately.",
+      "verifiedOn": "2026-11-19",
+      "reviewBy": "2027-01-17",
+      "models": [
+        "gpt-5.4"
+      ],
+      "version": "2026-03-05",
+      "sku": "GlobalStandard",
+      "regions": [
+        "eastus2",
+        "uksouth",
+        "westeurope"
+      ]
+    },
+    {
+      "id": "gpt-5-4-2026-03-05-provisionedmanaged-conditional",
+      "status": "conditional",
+      "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#regional-provisioned-managed",
+      "condition": "Microsoft lists this exact provisioned model and deployment region. Confirm tenant quota, capacity and sizing before planning rollout.",
+      "verifiedOn": "2026-11-19",
+      "reviewBy": "2027-01-17",
+      "models": [
+        "gpt-5.4"
+      ],
+      "version": "2026-03-05",
+      "sku": "ProvisionedManaged",
+      "regions": [
+        "uksouth"
+      ]
+    },
+    {
+      "id": "gpt-5-4-2026-03-05-provisionedmanaged-incompatible",
+      "status": "incompatible",
+      "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#regional-provisioned-managed",
+      "condition": "Microsoft marks this exact model version and deployment type unavailable in the selected region.",
+      "verifiedOn": "2026-11-19",
+      "reviewBy": "2027-01-17",
+      "models": [
+        "gpt-5.4"
+      ],
+      "version": "2026-03-05",
+      "sku": "ProvisionedManaged",
+      "regions": [
+        "eastus2",
+        "westeurope"
+      ]
+    },
+    {
+      "id": "gpt-5-4-mini-2026-03-17-datazoneprovisionedmanaged-conditional",
+      "status": "conditional",
+      "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#data-zone-provisioned-managed",
+      "condition": "Microsoft lists this exact provisioned model and deployment region. Confirm tenant quota, capacity and sizing before planning rollout.",
+      "verifiedOn": "2026-11-19",
+      "reviewBy": "2027-01-17",
+      "models": [
+        "gpt-5.4-mini"
+      ],
+      "version": "2026-03-17",
+      "sku": "DataZoneProvisionedManaged",
+      "regions": [
+        "eastus2",
+        "westeurope"
+      ]
+    },
+    {
+      "id": "gpt-5-4-mini-2026-03-17-datazonestandard-compatible",
+      "status": "compatible",
+      "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#data-zone-standard",
+      "condition": "Microsoft lists this exact model version and deployment type in this region. Verify customer quota separately.",
+      "verifiedOn": "2026-11-19",
+      "reviewBy": "2027-01-17",
+      "models": [
+        "gpt-5.4-mini"
+      ],
+      "version": "2026-03-17",
+      "sku": "DataZoneStandard",
+      "regions": [
+        "eastus2",
+        "westeurope"
+      ]
+    },
+    {
+      "id": "gpt-5-4-mini-2026-03-17-globalprovisionedmanaged-conditional",
+      "status": "conditional",
+      "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#global-provisioned-managed",
+      "condition": "Microsoft lists this exact provisioned model and deployment region. Confirm tenant quota, capacity and sizing before planning rollout.",
+      "verifiedOn": "2026-11-19",
+      "reviewBy": "2027-01-17",
+      "models": [
+        "gpt-5.4-mini"
+      ],
+      "version": "2026-03-17",
+      "sku": "GlobalProvisionedManaged",
+      "regions": [
+        "eastus2",
+        "uksouth",
+        "westeurope"
+      ]
+    },
+    {
+      "id": "gpt-5-4-mini-2026-03-17-globalstandard-compatible",
+      "status": "compatible",
+      "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#global-standard",
+      "condition": "Microsoft lists this exact model version and deployment type in this region. Verify customer quota separately.",
+      "verifiedOn": "2026-11-19",
+      "reviewBy": "2027-01-17",
+      "models": [
+        "gpt-5.4-mini"
+      ],
+      "version": "2026-03-17",
+      "sku": "GlobalStandard",
+      "regions": [
+        "eastus2",
+        "uksouth",
+        "westeurope"
+      ]
+    },
+    {
+      "id": "gpt-5-4-mini-2026-03-17-provisionedmanaged-conditional",
+      "status": "conditional",
+      "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#regional-provisioned-managed",
+      "condition": "Microsoft lists this exact provisioned model and deployment region. Confirm tenant quota, capacity and sizing before planning rollout.",
+      "verifiedOn": "2026-11-19",
+      "reviewBy": "2027-01-17",
+      "models": [
+        "gpt-5.4-mini"
+      ],
+      "version": "2026-03-17",
+      "sku": "ProvisionedManaged",
+      "regions": [
+        "uksouth"
+      ]
+    },
+    {
+      "id": "gpt-5-4-mini-2026-03-17-provisionedmanaged-incompatible",
+      "status": "incompatible",
+      "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#regional-provisioned-managed",
+      "condition": "Microsoft marks this exact model version and deployment type unavailable in the selected region.",
+      "verifiedOn": "2026-11-19",
+      "reviewBy": "2027-01-17",
+      "models": [
+        "gpt-5.4-mini"
+      ],
+      "version": "2026-03-17",
+      "sku": "ProvisionedManaged",
+      "regions": [
+        "eastus2",
+        "westeurope"
+      ]
+    },
+    {
+      "id": "gpt-5-6-sol-2026-07-09-datazoneprovisionedmanaged-conditional",
+      "status": "conditional",
+      "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#data-zone-provisioned-managed",
+      "condition": "Microsoft lists this exact provisioned model and deployment region. Confirm tenant quota, capacity and sizing before planning rollout.",
+      "verifiedOn": "2026-11-19",
+      "reviewBy": "2027-01-17",
+      "models": [
+        "gpt-5.6-sol"
+      ],
+      "version": "2026-07-09",
+      "sku": "DataZoneProvisionedManaged",
+      "regions": [
+        "eastus2",
+        "westeurope"
+      ]
+    },
+    {
+      "id": "gpt-5-6-sol-2026-07-09-datazonestandard-compatible",
+      "status": "compatible",
+      "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#data-zone-standard",
+      "condition": "Microsoft lists this exact model version and deployment type in this region. Verify customer quota separately.",
+      "verifiedOn": "2026-11-19",
+      "reviewBy": "2027-01-17",
+      "models": [
+        "gpt-5.6-sol"
+      ],
+      "version": "2026-07-09",
+      "sku": "DataZoneStandard",
+      "regions": [
+        "eastus2",
+        "westeurope"
+      ]
+    },
+    {
+      "id": "gpt-5-6-sol-2026-07-09-globalprovisionedmanaged-conditional",
+      "status": "conditional",
+      "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#global-provisioned-managed",
+      "condition": "Microsoft lists this exact provisioned model and deployment region. Confirm tenant quota, capacity and sizing before planning rollout.",
+      "verifiedOn": "2026-11-19",
+      "reviewBy": "2027-01-17",
+      "models": [
+        "gpt-5.6-sol"
+      ],
+      "version": "2026-07-09",
+      "sku": "GlobalProvisionedManaged",
+      "regions": [
+        "uksouth",
+        "westeurope"
+      ]
+    },
+    {
+      "id": "gpt-5-6-sol-2026-07-09-globalprovisionedmanaged-incompatible",
+      "status": "incompatible",
+      "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#global-provisioned-managed",
+      "condition": "Microsoft marks this exact model version and deployment type unavailable in the selected region.",
+      "verifiedOn": "2026-11-19",
+      "reviewBy": "2027-01-17",
+      "models": [
+        "gpt-5.6-sol"
+      ],
+      "version": "2026-07-09",
+      "sku": "GlobalProvisionedManaged",
+      "regions": [
+        "eastus2"
+      ]
+    },
+    {
+      "id": "gpt-5-6-sol-2026-07-09-globalstandard-compatible",
+      "status": "compatible",
+      "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#global-standard",
+      "condition": "Microsoft lists this exact model version and deployment type in this region. Verify customer quota separately.",
+      "verifiedOn": "2026-11-19",
+      "reviewBy": "2027-01-17",
+      "models": [
+        "gpt-5.6-sol"
+      ],
+      "version": "2026-07-09",
+      "sku": "GlobalStandard",
+      "regions": [
+        "eastus2",
+        "uksouth",
+        "westeurope"
+      ]
+    },
+    {
+      "id": "gpt-5-6-sol-2026-07-09-provisionedmanaged-conditional",
+      "status": "conditional",
+      "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#regional-provisioned-managed",
+      "condition": "Microsoft lists this exact provisioned model and deployment region. Confirm tenant quota, capacity and sizing before planning rollout.",
+      "verifiedOn": "2026-11-19",
+      "reviewBy": "2027-01-17",
+      "models": [
+        "gpt-5.6-sol"
+      ],
+      "version": "2026-07-09",
+      "sku": "ProvisionedManaged",
+      "regions": [
+        "uksouth"
+      ]
+    },
+    {
+      "id": "gpt-5-6-sol-2026-07-09-provisionedmanaged-incompatible",
+      "status": "incompatible",
+      "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#regional-provisioned-managed",
+      "condition": "Microsoft marks this exact model version and deployment type unavailable in the selected region.",
+      "verifiedOn": "2026-11-19",
+      "reviewBy": "2027-01-17",
+      "models": [
+        "gpt-5.6-sol"
+      ],
+      "version": "2026-07-09",
+      "sku": "ProvisionedManaged",
+      "regions": [
+        "eastus2",
+        "westeurope"
+      ]
+    },
+    {
+      "id": "gpt-5-6-sol-2026-07-09-standard-incompatible",
+      "status": "incompatible",
+      "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#regional-standard",
+      "condition": "Microsoft marks this exact model version and deployment type unavailable in the selected region.",
+      "verifiedOn": "2026-11-19",
+      "reviewBy": "2027-01-17",
+      "models": [
+        "gpt-5.6-sol"
+      ],
+      "version": "2026-07-09",
+      "sku": "Standard",
+      "regions": [
+        "eastus2",
+        "uksouth",
+        "westeurope"
+      ]
+    },
+    {
+      "id": "gpt-6-sol-2026-09-22-datazoneprovisionedmanaged-conditional",
+      "status": "conditional",
+      "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#data-zone-provisioned-managed",
+      "condition": "Microsoft lists this exact provisioned model and deployment region. Confirm tenant quota, capacity and sizing before planning rollout.",
+      "verifiedOn": "2026-11-19",
+      "reviewBy": "2027-01-17",
+      "models": [
+        "gpt-6-sol"
+      ],
+      "version": "2026-09-22",
+      "sku": "DataZoneProvisionedManaged",
+      "regions": [
+        "eastus2"
+      ]
+    },
+    {
+      "id": "gpt-6-sol-2026-09-22-datazonestandard-compatible",
+      "status": "compatible",
+      "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#data-zone-standard",
+      "condition": "Microsoft lists this exact model version and deployment type in this region. Verify customer quota separately.",
+      "verifiedOn": "2026-11-19",
+      "reviewBy": "2027-01-17",
+      "models": [
+        "gpt-6-sol"
+      ],
+      "version": "2026-09-22",
+      "sku": "DataZoneStandard",
+      "regions": [
+        "eastus2",
+        "westeurope"
+      ]
+    },
+    {
+      "id": "gpt-6-sol-2026-09-22-globalprovisionedmanaged-conditional",
+      "status": "conditional",
+      "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#global-provisioned-managed",
+      "condition": "Microsoft lists this exact provisioned model and deployment region. Confirm tenant quota, capacity and sizing before planning rollout.",
+      "verifiedOn": "2026-11-19",
+      "reviewBy": "2027-01-17",
+      "models": [
+        "gpt-6-sol"
+      ],
+      "version": "2026-09-22",
+      "sku": "GlobalProvisionedManaged",
+      "regions": [
+        "eastus2",
+        "uksouth",
+        "westeurope"
+      ]
+    },
+    {
+      "id": "gpt-6-sol-2026-09-22-globalstandard-compatible",
+      "status": "compatible",
+      "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#global-standard",
+      "condition": "Microsoft lists this exact model version and deployment type in this region. Verify customer quota separately.",
+      "verifiedOn": "2026-11-19",
+      "reviewBy": "2027-01-17",
+      "models": [
+        "gpt-6-sol"
+      ],
+      "version": "2026-09-22",
+      "sku": "GlobalStandard",
+      "regions": [
+        "eastus2",
+        "uksouth",
+        "westeurope"
+      ]
+    },
+    {
+      "id": "gpt-audio-2025-08-28-globalstandard-compatible",
+      "status": "compatible",
+      "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#global-standard",
+      "condition": "Microsoft lists this exact model version and deployment type in this region. Verify customer quota separately.",
+      "verifiedOn": "2026-11-19",
+      "reviewBy": "2027-01-17",
+      "models": [
+        "gpt-audio"
+      ],
+      "version": "2025-08-28",
+      "sku": "GlobalStandard",
+      "regions": [
+        "eastus2"
+      ]
+    },
+    {
+      "id": "gpt-audio-2025-08-28-globalstandard-incompatible",
+      "status": "incompatible",
+      "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#global-standard",
+      "condition": "Microsoft marks this exact model version and deployment type unavailable in the selected region.",
+      "verifiedOn": "2026-11-19",
+      "reviewBy": "2027-01-17",
+      "models": [
+        "gpt-audio"
+      ],
+      "version": "2025-08-28",
+      "sku": "GlobalStandard",
+      "regions": [
+        "uksouth",
+        "westeurope"
+      ]
+    },
+    {
+      "id": "gpt-audio-mini-2025-10-06-globalstandard-compatible",
+      "status": "compatible",
+      "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#global-standard",
+      "condition": "Microsoft lists this exact model version and deployment type in this region. Verify customer quota separately.",
+      "verifiedOn": "2026-11-19",
+      "reviewBy": "2027-01-17",
+      "models": [
+        "gpt-audio-mini"
+      ],
+      "version": "2025-10-06",
+      "sku": "GlobalStandard",
+      "regions": [
+        "eastus2"
+      ]
+    },
+    {
+      "id": "gpt-audio-mini-2025-10-06-globalstandard-incompatible",
+      "status": "incompatible",
+      "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#global-standard",
+      "condition": "Microsoft marks this exact model version and deployment type unavailable in the selected region.",
+      "verifiedOn": "2026-11-19",
+      "reviewBy": "2027-01-17",
+      "models": [
+        "gpt-audio-mini"
+      ],
+      "version": "2025-10-06",
+      "sku": "GlobalStandard",
+      "regions": [
+        "uksouth",
+        "westeurope"
+      ]
+    },
+    {
+      "id": "gpt-audio-mini-2025-12-15-globalstandard-compatible",
+      "status": "compatible",
+      "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#global-standard",
+      "condition": "Microsoft lists this exact model version and deployment type in this region. Verify customer quota separately.",
+      "verifiedOn": "2026-11-19",
+      "reviewBy": "2027-01-17",
+      "models": [
+        "gpt-audio-mini"
+      ],
+      "version": "2025-12-15",
+      "sku": "GlobalStandard",
+      "regions": [
+        "eastus2"
+      ]
+    },
+    {
+      "id": "gpt-audio-mini-2025-12-15-globalstandard-incompatible",
+      "status": "incompatible",
+      "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#global-standard",
+      "condition": "Microsoft marks this exact model version and deployment type unavailable in the selected region.",
+      "verifiedOn": "2026-11-19",
+      "reviewBy": "2027-01-17",
+      "models": [
+        "gpt-audio-mini"
+      ],
+      "version": "2025-12-15",
+      "sku": "GlobalStandard",
+      "regions": [
+        "uksouth",
+        "westeurope"
+      ]
+    },
+    {
+      "id": "gpt-image-1-5-2025-12-16-datazonestandard-compatible",
+      "status": "compatible",
+      "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#data-zone-standard",
+      "condition": "Microsoft lists this exact model version and deployment type in this region. Verify customer quota separately.",
+      "verifiedOn": "2026-11-19",
+      "reviewBy": "2027-01-17",
+      "models": [
+        "gpt-image-1.5"
+      ],
+      "version": "2025-12-16",
+      "sku": "DataZoneStandard",
+      "regions": [
+        "eastus2"
+      ]
+    },
+    {
+      "id": "gpt-image-1-5-2025-12-16-datazonestandard-incompatible",
+      "status": "incompatible",
+      "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#data-zone-standard",
+      "condition": "Microsoft marks this exact model version and deployment type unavailable in the selected region.",
+      "verifiedOn": "2026-11-19",
+      "reviewBy": "2027-01-17",
+      "models": [
+        "gpt-image-1.5"
+      ],
+      "version": "2025-12-16",
+      "sku": "DataZoneStandard",
+      "regions": [
+        "westeurope"
+      ]
+    },
+    {
+      "id": "gpt-image-1-5-2025-12-16-globalstandard-compatible",
+      "status": "compatible",
+      "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#global-standard",
+      "condition": "Microsoft lists this exact model version and deployment type in this region. Verify customer quota separately.",
+      "verifiedOn": "2026-11-19",
+      "reviewBy": "2027-01-17",
+      "models": [
+        "gpt-image-1.5"
+      ],
+      "version": "2025-12-16",
+      "sku": "GlobalStandard",
+      "regions": [
+        "eastus2"
+      ]
+    },
+    {
+      "id": "gpt-image-1-5-2025-12-16-globalstandard-incompatible",
+      "status": "incompatible",
+      "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#global-standard",
+      "condition": "Microsoft marks this exact model version and deployment type unavailable in the selected region.",
+      "verifiedOn": "2026-11-19",
+      "reviewBy": "2027-01-17",
+      "models": [
+        "gpt-image-1.5"
+      ],
+      "version": "2025-12-16",
+      "sku": "GlobalStandard",
+      "regions": [
+        "uksouth",
+        "westeurope"
+      ]
+    },
+    {
+      "id": "llama-3-3-70b-instruct-1-globalstandard-compatible",
+      "status": "compatible",
+      "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#global-standard",
+      "condition": "Microsoft lists this exact model version and deployment type in this region. Verify customer quota separately.",
+      "verifiedOn": "2026-11-19",
+      "reviewBy": "2027-01-17",
+      "models": [
+        "llama-3.3-70b-instruct"
+      ],
+      "version": "1",
+      "sku": "GlobalStandard",
+      "regions": [
+        "eastus2",
+        "uksouth",
+        "westeurope"
+      ]
+    },
+    {
+      "id": "llama-3-3-70b-instruct-2-globalstandard-compatible",
+      "status": "compatible",
+      "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#global-standard",
+      "condition": "Microsoft lists this exact model version and deployment type in this region. Verify customer quota separately.",
+      "verifiedOn": "2026-11-19",
+      "reviewBy": "2027-01-17",
+      "models": [
+        "llama-3.3-70b-instruct"
+      ],
+      "version": "2",
+      "sku": "GlobalStandard",
+      "regions": [
+        "eastus2",
+        "uksouth",
+        "westeurope"
+      ]
+    },
+    {
+      "id": "llama-3-3-70b-instruct-3-globalstandard-compatible",
+      "status": "compatible",
+      "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#global-standard",
+      "condition": "Microsoft lists this exact model version and deployment type in this region. Verify customer quota separately.",
+      "verifiedOn": "2026-11-19",
+      "reviewBy": "2027-01-17",
+      "models": [
+        "llama-3.3-70b-instruct"
+      ],
+      "version": "3",
+      "sku": "GlobalStandard",
+      "regions": [
+        "eastus2",
+        "uksouth",
+        "westeurope"
+      ]
+    },
+    {
+      "id": "llama-3-3-70b-instruct-4-globalstandard-compatible",
+      "status": "compatible",
+      "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#global-standard",
+      "condition": "Microsoft lists this exact model version and deployment type in this region. Verify customer quota separately.",
+      "verifiedOn": "2026-11-19",
+      "reviewBy": "2027-01-17",
+      "models": [
+        "llama-3.3-70b-instruct"
+      ],
+      "version": "4",
+      "sku": "GlobalStandard",
+      "regions": [
+        "eastus2",
+        "uksouth",
+        "westeurope"
+      ]
+    },
+    {
+      "id": "llama-3-3-70b-instruct-5-globalstandard-compatible",
+      "status": "compatible",
+      "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#global-standard",
+      "condition": "Microsoft lists this exact model version and deployment type in this region. Verify customer quota separately.",
+      "verifiedOn": "2026-11-19",
+      "reviewBy": "2027-01-17",
+      "models": [
+        "llama-3.3-70b-instruct"
+      ],
+      "version": "5",
+      "sku": "GlobalStandard",
+      "regions": [
+        "eastus2",
+        "uksouth",
+        "westeurope"
+      ]
+    },
+    {
+      "id": "llama-3-3-70b-instruct-9-datazoneprovisionedmanaged-conditional",
+      "status": "conditional",
+      "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#data-zone-provisioned-managed",
+      "condition": "Microsoft lists this exact provisioned model and deployment region. Confirm tenant quota, capacity and sizing before planning rollout.",
+      "verifiedOn": "2026-11-19",
+      "reviewBy": "2027-01-17",
+      "models": [
+        "llama-3.3-70b-instruct"
+      ],
+      "version": "9",
+      "sku": "DataZoneProvisionedManaged",
+      "regions": [
+        "eastus2",
+        "westeurope"
+      ]
+    },
+    {
+      "id": "llama-3-3-70b-instruct-9-globalprovisionedmanaged-conditional",
+      "status": "conditional",
+      "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#global-provisioned-managed",
+      "condition": "Microsoft lists this exact provisioned model and deployment region. Confirm tenant quota, capacity and sizing before planning rollout.",
+      "verifiedOn": "2026-11-19",
+      "reviewBy": "2027-01-17",
+      "models": [
+        "llama-3.3-70b-instruct"
+      ],
+      "version": "9",
+      "sku": "GlobalProvisionedManaged",
+      "regions": [
+        "eastus2",
+        "uksouth",
+        "westeurope"
+      ]
+    },
+    {
+      "id": "llama-3-3-70b-instruct-9-globalstandard-compatible",
+      "status": "compatible",
+      "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#global-standard",
+      "condition": "Microsoft lists this exact model version and deployment type in this region. Verify customer quota separately.",
+      "verifiedOn": "2026-11-19",
+      "reviewBy": "2027-01-17",
+      "models": [
+        "llama-3.3-70b-instruct"
+      ],
+      "version": "9",
+      "sku": "GlobalStandard",
+      "regions": [
+        "eastus2",
+        "uksouth",
+        "westeurope"
+      ]
+    },
+    {
+      "id": "llama-4-maverick-17b-128e-instruct-fp8-1-globalstandard-compatible",
+      "status": "compatible",
+      "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#global-standard",
+      "condition": "Microsoft lists this exact model version and deployment type in this region. Verify customer quota separately.",
+      "verifiedOn": "2026-11-19",
+      "reviewBy": "2027-01-17",
+      "models": [
+        "llama-4-maverick-17b-128e-instruct-fp8"
+      ],
+      "version": "1",
+      "sku": "GlobalStandard",
+      "regions": [
+        "eastus2",
+        "uksouth",
+        "westeurope"
+      ]
+    },
+    {
+      "id": "o1-2024-12-17-datazoneprovisionedmanaged-conditional",
+      "status": "conditional",
+      "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#data-zone-provisioned-managed",
+      "condition": "Microsoft lists this exact provisioned model and deployment region. Confirm tenant quota, capacity and sizing before planning rollout.",
+      "verifiedOn": "2026-11-19",
+      "reviewBy": "2027-01-17",
+      "models": [
+        "o1"
+      ],
+      "version": "2024-12-17",
+      "sku": "DataZoneProvisionedManaged",
+      "regions": [
+        "eastus2",
+        "westeurope"
+      ]
+    },
+    {
+      "id": "o1-2024-12-17-datazonestandard-compatible",
+      "status": "compatible",
+      "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#data-zone-standard",
+      "condition": "Microsoft lists this exact model version and deployment type in this region. Verify customer quota separately.",
+      "verifiedOn": "2026-11-19",
+      "reviewBy": "2027-01-17",
+      "models": [
+        "o1"
+      ],
+      "version": "2024-12-17",
+      "sku": "DataZoneStandard",
+      "regions": [
+        "eastus2",
+        "westeurope"
+      ]
+    },
+    {
+      "id": "o1-2024-12-17-globalprovisionedmanaged-conditional",
+      "status": "conditional",
+      "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#global-provisioned-managed",
+      "condition": "Microsoft lists this exact provisioned model and deployment region. Confirm tenant quota, capacity and sizing before planning rollout.",
+      "verifiedOn": "2026-11-19",
+      "reviewBy": "2027-01-17",
+      "models": [
+        "o1"
+      ],
+      "version": "2024-12-17",
+      "sku": "GlobalProvisionedManaged",
+      "regions": [
+        "eastus2",
+        "uksouth",
+        "westeurope"
+      ]
+    },
+    {
+      "id": "o1-2024-12-17-globalstandard-compatible",
+      "status": "compatible",
+      "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#global-standard",
+      "condition": "Microsoft lists this exact model version and deployment type in this region. Verify customer quota separately.",
+      "verifiedOn": "2026-11-19",
+      "reviewBy": "2027-01-17",
+      "models": [
+        "o1"
+      ],
+      "version": "2024-12-17",
+      "sku": "GlobalStandard",
+      "regions": [
+        "eastus2",
+        "uksouth",
+        "westeurope"
+      ]
+    },
+    {
+      "id": "o1-2024-12-17-provisionedmanaged-conditional",
+      "status": "conditional",
+      "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#regional-provisioned-managed",
+      "condition": "Microsoft lists this exact provisioned model and deployment region. Confirm tenant quota, capacity and sizing before planning rollout.",
+      "verifiedOn": "2026-11-19",
+      "reviewBy": "2027-01-17",
+      "models": [
+        "o1"
+      ],
+      "version": "2024-12-17",
+      "sku": "ProvisionedManaged",
+      "regions": [
+        "uksouth"
+      ]
+    },
+    {
+      "id": "o1-2024-12-17-provisionedmanaged-incompatible",
+      "status": "incompatible",
+      "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#regional-provisioned-managed",
+      "condition": "Microsoft marks this exact model version and deployment type unavailable in the selected region.",
+      "verifiedOn": "2026-11-19",
+      "reviewBy": "2027-01-17",
+      "models": [
+        "o1"
+      ],
+      "version": "2024-12-17",
+      "sku": "ProvisionedManaged",
+      "regions": [
+        "eastus2",
+        "westeurope"
+      ]
+    },
+    {
+      "id": "o1-2024-12-17-standard-compatible",
+      "status": "compatible",
+      "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#regional-standard",
+      "condition": "Microsoft lists this exact model version and deployment type in this region. Verify customer quota separately.",
+      "verifiedOn": "2026-11-19",
+      "reviewBy": "2027-01-17",
+      "models": [
+        "o1"
+      ],
+      "version": "2024-12-17",
+      "sku": "Standard",
+      "regions": [
+        "eastus2"
+      ]
+    },
+    {
+      "id": "o1-2024-12-17-standard-incompatible",
+      "status": "incompatible",
+      "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#regional-standard",
+      "condition": "Microsoft marks this exact model version and deployment type unavailable in the selected region.",
+      "verifiedOn": "2026-11-19",
+      "reviewBy": "2027-01-17",
+      "models": [
+        "o1"
+      ],
+      "version": "2024-12-17",
+      "sku": "Standard",
+      "regions": [
+        "uksouth",
+        "westeurope"
+      ]
+    },
+    {
+      "id": "o3-2025-04-16-datazoneprovisionedmanaged-conditional",
+      "status": "conditional",
+      "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#data-zone-provisioned-managed",
+      "condition": "Microsoft lists this exact provisioned model and deployment region. Confirm tenant quota, capacity and sizing before planning rollout.",
+      "verifiedOn": "2026-11-19",
+      "reviewBy": "2027-01-17",
+      "models": [
+        "o3"
+      ],
+      "version": "2025-04-16",
+      "sku": "DataZoneProvisionedManaged",
+      "regions": [
+        "eastus2",
+        "westeurope"
+      ]
+    },
+    {
+      "id": "o3-2025-04-16-datazonestandard-compatible",
+      "status": "compatible",
+      "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#data-zone-standard",
+      "condition": "Microsoft lists this exact model version and deployment type in this region. Verify customer quota separately.",
+      "verifiedOn": "2026-11-19",
+      "reviewBy": "2027-01-17",
+      "models": [
+        "o3"
+      ],
+      "version": "2025-04-16",
+      "sku": "DataZoneStandard",
+      "regions": [
+        "eastus2",
+        "westeurope"
+      ]
+    },
+    {
+      "id": "o3-2025-04-16-globalprovisionedmanaged-conditional",
+      "status": "conditional",
+      "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#global-provisioned-managed",
+      "condition": "Microsoft lists this exact provisioned model and deployment region. Confirm tenant quota, capacity and sizing before planning rollout.",
+      "verifiedOn": "2026-11-19",
+      "reviewBy": "2027-01-17",
+      "models": [
+        "o3"
+      ],
+      "version": "2025-04-16",
+      "sku": "GlobalProvisionedManaged",
+      "regions": [
+        "eastus2",
+        "uksouth",
+        "westeurope"
+      ]
+    },
+    {
+      "id": "o3-2025-04-16-globalstandard-compatible",
+      "status": "compatible",
+      "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#global-standard",
+      "condition": "Microsoft lists this exact model version and deployment type in this region. Verify customer quota separately.",
+      "verifiedOn": "2026-11-19",
+      "reviewBy": "2027-01-17",
+      "models": [
+        "o3"
+      ],
+      "version": "2025-04-16",
+      "sku": "GlobalStandard",
+      "regions": [
+        "eastus2",
+        "uksouth",
+        "westeurope"
+      ]
+    },
+    {
+      "id": "o3-2025-04-16-provisionedmanaged-conditional",
+      "status": "conditional",
+      "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#regional-provisioned-managed",
+      "condition": "Microsoft lists this exact provisioned model and deployment region. Confirm tenant quota, capacity and sizing before planning rollout.",
+      "verifiedOn": "2026-11-19",
+      "reviewBy": "2027-01-17",
+      "models": [
+        "o3"
+      ],
+      "version": "2025-04-16",
+      "sku": "ProvisionedManaged",
+      "regions": [
+        "eastus2",
+        "westeurope"
+      ]
+    },
+    {
+      "id": "o3-2025-04-16-provisionedmanaged-incompatible",
+      "status": "incompatible",
+      "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#regional-provisioned-managed",
+      "condition": "Microsoft marks this exact model version and deployment type unavailable in the selected region.",
+      "verifiedOn": "2026-11-19",
+      "reviewBy": "2027-01-17",
+      "models": [
+        "o3"
+      ],
+      "version": "2025-04-16",
+      "sku": "ProvisionedManaged",
+      "regions": [
+        "uksouth"
+      ]
+    },
+    {
+      "id": "o3-mini-2025-01-31-datazoneprovisionedmanaged-conditional",
+      "status": "conditional",
+      "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#data-zone-provisioned-managed",
+      "condition": "Microsoft lists this exact provisioned model and deployment region. Confirm tenant quota, capacity and sizing before planning rollout.",
+      "verifiedOn": "2026-11-19",
+      "reviewBy": "2027-01-17",
+      "models": [
+        "o3-mini"
+      ],
+      "version": "2025-01-31",
+      "sku": "DataZoneProvisionedManaged",
+      "regions": [
+        "eastus2",
+        "westeurope"
+      ]
+    },
+    {
+      "id": "o3-mini-2025-01-31-datazonestandard-compatible",
+      "status": "compatible",
+      "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#data-zone-standard",
+      "condition": "Microsoft lists this exact model version and deployment type in this region. Verify customer quota separately.",
+      "verifiedOn": "2026-11-19",
+      "reviewBy": "2027-01-17",
+      "models": [
+        "o3-mini"
+      ],
+      "version": "2025-01-31",
+      "sku": "DataZoneStandard",
+      "regions": [
+        "eastus2",
+        "westeurope"
+      ]
+    },
+    {
+      "id": "o3-mini-2025-01-31-globalprovisionedmanaged-conditional",
+      "status": "conditional",
+      "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#global-provisioned-managed",
+      "condition": "Microsoft lists this exact provisioned model and deployment region. Confirm tenant quota, capacity and sizing before planning rollout.",
+      "verifiedOn": "2026-11-19",
+      "reviewBy": "2027-01-17",
+      "models": [
+        "o3-mini"
+      ],
+      "version": "2025-01-31",
+      "sku": "GlobalProvisionedManaged",
+      "regions": [
+        "eastus2",
+        "uksouth",
+        "westeurope"
+      ]
+    },
+    {
+      "id": "o3-mini-2025-01-31-globalstandard-compatible",
+      "status": "compatible",
+      "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#global-standard",
+      "condition": "Microsoft lists this exact model version and deployment type in this region. Verify customer quota separately.",
+      "verifiedOn": "2026-11-19",
+      "reviewBy": "2027-01-17",
+      "models": [
+        "o3-mini"
+      ],
+      "version": "2025-01-31",
+      "sku": "GlobalStandard",
+      "regions": [
+        "eastus2",
+        "uksouth",
+        "westeurope"
+      ]
+    },
+    {
+      "id": "o3-mini-2025-01-31-provisionedmanaged-conditional",
+      "status": "conditional",
+      "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#regional-provisioned-managed",
+      "condition": "Microsoft lists this exact provisioned model and deployment region. Confirm tenant quota, capacity and sizing before planning rollout.",
+      "verifiedOn": "2026-11-19",
+      "reviewBy": "2027-01-17",
+      "models": [
+        "o3-mini"
+      ],
+      "version": "2025-01-31",
+      "sku": "ProvisionedManaged",
+      "regions": [
+        "eastus2"
+      ]
+    },
+    {
+      "id": "o3-mini-2025-01-31-provisionedmanaged-incompatible",
+      "status": "incompatible",
+      "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#regional-provisioned-managed",
+      "condition": "Microsoft marks this exact model version and deployment type unavailable in the selected region.",
+      "verifiedOn": "2026-11-19",
+      "reviewBy": "2027-01-17",
+      "models": [
+        "o3-mini"
+      ],
+      "version": "2025-01-31",
+      "sku": "ProvisionedManaged",
+      "regions": [
+        "uksouth",
+        "westeurope"
+      ]
+    },
+    {
+      "id": "o4-mini-2025-04-16-datazoneprovisionedmanaged-conditional",
+      "status": "conditional",
+      "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#data-zone-provisioned-managed",
+      "condition": "Microsoft lists this exact provisioned model and deployment region. Confirm tenant quota, capacity and sizing before planning rollout.",
+      "verifiedOn": "2026-11-19",
+      "reviewBy": "2027-01-17",
+      "models": [
+        "o4-mini"
+      ],
+      "version": "2025-04-16",
+      "sku": "DataZoneProvisionedManaged",
+      "regions": [
+        "eastus2",
+        "westeurope"
+      ]
+    },
+    {
+      "id": "o4-mini-2025-04-16-datazonestandard-compatible",
+      "status": "compatible",
+      "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#data-zone-standard",
+      "condition": "Microsoft lists this exact model version and deployment type in this region. Verify customer quota separately.",
+      "verifiedOn": "2026-11-19",
+      "reviewBy": "2027-01-17",
+      "models": [
+        "o4-mini"
+      ],
+      "version": "2025-04-16",
+      "sku": "DataZoneStandard",
+      "regions": [
+        "eastus2",
+        "westeurope"
+      ]
+    },
+    {
+      "id": "o4-mini-2025-04-16-globalprovisionedmanaged-conditional",
+      "status": "conditional",
+      "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#global-provisioned-managed",
+      "condition": "Microsoft lists this exact provisioned model and deployment region. Confirm tenant quota, capacity and sizing before planning rollout.",
+      "verifiedOn": "2026-11-19",
+      "reviewBy": "2027-01-17",
+      "models": [
+        "o4-mini"
+      ],
+      "version": "2025-04-16",
+      "sku": "GlobalProvisionedManaged",
+      "regions": [
+        "eastus2",
+        "uksouth",
+        "westeurope"
+      ]
+    },
+    {
+      "id": "o4-mini-2025-04-16-globalstandard-compatible",
+      "status": "compatible",
+      "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#global-standard",
+      "condition": "Microsoft lists this exact model version and deployment type in this region. Verify customer quota separately.",
+      "verifiedOn": "2026-11-19",
+      "reviewBy": "2027-01-17",
+      "models": [
+        "o4-mini"
+      ],
+      "version": "2025-04-16",
+      "sku": "GlobalStandard",
+      "regions": [
+        "eastus2",
+        "uksouth",
+        "westeurope"
+      ]
+    },
+    {
+      "id": "o4-mini-2025-04-16-provisionedmanaged-conditional",
+      "status": "conditional",
+      "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#regional-provisioned-managed",
+      "condition": "Microsoft lists this exact provisioned model and deployment region. Confirm tenant quota, capacity and sizing before planning rollout.",
+      "verifiedOn": "2026-11-19",
+      "reviewBy": "2027-01-17",
+      "models": [
+        "o4-mini"
+      ],
+      "version": "2025-04-16",
+      "sku": "ProvisionedManaged",
+      "regions": [
+        "eastus2",
+        "westeurope"
+      ]
+    },
+    {
+      "id": "o4-mini-2025-04-16-provisionedmanaged-incompatible",
+      "status": "incompatible",
+      "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#regional-provisioned-managed",
+      "condition": "Microsoft marks this exact model version and deployment type unavailable in the selected region.",
+      "verifiedOn": "2026-11-19",
+      "reviewBy": "2027-01-17",
+      "models": [
+        "o4-mini"
+      ],
+      "version": "2025-04-16",
+      "sku": "ProvisionedManaged",
+      "regions": [
+        "uksouth"
+      ]
+    },
+    {
+      "id": "o4-mini-2025-04-16-standard-compatible",
+      "status": "compatible",
+      "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#regional-standard",
+      "condition": "Microsoft lists this exact model version and deployment type in this region. Verify customer quota separately.",
+      "verifiedOn": "2026-11-19",
+      "reviewBy": "2027-01-17",
+      "models": [
+        "o4-mini"
+      ],
+      "version": "2025-04-16",
+      "sku": "Standard",
+      "regions": [
+        "eastus2"
+      ]
+    },
+    {
+      "id": "o4-mini-2025-04-16-standard-incompatible",
+      "status": "incompatible",
+      "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#regional-standard",
+      "condition": "Microsoft marks this exact model version and deployment type unavailable in the selected region.",
+      "verifiedOn": "2026-11-19",
+      "reviewBy": "2027-01-17",
+      "models": [
+        "o4-mini"
+      ],
+      "version": "2025-04-16",
+      "sku": "Standard",
+      "regions": [
+        "uksouth",
+        "westeurope"
+      ]
+    },
+    {
+      "id": "text-embedding-3-large-1-datazonestandard-compatible",
+      "status": "compatible",
+      "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#data-zone-standard",
+      "condition": "Microsoft lists this exact model version and deployment type in this region. Verify customer quota separately.",
+      "verifiedOn": "2026-11-19",
+      "reviewBy": "2027-01-17",
+      "models": [
+        "text-embedding-3-large"
+      ],
+      "version": "1",
+      "sku": "DataZoneStandard",
+      "regions": [
+        "eastus2",
+        "westeurope"
+      ]
+    },
+    {
+      "id": "text-embedding-3-large-1-globalstandard-compatible",
+      "status": "compatible",
+      "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#global-standard",
+      "condition": "Microsoft lists this exact model version and deployment type in this region. Verify customer quota separately.",
+      "verifiedOn": "2026-11-19",
+      "reviewBy": "2027-01-17",
+      "models": [
+        "text-embedding-3-large"
+      ],
+      "version": "1",
+      "sku": "GlobalStandard",
+      "regions": [
+        "eastus2",
+        "uksouth",
+        "westeurope"
+      ]
+    },
+    {
+      "id": "text-embedding-3-large-1-standard-compatible",
+      "status": "compatible",
+      "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#regional-standard",
+      "condition": "Microsoft lists this exact model version and deployment type in this region. Verify customer quota separately.",
+      "verifiedOn": "2026-11-19",
+      "reviewBy": "2027-01-17",
+      "models": [
+        "text-embedding-3-large"
+      ],
+      "version": "1",
+      "sku": "Standard",
+      "regions": [
+        "eastus2",
+        "uksouth"
+      ]
+    },
+    {
+      "id": "text-embedding-3-large-1-standard-incompatible",
+      "status": "incompatible",
+      "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#regional-standard",
+      "condition": "Microsoft marks this exact model version and deployment type unavailable in the selected region.",
+      "verifiedOn": "2026-11-19",
+      "reviewBy": "2027-01-17",
+      "models": [
+        "text-embedding-3-large"
+      ],
+      "version": "1",
+      "sku": "Standard",
+      "regions": [
+        "westeurope"
+      ]
+    },
+    {
+      "id": "text-embedding-3-small-1-datazonestandard-compatible",
+      "status": "compatible",
+      "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#data-zone-standard",
+      "condition": "Microsoft lists this exact model version and deployment type in this region. Verify customer quota separately.",
+      "verifiedOn": "2026-11-19",
+      "reviewBy": "2027-01-17",
+      "models": [
+        "text-embedding-3-small"
+      ],
+      "version": "1",
+      "sku": "DataZoneStandard",
+      "regions": [
+        "eastus2",
+        "westeurope"
+      ]
+    },
+    {
+      "id": "text-embedding-3-small-1-globalstandard-compatible",
+      "status": "compatible",
+      "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#global-standard",
+      "condition": "Microsoft lists this exact model version and deployment type in this region. Verify customer quota separately.",
+      "verifiedOn": "2026-11-19",
+      "reviewBy": "2027-01-17",
+      "models": [
+        "text-embedding-3-small"
+      ],
+      "version": "1",
+      "sku": "GlobalStandard",
+      "regions": [
+        "eastus2",
+        "uksouth",
+        "westeurope"
+      ]
+    },
+    {
+      "id": "text-embedding-3-small-1-standard-compatible",
+      "status": "compatible",
+      "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#regional-standard",
+      "condition": "Microsoft lists this exact model version and deployment type in this region. Verify customer quota separately.",
+      "verifiedOn": "2026-11-19",
+      "reviewBy": "2027-01-17",
+      "models": [
+        "text-embedding-3-small"
+      ],
+      "version": "1",
+      "sku": "Standard",
+      "regions": [
+        "eastus2"
+      ]
+    },
+    {
+      "id": "text-embedding-3-small-1-standard-incompatible",
+      "status": "incompatible",
+      "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#regional-standard",
+      "condition": "Microsoft marks this exact model version and deployment type unavailable in the selected region.",
+      "verifiedOn": "2026-11-19",
+      "reviewBy": "2027-01-17",
+      "models": [
+        "text-embedding-3-small"
+      ],
+      "version": "1",
+      "sku": "Standard",
+      "regions": [
+        "uksouth",
+        "westeurope"
+      ]
     }
   ],
   "integrations": [
@@ -913,6 +3269,236 @@
       "condition": "Configure virtual network injection and Microsoft Entra project managed identity with appropriate Search roles. Confirm private endpoint connectivity.",
       "verifiedOn": "2026-11-19",
       "reviewBy": "2027-01-17"
+    }
+  ],
+  "lifecycle": [
+    {
+      "id": "gpt-4.1-2025-04-14-lifecycle",
+      "status": "conditional",
+      "source": "https://learn.microsoft.com/en-us/azure/foundry/openai/concepts/model-retirement-schedule",
+      "condition": "Published retirement date 2027-04-14. Check schedule footnotes for model- or offer-specific exceptions.",
+      "verifiedOn": "2026-11-19",
+      "reviewBy": "2027-01-17",
+      "models": [
+        "gpt-4.1",
+        "gpt-4.1-mini",
+        "gpt-4.1-nano"
+      ],
+      "version": "2025-04-14",
+      "date": "2027-04-14",
+      "timing": "retirement"
+    },
+    {
+      "id": "gpt-4o-2024-05-13-lifecycle",
+      "status": "conditional",
+      "source": "https://learn.microsoft.com/en-us/azure/foundry/openai/concepts/model-retirement-schedule",
+      "condition": "Published retirement date 2027-01-14. Check schedule footnotes for mode-specific exceptions and migrate to the published replacement where applicable.",
+      "verifiedOn": "2026-11-19",
+      "reviewBy": "2027-01-17",
+      "models": [
+        "gpt-4o"
+      ],
+      "version": "2024-05-13",
+      "date": "2027-01-14",
+      "timing": "retirement"
+    },
+    {
+      "id": "gpt-4o-2024-08-06-lifecycle",
+      "status": "conditional",
+      "source": "https://learn.microsoft.com/en-us/azure/foundry/openai/concepts/model-retirement-schedule",
+      "condition": "Published retirement date 2027-04-14. Check schedule footnotes for mode-specific exceptions.",
+      "verifiedOn": "2026-11-19",
+      "reviewBy": "2027-01-17",
+      "models": [
+        "gpt-4o"
+      ],
+      "version": "2024-08-06",
+      "date": "2027-04-14",
+      "timing": "retirement"
+    },
+    {
+      "id": "gpt-4o-2024-11-20-lifecycle",
+      "status": "conditional",
+      "source": "https://learn.microsoft.com/en-us/azure/foundry/openai/concepts/model-retirement-schedule",
+      "condition": "Published retirement date 2027-04-14. Check schedule footnotes for mode-specific exceptions.",
+      "verifiedOn": "2026-11-19",
+      "reviewBy": "2027-01-17",
+      "models": [
+        "gpt-4o"
+      ],
+      "version": "2024-11-20",
+      "date": "2027-04-14",
+      "timing": "retirement"
+    },
+    {
+      "id": "gpt-4o-mini-2024-07-18-lifecycle",
+      "status": "conditional",
+      "source": "https://learn.microsoft.com/en-us/azure/foundry/openai/concepts/model-retirement-schedule",
+      "condition": "Published retirement date 2027-04-14. Check schedule footnotes for mode-specific exceptions.",
+      "verifiedOn": "2026-11-19",
+      "reviewBy": "2027-01-17",
+      "models": [
+        "gpt-4o-mini"
+      ],
+      "version": "2024-07-18",
+      "date": "2027-04-14",
+      "timing": "retirement"
+    },
+    {
+      "id": "gpt-5-2025-08-07-lifecycle",
+      "status": "conditional",
+      "source": "https://learn.microsoft.com/en-us/azure/foundry/openai/concepts/model-retirement-schedule",
+      "condition": "Published retirement date 2027-02-09. Plan a migration before the published inference retirement date.",
+      "verifiedOn": "2026-11-19",
+      "reviewBy": "2027-01-17",
+      "models": [
+        "gpt-5",
+        "gpt-5-nano"
+      ],
+      "version": "2025-08-07",
+      "date": "2027-02-09",
+      "timing": "retirement"
+    },
+    {
+      "id": "gpt-5-mini-2025-08-07-lifecycle",
+      "status": "conditional",
+      "source": "https://learn.microsoft.com/en-us/azure/foundry/openai/concepts/model-retirement-schedule",
+      "condition": "Published retirement date 2027-07-13. Plan a migration before the published inference retirement date.",
+      "verifiedOn": "2026-11-19",
+      "reviewBy": "2027-01-17",
+      "models": [
+        "gpt-5-mini"
+      ],
+      "version": "2025-08-07",
+      "date": "2027-07-13",
+      "timing": "retirement"
+    },
+    {
+      "id": "gpt-5.1-2025-11-13-lifecycle",
+      "status": "conditional",
+      "source": "https://learn.microsoft.com/en-us/azure/foundry/openai/concepts/model-retirement-schedule",
+      "condition": "Published retirement date 2027-07-13. Plan a migration before the published inference retirement date.",
+      "verifiedOn": "2026-11-19",
+      "reviewBy": "2027-01-17",
+      "models": [
+        "gpt-5.1"
+      ],
+      "version": "2025-11-13",
+      "date": "2027-07-13",
+      "timing": "retirement"
+    },
+    {
+      "id": "gpt-5.2-2025-12-11-lifecycle",
+      "status": "conditional",
+      "source": "https://learn.microsoft.com/en-us/azure/foundry/openai/concepts/model-retirement-schedule",
+      "condition": "Published retirement date 2027-06-08. Plan a migration before the published inference retirement date.",
+      "verifiedOn": "2026-11-19",
+      "reviewBy": "2027-01-17",
+      "models": [
+        "gpt-5.2"
+      ],
+      "version": "2025-12-11",
+      "date": "2027-06-08",
+      "timing": "retirement"
+    },
+    {
+      "id": "gpt-5.4-2026-03-05-lifecycle",
+      "status": "conditional",
+      "source": "https://learn.microsoft.com/en-us/azure/foundry/openai/concepts/model-retirement-schedule",
+      "condition": "Published retirement date 2027-09-02. Plan a migration before the published inference retirement date.",
+      "verifiedOn": "2026-11-19",
+      "reviewBy": "2027-01-17",
+      "models": [
+        "gpt-5.4"
+      ],
+      "version": "2026-03-05",
+      "date": "2027-09-02",
+      "timing": "retirement"
+    },
+    {
+      "id": "gpt-5.4-mini-2026-03-17-lifecycle",
+      "status": "conditional",
+      "source": "https://learn.microsoft.com/en-us/azure/foundry/openai/concepts/model-retirement-schedule",
+      "condition": "Published retirement date 2027-09-21. Plan a migration before the published inference retirement date.",
+      "verifiedOn": "2026-11-19",
+      "reviewBy": "2027-01-17",
+      "models": [
+        "gpt-5.4-mini"
+      ],
+      "version": "2026-03-17",
+      "date": "2027-09-21",
+      "timing": "retirement"
+    },
+    {
+      "id": "gpt-5.6-sol-2026-07-09-lifecycle",
+      "status": "conditional",
+      "source": "https://learn.microsoft.com/en-us/azure/foundry/openai/concepts/model-retirement-schedule",
+      "condition": "Published retirement date 2028-01-11. Plan a migration before the published inference retirement date.",
+      "verifiedOn": "2026-11-19",
+      "reviewBy": "2027-01-17",
+      "models": [
+        "gpt-5.6-sol"
+      ],
+      "version": "2026-07-09",
+      "date": "2028-01-11",
+      "timing": "retirement"
+    },
+    {
+      "id": "gpt-6-sol-2026-09-22-lifecycle",
+      "status": "conditional",
+      "source": "https://learn.microsoft.com/en-us/azure/foundry/openai/concepts/model-retirement-schedule",
+      "condition": "Published retirement date 2028-03-11. Plan a migration before the published inference retirement date.",
+      "verifiedOn": "2026-11-19",
+      "reviewBy": "2027-01-17",
+      "models": [
+        "gpt-6-sol"
+      ],
+      "version": "2026-09-22",
+      "date": "2028-03-11",
+      "timing": "retirement"
+    },
+    {
+      "id": "o3-2025-04-16-lifecycle",
+      "status": "conditional",
+      "source": "https://learn.microsoft.com/en-us/azure/foundry/openai/concepts/model-retirement-schedule",
+      "condition": "Published retirement date 2026-11-19. Microsoft’s schedule identifies this model version for retirement. Confirm migration and any separately documented exceptions.",
+      "verifiedOn": "2026-11-19",
+      "reviewBy": "2027-01-17",
+      "models": [
+        "o3",
+        "o4-mini"
+      ],
+      "version": "2025-04-16",
+      "date": "2026-11-19",
+      "timing": "retirement"
+    },
+    {
+      "id": "o3-mini-2025-01-31-lifecycle",
+      "status": "conditional",
+      "source": "https://learn.microsoft.com/en-us/azure/foundry/openai/concepts/model-retirement-schedule",
+      "condition": "Published retirement date 2026-11-19. Microsoft’s schedule identifies this model version for retirement. Confirm migration.",
+      "verifiedOn": "2026-11-19",
+      "reviewBy": "2027-01-17",
+      "models": [
+        "o3-mini"
+      ],
+      "version": "2025-01-31",
+      "date": "2026-11-19",
+      "timing": "retirement"
+    },
+    {
+      "id": "o1-2024-12-17-lifecycle",
+      "status": "conditional",
+      "source": "https://learn.microsoft.com/en-us/azure/foundry/openai/concepts/model-retirement-schedule",
+      "condition": "Published retirement date 2026-11-19. Microsoft’s schedule identifies this model version for retirement. Confirm migration.",
+      "verifiedOn": "2026-11-19",
+      "reviewBy": "2027-01-17",
+      "models": [
+        "o1"
+      ],
+      "version": "2024-12-17",
+      "date": "2026-11-19",
+      "timing": "retirement"
     }
   ]
 }

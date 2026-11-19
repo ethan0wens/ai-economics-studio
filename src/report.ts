@@ -117,6 +117,15 @@ export async function report(env: Environment, result: Ledger, catalogue: Catalo
   if (!drivers.length) paragraph('No priced cost drivers yet.');
   for (const line of drivers) paragraph(`${line.object} / ${line.component}: ${money(line.amounts.current)} per month`);
   paragraph('Flat usage rates scale with declared quantity. Graduated tariffs charge only the units in each band. Shared provisioned capacity scales with capacity and hours. Review input, output, seat and credit assumptions before relying on a forecast.', { color: muted });
+  if (result.capacityComparisons.length) {
+    heading('Provisioned and PAYG costs');
+    for (const row of result.capacityComparisons) {
+      paragraph(`${row.name} | ${money(row.current)} provisioned | ${money(row.payg)} PAYG retail | Provisioned minus PAYG ${money(row.difference)}`, { font: bold });
+      paragraph([row.offering, row.detail, row.reason].filter(Boolean).join(' | '));
+      for (const source of row.sources) paragraph(`${source.component} | ${source.currency} ${source.price} per ${source.unit} | ${source.source}`, { size: 9, color: muted });
+    }
+    paragraph('Monthly workload cost comparison only. Validate peak capacity and workload shape independently.', { color: muted });
+  }
   newPage();
   heading('Logical architecture');
   paragraph('Conceptual object relationships for planning. Topology, traffic and security boundaries are outside its scope.', { color: muted });
@@ -167,6 +176,7 @@ export async function report(env: Environment, result: Ledger, catalogue: Catalo
     paragraph(`Quantity: ${line.quantity ?? 'unknown'} | ${line.meter ? `${line.meter.sku} / ${line.meter.region} / ${line.meter.unit} (${line.meter.quantityPerUnit} base units)` : 'Billing unit unresolved'} | ${line.status}`, { gap: 1 });
     paragraph(bases.map(basis => `${labels[basis]}: ${money(line.amounts[basis])} (rate ${line.rates[basis] ?? 'unknown'})`).join(' | '), { gap: 1 });
     if (line.reason) paragraph(line.reason, { color: muted, gap: 1 });
+    if (line.retailQuantity) paragraph(`Retail comparison quantity without reservation: ${line.retailQuantity} PTU-hours.`, { size: 9, color: muted });
     if (line.agreement) paragraph(`User agreement: ${line.agreement.mode} | ${line.agreement.reason} | ${line.agreement.effectiveAt ?? 'undated'}`, { gap: 1 });
     if (line.source) paragraph(`Retail source: ${line.source.source} | ${line.source.review ? 'Reviewed ' + line.source.review.checkedAt + ' | ' + line.source.review.terms : 'Effective ' + line.source.effectiveAt + ' | Validated ' + (catalogue.manifest.lastCheckedAt ?? 'unknown')}`, { size: 9, color: muted, gap: 1 });
     if (line.source?.tiers) paragraph(`Graduated bands (base units / rate): ${line.source.tiers.map(tier => `${tier.from} / ${tier.price}`).join(' | ')}. Displayed rates are blended at this usage.`, { size: 9, color: muted, gap: 1 });

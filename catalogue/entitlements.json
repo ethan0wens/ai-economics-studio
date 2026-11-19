@@ -29,7 +29,12 @@
       "o365-e5-no-teams-gb",
       "o365-f3-gb",
       "m365-e3-no-teams-gb",
-      "m365-e5-no-teams-gb"
+      "m365-e5-no-teams-gb",
+      "m365-business-standard-no-teams-gb",
+      "m365-business-premium-no-teams-gb"
+    ],
+    "possible": [
+      "m365-f3-no-teams-gb"
     ]
   },
   {
@@ -50,7 +55,9 @@
       "m365-business-standard-gb",
       "m365-business-premium-gb",
       "m365-apps-business-gb",
-      "teams-essentials-gb"
+      "teams-essentials-gb",
+      "m365-business-standard-no-teams-gb",
+      "m365-business-premium-no-teams-gb"
     ]
   },
   {
@@ -126,7 +133,8 @@
     "products": [
       "m365-e3-gb",
       "m365-business-premium-gb",
-      "m365-e3-no-teams-gb"
+      "m365-e3-no-teams-gb",
+      "m365-business-premium-no-teams-gb"
     ],
     "market": "GB",
     "kind": "included",
@@ -269,5 +277,73 @@
     "verifiedOn": "2026-11-19",
     "reviewBy": "2027-01-17",
     "condition": "Microsoft lists an eligible Microsoft 365 subscription as a prerequisite. Confirm the exact SKU and tenant offer under Product Terms."
+  },
+  {
+    "id": "defender-suite-base",
+    "products": [
+      "defender-suite-gb"
+    ],
+    "market": "GB",
+    "kind": "requirement",
+    "capability": "Defender Suite qualifying subscription",
+    "source": "https://www.microsoft.com/en-gb/security/business/siem-and-xdr/microsoft-defender-cloud-apps",
+    "condition": "The published UK offer requires Microsoft 365 E3, or Office 365 E3 together with Enterprise Mobility + Security E3.",
+    "verifiedOn": "2026-11-19",
+    "reviewBy": "2027-01-17",
+    "eligible": [
+      "m365-e3-gb"
+    ],
+    "possible": [
+      "m365-e3-no-teams-gb",
+      "o365-e3-no-teams-gb"
+    ],
+    "qualifyingBundles": [
+      [
+        "o365-e3-gb",
+        "ems-e3-gb"
+      ]
+    ]
+  },
+  {
+    "id": "defender-office-plan2",
+    "products": [
+      "defender-o365-p2-gb"
+    ],
+    "market": "GB",
+    "kind": "included",
+    "capability": "Defender for Office 365 Plan 1 capabilities",
+    "source": "https://www.microsoft.com/en-gb/security/business/siem-and-xdr/microsoft-defender-office-365",
+    "condition": "Microsoft states Plan 2 includes Plan 1 capabilities. Review a separate Plan 1 purchase where the same workloads are covered.",
+    "verifiedOn": "2026-11-19",
+    "reviewBy": "2027-01-17",
+    "eligible": [
+      "defender-o365-p1-gb"
+    ]
+  },
+  {
+    "id": "defender-suite-overlap",
+    "products": [
+      "defender-suite-gb"
+    ],
+    "market": "GB",
+    "kind": "conditional",
+    "capability": "Defender workload overlap",
+    "source": "https://www.microsoft.com/en-gb/security/business/siem-and-xdr/microsoft-defender-cloud-apps",
+    "condition": "The Suite covers endpoint, email and collaboration, identity, and SaaS threat protection. Verify the specific standalone plan, assignment and workload before changing spend.",
+    "verifiedOn": "2026-11-19",
+    "reviewBy": "2027-01-17"
+  },
+  {
+    "id": "purview-ediscovery",
+    "products": [
+      "purview-suite-gb"
+    ],
+    "market": "GB",
+    "kind": "conditional",
+    "capability": "Purview workload licensing",
+    "source": "https://learn.microsoft.com/en-us/purview/ediscovery-assign-permissions",
+    "condition": "Confirm the licence and assigned roles for each eDiscovery workload. Microsoft documents plan- and role-specific premium access. A suite label does not establish rights for all users or workloads.",
+    "verifiedOn": "2026-11-19",
+    "reviewBy": "2027-01-17"
   }
 ]

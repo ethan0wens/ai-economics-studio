@@ -17,7 +17,7 @@ const moneySnapshot = z.string().regex(/^\d{1,70}(\.\d{1,4})?$/);
 const scopeSnapshot = z.strictObject({ known: moneySnapshot, annual: moneySnapshot, incomplete: count });
 const common = { id, name };
 const region = text.regex(/^[a-z0-9-]+$/);
-const modality = z.enum(['text', 'image', 'audio', 'video']);
+const modality = z.enum(['text', 'image', 'audio', 'video', 'embedding']);
 const meter = z.strictObject({
   meterId: id, sku: id, unit: name, quantityPerUnit: quantity.gt(0), region,
   priceType: z.literal('Consumption'),
@@ -34,6 +34,12 @@ const parts = {
     deployedModel: text.optional(), deployedVersion: text.optional(),
     inputMeter: meter.optional(), outputMeter: meter.optional(), capacityMeter: meter.optional(),
     capacity: quantity.optional(), billableHours: quantity.max(744).optional(), allocationBasis: z.literal('input-tokens').optional(),
+    comparisonOfferingId: id.optional(), peakInputTpm: count.optional(), peakOutputTpm: count.optional(),
+    reservation: z.strictObject({
+      sku: text.optional(), region: region.optional(), currency: currency.optional(), ptus: count.positive().optional(),
+      term: z.enum(['1', '12']).optional(), total: decimal.refine(value => Number(value) > 0).optional(),
+      start: z.iso.date().optional(), coveredHours: quantity.max(744).optional(), reference: text.optional(),
+    }).optional(),
   }),
   agent: z.strictObject({
     ...common, kind: z.literal('agent'), offeringId: id.optional(),

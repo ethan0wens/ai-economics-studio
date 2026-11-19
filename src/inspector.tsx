@@ -10,6 +10,8 @@ import { applicableOffering, copilotPack, offeringMeter, offerings } from './off
 import type { FieldId } from './field-help';
 import { EvidenceFindings } from './validation-ui';
 import { deploymentFindings } from './compatibility';
+import { deployedIdentity } from './provisioned';
+import { CapacityComparisons } from './capacity-ui';
 
 const edgeLabels: Record<EdgeType, string> = {
   'agent-uses-deployment': 'Model deployment', 'agent-uses-usage': 'Usage profile', 'group-can-access-agent': 'Can access agent',
@@ -73,7 +75,7 @@ export function Inspector({ item, env, catalogue, result, update, select, remove
         const unavailable = item.kind === 'model-deployment' && offer.kind === 'model-deployment' && deploymentFindings({
           ...item, modelId: offer.model.id, modelVersion: offer.model.version, sku: offer.model.sku, mode: offer.model.mode,
           deployedVersion: offer.model.id === item.modelId ? item.deployedVersion : undefined,
-        }, new Date().toISOString()).find(check => check.status === 'incompatible');
+        }, new Date().toISOString(), false).find(check => check.status === 'incompatible');
         return [offer.id, `${offer.name} · ${offer.region === 'gb' ? 'UK market' : offer.region} · ${offer.currency}${unavailable ? ` · Unavailable — ${unavailable.title}` : ''}`, !!unavailable];
       })}
       hint={activeOffer
@@ -163,7 +165,7 @@ export function Inspector({ item, env, catalogue, result, update, select, remove
           <Text field="deploymentRegion" value={item.deploymentRegion} onChange={value => change('deploymentRegion', value || undefined)} />
           {item.modelId === 'azure-openai' && string('deployedModel', 'deployedModel', item.deployedModel)}
           {string('deployedVersion', 'deployedVersion', item.deployedVersion)}
-          {option('inputModality', 'inputModality', item.inputModality, modalities)}{option('outputModality', 'outputModality', item.outputModality, modalities)}
+          {option('inputModality', 'inputModality', item.inputModality, modalities)}{option('outputModality', 'outputModality', item.outputModality, [...modalities, 'embedding'])}
           {option('requiredFeature', 'requiredFeature', item.requiredFeature, [['function-calling', 'Function calling'], ['structured-outputs', 'Structured outputs'], ['responses', 'Responses API']])}
         </div>}
         {advanced && string('sku', 'sku', item.sku)}
@@ -297,10 +299,39 @@ export function Inspector({ item, env, catalogue, result, update, select, remove
         {detailed && canUseProfile && <p className="field-hint">Use a separate profile for each distinct workload. Connections do not multiply traffic. Provisioned deployments use profiles only for cost allocation.</p>}
       </> : item.kind === 'model-deployment' && (item.mode === 'provisioned' ? <>
         <p className="field-hint">Enter reserved units and billable hours for the same month. This shared charge is counted once per deployment.</p>
-        {number('capacity', 'capacity', item.capacity)}
+        {number('capacity', 'capacity', item.capacity, undefined, 1)}
         {number('hours', 'billableHours', item.billableHours, 744)}
-        {advanced && <Field field="allocation"><input type="checkbox" checked={!!item.allocationBasis}
-          onChange={event => change('allocationBasis', event.target.checked ? 'input-tokens' : undefined)} /></Field>}
+        <EvidenceFindings label="Provisioned sizing" items={result.technicalFindings.filter(finding => finding.id === item.id &&
+          ['Provisioned capacity', 'Throughput feasibility'].includes(finding.title))} />
+        {advanced && <>
+          <Field field="allocation"><input type="checkbox" checked={!!item.allocationBasis}
+            onChange={event => change('allocationBasis', event.target.checked ? 'input-tokens' : undefined)} /></Field>
+          <Select field="comparePayg" value={item.comparisonOfferingId} empty="No comparison" options={inventory.filter(offer => {
+            const identity = deployedIdentity(item);
+            return offer.kind === 'model-deployment' && offer.model.mode === 'payg' && offer.currency === env.currency &&
+              offer.model.id.toLowerCase() === identity.model && offer.model.version === identity.version && offer.selectable !== false;
+          }).map(offer => [offer.id, `${offer.name} · ${offer.region}`])}
+          onChange={value => change('comparisonOfferingId', value || undefined)} />
+          {number('peakInput', 'peakInputTpm', item.peakInputTpm, undefined, 1)}
+          {number('peakOutput', 'peakOutputTpm', item.peakOutputTpm, undefined, 1)}
+          <Field field="useReservation"><input type="checkbox" checked={!!item.reservation}
+            onChange={event => change('reservation', event.target.checked ? { sku: item.sku, region: regionForOffer, currency: env.currency } : undefined)} /></Field>
+          {item.reservation && <div className="field-group">
+            <p className="field-hint">Scope {item.reservation.sku ?? 'unassigned'} · {item.reservation.region ?? 'unassigned'} · {item.reservation.currency ?? 'unassigned'}. Reselect the reservation and reconfirm the quote if this scope changes.</p>
+            <NumberField field="reservationPtus" value={item.reservation.ptus} min={1} step={1}
+              onChange={ptus => change('reservation', { ...item.reservation, ptus })} />
+            <Select field="reservationTerm" value={item.reservation.term} options={[[ '1', 'One month' ], [ '12', 'One year' ]]}
+              onChange={term => change('reservation', { ...item.reservation, term: term || undefined })} />
+            <NumberField field="reservationTotal" value={item.reservation.total ? Number(item.reservation.total) : undefined} min={0.01}
+              onChange={value => change('reservation', { ...item.reservation, total: value?.toFixed(2) })} />
+            <Field field="reservationStart"><input type="date" value={item.reservation.start ?? ''}
+              onChange={event => change('reservation', { ...item.reservation, start: event.target.value || undefined })} /></Field>
+            <NumberField field="reservationHours" value={item.reservation.coveredHours} max={744}
+              onChange={coveredHours => change('reservation', { ...item.reservation, coveredHours })} />
+            <Text field="reservationRef" value={item.reservation.reference}
+              onChange={reference => change('reservation', { ...item.reservation, reference })} />
+          </div>}
+        </>}
       </> : <p className="field-hint">{item.mode === 'payg' ? 'Pay-as-you-go token usage comes from profiles linked to agents.' : 'Choose a billing mode in Configuration to see the applicable usage inputs.'}</p>))}
       {tab === 'Dependencies' && <>
         {related.length === 0 && <p className="muted">This object has no linked dependencies.</p>}
@@ -332,7 +363,8 @@ export function Inspector({ item, env, catalogue, result, update, select, remove
           <button className="button" disabled={!target} onClick={() => setEdge(link as EdgeType, target, ['agent-uses-deployment', 'agent-uses-usage', 'agent-uses-prompt-model'].includes(link))}>Link object</button></>}
         </>}
       </>}
-      {tab === 'Costs' && <Lines lines={rows} env={env} update={update} checkedAt={catalogue.manifest.lastCheckedAt} compact />}
+      {tab === 'Costs' && <><CapacityComparisons rows={result.capacityComparisons.filter(row => row.id === item.id)} currency={env.currency} />
+        <Lines lines={rows} env={env} update={update} checkedAt={catalogue.manifest.lastCheckedAt} compact /></>}
       <div className="inspector-footer"><button className="button danger" onClick={remove}><Trash2 size={15} /> Delete object</button></div>
     </div>
   </aside>;

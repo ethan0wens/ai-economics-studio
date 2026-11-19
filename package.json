@@ -13,10 +13,11 @@
     "lint": "eslint . --max-warnings 0",
     "test": "vitest run",
     "test:e2e": "playwright test",
-    "build": "npm run pricing:validate && vite build",
+    "build": "npm run pricing:validate && npm run evidence:validate && vite build",
     "pricing:refresh": "tsx scripts/pricing.ts refresh",
     "pricing:validate": "tsx scripts/pricing.ts validate",
-    "deploy": "tsx scripts/deploy.ts"
+    "deploy": "tsx scripts/deploy.ts",
+    "evidence:validate": "tsx scripts/evidence.ts"
   },
   "dependencies": {
     "@dagrejs/dagre": "^3.1.3",

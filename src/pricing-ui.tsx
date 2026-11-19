@@ -108,6 +108,7 @@ export function Lines({ lines, env, update, compact = false, checkedAt }: {
       </summary>
       <div className="ledger-detail">
         {line.reason && <p>{line.reason}</p>}
+        {line.retailQuantity && <p>Retail comparison without reservation uses {line.retailQuantity} PTU-hours.</p>}
         <p className="muted">{line.meter ? `${line.currency} · ${line.meter.region === 'gb' ? 'UK market' : line.meter.region} · ${line.meter.unit === '1K' ? 'per 1,000 tokens' : line.meter.unit} · ${line.meter.quantityPerUnit} base units per billed unit` : 'Billing identity unresolved'} · Monthly billable quantity {line.quantity ?? 'unknown'}</p>
         {line.includedCredits && <p>{line.includedCredits} credits allocated from the linked monthly pack. The balance above is billable.</p>}
         {line.entitledCredits && <p>{line.entitledCredits} credits reconciled under the customer-declared allowance before pack allocation.</p>}

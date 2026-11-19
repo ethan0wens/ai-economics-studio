@@ -12,6 +12,7 @@ import { basisNames, CostAnalysis } from './pricing-ui';
 import { Field, FieldHelp } from './fields';
 import { hasUnknownPrice, missingInputs } from './inspector-status';
 import { download } from './download';
+import { CapacityComparisons } from './capacity-ui';
 import { LicenceEstate, ValidationDashboard } from './validation-ui';
 
 const Architecture = lazy(() => import('./diagram'));
@@ -281,6 +282,7 @@ export default function App() {
         {page === 'Architecture' && <Suspense fallback={<p role="status">Preparing diagram…</p>}><Architecture env={env} result={result} select={selectObject} /></Suspense>}
         {page === 'Pricing Catalogue' && <Coverage catalogue={catalogue} result={result} select={selectObject} />}
         {page === 'Cost Analysis' && <><Comparison env={env} result={result} /><LicenceEstate result={result} currency={env.currency} />
+          <CapacityComparisons rows={result.capacityComparisons} currency={env.currency} />
           <ValidationDashboard env={env} result={result} select={selectObject} />
           <CostAnalysis env={env} result={result} update={update} checkedAt={catalogue.manifest.lastCheckedAt} /></>}
         {page === 'Security & Governance' && <section className="panel padded"><h2>Advisory assessment</h2><p className="muted">Ruleset 1.0.0 · {advice.length} applicable checks · {advice.filter(item => item.status === 'Unknown').length} with unknown coverage. Based on declarations only.</p>

@@ -544,5 +544,257 @@
       "expiresAt": "2027-01-17T23:59:00Z",
       "terms": "UK public offer per user/month, paid yearly. Annual subscription auto-renews. Price excludes VAT."
     }
+  },
+  {
+    "meterId": "m365-f3-gb/seats",
+    "sku": "m365-f3-gb",
+    "region": "gb",
+    "unit": "seat/month",
+    "quantityPerUnit": 1,
+    "priceType": "Consumption",
+    "currency": "GBP",
+    "price": "7.70",
+    "effectiveAt": "2026-11-19T00:00:00Z",
+    "source": "https://www.microsoft.com/en-gb/microsoft-365/enterprise/frontline-plans-and-pricing",
+    "product": "Microsoft 365 F3",
+    "verification": "microsoft-commercial",
+    "offeringId": "m365-f3-gb",
+    "component": "seats",
+    "review": {
+      "checkedAt": "2026-11-19T00:00:00Z",
+      "expiresAt": "2027-01-17T23:59:00Z",
+      "terms": "UK public offer per user/month. Annual commitment, paid yearly. Excludes VAT. With Teams edition. Confirm frontline eligibility."
+    }
+  },
+  {
+    "meterId": "m365-business-standard-gb/seats",
+    "sku": "m365-business-standard-gb",
+    "region": "gb",
+    "unit": "seat/month",
+    "quantityPerUnit": 1,
+    "priceType": "Consumption",
+    "currency": "GBP",
+    "price": "10.80",
+    "effectiveAt": "2026-11-19T00:00:00Z",
+    "source": "https://www.microsoft.com/en-gb/microsoft-365/business/microsoft-365-business-standard",
+    "product": "Microsoft 365 Business Standard",
+    "verification": "microsoft-commercial",
+    "offeringId": "m365-business-standard-gb",
+    "component": "seats",
+    "review": {
+      "checkedAt": "2026-11-19T00:00:00Z",
+      "expiresAt": "2027-01-17T23:59:00Z",
+      "terms": "UK public offer per user/month. Annual subscription, paid yearly, auto-renews. Excludes VAT. Standalone Business Standard with Teams."
+    }
+  },
+  {
+    "meterId": "m365-business-premium-gb/seats",
+    "sku": "m365-business-premium-gb",
+    "region": "gb",
+    "unit": "seat/month",
+    "quantityPerUnit": 1,
+    "priceType": "Consumption",
+    "currency": "GBP",
+    "price": "16.90",
+    "effectiveAt": "2026-11-19T00:00:00Z",
+    "source": "https://www.microsoft.com/en-gb/microsoft-365/business/microsoft-365-business-premium",
+    "product": "Microsoft 365 Business Premium",
+    "verification": "microsoft-commercial",
+    "offeringId": "m365-business-premium-gb",
+    "component": "seats",
+    "review": {
+      "checkedAt": "2026-11-19T00:00:00Z",
+      "expiresAt": "2027-01-17T23:59:00Z",
+      "terms": "UK public offer per user/month. Annual subscription, paid yearly, auto-renews. Excludes VAT. Standalone Business Premium with Teams."
+    }
+  },
+  {
+    "meterId": "teams-essentials-gb/seats",
+    "sku": "teams-essentials-gb",
+    "region": "gb",
+    "unit": "seat/month",
+    "quantityPerUnit": 1,
+    "priceType": "Consumption",
+    "currency": "GBP",
+    "price": "3.10",
+    "effectiveAt": "2026-11-19T00:00:00Z",
+    "source": "https://www.microsoft.com/en-gb/microsoft-teams/compare-microsoft-teams-business-options",
+    "product": "Microsoft Teams Essentials",
+    "verification": "microsoft-commercial",
+    "offeringId": "teams-essentials-gb",
+    "component": "seats",
+    "review": {
+      "checkedAt": "2026-11-19T00:00:00Z",
+      "expiresAt": "2027-01-17T23:59:00Z",
+      "terms": "UK public offer per user/month. Annual subscription, paid yearly, auto-renews. Excludes VAT. Exact Teams Essentials subscription."
+    }
+  },
+  {
+    "meterId": "m365-business-copilot-gb/seats",
+    "sku": "m365-business-copilot-gb",
+    "region": "gb",
+    "unit": "seat/month",
+    "quantityPerUnit": 1,
+    "priceType": "Consumption",
+    "currency": "GBP",
+    "price": "19.32",
+    "effectiveAt": "2026-11-19T00:00:00Z",
+    "source": "https://www.microsoft.com/en-gb/copilot/pricing/business",
+    "product": "Microsoft 365 Copilot Business add-on",
+    "verification": "microsoft-commercial",
+    "offeringId": "m365-business-copilot-gb",
+    "component": "seats",
+    "review": {
+      "checkedAt": "2026-11-19T00:00:00Z",
+      "expiresAt": "2027-01-17T23:59:00Z",
+      "terms": "UK public offer per user/month. Monthly subscription, auto-renews. Excludes VAT. Exact non-promotional monthly offer for the standalone Business add-on with an eligible Microsoft subscription. Advanced usage can be billed separately."
+    }
+  },
+  {
+    "meterId": "defender-o365-p1-gb/seats",
+    "sku": "defender-o365-p1-gb",
+    "region": "gb",
+    "unit": "seat/month",
+    "quantityPerUnit": 1,
+    "priceType": "Consumption",
+    "currency": "GBP",
+    "price": "1.54",
+    "effectiveAt": "2026-11-19T00:00:00Z",
+    "source": "https://www.microsoft.com/en-gb/security/business/siem-and-xdr/microsoft-defender-office-365",
+    "product": "Microsoft Defender for Office 365 Plan 1",
+    "verification": "microsoft-commercial",
+    "offeringId": "defender-o365-p1-gb",
+    "component": "seats",
+    "review": {
+      "checkedAt": "2026-11-19T00:00:00Z",
+      "expiresAt": "2027-01-17T23:59:00Z",
+      "terms": "UK public offer per user/month. Annual subscription, paid yearly, auto-renews. Excludes VAT. Plan 1. Confirm email and workload prerequisites."
+    }
+  },
+  {
+    "meterId": "defender-o365-p2-gb/seats",
+    "sku": "defender-o365-p2-gb",
+    "region": "gb",
+    "unit": "seat/month",
+    "quantityPerUnit": 1,
+    "priceType": "Consumption",
+    "currency": "GBP",
+    "price": "3.80",
+    "effectiveAt": "2026-11-19T00:00:00Z",
+    "source": "https://www.microsoft.com/en-gb/security/business/siem-and-xdr/microsoft-defender-office-365",
+    "product": "Microsoft Defender for Office 365 Plan 2",
+    "verification": "microsoft-commercial",
+    "offeringId": "defender-o365-p2-gb",
+    "component": "seats",
+    "review": {
+      "checkedAt": "2026-11-19T00:00:00Z",
+      "expiresAt": "2027-01-17T23:59:00Z",
+      "terms": "UK public offer per user/month. Annual subscription, paid yearly, auto-renews. Excludes VAT. Plan 2. Confirm email and workload prerequisites."
+    }
+  },
+  {
+    "meterId": "defender-suite-gb/seats",
+    "sku": "defender-suite-gb",
+    "region": "gb",
+    "unit": "seat/month",
+    "quantityPerUnit": 1,
+    "priceType": "Consumption",
+    "currency": "GBP",
+    "price": "9.20",
+    "effectiveAt": "2026-11-19T00:00:00Z",
+    "source": "https://www.microsoft.com/en-gb/security/business/siem-and-xdr/microsoft-defender-cloud-apps",
+    "product": "Microsoft Defender Suite",
+    "verification": "microsoft-commercial",
+    "offeringId": "defender-suite-gb",
+    "component": "seats",
+    "review": {
+      "checkedAt": "2026-11-19T00:00:00Z",
+      "expiresAt": "2027-01-17T23:59:00Z",
+      "terms": "UK public offer per user/month. Annual subscription, paid yearly, auto-renews. Excludes VAT. Requires Microsoft 365 E3, or Office 365 E3 and Enterprise Mobility + Security E3."
+    }
+  },
+  {
+    "meterId": "m365-f3-no-teams-gb/seats",
+    "sku": "m365-f3-no-teams-gb",
+    "region": "gb",
+    "unit": "seat/month",
+    "quantityPerUnit": 1,
+    "priceType": "Consumption",
+    "currency": "GBP",
+    "price": "6.90",
+    "effectiveAt": "2026-11-19T00:00:00Z",
+    "source": "https://www.microsoft.com/en-gb/microsoft-365/enterprise/frontline-plans-and-pricing",
+    "product": "Microsoft 365 F3 (no Teams)",
+    "verification": "microsoft-commercial",
+    "offeringId": "m365-f3-no-teams-gb",
+    "component": "seats",
+    "review": {
+      "checkedAt": "2026-11-19T00:00:00Z",
+      "expiresAt": "2027-01-17T23:59:00Z",
+      "terms": "UK public offer per user/month. Annual commitment, paid yearly. Excludes VAT. Frontline eligibility and the no-Teams edition apply."
+    }
+  },
+  {
+    "meterId": "m365-business-standard-no-teams-gb/seats",
+    "sku": "m365-business-standard-no-teams-gb",
+    "region": "gb",
+    "unit": "seat/month",
+    "quantityPerUnit": 1,
+    "priceType": "Consumption",
+    "currency": "GBP",
+    "price": "8.30",
+    "effectiveAt": "2026-11-19T00:00:00Z",
+    "source": "https://www.microsoft.com/en-gb/microsoft-365/business/microsoft-365-business-standard",
+    "product": "Microsoft 365 Business Standard (no Teams)",
+    "verification": "microsoft-commercial",
+    "offeringId": "m365-business-standard-no-teams-gb",
+    "component": "seats",
+    "review": {
+      "checkedAt": "2026-11-19T00:00:00Z",
+      "expiresAt": "2027-01-17T23:59:00Z",
+      "terms": "UK public offer per user/month. Annual subscription, paid yearly, auto-renews. Excludes VAT. No Teams edition."
+    }
+  },
+  {
+    "meterId": "m365-business-premium-no-teams-gb/seats",
+    "sku": "m365-business-premium-no-teams-gb",
+    "region": "gb",
+    "unit": "seat/month",
+    "quantityPerUnit": 1,
+    "priceType": "Consumption",
+    "currency": "GBP",
+    "price": "14.40",
+    "effectiveAt": "2026-11-19T00:00:00Z",
+    "source": "https://www.microsoft.com/en-gb/microsoft-365/business/microsoft-365-business-premium",
+    "product": "Microsoft 365 Business Premium (no Teams)",
+    "verification": "microsoft-commercial",
+    "offeringId": "m365-business-premium-no-teams-gb",
+    "component": "seats",
+    "review": {
+      "checkedAt": "2026-11-19T00:00:00Z",
+      "expiresAt": "2027-01-17T23:59:00Z",
+      "terms": "UK public offer per user/month. Annual subscription, paid yearly, auto-renews. Excludes VAT. No Teams edition."
+    }
+  },
+  {
+    "meterId": "ems-e3-gb/seats",
+    "sku": "ems-e3-gb",
+    "region": "gb",
+    "unit": "seat/month",
+    "quantityPerUnit": 1,
+    "priceType": "Consumption",
+    "currency": "GBP",
+    "price": "9.30",
+    "effectiveAt": "2026-11-19T00:00:00Z",
+    "source": "https://www.microsoft.com/en-gb/microsoft-365/enterprise/office-365-plans-and-pricing",
+    "product": "Enterprise Mobility + Security E3",
+    "verification": "microsoft-commercial",
+    "offeringId": "ems-e3-gb",
+    "component": "seats",
+    "review": {
+      "checkedAt": "2026-11-19T00:00:00Z",
+      "expiresAt": "2027-01-17T23:59:00Z",
+      "terms": "UK public offer per user/month. Annual subscription, paid yearly, auto-renews. Excludes VAT. The separately purchased offer can be part of the Defender Suite prerequisite."
+    }
   }
 ]

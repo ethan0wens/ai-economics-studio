@@ -24,8 +24,10 @@ export function logicalGraph(env: Environment, result: Ledger) {
     nodes: nodes.map(item => {
       const billable = result.lines.filter(line => line.objectId === item.id);
       const cost = summarize(billable, env.currency).current;
-      const annotation = !billable.length ? undefined : cost.incomplete === billable.length
+      const monthly = !billable.length ? undefined : cost.incomplete === billable.length
         ? 'Current cost unknown' : `${formatMoney(cost.known, env.currency)}/mo${cost.incomplete ? ' + unknown' : ''}`;
+      const comparison = result.capacityComparisons.find(row => row.id === item.id);
+      const annotation = comparison ? `${monthly} · PAYG comparison ${formatMoney(comparison.payg, env.currency)}` : monthly;
       return ({
       id: item.id, name: item.name, kind: item.kind, type: kindLabels[item.kind], color: groupColors[item.kind],
       incomplete: result.issues.some(issue => issue.id === item.id) || result.lines.some(line => line.objectId === item.id && line.amounts.current === null) ||

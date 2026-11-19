@@ -11,7 +11,8 @@ export const evidenceWindow = {
 const ruleSchema = z.strictObject({
   id: z.string(), products: z.array(z.string()).min(1), market: z.literal('GB'),
   kind: z.enum(['requirement', 'included', 'conditional', 'unverified']),
-  capability: z.string().min(1), eligible: z.array(z.string()).optional(), possible: z.array(z.string()).optional(), ...evidenceWindow,
+  capability: z.string().min(1), eligible: z.array(z.string()).optional(), possible: z.array(z.string()).optional(),
+  qualifyingBundles: z.array(z.array(z.string()).min(2)).optional(), ...evidenceWindow,
 });
 export const entitlementRules = z.array(ruleSchema).parse(reviewed);
 export function currentEvidence(rule: { verifiedOn: string; reviewBy: string }, at: string) {
@@ -99,20 +100,25 @@ export function licensing(env: Environment, inventory: readonly Offering[], at: 
         !blocked.has(other.id) && (other.procurement === 'existing' || other.procurement === 'incremental'));
       const potential = licences.some(other => other.id !== licence.id && rule.possible?.includes(offers.get(other.id) ?? '') &&
         !blocked.has(other.id) && (other.procurement === 'existing' || other.procurement === 'incremental'));
+      const assignedProducts = licences.filter(other => other.id !== licence.id && !blocked.has(other.id) &&
+        (other.procurement === 'existing' || other.procurement === 'incremental'));
+      const partialBundle = assignedProducts.some(other => rule.qualifyingBundles?.some(bundle => bundle.includes(offers.get(other.id) ?? '')));
       const allGroupsCovered = groups.length > 0 && groups.every(group => {
         const object = objects.get(group.from);
+        const fullyAssigned = (base: Licence) => object?.kind === 'user-group' && object.population !== undefined &&
+          (seats.get(base.id) ?? 0) >= object.population && assigned(base.id).some(link => link.from === group.from && link.seats === object.population);
         return object?.kind === 'user-group' && object.population !== undefined &&
           group.seats !== undefined && group.seats <= object.population &&
-          eligible.some(base => (seats.get(base.id) ?? 0) >= object.population! &&
-            assigned(base.id).some(link => link.from === group.from && link.seats === object.population));
+          (eligible.some(fullyAssigned) || rule.qualifyingBundles?.some(bundle =>
+            bundle.every(product => assignedProducts.some(base => offers.get(base.id) === product && fullyAssigned(base)))));
       });
       const status = !dateValid || rule.kind === 'unverified' ? 'Unverified'
         : rule.kind === 'included' ? 'Verified'
-        : rule.kind === 'requirement' ? allGroupsCovered ? 'Verified' : (eligible.length || potential) ? 'Conditional' : 'Action required'
+        : rule.kind === 'requirement' ? allGroupsCovered ? 'Verified' : (eligible.length || potential || partialBundle) ? 'Conditional' : 'Action required'
         : 'Conditional';
       const assignment = rule.kind === 'requirement'
         ? allGroupsCovered ? ' A qualifying base licence covers each assigned group in the plan.'
-        : eligible.length ? ' Confirm that the same users hold the prerequisite, or model a fully covered group.'
+        : eligible.length || partialBundle ? ' Confirm that the same users hold every required subscription, or model a fully covered group.'
         : potential ? ' The selected plan can have different eligibility or commercial terms. Confirm them before adding another licence.'
         : ' Add an eligible base entitlement or confirm coverage in the customer agreement.' : '';
       findings.push({

@@ -2,6 +2,7 @@ import { z } from 'zod';
 import type { Environment, StudioObject } from './domain';
 import { currentEvidence, evidenceWindow } from './entitlements';
 import reviewed from '../catalogue/compatibility.json' with { type: 'json' };
+import { capacityIssue, capacityRequirement, deployedIdentity, calculatorSource, estimatedPeak } from './provisioned';
 
 export const compatibilityLabels = {
   compatible: 'Verified compatible', conditional: 'Conditionally compatible',
@@ -21,14 +22,17 @@ const matrix = z.strictObject({
   })),
   regions: z.array(record.extend({ models: z.array(z.string()).min(1), version: z.string(), sku: z.string(), regions: z.array(z.string()).min(1) })),
   integrations: z.array(record),
+  lifecycle: z.array(record.extend({ models: z.array(z.string()).min(1), version: z.string(),
+    date: z.iso.date(), timing: z.enum(['retirement', 'no-earlier-than']), sku: z.string().optional(),
+  })).default([]),
 });
 export const compatibilityEvidence = matrix.parse(reviewed);
 type Rule = z.infer<typeof record>;
 type Model = Extract<StudioObject, { kind: 'model-deployment' }>;
 type Agent = Extract<StudioObject, { kind: 'agent' }>;
 const normalized = (value?: string) => value?.toLowerCase();
-const modelName = (model: Model) => normalized(model.modelId === 'azure-openai' ? model.deployedModel : model.modelId);
-const modelVersion = (model: Model) => model.deployedVersion ?? (model.modelId === 'azure-openai' ? undefined : model.modelVersion);
+const modelName = (model: Model) => deployedIdentity(model).model;
+const modelVersion = (model: Model) => deployedIdentity(model).version;
 const integration = (id: string) => compatibilityEvidence.integrations.find(rule => rule.id === id);
 
 function finding(id: string, title: string, at: string, rule?: Rule, fallback = 'Current authoritative evidence does not cover this exact configuration.', related?: string): TechnicalFinding {
@@ -41,7 +45,7 @@ function finding(id: string, title: string, at: string, rule?: Rule, fallback = 
   };
 }
 
-export function deploymentFindings(model: Model, at: string) {
+export function deploymentFindings(model: Model, at: string, sizing = true) {
   const name = modelName(model);
   const version = modelVersion(model);
   const scoped = compatibilityEvidence.regions.find(rule => name && rule.models.includes(name) && version === rule.version &&
@@ -50,6 +54,13 @@ export function deploymentFindings(model: Model, at: string) {
     ? 'Enter the actual Azure deployment region. The billing region is a separate pricing input.'
     : 'Review availability for this exact model, version, deployment type and location. A verified Azure price only establishes billing.');
   const checks = [region];
+  const lifecycle = compatibilityEvidence.lifecycle.find(rule => name && rule.models.includes(name) && rule.version === version &&
+    (!rule.sku || normalized(rule.sku) === normalized(model.sku)));
+  if (lifecycle) {
+    checks.push(finding(model.id, 'Model lifecycle', at, {
+      ...lifecycle, status: lifecycle.timing === 'retirement' && at.slice(0, 10) >= lifecycle.date ? 'incompatible' : 'conditional',
+    }));
+  }
   const sku = normalized(model.sku);
   if (sku && model.mode && ['standard', 'globalstandard', 'datazonestandard', 'provisionedmanaged', 'globalprovisionedmanaged', 'datazoneprovisionedmanaged'].includes(sku) &&
     (sku.includes('provisioned') !== (model.mode === 'provisioned'))) {
@@ -74,11 +85,23 @@ export function deploymentFindings(model: Model, at: string) {
         : `Check ${feature} with the required API version and deployment. The reviewed capability list did not establish it.`,
     }));
   }
-  if (model.mode === 'provisioned') {
-    const capacity = integration('provisioned-constraints');
-    checks.push(finding(model.id, 'Provisioned capacity', at, capacity && {
-      ...capacity, condition: `${capacity.condition}${model.capacity === undefined ? ' Enter the purchased PTUs.' : ''}`,
-    }));
+  if (model.mode === 'provisioned' && sizing) {
+    const rule = capacityRequirement(model, at);
+    const issue = capacityIssue(model, rule);
+    const requirements = [rule?.minimum === undefined ? 'Minimum unverified' : `Minimum ${rule.minimum} PTUs`,
+      rule?.increment === undefined ? 'increment unverified' : `increments of ${rule.increment} PTUs`].join(' · ');
+    checks.push({
+      id: model.id, title: 'Provisioned capacity', status: issue ? 'incompatible' :
+        rule?.minimum !== undefined && rule.increment !== undefined && model.capacity !== undefined ? 'compatible' : 'unverified',
+      detail: issue ?? `${requirements}. ${model.capacity === undefined ? 'Enter the deployment capacity. ' : ''}${rule?.condition ?? 'Check the exact model version, deployment mode and published sizing evidence.'}`,
+      rule: rule?.id, source: rule?.source ?? calculatorSource, verifiedOn: rule?.verifiedOn,
+    });
+    const peak = !issue && estimatedPeak(model, rule);
+    checks.push({
+      id: model.id, title: 'Throughput feasibility', status: peak ? 'conditional' : 'unverified', source: calculatorSource,
+      detail: `${peak ? `Estimated normalized peak ${peak.demand} TPM ${peak.exceeds ? 'exceeds' : 'fits within'} the ${peak.capacity} TPM reference estimate. `
+        : rule?.inputTpmPerPtu ? `Microsoft lists ${rule.inputTpmPerPtu.toLocaleString('en-GB')} input TPM per PTU under reference conditions. ` : ''}Validate customer quota, actual capacity, cache mix and request shape with Microsoft’s sizing guidance and load testing.`,
+    });
   }
   return checks;
 }

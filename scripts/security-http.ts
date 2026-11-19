@@ -73,9 +73,11 @@ export async function verifyPublicSecurity(site: string, expected?: string | nul
     get('/'), get('/documentation'), get('/pricing/manifest.json'),
     request(new URL('/', site.replace(/^https:/, 'http:')), { redirect: 'manual', credentials: 'omit', signal: AbortSignal.timeout(12_000) }),
   ]);
-  if (![301, 302, 307, 308].includes(redirect.status) || URL.parse(redirect.headers.get('location') ?? '', site)?.href !== new URL('/', site).href) {
-    throw new Error('The public HTTP endpoint did not redirect to the exact HTTPS origin.');
-  }
+  const upgrade = [301, 302, 307, 308].includes(redirect.status) &&
+    URL.parse(redirect.headers.get('location') ?? '', site)?.href === new URL('/', site).href;
+  const rejected = [400, 403, 404, 421, 426].includes(redirect.status) && redirect.headers.get('server') === 'cloudflare';
+  const transport = `HTTP ${redirect.status} · ${upgrade ? 'redirects to the same HTTPS origin' : rejected ? 'plaintext refused by Cloudflare' : 'secure upgrade or provider refusal unverified'}`;
+  const secured = upgrade || rejected;
   await redirect.body?.cancel();
   [html, fallback].forEach(response => verifySecurityHeaders(response.headers, 'document', expected !== undefined));
   verifySecurityHeaders(manifestResponse.headers, 'mutable');
@@ -96,10 +98,13 @@ export async function verifyPublicSecurity(site: string, expected?: string | nul
     const bytes = await readResponseBytes(catalogue, maxCatalogueBytes, 'Public pricing catalogue');
     if (createHash('sha256').update(bytes).digest('hex') !== manifest.catalogueId) throw new Error('Public catalogue bytes did not match the manifest hash.');
   }
-  return { catalogueId: manifest.catalogueId, frameHeader: html.headers.get('x-frame-options'), hsts: html.headers.get('strict-transport-security') };
+  if (expected !== undefined && !secured) throw new Error(`Public plaintext delivery check failed. ${transport}.`);
+  return { catalogueId: manifest.catalogueId, frameHeader: html.headers.get('x-frame-options'),
+    hsts: html.headers.get('strict-transport-security'), transport, secured };
 }
 
 if (process.argv[1] && pathToFileURL(process.argv[1]).href === import.meta.url) {
   const result = await verifyPublicSecurity(workerUrl);
-  console.log(`Public HTTPS, CSP, cache, SPA and catalogue checks passed. Catalogue ${result.catalogueId}, X-Frame-Options ${result.frameHeader ?? 'absent'}, HSTS response header ${result.hsts ?? 'absent'}.`);
+  console.log(`Public HTTPS, CSP, cache, SPA and catalogue checks passed. Catalogue ${result.catalogueId}; X-Frame-Options ${result.frameHeader ?? 'absent'}; HSTS response header ${result.hsts ?? 'absent'}; ${result.transport}.`);
+  if (!result.secured) process.exitCode = 1;
 }

@@ -7,12 +7,13 @@ import { parseConfigFileTextToJson } from 'typescript';
 import { catalogueFilename, catalogueSchema, manifestSchema } from '../src/catalogue';
 import { catalogueCoverage } from '../src/coverage';
 import { maintenanceHealthSchema, releaseHealthSchema } from '../src/catalogue-health';
-import { verifyPublicSecurity } from './security-http';
+import { documentAssetPaths, reportSecurityVerification, verifyPublicSecurity, workerUrl } from './security-http';
+import { readResponseBytes } from '../src/untrusted-data';
 import { promoteWorker, workerReleases, type ActiveWorker } from './worker-release';
 
 const worker = 'ai-econmics-studio';
 const workersSubdomain = 'ethan0wens';
-const site = `https://${worker}.${workersSubdomain}.workers.dev`;
+const site = workerUrl;
 const config = fileURLToPath(new URL('../wrangler.jsonc', import.meta.url));
 const wrangler = fileURLToPath(new URL('../node_modules/wrangler/bin/wrangler.js', import.meta.url));
 
@@ -52,9 +53,10 @@ export async function verifyPublishedAssets(expected: ReadonlyMap<string, string
       redirect: 'error',
       signal: AbortSignal.timeout(10_000),
     });
-    if (!response.ok || await response.text() !== contents) {
-      throw new Error(`Live ${path} does not match the build (HTTP ${response.status}).`);
-    }
+    const bytes = Buffer.from(contents);
+    const matches = response.ok && await readResponseBytes(response, bytes.length, `Published ${path}`)
+      .then(actual => bytes.equals(actual), () => false);
+    if (!matches) throw new Error(`Live ${path} does not match the build (HTTP ${response.status}).`);
   }));
 }
 
@@ -95,7 +97,9 @@ async function builtAssets(previous: ActiveWorker, previousAssets: Awaited<Retur
   const readAsset = (path: string) => readFile(new URL(`../dist${path}`, import.meta.url), 'utf8');
   const raw = await readAsset(manifestPath);
   const manifest = manifestSchema.parse(JSON.parse(raw));
-  const assets = new Map([['/', await readAsset('/index.html')], [manifestPath, raw]]);
+  const html = await readAsset('/index.html');
+  const assets = new Map([['/', html], [manifestPath, raw]]);
+  for (const path of documentAssetPaths(html).assets) assets.set(path, await readAsset(path));
   const catalogue = manifest.catalogueId ? await readAsset(`/pricing/${catalogueFilename(manifest.catalogueId)}`) : undefined;
   const checksum = (source: string) => createHash('sha256').update(source).digest('hex');
   if (manifest.catalogueId && (!catalogue || checksum(catalogue) !== manifest.catalogueId)) throw new Error('Built pricing asset has an invalid checksum.');
@@ -165,7 +169,7 @@ async function waitForPublishedAssets(assets: ReadonlyMap<string, string>) {
   for (let attempt = 1; ; attempt++) {
     try {
       await verifyPublishedAssets(assets);
-      report('notice', `Production HTML and pricing assets match this build at ${site}`);
+      report('notice', `Preview application and pricing assets match this build at ${site}`);
       return;
     } catch (error) {
       if (attempt === 6) {
@@ -212,14 +216,16 @@ if (process.argv[1] && pathToFileURL(process.argv[1]).href === import.meta.url) 
       current: worker.current,
       async verify() {
         await waitForPublishedAssets(assets);
-        await verifyPublicSecurity(site, manifest.catalogueId);
+        await reportSecurityVerification(await verifyPublicSecurity(site, {
+          policy: 'preview', expectedCatalogueId: manifest.catalogueId, expectedApplication: application,
+        }));
         liveBrowser(manifest.catalogueId);
       },
       persist() { if (publish) publishCatalogue(application, publishToken!); },
       restore: worker.restore,
       verifyRestore: () => waitForPublishedAssets(previousAssets.assets),
     });
-    report('notice', `Production browser reconciliation passed for ${manifest.catalogueId ?? 'unpriced bootstrap catalogue'} at ${site}`);
+    report('notice', `Preview browser reconciliation passed for application ${application}, catalogue ${manifest.catalogueId ?? 'unpriced bootstrap catalogue'} at ${site}`);
   } catch (error) {
     report('error', error instanceof Error ? error.message : String(error));
     process.exitCode = 1;

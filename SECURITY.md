@@ -1,6 +1,6 @@
 # Security policy
 
-The supported version is the current production release of AI Economics Studio and its matching public catalogue. Security fixes are reviewed against the main release line.
+The supported version is the current publicly reachable development preview and its matching catalogue. Security fixes are reviewed on the main release line. The owner temporarily accepts the existing workers.dev HTTP behaviour as S6-10 for preview. Wider public release requires a custom domain with verified HTTPS enforcement. [Release requirements](docs/security/06-operational-security.md#before-public-release--mandatory-security-requirements) · [Risk register](docs/security/03-risk-register.md)
 
 ## Report a vulnerability
 

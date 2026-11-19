@@ -14,4 +14,4 @@ The site restricts scripts and connections to its origin, and prevents framing a
 
 ## Limits and independent review
 
-An estimate describes the inputs and verified public rates available at an assessment time. It does not establish the confidentiality of a device or the accuracy of entered assumptions. Independent review and owner verification of production permissions are separate from the automatic checks. See [limitations and independent review](07-limitations.md).
+An estimate describes the inputs and verified public rates available at an assessment time. It does not establish the confidentiality of a device or the accuracy of entered assumptions. The publicly reachable workers.dev site is a development preview. Use its HTTPS address. Some clients without HTTPS upgrade protection can receive the application shell over HTTP. The studio checks for a secure browser context before opening a workspace. Wider public release requires an approved custom domain and Cloudflare HTTPS enforcement. Independent review and owner verification of publishing permissions are separate from the automatic checks. See [limitations and independent review](07-limitations.md).

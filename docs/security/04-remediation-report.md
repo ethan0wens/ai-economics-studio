@@ -9,3 +9,7 @@
 - Dependency monitoring combines npm audit with Dependabot. ESLint checks dynamic code and HTML injection sinks. The risk register tracks owner controls and remaining limits.
 
 See the [risk register](03-risk-register.md) and [verification evidence](05-security-verification.md).
+
+## Stage 6.1 scoped preview exception
+
+Preview verification records S6-10 only when the exact approved hostname serves HTTP 200 with a byte-identical HTML shell. It checks HTTPS, the hardened response policy, application artefacts, release identity and catalogue integrity before recording the warning. A bad redirect, unverified refusal, unexpected bytes or any other verification error still blocks or rolls back deployment. The separate public gate requires an approved custom domain, revision-bound review evidence and verified edge HTTPS enforcement. See the [operational requirements](06-operational-security.md).

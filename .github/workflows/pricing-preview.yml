@@ -19,6 +19,9 @@ on:
       - 'tests/e2e/**'
       - 'package-lock.json'
       - 'scripts/security-*.ts'
+      - 'scripts/release-readiness.ts'
+      - 'docs/security/public-release.json'
+      - 'package.json'
       - 'src/untrusted-data.ts'
       - 'public/_headers'
 
@@ -120,17 +123,5 @@ jobs:
           node-version: '24'
           cache: npm
       - run: npm ci --ignore-scripts
-      - name: Verify the current public delivery boundary
-        run: |
-          if result=$(npm run --silent security:http 2>&1); then
-            printf '%s\n' "$result" >> "$GITHUB_STEP_SUMMARY"
-            level=notice
-          else
-            level=error
-          fi
-          printf '%s\n' "$result"
-          result=${result//%/%25}
-          result=${result//$'\r'/%0D}
-          result=${result//$'\n'/%0A}
-          printf '::%s title=Public security probe::%s\n' "$level" "$result"
-          test "$level" = notice
+      - name: Observe live preview delivery and record any exception
+        run: npm run security:preview -- --observe-current

@@ -1,10 +1,39 @@
 import { createHash } from 'node:crypto';
-import { pathToFileURL } from 'node:url';
+import { appendFile } from 'node:fs/promises';
 import { parse, type DefaultTreeAdapterTypes as Html } from 'parse5';
-import { catalogueFilename, manifestSchema, maxCatalogueBytes, maxManifestBytes } from '../src/catalogue';
+import { catalogueFilename, catalogueSchema, manifestSchema, maxCatalogueBytes, maxManifestBytes, type Manifest } from '../src/catalogue';
+import { releaseHealthSchema } from '../src/catalogue-health';
 import { decodeUtf8, parseBoundedJson, readResponseBytes } from '../src/untrusted-data';
 
 export const workerUrl = 'https://ai-econmics-studio.ethan0wens.workers.dev';
+const stage5Application = 'ba6b9c90e75beba0873003249286930f8ebdf024';
+const maxShellBytes = 128_000;
+const maxAssetBytes = 6_000_000;
+
+export type ReleaseSecurityPolicy = {
+  expectedCatalogueId?: string | null;
+  expectedApplication?: string;
+} & (
+  { policy: 'preview'; observeCurrent?: true } |
+  { policy: 'public'; approvedHostname: string }
+);
+
+type Transport = { status: number; outcome: 'redirected' | 'cloudflare-refused' | 'plaintext-shell' };
+export type SecurityVerification = {
+  hostname: string;
+  policy: 'preview' | 'public';
+  https: { verified: true; headers: 'hardened' | 'stage-5-baseline'; catalogueId: string | null };
+  http: Transport;
+  exception: 'S6-10' | null;
+  warnings: string[];
+  decision: 'conditional-pass-preview-only' | 'stage-5-observation' | 'pass-public-delivery';
+};
+
+export function publicHostname(hostname: string) {
+  return /^(?:[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\.)+[a-z]{2,63}$/.test(hostname) &&
+    hostname.length <= 253 && !/(?:^|\.)(?:workers\.dev|localhost|local|internal)$/.test(hostname);
+}
+
 const directives = {
   'default-src': "'self'", 'script-src': "'self'", 'style-src': "'self'", 'font-src': "'self'",
   'img-src': "'self' data:", 'connect-src': "'self'", 'object-src': "'none'", 'base-uri': "'self'",
@@ -64,54 +93,131 @@ export function documentAssetPaths(source: string) {
   return { script: scripts[0], assets };
 }
 
-export async function verifyPublicSecurity(site: string, expected?: string | null, request = fetch) {
+export async function verifyPublicSecurity(site: string, options: ReleaseSecurityPolicy, request = fetch): Promise<SecurityVerification> {
+  const origin = URL.parse(site);
+  if (!origin || origin.protocol !== 'https:' || origin.href !== origin.origin + '/') {
+    throw new Error('Use an exact HTTPS origin for delivery verification.');
+  }
+  if (options.policy === 'preview' && origin.origin !== workerUrl) {
+    throw new Error('The preview policy applies only to the existing ai-econmics-studio Worker hostname.');
+  }
+  if (options.policy === 'public' && (!publicHostname(origin.hostname) || origin.origin !== `https://${options.approvedHostname}`)) {
+    throw new Error('Wider public release requires the approved custom domain and Cloudflare HTTPS enforcement.');
+  }
+
   async function get(path: string) {
-    const response = await request(new URL(path, site), {
+    const response = await request(new URL(path, origin!), {
       redirect: 'error', cache: 'no-cache', credentials: 'omit', signal: AbortSignal.timeout(12_000),
     });
     if (!response.ok) throw new Error(`Security delivery probe received HTTP ${response.status} for ${path}.`);
     return response;
   }
-  const [html, fallback, manifestResponse, redirect] = await Promise.all([
+  async function readRelease(manifest: Manifest) {
+    const bytes = await readResponseBytes(await get('/pricing/health.json'), 1_000_000, 'Release receipt');
+    const payload = parseBoundedJson(decodeUtf8(bytes), 30_000, 'Release receipt') as { release?: unknown } | null;
+    const release = releaseHealthSchema.parse(payload?.release);
+    if (release.catalogueId !== manifest.catalogueId || release.pricingCheckedAt !== manifest.lastCheckedAt ||
+        release.coverage.records !== manifest.records) throw new Error('The live release receipt did not match the pricing manifest.');
+    return release;
+  }
+  const plaintextUrl = new URL(origin.href);
+  plaintextUrl.protocol = 'http:';
+  const [html, fallback, manifestResponse, plaintext] = await Promise.all([
     get('/'), get('/documentation'), get('/pricing/manifest.json'),
-    request(new URL('/', site.replace(/^https:/, 'http:')), { redirect: 'manual', credentials: 'omit', signal: AbortSignal.timeout(12_000) }),
+    request(plaintextUrl, { redirect: 'manual', cache: 'no-cache', credentials: 'omit', signal: AbortSignal.timeout(12_000) }),
   ]);
-  const upgrade = [301, 302, 307, 308].includes(redirect.status) &&
-    URL.parse(redirect.headers.get('location') ?? '', site)?.href === new URL('/', site).href;
-  const rejected = [400, 403, 404, 421, 426].includes(redirect.status) && redirect.headers.get('server') === 'cloudflare';
-  const secured = upgrade || rejected;
-  const isHtml = redirect.ok && (redirect.headers.get('content-type') ?? '').toLowerCase().includes('text/html');
-  const plaintext = isHtml ? decodeUtf8(await readResponseBytes(redirect, 128_000, 'Plain HTTP response')) : undefined;
-  if (!isHtml) await redirect.body?.cancel();
-  [html, fallback].forEach(response => verifySecurityHeaders(response.headers, 'document', expected !== undefined));
+  const root = await readResponseBytes(html, maxShellBytes, 'Application shell');
+  const alternate = await readResponseBytes(fallback, maxShellBytes, 'SPA fallback');
+  if (!Buffer.from(root).equals(alternate)) throw new Error('The direct SPA route did not serve the application shell.');
+  const { assets } = documentAssetPaths(decodeUtf8(root));
   verifySecurityHeaders(manifestResponse.headers, 'mutable');
-  const rawHtml = decodeUtf8(await readResponseBytes(html, 128_000, 'Application shell'));
-  const transport = `HTTP ${redirect.status} · ${upgrade ? 'redirects to the same HTTPS origin' :
-    rejected ? 'plaintext refused by Cloudflare' : plaintext === rawHtml ? 'served the same application shell over plaintext' :
-      'secure upgrade or provider refusal unverified'}`;
-  const fallbackText = decodeUtf8(await readResponseBytes(fallback, 128_000, 'SPA fallback'));
-  const { script } = documentAssetPaths(rawHtml);
-  if (rawHtml !== fallbackText) throw new Error('The direct SPA route did not serve the application shell.');
   const manifest = manifestSchema.parse(parseBoundedJson(
     decodeUtf8(await readResponseBytes(manifestResponse, maxManifestBytes, 'Public pricing manifest')), 30, 'Public pricing manifest'));
-  if (expected !== undefined && expected !== manifest.catalogueId) throw new Error('Public security probe received a different catalogue.');
-  const bundle = await get(script);
-  verifySecurityHeaders(bundle.headers, 'immutable');
-  if (!/(?:text|application)\/javascript/i.test(bundle.headers.get('content-type') ?? '')) throw new Error('Application script served without a JavaScript MIME type.');
-  await bundle.body?.cancel();
-  if (manifest.catalogueId) {
-    const catalogue = await get(`/pricing/${catalogueFilename(manifest.catalogueId)}`);
-    verifySecurityHeaders(catalogue.headers, 'immutable');
-    const bytes = await readResponseBytes(catalogue, maxCatalogueBytes, 'Public pricing catalogue');
-    if (createHash('sha256').update(bytes).digest('hex') !== manifest.catalogueId) throw new Error('Public catalogue bytes did not match the manifest hash.');
+  if (options.expectedCatalogueId !== undefined && options.expectedCatalogueId !== manifest.catalogueId) {
+    throw new Error('Public security probe received a different catalogue.');
   }
-  if (expected !== undefined && !secured) throw new Error(`Public plaintext delivery check failed. ${transport}.`);
-  return { catalogueId: manifest.catalogueId, frameHeader: html.headers.get('x-frame-options'),
-    hsts: html.headers.get('strict-transport-security'), transport, secured };
+
+  // The read-only work-branch probe can observe the one previously verified Stage 5
+  // deployment while it is still active. Every candidate requires both new headers.
+  const stage5 = options.policy === 'preview' && options.observeCurrent === true && options.expectedApplication === undefined &&
+    [html, fallback].every(response => !response.headers.has('x-frame-options') && !response.headers.has('strict-transport-security'));
+  [html, fallback].forEach(response => verifySecurityHeaders(response.headers, 'document', !stage5));
+  if (stage5 || options.expectedApplication !== undefined) {
+    const release = await readRelease(manifest);
+    if (release.application !== (stage5 ? stage5Application : options.expectedApplication)) {
+      throw new Error('The live application revision did not match the checked release.');
+    }
+  }
+
+  await Promise.all([...assets].map(async path => {
+    const response = await get(path);
+    verifySecurityHeaders(response.headers, 'immutable');
+    const mime = response.headers.get('content-type')?.split(';', 1)[0].trim().toLowerCase();
+    if (path.endsWith('.js') ? !['text/javascript', 'application/javascript'].includes(mime ?? '') : mime !== 'text/css') {
+      throw new Error(`Unexpected asset MIME type for ${path}.`);
+    }
+    await readResponseBytes(response, maxAssetBytes, 'Application asset');
+  }));
+
+  if (manifest.catalogueId) {
+    const response = await get(`/pricing/${catalogueFilename(manifest.catalogueId)}`);
+    verifySecurityHeaders(response.headers, 'immutable');
+    const bytes = await readResponseBytes(response, maxCatalogueBytes, 'Public pricing catalogue');
+    if (createHash('sha256').update(bytes).digest('hex') !== manifest.catalogueId) throw new Error('Public catalogue bytes did not match the manifest hash.');
+    const catalogue = catalogueSchema.parse(parseBoundedJson(decodeUtf8(bytes), 275_000, 'Public pricing catalogue'));
+    if (catalogue.records.length !== manifest.records) throw new Error('Public catalogue record count did not match the manifest.');
+  }
+
+  const location = plaintext.headers.get('location');
+  const redirects = [301, 302, 307, 308].includes(plaintext.status);
+  const refuses = [400, 403, 404, 421, 426].includes(plaintext.status) && plaintext.headers.get('server') === 'cloudflare' &&
+    /^[a-f0-9]{16,32}-[a-z0-9]{3}$/i.test(plaintext.headers.get('cf-ray') ?? '');
+  const plainBytes = plaintext.body ? await readResponseBytes(plaintext, maxShellBytes, 'Plain HTTP response') : undefined;
+  const sameShell = plainBytes !== undefined && Buffer.from(root).equals(plainBytes);
+  const mime = plaintext.headers.get('content-type')?.split(';', 1)[0].trim().toLowerCase();
+  let outcome: Transport['outcome'];
+  if (redirects && location && URL.parse(location, plaintextUrl)?.href === origin.href && !sameShell) outcome = 'redirected';
+  else if (refuses && !location && !sameShell) outcome = 'cloudflare-refused';
+  else if (plaintext.status === 200 && !location && mime === 'text/html' && sameShell) outcome = 'plaintext-shell';
+  else throw new Error(`Unexpected plaintext HTTP response (HTTP ${plaintext.status}). Expected an exact HTTPS redirect, Cloudflare refusal or the known application shell.`);
+
+  if (options.policy === 'public' && outcome === 'plaintext-shell') throw new Error('Public plaintext delivery check failed. HTTP 200 served the application shell.');
+  const exception = outcome === 'plaintext-shell' ? 'S6-10' as const : null;
+  const warnings = exception
+    ? ['HTTP 200 served the same application shell as HTTPS. The owner temporarily accepts S6-10 for development and preview on this hostname. Custom-domain HTTPS enforcement is mandatory before wider public release.']
+    : [];
+  return {
+    hostname: origin.hostname, policy: options.policy,
+    https: { verified: true, headers: stage5 ? 'stage-5-baseline' : 'hardened', catalogueId: manifest.catalogueId },
+    http: { status: plaintext.status, outcome }, exception, warnings,
+    decision: stage5 ? 'stage-5-observation' : options.policy === 'preview' ? 'conditional-pass-preview-only' : 'pass-public-delivery',
+  };
 }
 
-if (process.argv[1] && pathToFileURL(process.argv[1]).href === import.meta.url) {
-  const result = await verifyPublicSecurity(workerUrl);
-  console.log(`Public HTTPS, CSP, cache, SPA and catalogue checks passed. Catalogue ${result.catalogueId}; X-Frame-Options ${result.frameHeader ?? 'absent'}; HSTS response header ${result.hsts ?? 'absent'}; ${result.transport}.`);
-  if (!result.secured) process.exitCode = 1;
+export async function reportSecurityVerification(result: SecurityVerification) {
+  const decisions = {
+    'stage-5-observation': 'ACTIVE STAGE 5 BASELINE OBSERVED',
+    'conditional-pass-preview-only': 'CONDITIONAL PASS — PREVIEW ONLY',
+    'pass-public-delivery': 'PUBLIC DELIVERY CHECKS PASSED',
+  };
+  const outcomes = { redirected: 'redirected to the exact HTTPS origin', 'cloudflare-refused': 'Cloudflare refused plaintext delivery',
+    'plaintext-shell': 'served the same application shell as HTTPS' };
+  const headline = decisions[result.decision];
+  const details = [
+    `${headline} · ${result.hostname}`,
+    `HTTPS policy, headers (${result.https.headers}), assets, SPA fallback and catalogue integrity verified. Catalogue ${result.https.catalogueId ?? 'bootstrap'}.`,
+    `HTTP ${result.http.status} ${outcomes[result.http.outcome]}.`,
+    ...(result.decision === 'stage-5-observation' ? ['Candidate HSTS and X-Frame-Options must pass at deployment.'] : []),
+  ];
+  console.log(details.join('\n'));
+  for (const warning of result.warnings) {
+    const label = 'Preview transport exception — S6-10';
+    console.log(process.env.GITHUB_ACTIONS === 'true' ? `::warning title=${label}::${warning}` : `WARNING ${label} · ${warning}`);
+  }
+  if (process.env.GITHUB_STEP_SUMMARY) {
+    const summary = [`## ${headline}`, ...details.slice(1)];
+    if (result.exception) summary.push('### Preview transport exception — S6-10', ...result.warnings);
+    if (result.policy === 'preview') summary.push('**Wider public release is blocked pending custom-domain HTTPS enforcement and release approval.**');
+    await appendFile(process.env.GITHUB_STEP_SUMMARY, summary.join('\n\n') + '\n\n');
+  }
 }

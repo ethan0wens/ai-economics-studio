@@ -1,4 +1,4 @@
-name: Refresh and deploy retail prices
+name: Refresh and deploy preview retail prices
 on:
   push:
     branches: [main]

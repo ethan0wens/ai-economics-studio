@@ -40,6 +40,10 @@ Read the [seven-section technical reference](docs/technical/README.md) for archi
 
 Review the [threat model](docs/security/01-threat-model.md), [security verification](docs/security/05-security-verification.md) and [reporting policy](SECURITY.md). Run `npm run security:audit` for dependency checks. The production build includes the static asset security gate.
 
+## Before public release — mandatory security requirements
+
+**The current workers.dev deployment is a preview. The temporary HTTP transport exception must be removed before wider public release.** Main publishes the preview. Use `npm run security:preview` for its delivery check and `npm run release:public` for the blocking wider-release gate. [Custom-domain tracking issue draft](docs/security/public-release-blocker.md) · [Risk register](docs/security/03-risk-register.md) · [Release requirements](docs/security/06-operational-security.md#before-public-release--mandatory-security-requirements)
+
 ## Locked architecture
 
 - **UI**: React + TypeScript + Vite, light-first Cloud Professional design system.

@@ -23,7 +23,9 @@
     "docs:index": "tsx scripts/technical-docs.ts",
     "security:audit": "npm audit --audit-level=high && npm audit --omit=dev --audit-level=moderate",
     "security:build": "tsx scripts/security-build.ts",
-    "security:http": "tsx scripts/security-http.ts"
+    "security:http": "tsx scripts/security-check.ts",
+    "security:preview": "tsx scripts/security-check.ts preview",
+    "release:public": "tsx scripts/security-check.ts public"
   },
   "dependencies": {
     "@dagrejs/dagre": "^3.1.3",

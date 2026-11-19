@@ -1,4 +1,4 @@
-name: Deploy static studio
+name: Deploy static studio preview
 on:
   push:
     branches: [main]

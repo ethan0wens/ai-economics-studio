@@ -54,14 +54,21 @@ jobs:
           printf '### Read-only Azure retail preview\n\n' >> "$GITHUB_STEP_SUMMARY"
           jq -r '"Validated records: \(.records)\n\nChecked at: \(.lastCheckedAt)\n\nCatalogue ID: \(.catalogueId)"' public/pricing/manifest.json >> "$GITHUB_STEP_SUMMARY"
           npx tsx scripts/pricing.ts coverage >> "$GITHUB_STEP_SUMMARY"
-      - run: npm run typecheck && npm run lint && npm test && npm run build
-      - uses: ./.github/actions/setup-browser
-      - run: npm run test:e2e
-        env:
-          STUDIO_CHECK_PUBLISHED_CATALOGUE: '1'
       - uses: actions/upload-artifact@v7
         with:
           name: verified-retail-preview
           path: public/pricing/*.json
           if-no-files-found: error
           retention-days: 7
+      - run: npm run typecheck && npm run lint && npm test && npm run build
+      - uses: ./.github/actions/setup-browser
+      - name: Check browser pricing and field guidance
+        run: |
+          if ! npm run test:e2e > "$RUNNER_TEMP/studio-browser.log" 2>&1; then
+            cat "$RUNNER_TEMP/studio-browser.log"
+            tail -c 12000 "$RUNNER_TEMP/studio-browser.log" | jq -Rs 'gsub("%"; "%25") | gsub("\r"; "%0D") | gsub("\n"; "%0A")' -r | sed 's/^/::error title=Browser pricing checks::/'
+            exit 1
+          fi
+          cat "$RUNNER_TEMP/studio-browser.log"
+        env:
+          STUDIO_CHECK_PUBLISHED_CATALOGUE: '1'

@@ -2544,6 +2544,90 @@
       "publishedUnit": "1K"
     },
     {
+      "meterId": "defender-business-gb/seats",
+      "sku": "defender-business-gb",
+      "region": "gb",
+      "unit": "seat/month",
+      "quantityPerUnit": 1,
+      "priceType": "Consumption",
+      "currency": "GBP",
+      "price": "2.30",
+      "effectiveAt": "2026-11-19T00:00:00Z",
+      "source": "https://www.microsoft.com/en-gb/microsoft-365/business/microsoft-365-plans-and-pricing",
+      "product": "Microsoft Defender for Business",
+      "verification": "microsoft-commercial",
+      "offeringId": "defender-business-gb",
+      "component": "seats",
+      "review": {
+        "checkedAt": "2026-11-19T00:00:00Z",
+        "expiresAt": "2027-01-17T23:59:00Z",
+        "terms": "UK public offer per user/month, paid yearly. Annual subscription auto-renews. Price excludes VAT."
+      }
+    },
+    {
+      "meterId": "defender-o365-p1-gb/seats",
+      "sku": "defender-o365-p1-gb",
+      "region": "gb",
+      "unit": "seat/month",
+      "quantityPerUnit": 1,
+      "priceType": "Consumption",
+      "currency": "GBP",
+      "price": "1.54",
+      "effectiveAt": "2026-11-19T00:00:00Z",
+      "source": "https://www.microsoft.com/en-gb/security/business/siem-and-xdr/microsoft-defender-office-365",
+      "product": "Microsoft Defender for Office 365 Plan 1",
+      "verification": "microsoft-commercial",
+      "offeringId": "defender-o365-p1-gb",
+      "component": "seats",
+      "review": {
+        "checkedAt": "2026-11-19T00:00:00Z",
+        "expiresAt": "2027-01-17T23:59:00Z",
+        "terms": "UK public offer per user/month. Annual subscription, paid yearly, auto-renews. Excludes VAT. Plan 1. Confirm email and workload prerequisites."
+      }
+    },
+    {
+      "meterId": "defender-o365-p2-gb/seats",
+      "sku": "defender-o365-p2-gb",
+      "region": "gb",
+      "unit": "seat/month",
+      "quantityPerUnit": 1,
+      "priceType": "Consumption",
+      "currency": "GBP",
+      "price": "3.80",
+      "effectiveAt": "2026-11-19T00:00:00Z",
+      "source": "https://www.microsoft.com/en-gb/security/business/siem-and-xdr/microsoft-defender-office-365",
+      "product": "Microsoft Defender for Office 365 Plan 2",
+      "verification": "microsoft-commercial",
+      "offeringId": "defender-o365-p2-gb",
+      "component": "seats",
+      "review": {
+        "checkedAt": "2026-11-19T00:00:00Z",
+        "expiresAt": "2027-01-17T23:59:00Z",
+        "terms": "UK public offer per user/month. Annual subscription, paid yearly, auto-renews. Excludes VAT. Plan 2. Confirm email and workload prerequisites."
+      }
+    },
+    {
+      "meterId": "defender-suite-gb/seats",
+      "sku": "defender-suite-gb",
+      "region": "gb",
+      "unit": "seat/month",
+      "quantityPerUnit": 1,
+      "priceType": "Consumption",
+      "currency": "GBP",
+      "price": "9.20",
+      "effectiveAt": "2026-11-19T00:00:00Z",
+      "source": "https://www.microsoft.com/en-gb/security/business/siem-and-xdr/microsoft-defender-cloud-apps",
+      "product": "Microsoft Defender Suite",
+      "verification": "microsoft-commercial",
+      "offeringId": "defender-suite-gb",
+      "component": "seats",
+      "review": {
+        "checkedAt": "2026-11-19T00:00:00Z",
+        "expiresAt": "2027-01-17T23:59:00Z",
+        "terms": "UK public offer per user/month. Annual subscription, paid yearly, auto-renews. Excludes VAT. Requires Microsoft 365 E3, or Office 365 E3 and Enterprise Mobility + Security E3."
+      }
+    },
+    {
       "meterId": "embedding-3-large-global-eastus2/usage",
       "sku": "embedding-3-large-global-eastus2",
       "region": "eastus2",
@@ -2904,6 +2988,48 @@
       "publishedUnit": "1K"
     },
     {
+      "meterId": "ems-e3-gb/seats",
+      "sku": "ems-e3-gb",
+      "region": "gb",
+      "unit": "seat/month",
+      "quantityPerUnit": 1,
+      "priceType": "Consumption",
+      "currency": "GBP",
+      "price": "9.30",
+      "effectiveAt": "2026-11-19T00:00:00Z",
+      "source": "https://www.microsoft.com/en-gb/microsoft-365/enterprise/office-365-plans-and-pricing",
+      "product": "Enterprise Mobility + Security E3",
+      "verification": "microsoft-commercial",
+      "offeringId": "ems-e3-gb",
+      "component": "seats",
+      "review": {
+        "checkedAt": "2026-11-19T00:00:00Z",
+        "expiresAt": "2027-01-17T23:59:00Z",
+        "terms": "UK public offer per user/month. Annual subscription, paid yearly, auto-renews. Excludes VAT. The separately purchased offer can be part of the Defender Suite prerequisite."
+      }
+    },
+    {
+      "meterId": "entra-governance-gb/seats",
+      "sku": "entra-governance-gb",
+      "region": "gb",
+      "unit": "seat/month",
+      "quantityPerUnit": 1,
+      "priceType": "Consumption",
+      "currency": "GBP",
+      "price": "5.40",
+      "effectiveAt": "2026-11-19T00:00:00Z",
+      "source": "https://www.microsoft.com/en-gb/security/microsoft-entra-pricing",
+      "product": "Microsoft Entra ID Governance",
+      "verification": "microsoft-commercial",
+      "offeringId": "entra-governance-gb",
+      "component": "seats",
+      "review": {
+        "checkedAt": "2026-11-19T00:00:00Z",
+        "expiresAt": "2027-01-17T23:59:00Z",
+        "terms": "UK public offer per user/month, paid yearly. Annual subscription auto-renews. Price excludes VAT. Customer prerequisite and plan eligibility require separate review."
+      }
+    },
+    {
       "meterId": "entra-p1-gb/seats",
       "sku": "entra-p1-gb",
       "region": "gb",
@@ -2922,6 +3048,27 @@
         "checkedAt": "2026-11-18T00:00:00Z",
         "expiresAt": "2027-01-17T23:59:59Z",
         "terms": "UK per user per month paid yearly, excluding VAT. Verify whether P1 is already included in a declared licence."
+      }
+    },
+    {
+      "meterId": "entra-p2-gb/seats",
+      "sku": "entra-p2-gb",
+      "region": "gb",
+      "unit": "seat/month",
+      "quantityPerUnit": 1,
+      "priceType": "Consumption",
+      "currency": "GBP",
+      "price": "7.70",
+      "effectiveAt": "2026-11-19T00:00:00Z",
+      "source": "https://www.microsoft.com/en-gb/security/microsoft-entra-pricing",
+      "product": "Microsoft Entra ID P2",
+      "verification": "microsoft-commercial",
+      "offeringId": "entra-p2-gb",
+      "component": "seats",
+      "review": {
+        "checkedAt": "2026-11-19T00:00:00Z",
+        "expiresAt": "2027-01-17T23:59:00Z",
+        "terms": "UK public offer per user/month, paid yearly. Annual subscription auto-renews. Price excludes VAT."
       }
     },
     {
@@ -4846,6 +4993,384 @@
       "publishedUnit": "1K"
     },
     {
+      "meterId": "m365-apps-business-gb/seats",
+      "sku": "m365-apps-business-gb",
+      "region": "gb",
+      "unit": "seat/month",
+      "quantityPerUnit": 1,
+      "priceType": "Consumption",
+      "currency": "GBP",
+      "price": "9.80",
+      "effectiveAt": "2026-11-19T00:00:00Z",
+      "source": "https://www.microsoft.com/en-gb/microsoft-365/business/microsoft-365-plans-and-pricing",
+      "product": "Microsoft 365 Apps for Business",
+      "verification": "microsoft-commercial",
+      "offeringId": "m365-apps-business-gb",
+      "component": "seats",
+      "review": {
+        "checkedAt": "2026-11-19T00:00:00Z",
+        "expiresAt": "2027-01-17T23:59:00Z",
+        "terms": "UK public offer per user/month, paid yearly. Annual subscription auto-renews. Price excludes VAT."
+      }
+    },
+    {
+      "meterId": "m365-apps-enterprise-gb/seats",
+      "sku": "m365-apps-enterprise-gb",
+      "region": "gb",
+      "unit": "seat/month",
+      "quantityPerUnit": 1,
+      "priceType": "Consumption",
+      "currency": "GBP",
+      "price": "13.70",
+      "effectiveAt": "2026-11-19T00:00:00Z",
+      "source": "https://www.microsoft.com/en-gb/microsoft-365/enterprise/office-365-plans-and-pricing",
+      "product": "Microsoft 365 Apps for enterprise",
+      "verification": "microsoft-commercial",
+      "offeringId": "m365-apps-enterprise-gb",
+      "component": "seats",
+      "review": {
+        "checkedAt": "2026-11-19T00:00:00Z",
+        "expiresAt": "2027-01-17T23:59:00Z",
+        "terms": "UK public offer per user/month, paid yearly. Annual subscription auto-renews. Price excludes VAT."
+      }
+    },
+    {
+      "meterId": "m365-business-basic-gb/seats",
+      "sku": "m365-business-basic-gb",
+      "region": "gb",
+      "unit": "seat/month",
+      "quantityPerUnit": 1,
+      "priceType": "Consumption",
+      "currency": "GBP",
+      "price": "5.40",
+      "effectiveAt": "2026-11-19T00:00:00Z",
+      "source": "https://www.microsoft.com/en-gb/microsoft-365/business/microsoft-365-plans-and-pricing",
+      "product": "Microsoft 365 Business Basic",
+      "verification": "microsoft-commercial",
+      "offeringId": "m365-business-basic-gb",
+      "component": "seats",
+      "review": {
+        "checkedAt": "2026-11-19T00:00:00Z",
+        "expiresAt": "2027-01-17T23:59:00Z",
+        "terms": "UK public offer per user/month, paid yearly. Annual subscription auto-renews. Price excludes VAT."
+      }
+    },
+    {
+      "meterId": "m365-business-basic-no-teams-gb/seats",
+      "sku": "m365-business-basic-no-teams-gb",
+      "region": "gb",
+      "unit": "seat/month",
+      "quantityPerUnit": 1,
+      "priceType": "Consumption",
+      "currency": "GBP",
+      "price": "4.20",
+      "effectiveAt": "2026-11-19T00:00:00Z",
+      "source": "https://www.microsoft.com/en-gb/microsoft-365/business/microsoft-365-plans-and-pricing",
+      "product": "Microsoft 365 Business Basic (no Teams)",
+      "verification": "microsoft-commercial",
+      "offeringId": "m365-business-basic-no-teams-gb",
+      "component": "seats",
+      "review": {
+        "checkedAt": "2026-11-19T00:00:00Z",
+        "expiresAt": "2027-01-17T23:59:00Z",
+        "terms": "UK public offer per user/month, paid yearly. Annual subscription auto-renews. Price excludes VAT."
+      }
+    },
+    {
+      "meterId": "m365-business-copilot-gb/seats",
+      "sku": "m365-business-copilot-gb",
+      "region": "gb",
+      "unit": "seat/month",
+      "quantityPerUnit": 1,
+      "priceType": "Consumption",
+      "currency": "GBP",
+      "price": "19.32",
+      "effectiveAt": "2026-11-19T00:00:00Z",
+      "source": "https://www.microsoft.com/en-gb/copilot/pricing/business",
+      "product": "Microsoft 365 Copilot Business add-on",
+      "verification": "microsoft-commercial",
+      "offeringId": "m365-business-copilot-gb",
+      "component": "seats",
+      "review": {
+        "checkedAt": "2026-11-19T00:00:00Z",
+        "expiresAt": "2027-01-17T23:59:00Z",
+        "terms": "UK public offer per user/month. Monthly subscription, auto-renews. Excludes VAT. Exact non-promotional monthly offer for the standalone Business add-on with an eligible Microsoft subscription. Advanced usage can be billed separately."
+      }
+    },
+    {
+      "meterId": "m365-business-premium-gb/seats",
+      "sku": "m365-business-premium-gb",
+      "region": "gb",
+      "unit": "seat/month",
+      "quantityPerUnit": 1,
+      "priceType": "Consumption",
+      "currency": "GBP",
+      "price": "16.90",
+      "effectiveAt": "2026-11-19T00:00:00Z",
+      "source": "https://www.microsoft.com/en-gb/microsoft-365/business/microsoft-365-business-premium",
+      "product": "Microsoft 365 Business Premium",
+      "verification": "microsoft-commercial",
+      "offeringId": "m365-business-premium-gb",
+      "component": "seats",
+      "review": {
+        "checkedAt": "2026-11-19T00:00:00Z",
+        "expiresAt": "2027-01-17T23:59:00Z",
+        "terms": "UK public offer per user/month. Annual subscription, paid yearly, auto-renews. Excludes VAT. Standalone Business Premium with Teams."
+      }
+    },
+    {
+      "meterId": "m365-business-premium-no-teams-gb/seats",
+      "sku": "m365-business-premium-no-teams-gb",
+      "region": "gb",
+      "unit": "seat/month",
+      "quantityPerUnit": 1,
+      "priceType": "Consumption",
+      "currency": "GBP",
+      "price": "14.40",
+      "effectiveAt": "2026-11-19T00:00:00Z",
+      "source": "https://www.microsoft.com/en-gb/microsoft-365/business/microsoft-365-business-premium",
+      "product": "Microsoft 365 Business Premium (no Teams)",
+      "verification": "microsoft-commercial",
+      "offeringId": "m365-business-premium-no-teams-gb",
+      "component": "seats",
+      "review": {
+        "checkedAt": "2026-11-19T00:00:00Z",
+        "expiresAt": "2027-01-17T23:59:00Z",
+        "terms": "UK public offer per user/month. Annual subscription, paid yearly, auto-renews. Excludes VAT. No Teams edition."
+      }
+    },
+    {
+      "meterId": "m365-business-standard-gb/seats",
+      "sku": "m365-business-standard-gb",
+      "region": "gb",
+      "unit": "seat/month",
+      "quantityPerUnit": 1,
+      "priceType": "Consumption",
+      "currency": "GBP",
+      "price": "10.80",
+      "effectiveAt": "2026-11-19T00:00:00Z",
+      "source": "https://www.microsoft.com/en-gb/microsoft-365/business/microsoft-365-business-standard",
+      "product": "Microsoft 365 Business Standard",
+      "verification": "microsoft-commercial",
+      "offeringId": "m365-business-standard-gb",
+      "component": "seats",
+      "review": {
+        "checkedAt": "2026-11-19T00:00:00Z",
+        "expiresAt": "2027-01-17T23:59:00Z",
+        "terms": "UK public offer per user/month. Annual subscription, paid yearly, auto-renews. Excludes VAT. Standalone Business Standard with Teams."
+      }
+    },
+    {
+      "meterId": "m365-business-standard-no-teams-gb/seats",
+      "sku": "m365-business-standard-no-teams-gb",
+      "region": "gb",
+      "unit": "seat/month",
+      "quantityPerUnit": 1,
+      "priceType": "Consumption",
+      "currency": "GBP",
+      "price": "8.30",
+      "effectiveAt": "2026-11-19T00:00:00Z",
+      "source": "https://www.microsoft.com/en-gb/microsoft-365/business/microsoft-365-business-standard",
+      "product": "Microsoft 365 Business Standard (no Teams)",
+      "verification": "microsoft-commercial",
+      "offeringId": "m365-business-standard-no-teams-gb",
+      "component": "seats",
+      "review": {
+        "checkedAt": "2026-11-19T00:00:00Z",
+        "expiresAt": "2027-01-17T23:59:00Z",
+        "terms": "UK public offer per user/month. Annual subscription, paid yearly, auto-renews. Excludes VAT. No Teams edition."
+      }
+    },
+    {
+      "meterId": "m365-copilot-enterprise-gb/seats",
+      "sku": "m365-copilot-enterprise-gb",
+      "region": "gb",
+      "unit": "seat/month",
+      "quantityPerUnit": 1,
+      "priceType": "Consumption",
+      "currency": "GBP",
+      "price": "23.10",
+      "effectiveAt": "2026-11-19T00:00:00Z",
+      "source": "https://www.microsoft.com/en-gb/microsoft-365/enterprise/office-365-plans-and-pricing",
+      "product": "Microsoft 365 Copilot enterprise add-on",
+      "verification": "microsoft-commercial",
+      "offeringId": "m365-copilot-enterprise-gb",
+      "component": "seats",
+      "review": {
+        "checkedAt": "2026-11-19T00:00:00Z",
+        "expiresAt": "2027-01-17T23:59:00Z",
+        "terms": "UK public offer per user/month, paid yearly. Annual subscription auto-renews. Price excludes VAT. Eligible Microsoft 365 or Office 365 licence required under Microsoft terms."
+      }
+    },
+    {
+      "meterId": "m365-e3-gb/seats",
+      "sku": "m365-e3-gb",
+      "region": "gb",
+      "unit": "seat/month",
+      "quantityPerUnit": 1,
+      "priceType": "Consumption",
+      "currency": "GBP",
+      "price": "33.50",
+      "effectiveAt": "2026-11-19T00:00:00Z",
+      "source": "https://www.microsoft.com/en-gb/microsoft-365/enterprise/microsoft-365-plans-and-pricing",
+      "product": "Microsoft 365 E3",
+      "verification": "microsoft-commercial",
+      "offeringId": "m365-e3-gb",
+      "component": "seats",
+      "review": {
+        "checkedAt": "2026-11-19T00:00:00Z",
+        "expiresAt": "2027-01-17T23:59:00Z",
+        "terms": "UK public offer per user/month, paid yearly. Annual commitment. Price excludes VAT."
+      }
+    },
+    {
+      "meterId": "m365-e3-no-teams-gb/seats",
+      "sku": "m365-e3-no-teams-gb",
+      "region": "gb",
+      "unit": "seat/month",
+      "quantityPerUnit": 1,
+      "priceType": "Consumption",
+      "currency": "GBP",
+      "price": "27.00",
+      "effectiveAt": "2026-11-19T00:00:00Z",
+      "source": "https://www.microsoft.com/en-gb/microsoft-365/enterprise/microsoft-365-plans-and-pricing",
+      "product": "Microsoft 365 E3 (no Teams)",
+      "verification": "microsoft-commercial",
+      "offeringId": "m365-e3-no-teams-gb",
+      "component": "seats",
+      "review": {
+        "checkedAt": "2026-11-19T00:00:00Z",
+        "expiresAt": "2027-01-17T23:59:00Z",
+        "terms": "UK public offer per user/month, paid yearly. Annual commitment. Price excludes VAT."
+      }
+    },
+    {
+      "meterId": "m365-e5-gb/seats",
+      "sku": "m365-e5-gb",
+      "region": "gb",
+      "unit": "seat/month",
+      "quantityPerUnit": 1,
+      "priceType": "Consumption",
+      "currency": "GBP",
+      "price": "51.60",
+      "effectiveAt": "2026-11-19T00:00:00Z",
+      "source": "https://www.microsoft.com/en-gb/microsoft-365/enterprise/microsoft-365-plans-and-pricing",
+      "product": "Microsoft 365 E5",
+      "verification": "microsoft-commercial",
+      "offeringId": "m365-e5-gb",
+      "component": "seats",
+      "review": {
+        "checkedAt": "2026-11-19T00:00:00Z",
+        "expiresAt": "2027-01-17T23:59:00Z",
+        "terms": "UK public offer per user/month, paid yearly. Annual commitment. Price excludes VAT."
+      }
+    },
+    {
+      "meterId": "m365-e5-no-teams-gb/seats",
+      "sku": "m365-e5-no-teams-gb",
+      "region": "gb",
+      "unit": "seat/month",
+      "quantityPerUnit": 1,
+      "priceType": "Consumption",
+      "currency": "GBP",
+      "price": "45.00",
+      "effectiveAt": "2026-11-19T00:00:00Z",
+      "source": "https://www.microsoft.com/en-gb/microsoft-365/enterprise/microsoft-365-plans-and-pricing",
+      "product": "Microsoft 365 E5 (no Teams)",
+      "verification": "microsoft-commercial",
+      "offeringId": "m365-e5-no-teams-gb",
+      "component": "seats",
+      "review": {
+        "checkedAt": "2026-11-19T00:00:00Z",
+        "expiresAt": "2027-01-17T23:59:00Z",
+        "terms": "UK public offer per user/month, paid yearly. Annual commitment. Price excludes VAT."
+      }
+    },
+    {
+      "meterId": "m365-e7-gb/seats",
+      "sku": "m365-e7-gb",
+      "region": "gb",
+      "unit": "seat/month",
+      "quantityPerUnit": 1,
+      "priceType": "Consumption",
+      "currency": "GBP",
+      "price": "81.60",
+      "effectiveAt": "2026-11-19T00:00:00Z",
+      "source": "https://www.microsoft.com/en-gb/microsoft-365/enterprise/microsoft-365-plans-and-pricing",
+      "product": "Microsoft 365 E7",
+      "verification": "microsoft-commercial",
+      "offeringId": "m365-e7-gb",
+      "component": "seats",
+      "review": {
+        "checkedAt": "2026-11-19T00:00:00Z",
+        "expiresAt": "2027-01-17T23:59:00Z",
+        "terms": "UK public offer per user/month, paid yearly. Annual commitment. Price excludes VAT."
+      }
+    },
+    {
+      "meterId": "m365-e7-no-teams-gb/seats",
+      "sku": "m365-e7-no-teams-gb",
+      "region": "gb",
+      "unit": "seat/month",
+      "quantityPerUnit": 1,
+      "priceType": "Consumption",
+      "currency": "GBP",
+      "price": "75.00",
+      "effectiveAt": "2026-11-19T00:00:00Z",
+      "source": "https://www.microsoft.com/en-gb/microsoft-365/enterprise/microsoft-365-plans-and-pricing",
+      "product": "Microsoft 365 E7 (no Teams)",
+      "verification": "microsoft-commercial",
+      "offeringId": "m365-e7-no-teams-gb",
+      "component": "seats",
+      "review": {
+        "checkedAt": "2026-11-19T00:00:00Z",
+        "expiresAt": "2027-01-17T23:59:00Z",
+        "terms": "UK public offer per user/month, paid yearly. Annual commitment. Price excludes VAT."
+      }
+    },
+    {
+      "meterId": "m365-f3-gb/seats",
+      "sku": "m365-f3-gb",
+      "region": "gb",
+      "unit": "seat/month",
+      "quantityPerUnit": 1,
+      "priceType": "Consumption",
+      "currency": "GBP",
+      "price": "7.70",
+      "effectiveAt": "2026-11-19T00:00:00Z",
+      "source": "https://www.microsoft.com/en-gb/microsoft-365/enterprise/frontline-plans-and-pricing",
+      "product": "Microsoft 365 F3",
+      "verification": "microsoft-commercial",
+      "offeringId": "m365-f3-gb",
+      "component": "seats",
+      "review": {
+        "checkedAt": "2026-11-19T00:00:00Z",
+        "expiresAt": "2027-01-17T23:59:00Z",
+        "terms": "UK public offer per user/month. Annual commitment, paid yearly. Excludes VAT. With Teams edition. Confirm frontline eligibility."
+      }
+    },
+    {
+      "meterId": "m365-f3-no-teams-gb/seats",
+      "sku": "m365-f3-no-teams-gb",
+      "region": "gb",
+      "unit": "seat/month",
+      "quantityPerUnit": 1,
+      "priceType": "Consumption",
+      "currency": "GBP",
+      "price": "6.90",
+      "effectiveAt": "2026-11-19T00:00:00Z",
+      "source": "https://www.microsoft.com/en-gb/microsoft-365/enterprise/frontline-plans-and-pricing",
+      "product": "Microsoft 365 F3 (no Teams)",
+      "verification": "microsoft-commercial",
+      "offeringId": "m365-f3-no-teams-gb",
+      "component": "seats",
+      "review": {
+        "checkedAt": "2026-11-19T00:00:00Z",
+        "expiresAt": "2027-01-17T23:59:00Z",
+        "terms": "UK public offer per user/month. Annual commitment, paid yearly. Excludes VAT. Frontline eligibility and the no-Teams edition apply."
+      }
+    },
+    {
       "meterId": "m365-premium-copilot-gb/seats",
       "sku": "m365-premium-copilot-gb",
       "region": "gb",
@@ -4885,6 +5410,132 @@
         "checkedAt": "2026-11-18T00:00:00Z",
         "expiresAt": "2027-01-17T23:59:59Z",
         "terms": "Microsoft 365 Business Standard with Copilot. UK per user per month paid yearly, excluding VAT. Bundle, not the standalone Copilot add-on."
+      }
+    },
+    {
+      "meterId": "o365-e1-gb/seats",
+      "sku": "o365-e1-gb",
+      "region": "gb",
+      "unit": "seat/month",
+      "quantityPerUnit": 1,
+      "priceType": "Consumption",
+      "currency": "GBP",
+      "price": "7.70",
+      "effectiveAt": "2026-11-19T00:00:00Z",
+      "source": "https://www.microsoft.com/en-gb/microsoft-365/enterprise/office-365-plans-and-pricing",
+      "product": "Office 365 E1",
+      "verification": "microsoft-commercial",
+      "offeringId": "o365-e1-gb",
+      "component": "seats",
+      "review": {
+        "checkedAt": "2026-11-19T00:00:00Z",
+        "expiresAt": "2027-01-17T23:59:00Z",
+        "terms": "UK public offer per user/month, paid yearly. Annual subscription auto-renews. Price excludes VAT."
+      }
+    },
+    {
+      "meterId": "o365-e1-no-teams-gb/seats",
+      "sku": "o365-e1-no-teams-gb",
+      "region": "gb",
+      "unit": "seat/month",
+      "quantityPerUnit": 1,
+      "priceType": "Consumption",
+      "currency": "GBP",
+      "price": "5.20",
+      "effectiveAt": "2026-11-19T00:00:00Z",
+      "source": "https://www.microsoft.com/en-gb/microsoft-365/enterprise/office-365-plans-and-pricing",
+      "product": "Office 365 E1 (no Teams)",
+      "verification": "microsoft-commercial",
+      "offeringId": "o365-e1-no-teams-gb",
+      "component": "seats",
+      "review": {
+        "checkedAt": "2026-11-19T00:00:00Z",
+        "expiresAt": "2027-01-17T23:59:00Z",
+        "terms": "UK public offer per user/month, paid yearly. Annual subscription auto-renews. Price excludes VAT."
+      }
+    },
+    {
+      "meterId": "o365-e3-gb/seats",
+      "sku": "o365-e3-gb",
+      "region": "gb",
+      "unit": "seat/month",
+      "quantityPerUnit": 1,
+      "priceType": "Consumption",
+      "currency": "GBP",
+      "price": "23.30",
+      "effectiveAt": "2026-11-19T00:00:00Z",
+      "source": "https://www.microsoft.com/en-gb/microsoft-365/enterprise/office-365-plans-and-pricing",
+      "product": "Office 365 E3",
+      "verification": "microsoft-commercial",
+      "offeringId": "o365-e3-gb",
+      "component": "seats",
+      "review": {
+        "checkedAt": "2026-11-19T00:00:00Z",
+        "expiresAt": "2027-01-17T23:59:00Z",
+        "terms": "UK public offer per user/month, paid yearly. Annual subscription auto-renews. Price excludes VAT."
+      }
+    },
+    {
+      "meterId": "o365-e3-no-teams-gb/seats",
+      "sku": "o365-e3-no-teams-gb",
+      "region": "gb",
+      "unit": "seat/month",
+      "quantityPerUnit": 1,
+      "priceType": "Consumption",
+      "currency": "GBP",
+      "price": "16.70",
+      "effectiveAt": "2026-11-19T00:00:00Z",
+      "source": "https://www.microsoft.com/en-gb/microsoft-365/enterprise/office-365-plans-and-pricing",
+      "product": "Office 365 E3 (no Teams)",
+      "verification": "microsoft-commercial",
+      "offeringId": "o365-e3-no-teams-gb",
+      "component": "seats",
+      "review": {
+        "checkedAt": "2026-11-19T00:00:00Z",
+        "expiresAt": "2027-01-17T23:59:00Z",
+        "terms": "UK public offer per user/month, paid yearly. Annual subscription auto-renews. Price excludes VAT."
+      }
+    },
+    {
+      "meterId": "o365-e5-gb/seats",
+      "sku": "o365-e5-gb",
+      "region": "gb",
+      "unit": "seat/month",
+      "quantityPerUnit": 1,
+      "priceType": "Consumption",
+      "currency": "GBP",
+      "price": "36.80",
+      "effectiveAt": "2026-11-19T00:00:00Z",
+      "source": "https://www.microsoft.com/en-gb/microsoft-365/enterprise/office-365-plans-and-pricing",
+      "product": "Office 365 E5",
+      "verification": "microsoft-commercial",
+      "offeringId": "o365-e5-gb",
+      "component": "seats",
+      "review": {
+        "checkedAt": "2026-11-19T00:00:00Z",
+        "expiresAt": "2027-01-17T23:59:00Z",
+        "terms": "UK public offer per user/month, paid yearly. Annual subscription auto-renews. Price excludes VAT."
+      }
+    },
+    {
+      "meterId": "o365-e5-no-teams-gb/seats",
+      "sku": "o365-e5-no-teams-gb",
+      "region": "gb",
+      "unit": "seat/month",
+      "quantityPerUnit": 1,
+      "priceType": "Consumption",
+      "currency": "GBP",
+      "price": "30.20",
+      "effectiveAt": "2026-11-19T00:00:00Z",
+      "source": "https://www.microsoft.com/en-gb/microsoft-365/enterprise/office-365-plans-and-pricing",
+      "product": "Office 365 E5 (no Teams)",
+      "verification": "microsoft-commercial",
+      "offeringId": "o365-e5-no-teams-gb",
+      "component": "seats",
+      "review": {
+        "checkedAt": "2026-11-19T00:00:00Z",
+        "expiresAt": "2027-01-17T23:59:00Z",
+        "terms": "UK public offer per user/month, paid yearly. Annual subscription auto-renews. Price excludes VAT."
       }
     },
     {
@@ -6266,6 +6917,27 @@
       "publishedSku": "S3",
       "sourceMeterId": "6bafdc11-b964-4895-9d4e-a0e548db1b2b",
       "publishedUnit": "1/Day"
+    },
+    {
+      "meterId": "teams-essentials-gb/seats",
+      "sku": "teams-essentials-gb",
+      "region": "gb",
+      "unit": "seat/month",
+      "quantityPerUnit": 1,
+      "priceType": "Consumption",
+      "currency": "GBP",
+      "price": "3.10",
+      "effectiveAt": "2026-11-19T00:00:00Z",
+      "source": "https://www.microsoft.com/en-gb/microsoft-teams/compare-microsoft-teams-business-options",
+      "product": "Microsoft Teams Essentials",
+      "verification": "microsoft-commercial",
+      "offeringId": "teams-essentials-gb",
+      "component": "seats",
+      "review": {
+        "checkedAt": "2026-11-19T00:00:00Z",
+        "expiresAt": "2027-01-17T23:59:00Z",
+        "terms": "UK public offer per user/month. Annual subscription, paid yearly, auto-renews. Excludes VAT. Exact Teams Essentials subscription."
+      }
     },
     {
       "meterId": "transcribe-audio-eastus2/usage",
@@ -12778,7 +13450,7 @@
         }
       ],
       "note": "Verify the exact commercial agreement, prerequisites and existing entitlement. No price is assigned without a reviewed rate.",
-      "evidence": "https://www.microsoft.com/en-gb/microsoft-365/enterprise/microsoft365-plans-and-pricing",
+      "evidence": "https://www.microsoft.com/en-gb/microsoft-365/enterprise/microsoft-365-plans-and-pricing",
       "kind": "licence-entitlement"
     },
     {
@@ -12796,7 +13468,7 @@
         }
       ],
       "note": "Verify the exact commercial agreement, prerequisites and existing entitlement. No price is assigned without a reviewed rate.",
-      "evidence": "https://www.microsoft.com/en-gb/microsoft-365/enterprise/microsoft365-plans-and-pricing",
+      "evidence": "https://www.microsoft.com/en-gb/microsoft-365/enterprise/microsoft-365-plans-and-pricing",
       "kind": "licence-entitlement"
     },
     {
@@ -12813,7 +13485,7 @@
           "quantityPerUnit": 1
         }
       ],
-      "note": "Verify the exact commercial agreement, prerequisites and existing entitlement. No price is assigned without a reviewed rate.",
+      "note": "Annual commitment, paid yearly. With Teams edition. Confirm frontline eligibility.",
       "evidence": "https://www.microsoft.com/en-gb/microsoft-365/enterprise/frontline-plans-and-pricing",
       "kind": "licence-entitlement"
     },
@@ -12832,7 +13504,7 @@
         }
       ],
       "note": "Verify the exact commercial agreement, prerequisites and existing entitlement. No price is assigned without a reviewed rate.",
-      "evidence": "https://www.microsoft.com/en-gb/microsoft-365/business/compare-all-microsoft-365-business-products",
+      "evidence": "https://www.microsoft.com/en-gb/microsoft-365/business/microsoft-365-plans-and-pricing",
       "kind": "licence-entitlement"
     },
     {
@@ -12849,8 +13521,8 @@
           "quantityPerUnit": 1
         }
       ],
-      "note": "Verify the exact commercial agreement, prerequisites and existing entitlement. No price is assigned without a reviewed rate.",
-      "evidence": "https://www.microsoft.com/en-gb/microsoft-365/business/compare-all-microsoft-365-business-products",
+      "note": "Annual subscription, paid yearly, auto-renews. Standalone Business Standard with Teams.",
+      "evidence": "https://www.microsoft.com/en-gb/microsoft-365/business/microsoft-365-business-standard",
       "kind": "licence-entitlement"
     },
     {
@@ -12867,8 +13539,8 @@
           "quantityPerUnit": 1
         }
       ],
-      "note": "Verify the exact commercial agreement, prerequisites and existing entitlement. No price is assigned without a reviewed rate.",
-      "evidence": "https://www.microsoft.com/en-gb/microsoft-365/business/compare-all-microsoft-365-business-products",
+      "note": "Annual subscription, paid yearly, auto-renews. Standalone Business Premium with Teams.",
+      "evidence": "https://www.microsoft.com/en-gb/microsoft-365/business/microsoft-365-business-premium",
       "kind": "licence-entitlement"
     },
     {
@@ -12885,8 +13557,8 @@
           "quantityPerUnit": 1
         }
       ],
-      "note": "Verify the exact commercial agreement, prerequisites and existing entitlement. No price is assigned without a reviewed rate.",
-      "evidence": "https://www.microsoft.com/en-gb/microsoft-365-copilot/pricing",
+      "note": "Monthly subscription, auto-renews. Exact non-promotional monthly offer for the standalone Business add-on with an eligible Microsoft subscription. Advanced usage can be billed separately.",
+      "evidence": "https://www.microsoft.com/en-gb/copilot/pricing/business",
       "kind": "licence-entitlement"
     },
     {
@@ -12904,7 +13576,7 @@
         }
       ],
       "note": "Verify the exact commercial agreement, prerequisites and existing entitlement. No price is assigned without a reviewed rate.",
-      "evidence": "https://www.microsoft.com/en-gb/microsoft-365-copilot/pricing",
+      "evidence": "https://www.microsoft.com/en-gb/microsoft-365/enterprise/office-365-plans-and-pricing",
       "kind": "licence-entitlement"
     },
     {
@@ -12940,7 +13612,7 @@
         }
       ],
       "note": "Verify the exact commercial agreement, prerequisites and existing entitlement. No price is assigned without a reviewed rate.",
-      "evidence": "https://www.microsoft.com/en-gb/security/business/microsoft-entra-pricing",
+      "evidence": "https://www.microsoft.com/en-gb/security/microsoft-entra-pricing",
       "kind": "licence-entitlement"
     },
     {
@@ -12958,7 +13630,7 @@
         }
       ],
       "note": "Verify the exact commercial agreement, prerequisites and existing entitlement. No price is assigned without a reviewed rate.",
-      "evidence": "https://www.microsoft.com/en-gb/security/business/microsoft-entra-pricing",
+      "evidence": "https://www.microsoft.com/en-gb/security/microsoft-entra-pricing",
       "kind": "licence-entitlement"
     },
     {
@@ -12976,7 +13648,7 @@
         }
       ],
       "note": "Verify the exact commercial agreement, prerequisites and existing entitlement. No price is assigned without a reviewed rate.",
-      "evidence": "https://www.microsoft.com/en-gb/security/business/endpoint-security/microsoft-defender-business",
+      "evidence": "https://www.microsoft.com/en-gb/microsoft-365/business/microsoft-365-plans-and-pricing",
       "kind": "licence-entitlement"
     },
     {
@@ -12993,8 +13665,8 @@
           "quantityPerUnit": 1
         }
       ],
-      "note": "Verify the exact commercial agreement, prerequisites and existing entitlement. No price is assigned without a reviewed rate.",
-      "evidence": "https://www.microsoft.com/en-gb/security/business/endpoint-security/microsoft-defender-endpoint",
+      "note": "Microsoft documents Plan 1. The UK Endpoint page lists a Defender Suite price, without an exact standalone Plan 1 tariff.",
+      "evidence": "https://learn.microsoft.com/en-us/defender-endpoint/defender-endpoint-plan-1",
       "kind": "licence-entitlement"
     },
     {
@@ -13011,7 +13683,7 @@
           "quantityPerUnit": 1
         }
       ],
-      "note": "Verify the exact commercial agreement, prerequisites and existing entitlement. No price is assigned without a reviewed rate.",
+      "note": "The UK Endpoint page showed a Defender Suite offer. Confirm standalone Plan 2 availability, term and price with Microsoft.",
       "evidence": "https://www.microsoft.com/en-gb/security/business/endpoint-security/microsoft-defender-endpoint",
       "kind": "licence-entitlement"
     },
@@ -13029,8 +13701,8 @@
           "quantityPerUnit": 1
         }
       ],
-      "note": "Verify the exact commercial agreement, prerequisites and existing entitlement. No price is assigned without a reviewed rate.",
-      "evidence": "https://www.microsoft.com/en-gb/security/business/siem-and-xdr/microsoft-defender-identity",
+      "note": "The product is documented. The reviewed individual UK product links did not resolve, and the reviewed suite rate cannot establish the standalone tariff.",
+      "evidence": "https://learn.microsoft.com/en-us/defender-xdr/prerequisites",
       "kind": "licence-entitlement"
     },
     {
@@ -13047,8 +13719,8 @@
           "quantityPerUnit": 1
         }
       ],
-      "note": "Verify the exact commercial agreement, prerequisites and existing entitlement. No price is assigned without a reviewed rate.",
-      "evidence": "https://www.microsoft.com/en-gb/security/business/microsoft-purview-pricing",
+      "note": "The UK product page provides capabilities. An exact public GBP seat tariff and commitment were not established. Use workload-specific licensing guidance.",
+      "evidence": "https://www.microsoft.com/en-gb/security/business/microsoft-purview",
       "kind": "licence-entitlement"
     },
     {
@@ -13067,7 +13739,7 @@
       ],
       "note": "Verify the exact commercial agreement, prerequisites and existing entitlement. No price is assigned without a reviewed rate.",
       "selectable": false,
-      "evidence": "https://azure.microsoft.com/en-gb/pricing/details/purview/",
+      "evidence": "https://www.microsoft.com/licensing/terms",
       "kind": "supporting-resource"
     },
     {
@@ -13898,6 +14570,1877 @@
       "note": "Use separately reconciled billable ingestion after included plan quantities and commitments. Enter a manual rate.",
       "evidence": "https://azure.microsoft.com/en-gb/pricing/details/monitor/",
       "kind": "supporting-resource"
+    },
+    {
+      "id": "m365-e7-gb",
+      "name": "Microsoft 365 E7",
+      "family": "licensing",
+      "currency": "GBP",
+      "region": "gb",
+      "components": [
+        {
+          "id": "seats",
+          "label": "Monthly seats",
+          "unit": "seat/month",
+          "quantityPerUnit": 1
+        }
+      ],
+      "note": "Confirm customer eligibility, term and included capabilities separately.",
+      "evidence": "https://www.microsoft.com/en-gb/microsoft-365/enterprise/microsoft-365-plans-and-pricing",
+      "kind": "licence-entitlement"
+    },
+    {
+      "id": "m365-e7-no-teams-gb",
+      "name": "Microsoft 365 E7 (no Teams)",
+      "family": "licensing",
+      "currency": "GBP",
+      "region": "gb",
+      "components": [
+        {
+          "id": "seats",
+          "label": "Monthly seats",
+          "unit": "seat/month",
+          "quantityPerUnit": 1
+        }
+      ],
+      "note": "Confirm customer eligibility, term and included capabilities separately.",
+      "evidence": "https://www.microsoft.com/en-gb/microsoft-365/enterprise/microsoft-365-plans-and-pricing",
+      "kind": "licence-entitlement"
+    },
+    {
+      "id": "m365-business-basic-no-teams-gb",
+      "name": "Microsoft 365 Business Basic (no Teams)",
+      "family": "licensing",
+      "currency": "GBP",
+      "region": "gb",
+      "components": [
+        {
+          "id": "seats",
+          "label": "Monthly seats",
+          "unit": "seat/month",
+          "quantityPerUnit": 1
+        }
+      ],
+      "note": "Confirm customer eligibility, term and included capabilities separately.",
+      "evidence": "https://www.microsoft.com/en-gb/microsoft-365/business/microsoft-365-plans-and-pricing",
+      "kind": "licence-entitlement"
+    },
+    {
+      "id": "m365-apps-enterprise-gb",
+      "name": "Microsoft 365 Apps for enterprise",
+      "family": "licensing",
+      "currency": "GBP",
+      "region": "gb",
+      "components": [
+        {
+          "id": "seats",
+          "label": "Monthly seats",
+          "unit": "seat/month",
+          "quantityPerUnit": 1
+        }
+      ],
+      "note": "Confirm customer eligibility, term and included capabilities separately.",
+      "evidence": "https://www.microsoft.com/en-gb/microsoft-365/enterprise/office-365-plans-and-pricing",
+      "kind": "licence-entitlement"
+    },
+    {
+      "id": "m365-apps-business-gb",
+      "name": "Microsoft 365 Apps for Business",
+      "family": "licensing",
+      "currency": "GBP",
+      "region": "gb",
+      "components": [
+        {
+          "id": "seats",
+          "label": "Monthly seats",
+          "unit": "seat/month",
+          "quantityPerUnit": 1
+        }
+      ],
+      "note": "Confirm customer eligibility, term and included capabilities separately.",
+      "evidence": "https://www.microsoft.com/en-gb/microsoft-365/business/microsoft-365-plans-and-pricing",
+      "kind": "licence-entitlement"
+    },
+    {
+      "id": "o365-e1-gb",
+      "name": "Office 365 E1",
+      "family": "licensing",
+      "currency": "GBP",
+      "region": "gb",
+      "components": [
+        {
+          "id": "seats",
+          "label": "Monthly seats",
+          "unit": "seat/month",
+          "quantityPerUnit": 1
+        }
+      ],
+      "note": "Confirm customer eligibility, term and included capabilities separately.",
+      "evidence": "https://www.microsoft.com/en-gb/microsoft-365/enterprise/office-365-plans-and-pricing",
+      "kind": "licence-entitlement"
+    },
+    {
+      "id": "o365-e3-gb",
+      "name": "Office 365 E3",
+      "family": "licensing",
+      "currency": "GBP",
+      "region": "gb",
+      "components": [
+        {
+          "id": "seats",
+          "label": "Monthly seats",
+          "unit": "seat/month",
+          "quantityPerUnit": 1
+        }
+      ],
+      "note": "Confirm customer eligibility, term and included capabilities separately.",
+      "evidence": "https://www.microsoft.com/en-gb/microsoft-365/enterprise/office-365-plans-and-pricing",
+      "kind": "licence-entitlement"
+    },
+    {
+      "id": "o365-e5-gb",
+      "name": "Office 365 E5",
+      "family": "licensing",
+      "currency": "GBP",
+      "region": "gb",
+      "components": [
+        {
+          "id": "seats",
+          "label": "Monthly seats",
+          "unit": "seat/month",
+          "quantityPerUnit": 1
+        }
+      ],
+      "note": "Confirm customer eligibility, term and included capabilities separately.",
+      "evidence": "https://www.microsoft.com/en-gb/microsoft-365/enterprise/office-365-plans-and-pricing",
+      "kind": "licence-entitlement"
+    },
+    {
+      "id": "o365-e1-no-teams-gb",
+      "name": "Office 365 E1 (no Teams)",
+      "family": "licensing",
+      "currency": "GBP",
+      "region": "gb",
+      "components": [
+        {
+          "id": "seats",
+          "label": "Monthly seats",
+          "unit": "seat/month",
+          "quantityPerUnit": 1
+        }
+      ],
+      "note": "Confirm customer eligibility, term and included capabilities separately.",
+      "evidence": "https://www.microsoft.com/en-gb/microsoft-365/enterprise/office-365-plans-and-pricing",
+      "kind": "licence-entitlement"
+    },
+    {
+      "id": "o365-e3-no-teams-gb",
+      "name": "Office 365 E3 (no Teams)",
+      "family": "licensing",
+      "currency": "GBP",
+      "region": "gb",
+      "components": [
+        {
+          "id": "seats",
+          "label": "Monthly seats",
+          "unit": "seat/month",
+          "quantityPerUnit": 1
+        }
+      ],
+      "note": "Confirm customer eligibility, term and included capabilities separately.",
+      "evidence": "https://www.microsoft.com/en-gb/microsoft-365/enterprise/office-365-plans-and-pricing",
+      "kind": "licence-entitlement"
+    },
+    {
+      "id": "o365-e5-no-teams-gb",
+      "name": "Office 365 E5 (no Teams)",
+      "family": "licensing",
+      "currency": "GBP",
+      "region": "gb",
+      "components": [
+        {
+          "id": "seats",
+          "label": "Monthly seats",
+          "unit": "seat/month",
+          "quantityPerUnit": 1
+        }
+      ],
+      "note": "Confirm customer eligibility, term and included capabilities separately.",
+      "evidence": "https://www.microsoft.com/en-gb/microsoft-365/enterprise/office-365-plans-and-pricing",
+      "kind": "licence-entitlement"
+    },
+    {
+      "id": "o365-f3-gb",
+      "name": "Office 365 F3",
+      "family": "licensing",
+      "currency": "GBP",
+      "region": "gb",
+      "components": [
+        {
+          "id": "seats",
+          "label": "Monthly seats",
+          "unit": "seat/month",
+          "quantityPerUnit": 1
+        }
+      ],
+      "note": "Office 365 F3 is listed as an eligible plan. The UK Frontline page publishes Microsoft 365 F3, a distinct SKU. Confirm market and price with Microsoft.",
+      "evidence": "https://learn.microsoft.com/en-us/copilot/plan/copilot-license-options",
+      "kind": "licence-entitlement"
+    },
+    {
+      "id": "teams-essentials-gb",
+      "name": "Microsoft Teams Essentials",
+      "family": "licensing",
+      "currency": "GBP",
+      "region": "gb",
+      "components": [
+        {
+          "id": "seats",
+          "label": "Monthly seats",
+          "unit": "seat/month",
+          "quantityPerUnit": 1
+        }
+      ],
+      "note": "Annual subscription, paid yearly, auto-renews. Exact Teams Essentials subscription.",
+      "evidence": "https://www.microsoft.com/en-gb/microsoft-teams/compare-microsoft-teams-business-options",
+      "kind": "licence-entitlement"
+    },
+    {
+      "id": "defender-o365-p1-gb",
+      "name": "Microsoft Defender for Office 365 Plan 1",
+      "family": "security",
+      "currency": "GBP",
+      "region": "gb",
+      "components": [
+        {
+          "id": "seats",
+          "label": "Monthly seats",
+          "unit": "seat/month",
+          "quantityPerUnit": 1
+        }
+      ],
+      "note": "Annual subscription, paid yearly, auto-renews. Plan 1. Confirm email and workload prerequisites.",
+      "evidence": "https://www.microsoft.com/en-gb/security/business/siem-and-xdr/microsoft-defender-office-365",
+      "kind": "licence-entitlement"
+    },
+    {
+      "id": "defender-o365-p2-gb",
+      "name": "Microsoft Defender for Office 365 Plan 2",
+      "family": "security",
+      "currency": "GBP",
+      "region": "gb",
+      "components": [
+        {
+          "id": "seats",
+          "label": "Monthly seats",
+          "unit": "seat/month",
+          "quantityPerUnit": 1
+        }
+      ],
+      "note": "Annual subscription, paid yearly, auto-renews. Plan 2. Confirm email and workload prerequisites.",
+      "evidence": "https://www.microsoft.com/en-gb/security/business/siem-and-xdr/microsoft-defender-office-365",
+      "kind": "licence-entitlement"
+    },
+    {
+      "id": "defender-cloud-apps-gb",
+      "name": "Microsoft Defender for Cloud Apps",
+      "family": "security",
+      "currency": "GBP",
+      "region": "gb",
+      "components": [
+        {
+          "id": "seats",
+          "label": "Monthly seats",
+          "unit": "seat/month",
+          "quantityPerUnit": 1
+        }
+      ],
+      "note": "The advertised UK amount is for Defender Suite. Confirm a standalone Cloud Apps offer and term separately.",
+      "evidence": "https://www.microsoft.com/en-gb/security/business/siem-and-xdr/microsoft-defender-cloud-apps",
+      "kind": "licence-entitlement"
+    },
+    {
+      "id": "defender-suite-gb",
+      "name": "Microsoft Defender Suite",
+      "family": "security",
+      "currency": "GBP",
+      "region": "gb",
+      "components": [
+        {
+          "id": "seats",
+          "label": "Monthly seats",
+          "unit": "seat/month",
+          "quantityPerUnit": 1
+        }
+      ],
+      "note": "Annual subscription, paid yearly, auto-renews. Requires Microsoft 365 E3, or Office 365 E3 and Enterprise Mobility + Security E3.",
+      "evidence": "https://www.microsoft.com/en-gb/security/business/siem-and-xdr/microsoft-defender-cloud-apps",
+      "kind": "licence-entitlement"
+    },
+    {
+      "id": "m365-e3-no-teams-gb",
+      "name": "Microsoft 365 E3 (no Teams)",
+      "family": "licensing",
+      "currency": "GBP",
+      "region": "gb",
+      "components": [
+        {
+          "id": "seats",
+          "label": "Monthly seats",
+          "unit": "seat/month",
+          "quantityPerUnit": 1
+        }
+      ],
+      "note": "Verify the exact commercial agreement, prerequisites and existing entitlement. No price is assigned without a reviewed rate.",
+      "evidence": "https://www.microsoft.com/en-gb/microsoft-365/enterprise/microsoft-365-plans-and-pricing",
+      "kind": "licence-entitlement"
+    },
+    {
+      "id": "m365-e5-no-teams-gb",
+      "name": "Microsoft 365 E5 (no Teams)",
+      "family": "licensing",
+      "currency": "GBP",
+      "region": "gb",
+      "components": [
+        {
+          "id": "seats",
+          "label": "Monthly seats",
+          "unit": "seat/month",
+          "quantityPerUnit": 1
+        }
+      ],
+      "note": "Verify the exact commercial agreement, prerequisites and existing entitlement. No price is assigned without a reviewed rate.",
+      "evidence": "https://www.microsoft.com/en-gb/microsoft-365/enterprise/microsoft-365-plans-and-pricing",
+      "kind": "licence-entitlement"
+    },
+    {
+      "id": "m365-f3-no-teams-gb",
+      "name": "Microsoft 365 F3 (no Teams)",
+      "family": "licensing",
+      "currency": "GBP",
+      "region": "gb",
+      "components": [
+        {
+          "id": "seats",
+          "label": "Monthly seats",
+          "unit": "seat/month",
+          "quantityPerUnit": 1
+        }
+      ],
+      "note": "Annual commitment, paid yearly. Frontline eligibility and the no-Teams edition apply.",
+      "evidence": "https://www.microsoft.com/en-gb/microsoft-365/enterprise/frontline-plans-and-pricing",
+      "kind": "licence-entitlement"
+    },
+    {
+      "id": "m365-business-standard-no-teams-gb",
+      "name": "Microsoft 365 Business Standard (no Teams)",
+      "family": "licensing",
+      "currency": "GBP",
+      "region": "gb",
+      "components": [
+        {
+          "id": "seats",
+          "label": "Monthly seats",
+          "unit": "seat/month",
+          "quantityPerUnit": 1
+        }
+      ],
+      "note": "Annual subscription, paid yearly, auto-renews. No Teams edition.",
+      "evidence": "https://www.microsoft.com/en-gb/microsoft-365/business/microsoft-365-business-standard",
+      "kind": "licence-entitlement"
+    },
+    {
+      "id": "m365-business-premium-no-teams-gb",
+      "name": "Microsoft 365 Business Premium (no Teams)",
+      "family": "licensing",
+      "currency": "GBP",
+      "region": "gb",
+      "components": [
+        {
+          "id": "seats",
+          "label": "Monthly seats",
+          "unit": "seat/month",
+          "quantityPerUnit": 1
+        }
+      ],
+      "note": "Annual subscription, paid yearly, auto-renews. No Teams edition.",
+      "evidence": "https://www.microsoft.com/en-gb/microsoft-365/business/microsoft-365-business-premium",
+      "kind": "licence-entitlement"
+    },
+    {
+      "id": "ems-e3-gb",
+      "name": "Enterprise Mobility + Security E3",
+      "family": "security",
+      "currency": "GBP",
+      "region": "gb",
+      "components": [
+        {
+          "id": "seats",
+          "label": "Monthly seats",
+          "unit": "seat/month",
+          "quantityPerUnit": 1
+        }
+      ],
+      "note": "Annual subscription, paid yearly, auto-renews. The separately purchased offer can be part of the Defender Suite prerequisite.",
+      "evidence": "https://www.microsoft.com/en-gb/microsoft-365/enterprise/office-365-plans-and-pricing",
+      "kind": "licence-entitlement"
+    },
+    {
+      "id": "gpt-5-data-zone-standard-eastus2",
+      "name": "GPT-5 · Data Zone Standard",
+      "family": "foundry",
+      "currency": "GBP",
+      "region": "eastus2",
+      "components": [
+        {
+          "id": "input",
+          "label": "Uncached input tokens",
+          "unit": "1M",
+          "quantityPerUnit": 1000000
+        },
+        {
+          "id": "output",
+          "label": "Output tokens",
+          "unit": "1M",
+          "quantityPerUnit": 1000000
+        }
+      ],
+      "note": "The tariff remains unknown until a matching Azure meter is published and validated.",
+      "evidence": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability",
+      "deployment": "data-zone-standard",
+      "kind": "model-deployment",
+      "model": {
+        "id": "gpt-5",
+        "version": "2025-08-07",
+        "sku": "DataZoneStandard",
+        "mode": "payg"
+      }
+    },
+    {
+      "id": "gpt-5-data-zone-standard-westeurope",
+      "name": "GPT-5 · Data Zone Standard",
+      "family": "foundry",
+      "currency": "GBP",
+      "region": "westeurope",
+      "components": [
+        {
+          "id": "input",
+          "label": "Uncached input tokens",
+          "unit": "1M",
+          "quantityPerUnit": 1000000
+        },
+        {
+          "id": "output",
+          "label": "Output tokens",
+          "unit": "1M",
+          "quantityPerUnit": 1000000
+        }
+      ],
+      "note": "The tariff remains unknown until a matching Azure meter is published and validated.",
+      "evidence": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability",
+      "deployment": "data-zone-standard",
+      "kind": "model-deployment",
+      "model": {
+        "id": "gpt-5",
+        "version": "2025-08-07",
+        "sku": "DataZoneStandard",
+        "mode": "payg"
+      }
+    },
+    {
+      "id": "gpt-5-global-standard-eastus2",
+      "name": "GPT-5 · Global Standard",
+      "family": "foundry",
+      "currency": "GBP",
+      "region": "eastus2",
+      "components": [
+        {
+          "id": "input",
+          "label": "Uncached input tokens",
+          "unit": "1M",
+          "quantityPerUnit": 1000000
+        },
+        {
+          "id": "output",
+          "label": "Output tokens",
+          "unit": "1M",
+          "quantityPerUnit": 1000000
+        }
+      ],
+      "note": "The tariff remains unknown until a matching Azure meter is published and validated.",
+      "evidence": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability",
+      "deployment": "global-standard",
+      "kind": "model-deployment",
+      "model": {
+        "id": "gpt-5",
+        "version": "2025-08-07",
+        "sku": "GlobalStandard",
+        "mode": "payg"
+      }
+    },
+    {
+      "id": "gpt-5-global-standard-uksouth",
+      "name": "GPT-5 · Global Standard",
+      "family": "foundry",
+      "currency": "GBP",
+      "region": "uksouth",
+      "components": [
+        {
+          "id": "input",
+          "label": "Uncached input tokens",
+          "unit": "1M",
+          "quantityPerUnit": 1000000
+        },
+        {
+          "id": "output",
+          "label": "Output tokens",
+          "unit": "1M",
+          "quantityPerUnit": 1000000
+        }
+      ],
+      "note": "The tariff remains unknown until a matching Azure meter is published and validated.",
+      "evidence": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability",
+      "deployment": "global-standard",
+      "kind": "model-deployment",
+      "model": {
+        "id": "gpt-5",
+        "version": "2025-08-07",
+        "sku": "GlobalStandard",
+        "mode": "payg"
+      }
+    },
+    {
+      "id": "gpt-5-global-standard-westeurope",
+      "name": "GPT-5 · Global Standard",
+      "family": "foundry",
+      "currency": "GBP",
+      "region": "westeurope",
+      "components": [
+        {
+          "id": "input",
+          "label": "Uncached input tokens",
+          "unit": "1M",
+          "quantityPerUnit": 1000000
+        },
+        {
+          "id": "output",
+          "label": "Output tokens",
+          "unit": "1M",
+          "quantityPerUnit": 1000000
+        }
+      ],
+      "note": "The tariff remains unknown until a matching Azure meter is published and validated.",
+      "evidence": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability",
+      "deployment": "global-standard",
+      "kind": "model-deployment",
+      "model": {
+        "id": "gpt-5",
+        "version": "2025-08-07",
+        "sku": "GlobalStandard",
+        "mode": "payg"
+      }
+    },
+    {
+      "id": "gpt-5-mini-data-zone-standard-eastus2",
+      "name": "GPT-5-mini · Data Zone Standard",
+      "family": "foundry",
+      "currency": "GBP",
+      "region": "eastus2",
+      "components": [
+        {
+          "id": "input",
+          "label": "Uncached input tokens",
+          "unit": "1M",
+          "quantityPerUnit": 1000000
+        },
+        {
+          "id": "output",
+          "label": "Output tokens",
+          "unit": "1M",
+          "quantityPerUnit": 1000000
+        }
+      ],
+      "note": "The tariff remains unknown until a matching Azure meter is published and validated.",
+      "evidence": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability",
+      "deployment": "data-zone-standard",
+      "kind": "model-deployment",
+      "model": {
+        "id": "gpt-5-mini",
+        "version": "2025-08-07",
+        "sku": "DataZoneStandard",
+        "mode": "payg"
+      }
+    },
+    {
+      "id": "gpt-5-mini-data-zone-standard-westeurope",
+      "name": "GPT-5-mini · Data Zone Standard",
+      "family": "foundry",
+      "currency": "GBP",
+      "region": "westeurope",
+      "components": [
+        {
+          "id": "input",
+          "label": "Uncached input tokens",
+          "unit": "1M",
+          "quantityPerUnit": 1000000
+        },
+        {
+          "id": "output",
+          "label": "Output tokens",
+          "unit": "1M",
+          "quantityPerUnit": 1000000
+        }
+      ],
+      "note": "The tariff remains unknown until a matching Azure meter is published and validated.",
+      "evidence": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability",
+      "deployment": "data-zone-standard",
+      "kind": "model-deployment",
+      "model": {
+        "id": "gpt-5-mini",
+        "version": "2025-08-07",
+        "sku": "DataZoneStandard",
+        "mode": "payg"
+      }
+    },
+    {
+      "id": "gpt-5-mini-global-standard-eastus2",
+      "name": "GPT-5-mini · Global Standard",
+      "family": "foundry",
+      "currency": "GBP",
+      "region": "eastus2",
+      "components": [
+        {
+          "id": "input",
+          "label": "Uncached input tokens",
+          "unit": "1M",
+          "quantityPerUnit": 1000000
+        },
+        {
+          "id": "output",
+          "label": "Output tokens",
+          "unit": "1M",
+          "quantityPerUnit": 1000000
+        }
+      ],
+      "note": "The tariff remains unknown until a matching Azure meter is published and validated.",
+      "evidence": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability",
+      "deployment": "global-standard",
+      "kind": "model-deployment",
+      "model": {
+        "id": "gpt-5-mini",
+        "version": "2025-08-07",
+        "sku": "GlobalStandard",
+        "mode": "payg"
+      }
+    },
+    {
+      "id": "gpt-5-mini-global-standard-uksouth",
+      "name": "GPT-5-mini · Global Standard",
+      "family": "foundry",
+      "currency": "GBP",
+      "region": "uksouth",
+      "components": [
+        {
+          "id": "input",
+          "label": "Uncached input tokens",
+          "unit": "1M",
+          "quantityPerUnit": 1000000
+        },
+        {
+          "id": "output",
+          "label": "Output tokens",
+          "unit": "1M",
+          "quantityPerUnit": 1000000
+        }
+      ],
+      "note": "The tariff remains unknown until a matching Azure meter is published and validated.",
+      "evidence": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability",
+      "deployment": "global-standard",
+      "kind": "model-deployment",
+      "model": {
+        "id": "gpt-5-mini",
+        "version": "2025-08-07",
+        "sku": "GlobalStandard",
+        "mode": "payg"
+      }
+    },
+    {
+      "id": "gpt-5-mini-global-standard-westeurope",
+      "name": "GPT-5-mini · Global Standard",
+      "family": "foundry",
+      "currency": "GBP",
+      "region": "westeurope",
+      "components": [
+        {
+          "id": "input",
+          "label": "Uncached input tokens",
+          "unit": "1M",
+          "quantityPerUnit": 1000000
+        },
+        {
+          "id": "output",
+          "label": "Output tokens",
+          "unit": "1M",
+          "quantityPerUnit": 1000000
+        }
+      ],
+      "note": "The tariff remains unknown until a matching Azure meter is published and validated.",
+      "evidence": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability",
+      "deployment": "global-standard",
+      "kind": "model-deployment",
+      "model": {
+        "id": "gpt-5-mini",
+        "version": "2025-08-07",
+        "sku": "GlobalStandard",
+        "mode": "payg"
+      }
+    },
+    {
+      "id": "gpt-5-nano-data-zone-standard-eastus2",
+      "name": "GPT-5-nano · Data Zone Standard",
+      "family": "foundry",
+      "currency": "GBP",
+      "region": "eastus2",
+      "components": [
+        {
+          "id": "input",
+          "label": "Uncached input tokens",
+          "unit": "1M",
+          "quantityPerUnit": 1000000
+        },
+        {
+          "id": "output",
+          "label": "Output tokens",
+          "unit": "1M",
+          "quantityPerUnit": 1000000
+        }
+      ],
+      "note": "The tariff remains unknown until a matching Azure meter is published and validated.",
+      "evidence": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability",
+      "deployment": "data-zone-standard",
+      "kind": "model-deployment",
+      "model": {
+        "id": "gpt-5-nano",
+        "version": "2025-08-07",
+        "sku": "DataZoneStandard",
+        "mode": "payg"
+      }
+    },
+    {
+      "id": "gpt-5-nano-data-zone-standard-westeurope",
+      "name": "GPT-5-nano · Data Zone Standard",
+      "family": "foundry",
+      "currency": "GBP",
+      "region": "westeurope",
+      "components": [
+        {
+          "id": "input",
+          "label": "Uncached input tokens",
+          "unit": "1M",
+          "quantityPerUnit": 1000000
+        },
+        {
+          "id": "output",
+          "label": "Output tokens",
+          "unit": "1M",
+          "quantityPerUnit": 1000000
+        }
+      ],
+      "note": "The tariff remains unknown until a matching Azure meter is published and validated.",
+      "evidence": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability",
+      "deployment": "data-zone-standard",
+      "kind": "model-deployment",
+      "model": {
+        "id": "gpt-5-nano",
+        "version": "2025-08-07",
+        "sku": "DataZoneStandard",
+        "mode": "payg"
+      }
+    },
+    {
+      "id": "gpt-5-nano-global-standard-eastus2",
+      "name": "GPT-5-nano · Global Standard",
+      "family": "foundry",
+      "currency": "GBP",
+      "region": "eastus2",
+      "components": [
+        {
+          "id": "input",
+          "label": "Uncached input tokens",
+          "unit": "1M",
+          "quantityPerUnit": 1000000
+        },
+        {
+          "id": "output",
+          "label": "Output tokens",
+          "unit": "1M",
+          "quantityPerUnit": 1000000
+        }
+      ],
+      "note": "The tariff remains unknown until a matching Azure meter is published and validated.",
+      "evidence": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability",
+      "deployment": "global-standard",
+      "kind": "model-deployment",
+      "model": {
+        "id": "gpt-5-nano",
+        "version": "2025-08-07",
+        "sku": "GlobalStandard",
+        "mode": "payg"
+      }
+    },
+    {
+      "id": "gpt-5-nano-global-standard-uksouth",
+      "name": "GPT-5-nano · Global Standard",
+      "family": "foundry",
+      "currency": "GBP",
+      "region": "uksouth",
+      "components": [
+        {
+          "id": "input",
+          "label": "Uncached input tokens",
+          "unit": "1M",
+          "quantityPerUnit": 1000000
+        },
+        {
+          "id": "output",
+          "label": "Output tokens",
+          "unit": "1M",
+          "quantityPerUnit": 1000000
+        }
+      ],
+      "note": "The tariff remains unknown until a matching Azure meter is published and validated.",
+      "evidence": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability",
+      "deployment": "global-standard",
+      "kind": "model-deployment",
+      "model": {
+        "id": "gpt-5-nano",
+        "version": "2025-08-07",
+        "sku": "GlobalStandard",
+        "mode": "payg"
+      }
+    },
+    {
+      "id": "gpt-5-nano-global-standard-westeurope",
+      "name": "GPT-5-nano · Global Standard",
+      "family": "foundry",
+      "currency": "GBP",
+      "region": "westeurope",
+      "components": [
+        {
+          "id": "input",
+          "label": "Uncached input tokens",
+          "unit": "1M",
+          "quantityPerUnit": 1000000
+        },
+        {
+          "id": "output",
+          "label": "Output tokens",
+          "unit": "1M",
+          "quantityPerUnit": 1000000
+        }
+      ],
+      "note": "The tariff remains unknown until a matching Azure meter is published and validated.",
+      "evidence": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability",
+      "deployment": "global-standard",
+      "kind": "model-deployment",
+      "model": {
+        "id": "gpt-5-nano",
+        "version": "2025-08-07",
+        "sku": "GlobalStandard",
+        "mode": "payg"
+      }
+    },
+    {
+      "id": "gpt-5-1-data-zone-standard-eastus2",
+      "name": "GPT-5.1 · Data Zone Standard",
+      "family": "foundry",
+      "currency": "GBP",
+      "region": "eastus2",
+      "components": [
+        {
+          "id": "input",
+          "label": "Uncached input tokens",
+          "unit": "1M",
+          "quantityPerUnit": 1000000
+        },
+        {
+          "id": "output",
+          "label": "Output tokens",
+          "unit": "1M",
+          "quantityPerUnit": 1000000
+        }
+      ],
+      "note": "The tariff remains unknown until a matching Azure meter is published and validated.",
+      "evidence": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability",
+      "deployment": "data-zone-standard",
+      "kind": "model-deployment",
+      "model": {
+        "id": "gpt-5.1",
+        "version": "2025-11-13",
+        "sku": "DataZoneStandard",
+        "mode": "payg"
+      }
+    },
+    {
+      "id": "gpt-5-1-global-standard-eastus2",
+      "name": "GPT-5.1 · Global Standard",
+      "family": "foundry",
+      "currency": "GBP",
+      "region": "eastus2",
+      "components": [
+        {
+          "id": "input",
+          "label": "Uncached input tokens",
+          "unit": "1M",
+          "quantityPerUnit": 1000000
+        },
+        {
+          "id": "output",
+          "label": "Output tokens",
+          "unit": "1M",
+          "quantityPerUnit": 1000000
+        }
+      ],
+      "note": "The tariff remains unknown until a matching Azure meter is published and validated.",
+      "evidence": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability",
+      "deployment": "global-standard",
+      "kind": "model-deployment",
+      "model": {
+        "id": "gpt-5.1",
+        "version": "2025-11-13",
+        "sku": "GlobalStandard",
+        "mode": "payg"
+      }
+    },
+    {
+      "id": "gpt-5-1-global-standard-uksouth",
+      "name": "GPT-5.1 · Global Standard",
+      "family": "foundry",
+      "currency": "GBP",
+      "region": "uksouth",
+      "components": [
+        {
+          "id": "input",
+          "label": "Uncached input tokens",
+          "unit": "1M",
+          "quantityPerUnit": 1000000
+        },
+        {
+          "id": "output",
+          "label": "Output tokens",
+          "unit": "1M",
+          "quantityPerUnit": 1000000
+        }
+      ],
+      "note": "The tariff remains unknown until a matching Azure meter is published and validated.",
+      "evidence": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability",
+      "deployment": "global-standard",
+      "kind": "model-deployment",
+      "model": {
+        "id": "gpt-5.1",
+        "version": "2025-11-13",
+        "sku": "GlobalStandard",
+        "mode": "payg"
+      }
+    },
+    {
+      "id": "gpt-5-1-global-standard-westeurope",
+      "name": "GPT-5.1 · Global Standard",
+      "family": "foundry",
+      "currency": "GBP",
+      "region": "westeurope",
+      "components": [
+        {
+          "id": "input",
+          "label": "Uncached input tokens",
+          "unit": "1M",
+          "quantityPerUnit": 1000000
+        },
+        {
+          "id": "output",
+          "label": "Output tokens",
+          "unit": "1M",
+          "quantityPerUnit": 1000000
+        }
+      ],
+      "note": "The tariff remains unknown until a matching Azure meter is published and validated.",
+      "evidence": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability",
+      "deployment": "global-standard",
+      "kind": "model-deployment",
+      "model": {
+        "id": "gpt-5.1",
+        "version": "2025-11-13",
+        "sku": "GlobalStandard",
+        "mode": "payg"
+      }
+    },
+    {
+      "id": "gpt-5-1-regional-standard-eastus2",
+      "name": "GPT-5.1 · Standard/Regional",
+      "family": "foundry",
+      "currency": "GBP",
+      "region": "eastus2",
+      "components": [
+        {
+          "id": "input",
+          "label": "Uncached input tokens",
+          "unit": "1M",
+          "quantityPerUnit": 1000000
+        },
+        {
+          "id": "output",
+          "label": "Output tokens",
+          "unit": "1M",
+          "quantityPerUnit": 1000000
+        }
+      ],
+      "note": "The tariff remains unknown until a matching Azure meter is published and validated.",
+      "evidence": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability",
+      "deployment": "regional-standard",
+      "kind": "model-deployment",
+      "model": {
+        "id": "gpt-5.1",
+        "version": "2025-11-13",
+        "sku": "Standard",
+        "mode": "payg"
+      }
+    },
+    {
+      "id": "gpt-5-2-data-zone-standard-eastus2",
+      "name": "GPT-5.2 · Data Zone Standard",
+      "family": "foundry",
+      "currency": "GBP",
+      "region": "eastus2",
+      "components": [
+        {
+          "id": "input",
+          "label": "Uncached input tokens",
+          "unit": "1M",
+          "quantityPerUnit": 1000000
+        },
+        {
+          "id": "output",
+          "label": "Output tokens",
+          "unit": "1M",
+          "quantityPerUnit": 1000000
+        }
+      ],
+      "note": "The tariff remains unknown until a matching Azure meter is published and validated.",
+      "evidence": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability",
+      "deployment": "data-zone-standard",
+      "kind": "model-deployment",
+      "model": {
+        "id": "gpt-5.2",
+        "version": "2025-12-11",
+        "sku": "DataZoneStandard",
+        "mode": "payg"
+      }
+    },
+    {
+      "id": "gpt-5-2-global-standard-eastus2",
+      "name": "GPT-5.2 · Global Standard",
+      "family": "foundry",
+      "currency": "GBP",
+      "region": "eastus2",
+      "components": [
+        {
+          "id": "input",
+          "label": "Uncached input tokens",
+          "unit": "1M",
+          "quantityPerUnit": 1000000
+        },
+        {
+          "id": "output",
+          "label": "Output tokens",
+          "unit": "1M",
+          "quantityPerUnit": 1000000
+        }
+      ],
+      "note": "The tariff remains unknown until a matching Azure meter is published and validated.",
+      "evidence": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability",
+      "deployment": "global-standard",
+      "kind": "model-deployment",
+      "model": {
+        "id": "gpt-5.2",
+        "version": "2025-12-11",
+        "sku": "GlobalStandard",
+        "mode": "payg"
+      }
+    },
+    {
+      "id": "gpt-5-2-global-standard-uksouth",
+      "name": "GPT-5.2 · Global Standard",
+      "family": "foundry",
+      "currency": "GBP",
+      "region": "uksouth",
+      "components": [
+        {
+          "id": "input",
+          "label": "Uncached input tokens",
+          "unit": "1M",
+          "quantityPerUnit": 1000000
+        },
+        {
+          "id": "output",
+          "label": "Output tokens",
+          "unit": "1M",
+          "quantityPerUnit": 1000000
+        }
+      ],
+      "note": "The tariff remains unknown until a matching Azure meter is published and validated.",
+      "evidence": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability",
+      "deployment": "global-standard",
+      "kind": "model-deployment",
+      "model": {
+        "id": "gpt-5.2",
+        "version": "2025-12-11",
+        "sku": "GlobalStandard",
+        "mode": "payg"
+      }
+    },
+    {
+      "id": "gpt-5-2-global-standard-westeurope",
+      "name": "GPT-5.2 · Global Standard",
+      "family": "foundry",
+      "currency": "GBP",
+      "region": "westeurope",
+      "components": [
+        {
+          "id": "input",
+          "label": "Uncached input tokens",
+          "unit": "1M",
+          "quantityPerUnit": 1000000
+        },
+        {
+          "id": "output",
+          "label": "Output tokens",
+          "unit": "1M",
+          "quantityPerUnit": 1000000
+        }
+      ],
+      "note": "The tariff remains unknown until a matching Azure meter is published and validated.",
+      "evidence": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability",
+      "deployment": "global-standard",
+      "kind": "model-deployment",
+      "model": {
+        "id": "gpt-5.2",
+        "version": "2025-12-11",
+        "sku": "GlobalStandard",
+        "mode": "payg"
+      }
+    },
+    {
+      "id": "gpt-5-4-data-zone-standard-eastus2",
+      "name": "GPT-5.4 · Data Zone Standard",
+      "family": "foundry",
+      "currency": "GBP",
+      "region": "eastus2",
+      "components": [
+        {
+          "id": "input",
+          "label": "Uncached input tokens",
+          "unit": "1M",
+          "quantityPerUnit": 1000000
+        },
+        {
+          "id": "output",
+          "label": "Output tokens",
+          "unit": "1M",
+          "quantityPerUnit": 1000000
+        }
+      ],
+      "note": "The tariff remains unknown until a matching Azure meter is published and validated.",
+      "evidence": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability",
+      "deployment": "data-zone-standard",
+      "kind": "model-deployment",
+      "model": {
+        "id": "gpt-5.4",
+        "version": "2026-03-05",
+        "sku": "DataZoneStandard",
+        "mode": "payg"
+      }
+    },
+    {
+      "id": "gpt-5-4-data-zone-standard-westeurope",
+      "name": "GPT-5.4 · Data Zone Standard",
+      "family": "foundry",
+      "currency": "GBP",
+      "region": "westeurope",
+      "components": [
+        {
+          "id": "input",
+          "label": "Uncached input tokens",
+          "unit": "1M",
+          "quantityPerUnit": 1000000
+        },
+        {
+          "id": "output",
+          "label": "Output tokens",
+          "unit": "1M",
+          "quantityPerUnit": 1000000
+        }
+      ],
+      "note": "The tariff remains unknown until a matching Azure meter is published and validated.",
+      "evidence": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability",
+      "deployment": "data-zone-standard",
+      "kind": "model-deployment",
+      "model": {
+        "id": "gpt-5.4",
+        "version": "2026-03-05",
+        "sku": "DataZoneStandard",
+        "mode": "payg"
+      }
+    },
+    {
+      "id": "gpt-5-4-global-standard-eastus2",
+      "name": "GPT-5.4 · Global Standard",
+      "family": "foundry",
+      "currency": "GBP",
+      "region": "eastus2",
+      "components": [
+        {
+          "id": "input",
+          "label": "Uncached input tokens",
+          "unit": "1M",
+          "quantityPerUnit": 1000000
+        },
+        {
+          "id": "output",
+          "label": "Output tokens",
+          "unit": "1M",
+          "quantityPerUnit": 1000000
+        }
+      ],
+      "note": "The tariff remains unknown until a matching Azure meter is published and validated.",
+      "evidence": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability",
+      "deployment": "global-standard",
+      "kind": "model-deployment",
+      "model": {
+        "id": "gpt-5.4",
+        "version": "2026-03-05",
+        "sku": "GlobalStandard",
+        "mode": "payg"
+      }
+    },
+    {
+      "id": "gpt-5-4-global-standard-uksouth",
+      "name": "GPT-5.4 · Global Standard",
+      "family": "foundry",
+      "currency": "GBP",
+      "region": "uksouth",
+      "components": [
+        {
+          "id": "input",
+          "label": "Uncached input tokens",
+          "unit": "1M",
+          "quantityPerUnit": 1000000
+        },
+        {
+          "id": "output",
+          "label": "Output tokens",
+          "unit": "1M",
+          "quantityPerUnit": 1000000
+        }
+      ],
+      "note": "The tariff remains unknown until a matching Azure meter is published and validated.",
+      "evidence": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability",
+      "deployment": "global-standard",
+      "kind": "model-deployment",
+      "model": {
+        "id": "gpt-5.4",
+        "version": "2026-03-05",
+        "sku": "GlobalStandard",
+        "mode": "payg"
+      }
+    },
+    {
+      "id": "gpt-5-4-global-standard-westeurope",
+      "name": "GPT-5.4 · Global Standard",
+      "family": "foundry",
+      "currency": "GBP",
+      "region": "westeurope",
+      "components": [
+        {
+          "id": "input",
+          "label": "Uncached input tokens",
+          "unit": "1M",
+          "quantityPerUnit": 1000000
+        },
+        {
+          "id": "output",
+          "label": "Output tokens",
+          "unit": "1M",
+          "quantityPerUnit": 1000000
+        }
+      ],
+      "note": "The tariff remains unknown until a matching Azure meter is published and validated.",
+      "evidence": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability",
+      "deployment": "global-standard",
+      "kind": "model-deployment",
+      "model": {
+        "id": "gpt-5.4",
+        "version": "2026-03-05",
+        "sku": "GlobalStandard",
+        "mode": "payg"
+      }
+    },
+    {
+      "id": "gpt-5-4-mini-data-zone-standard-eastus2",
+      "name": "GPT-5.4-mini · Data Zone Standard",
+      "family": "foundry",
+      "currency": "GBP",
+      "region": "eastus2",
+      "components": [
+        {
+          "id": "input",
+          "label": "Uncached input tokens",
+          "unit": "1M",
+          "quantityPerUnit": 1000000
+        },
+        {
+          "id": "output",
+          "label": "Output tokens",
+          "unit": "1M",
+          "quantityPerUnit": 1000000
+        }
+      ],
+      "note": "The tariff remains unknown until a matching Azure meter is published and validated.",
+      "evidence": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability",
+      "deployment": "data-zone-standard",
+      "kind": "model-deployment",
+      "model": {
+        "id": "gpt-5.4-mini",
+        "version": "2026-03-17",
+        "sku": "DataZoneStandard",
+        "mode": "payg"
+      }
+    },
+    {
+      "id": "gpt-5-4-mini-data-zone-standard-westeurope",
+      "name": "GPT-5.4-mini · Data Zone Standard",
+      "family": "foundry",
+      "currency": "GBP",
+      "region": "westeurope",
+      "components": [
+        {
+          "id": "input",
+          "label": "Uncached input tokens",
+          "unit": "1M",
+          "quantityPerUnit": 1000000
+        },
+        {
+          "id": "output",
+          "label": "Output tokens",
+          "unit": "1M",
+          "quantityPerUnit": 1000000
+        }
+      ],
+      "note": "The tariff remains unknown until a matching Azure meter is published and validated.",
+      "evidence": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability",
+      "deployment": "data-zone-standard",
+      "kind": "model-deployment",
+      "model": {
+        "id": "gpt-5.4-mini",
+        "version": "2026-03-17",
+        "sku": "DataZoneStandard",
+        "mode": "payg"
+      }
+    },
+    {
+      "id": "gpt-5-4-mini-global-standard-eastus2",
+      "name": "GPT-5.4-mini · Global Standard",
+      "family": "foundry",
+      "currency": "GBP",
+      "region": "eastus2",
+      "components": [
+        {
+          "id": "input",
+          "label": "Uncached input tokens",
+          "unit": "1M",
+          "quantityPerUnit": 1000000
+        },
+        {
+          "id": "output",
+          "label": "Output tokens",
+          "unit": "1M",
+          "quantityPerUnit": 1000000
+        }
+      ],
+      "note": "The tariff remains unknown until a matching Azure meter is published and validated.",
+      "evidence": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability",
+      "deployment": "global-standard",
+      "kind": "model-deployment",
+      "model": {
+        "id": "gpt-5.4-mini",
+        "version": "2026-03-17",
+        "sku": "GlobalStandard",
+        "mode": "payg"
+      }
+    },
+    {
+      "id": "gpt-5-4-mini-global-standard-uksouth",
+      "name": "GPT-5.4-mini · Global Standard",
+      "family": "foundry",
+      "currency": "GBP",
+      "region": "uksouth",
+      "components": [
+        {
+          "id": "input",
+          "label": "Uncached input tokens",
+          "unit": "1M",
+          "quantityPerUnit": 1000000
+        },
+        {
+          "id": "output",
+          "label": "Output tokens",
+          "unit": "1M",
+          "quantityPerUnit": 1000000
+        }
+      ],
+      "note": "The tariff remains unknown until a matching Azure meter is published and validated.",
+      "evidence": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability",
+      "deployment": "global-standard",
+      "kind": "model-deployment",
+      "model": {
+        "id": "gpt-5.4-mini",
+        "version": "2026-03-17",
+        "sku": "GlobalStandard",
+        "mode": "payg"
+      }
+    },
+    {
+      "id": "gpt-5-4-mini-global-standard-westeurope",
+      "name": "GPT-5.4-mini · Global Standard",
+      "family": "foundry",
+      "currency": "GBP",
+      "region": "westeurope",
+      "components": [
+        {
+          "id": "input",
+          "label": "Uncached input tokens",
+          "unit": "1M",
+          "quantityPerUnit": 1000000
+        },
+        {
+          "id": "output",
+          "label": "Output tokens",
+          "unit": "1M",
+          "quantityPerUnit": 1000000
+        }
+      ],
+      "note": "The tariff remains unknown until a matching Azure meter is published and validated.",
+      "evidence": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability",
+      "deployment": "global-standard",
+      "kind": "model-deployment",
+      "model": {
+        "id": "gpt-5.4-mini",
+        "version": "2026-03-17",
+        "sku": "GlobalStandard",
+        "mode": "payg"
+      }
+    },
+    {
+      "id": "gpt-5-6-sol-data-zone-standard-eastus2",
+      "name": "GPT-5.6-sol · Data Zone Standard",
+      "family": "foundry",
+      "currency": "GBP",
+      "region": "eastus2",
+      "components": [
+        {
+          "id": "input",
+          "label": "Uncached input tokens",
+          "unit": "1M",
+          "quantityPerUnit": 1000000
+        },
+        {
+          "id": "output",
+          "label": "Output tokens",
+          "unit": "1M",
+          "quantityPerUnit": 1000000
+        }
+      ],
+      "note": "The tariff remains unknown until a matching Azure meter is published and validated.",
+      "evidence": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability",
+      "deployment": "data-zone-standard",
+      "kind": "model-deployment",
+      "model": {
+        "id": "gpt-5.6-sol",
+        "version": "2026-07-09",
+        "sku": "DataZoneStandard",
+        "mode": "payg"
+      }
+    },
+    {
+      "id": "gpt-5-6-sol-data-zone-standard-westeurope",
+      "name": "GPT-5.6-sol · Data Zone Standard",
+      "family": "foundry",
+      "currency": "GBP",
+      "region": "westeurope",
+      "components": [
+        {
+          "id": "input",
+          "label": "Uncached input tokens",
+          "unit": "1M",
+          "quantityPerUnit": 1000000
+        },
+        {
+          "id": "output",
+          "label": "Output tokens",
+          "unit": "1M",
+          "quantityPerUnit": 1000000
+        }
+      ],
+      "note": "The tariff remains unknown until a matching Azure meter is published and validated.",
+      "evidence": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability",
+      "deployment": "data-zone-standard",
+      "kind": "model-deployment",
+      "model": {
+        "id": "gpt-5.6-sol",
+        "version": "2026-07-09",
+        "sku": "DataZoneStandard",
+        "mode": "payg"
+      }
+    },
+    {
+      "id": "gpt-5-6-sol-global-standard-eastus2",
+      "name": "GPT-5.6-sol · Global Standard",
+      "family": "foundry",
+      "currency": "GBP",
+      "region": "eastus2",
+      "components": [
+        {
+          "id": "input",
+          "label": "Uncached input tokens",
+          "unit": "1M",
+          "quantityPerUnit": 1000000
+        },
+        {
+          "id": "output",
+          "label": "Output tokens",
+          "unit": "1M",
+          "quantityPerUnit": 1000000
+        }
+      ],
+      "note": "The tariff remains unknown until a matching Azure meter is published and validated.",
+      "evidence": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability",
+      "deployment": "global-standard",
+      "kind": "model-deployment",
+      "model": {
+        "id": "gpt-5.6-sol",
+        "version": "2026-07-09",
+        "sku": "GlobalStandard",
+        "mode": "payg"
+      }
+    },
+    {
+      "id": "gpt-5-6-sol-global-standard-uksouth",
+      "name": "GPT-5.6-sol · Global Standard",
+      "family": "foundry",
+      "currency": "GBP",
+      "region": "uksouth",
+      "components": [
+        {
+          "id": "input",
+          "label": "Uncached input tokens",
+          "unit": "1M",
+          "quantityPerUnit": 1000000
+        },
+        {
+          "id": "output",
+          "label": "Output tokens",
+          "unit": "1M",
+          "quantityPerUnit": 1000000
+        }
+      ],
+      "note": "The tariff remains unknown until a matching Azure meter is published and validated.",
+      "evidence": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability",
+      "deployment": "global-standard",
+      "kind": "model-deployment",
+      "model": {
+        "id": "gpt-5.6-sol",
+        "version": "2026-07-09",
+        "sku": "GlobalStandard",
+        "mode": "payg"
+      }
+    },
+    {
+      "id": "gpt-5-6-sol-global-standard-westeurope",
+      "name": "GPT-5.6-sol · Global Standard",
+      "family": "foundry",
+      "currency": "GBP",
+      "region": "westeurope",
+      "components": [
+        {
+          "id": "input",
+          "label": "Uncached input tokens",
+          "unit": "1M",
+          "quantityPerUnit": 1000000
+        },
+        {
+          "id": "output",
+          "label": "Output tokens",
+          "unit": "1M",
+          "quantityPerUnit": 1000000
+        }
+      ],
+      "note": "The tariff remains unknown until a matching Azure meter is published and validated.",
+      "evidence": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability",
+      "deployment": "global-standard",
+      "kind": "model-deployment",
+      "model": {
+        "id": "gpt-5.6-sol",
+        "version": "2026-07-09",
+        "sku": "GlobalStandard",
+        "mode": "payg"
+      }
+    },
+    {
+      "id": "gpt-6-sol-data-zone-standard-eastus2",
+      "name": "GPT-6-sol · Data Zone Standard",
+      "family": "foundry",
+      "currency": "GBP",
+      "region": "eastus2",
+      "components": [
+        {
+          "id": "input",
+          "label": "Uncached input tokens",
+          "unit": "1M",
+          "quantityPerUnit": 1000000
+        },
+        {
+          "id": "output",
+          "label": "Output tokens",
+          "unit": "1M",
+          "quantityPerUnit": 1000000
+        }
+      ],
+      "note": "The tariff remains unknown until a matching Azure meter is published and validated.",
+      "evidence": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability",
+      "deployment": "data-zone-standard",
+      "kind": "model-deployment",
+      "model": {
+        "id": "gpt-6-sol",
+        "version": "2026-09-22",
+        "sku": "DataZoneStandard",
+        "mode": "payg"
+      }
+    },
+    {
+      "id": "gpt-6-sol-data-zone-standard-westeurope",
+      "name": "GPT-6-sol · Data Zone Standard",
+      "family": "foundry",
+      "currency": "GBP",
+      "region": "westeurope",
+      "components": [
+        {
+          "id": "input",
+          "label": "Uncached input tokens",
+          "unit": "1M",
+          "quantityPerUnit": 1000000
+        },
+        {
+          "id": "output",
+          "label": "Output tokens",
+          "unit": "1M",
+          "quantityPerUnit": 1000000
+        }
+      ],
+      "note": "The tariff remains unknown until a matching Azure meter is published and validated.",
+      "evidence": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability",
+      "deployment": "data-zone-standard",
+      "kind": "model-deployment",
+      "model": {
+        "id": "gpt-6-sol",
+        "version": "2026-09-22",
+        "sku": "DataZoneStandard",
+        "mode": "payg"
+      }
+    },
+    {
+      "id": "gpt-6-sol-global-standard-eastus2",
+      "name": "GPT-6-sol · Global Standard",
+      "family": "foundry",
+      "currency": "GBP",
+      "region": "eastus2",
+      "components": [
+        {
+          "id": "input",
+          "label": "Uncached input tokens",
+          "unit": "1M",
+          "quantityPerUnit": 1000000
+        },
+        {
+          "id": "output",
+          "label": "Output tokens",
+          "unit": "1M",
+          "quantityPerUnit": 1000000
+        }
+      ],
+      "note": "The tariff remains unknown until a matching Azure meter is published and validated.",
+      "evidence": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability",
+      "deployment": "global-standard",
+      "kind": "model-deployment",
+      "model": {
+        "id": "gpt-6-sol",
+        "version": "2026-09-22",
+        "sku": "GlobalStandard",
+        "mode": "payg"
+      }
+    },
+    {
+      "id": "gpt-6-sol-global-standard-uksouth",
+      "name": "GPT-6-sol · Global Standard",
+      "family": "foundry",
+      "currency": "GBP",
+      "region": "uksouth",
+      "components": [
+        {
+          "id": "input",
+          "label": "Uncached input tokens",
+          "unit": "1M",
+          "quantityPerUnit": 1000000
+        },
+        {
+          "id": "output",
+          "label": "Output tokens",
+          "unit": "1M",
+          "quantityPerUnit": 1000000
+        }
+      ],
+      "note": "The tariff remains unknown until a matching Azure meter is published and validated.",
+      "evidence": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability",
+      "deployment": "global-standard",
+      "kind": "model-deployment",
+      "model": {
+        "id": "gpt-6-sol",
+        "version": "2026-09-22",
+        "sku": "GlobalStandard",
+        "mode": "payg"
+      }
+    },
+    {
+      "id": "gpt-6-sol-global-standard-westeurope",
+      "name": "GPT-6-sol · Global Standard",
+      "family": "foundry",
+      "currency": "GBP",
+      "region": "westeurope",
+      "components": [
+        {
+          "id": "input",
+          "label": "Uncached input tokens",
+          "unit": "1M",
+          "quantityPerUnit": 1000000
+        },
+        {
+          "id": "output",
+          "label": "Output tokens",
+          "unit": "1M",
+          "quantityPerUnit": 1000000
+        }
+      ],
+      "note": "The tariff remains unknown until a matching Azure meter is published and validated.",
+      "evidence": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability",
+      "deployment": "global-standard",
+      "kind": "model-deployment",
+      "model": {
+        "id": "gpt-6-sol",
+        "version": "2026-09-22",
+        "sku": "GlobalStandard",
+        "mode": "payg"
+      }
+    },
+    {
+      "id": "llama-3-3-70b-instruct-global-standard-eastus2",
+      "name": "Llama-3.3-70B-Instruct · Global Standard",
+      "family": "foundry",
+      "currency": "GBP",
+      "region": "eastus2",
+      "components": [
+        {
+          "id": "input",
+          "label": "Uncached input tokens",
+          "unit": "1M",
+          "quantityPerUnit": 1000000
+        },
+        {
+          "id": "output",
+          "label": "Output tokens",
+          "unit": "1M",
+          "quantityPerUnit": 1000000
+        }
+      ],
+      "note": "The tariff remains unknown until a matching Azure meter is published and validated.",
+      "evidence": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability",
+      "deployment": "global-standard",
+      "kind": "model-deployment",
+      "model": {
+        "id": "Llama-3.3-70B-Instruct",
+        "version": "9",
+        "sku": "GlobalStandard",
+        "mode": "payg"
+      }
+    },
+    {
+      "id": "llama-3-3-70b-instruct-global-standard-uksouth",
+      "name": "Llama-3.3-70B-Instruct · Global Standard",
+      "family": "foundry",
+      "currency": "GBP",
+      "region": "uksouth",
+      "components": [
+        {
+          "id": "input",
+          "label": "Uncached input tokens",
+          "unit": "1M",
+          "quantityPerUnit": 1000000
+        },
+        {
+          "id": "output",
+          "label": "Output tokens",
+          "unit": "1M",
+          "quantityPerUnit": 1000000
+        }
+      ],
+      "note": "The tariff remains unknown until a matching Azure meter is published and validated.",
+      "evidence": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability",
+      "deployment": "global-standard",
+      "kind": "model-deployment",
+      "model": {
+        "id": "Llama-3.3-70B-Instruct",
+        "version": "9",
+        "sku": "GlobalStandard",
+        "mode": "payg"
+      }
+    },
+    {
+      "id": "llama-3-3-70b-instruct-global-standard-westeurope",
+      "name": "Llama-3.3-70B-Instruct · Global Standard",
+      "family": "foundry",
+      "currency": "GBP",
+      "region": "westeurope",
+      "components": [
+        {
+          "id": "input",
+          "label": "Uncached input tokens",
+          "unit": "1M",
+          "quantityPerUnit": 1000000
+        },
+        {
+          "id": "output",
+          "label": "Output tokens",
+          "unit": "1M",
+          "quantityPerUnit": 1000000
+        }
+      ],
+      "note": "The tariff remains unknown until a matching Azure meter is published and validated.",
+      "evidence": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability",
+      "deployment": "global-standard",
+      "kind": "model-deployment",
+      "model": {
+        "id": "Llama-3.3-70B-Instruct",
+        "version": "9",
+        "sku": "GlobalStandard",
+        "mode": "payg"
+      }
     }
   ]
 }

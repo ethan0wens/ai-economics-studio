@@ -2,7 +2,7 @@ name: Discover Microsoft retail meter candidates
 on:
   push:
     branches: [work]
-    paths: ['scripts/discover-retail.ts', '.github/workflows/pricing-discovery.yml']
+    paths: ['scripts/discover-retail.ts', 'scripts/survey-retail.ts', '.github/workflows/pricing-discovery.yml']
 permissions:
   contents: read
 jobs:
@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        source: [azure, commercial]
+        source: [focused]
     timeout-minutes: 8
     steps:
       - uses: actions/checkout@v6
@@ -19,4 +19,4 @@ jobs:
       - uses: actions/setup-node@v6
         with:
           node-version: '24'
-      - run: node scripts/discover-retail.ts ${{ matrix.source }}
+      - run: node scripts/survey-retail.ts ${{ matrix.source }}

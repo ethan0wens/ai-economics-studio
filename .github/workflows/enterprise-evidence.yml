@@ -1,0 +1,28 @@
+name: Review Microsoft enterprise evidence
+on:
+  workflow_dispatch:
+  push:
+    branches: [work]
+    paths: ['scripts/survey-enterprise.ts', '.github/workflows/enterprise-evidence.yml']
+permissions:
+  contents: read
+jobs:
+  evidence:
+    strategy:
+      matrix:
+        scope: [licensing, technical]
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v6
+        with:
+          node-version: '24'
+      - run: node scripts/survey-enterprise.ts ${{ matrix.scope }}
+      - uses: actions/upload-artifact@v7
+        with:
+          name: microsoft-evidence-${{ matrix.scope }}
+          path: enterprise-*.txt
+          retention-days: 7

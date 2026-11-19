@@ -1,3 +1,4 @@
+import type { DocumentationLink } from './help-links';
 import type { Destination } from './navigation';
 
 export const topics = ['Getting started', 'Building environments', 'Understanding costs', 'Worked examples',
@@ -7,7 +8,7 @@ export type Section = { id: string; title: string; paragraphs: string[]; steps?:
 type ToolLink = { page: Destination; item?: string; label: string };
 export type Article = {
   id: string; title: string; intro: string; topic: Topic; sections: Section[]; related: string[];
-  aliases?: string[]; tool?: ToolLink; reference?: 'pricing' | 'models' | 'coverage' | 'units'; sources?: [string, string][];
+  aliases?: string[]; tool?: ToolLink; next?: ToolLink[]; guidance?: DocumentationLink[]; reference?: 'pricing' | 'models' | 'coverage' | 'units'; sources?: [string, string][];
 };
 export const documentationVersion = 'Reviewed 19 November 2026';
 const s = (id: string, title: string, text: string | string[], steps?: string[]): Section =>
@@ -49,7 +50,7 @@ export const articles: Article[] = [
         'The report uses applied usage. Annualised estimates use the same monthly quantities and rates for 12 months. The forecast varies price at the same usage.',
         'Chart shares use known costs. Check the unresolved charge count before treating a known-cost subtotal as complete. Full Report identifies rate sources and gives separate catalogue check and report generation dates.',
         'The diagram shows declared relationships. For large environments, the grouped view and registers trace the individual links.',
-        'Accepted value assumptions appear separately from the financial estimate. A temporary adoption comparison appears in Full Report only after choosing Include comparison in Full Report.',
+        'Accepted value assumptions appear separately from the financial estimate. A temporary adoption comparison appears in Full Report only after choosing Include comparison in Full Report. It stays outside Executive Summary and JSON. Editing the environment, replacing it or applying another catalogue removes the illustration.',
       ]),
       s('restore', 'Restore a saved environment', 'Choose Import existing on Home. Select a Studio JSON file. A valid import opens Review your estimate and uses the applied catalogue to recalculate costs. Compare the previous known subtotal and unresolved count to the current estimate.', [
         'If another environment has changes, choose Keep editing, Export JSON first or Replace environment.',
@@ -140,34 +141,40 @@ export const articles: Article[] = [
     ] },
   { id: 'example-foundry-assistant', topic: 'Worked examples', title: 'Walk through the Basic Foundry Assistant',
     intro: 'Reconcile the simplest linked Foundry agent from its workload to two token charges.',
-    tool: { page: 'examples', item: 'foundry-assistant', label: 'Preview Basic Foundry Assistant' }, related: ['foundry-usage', 'billing-units'], sections: [
+    tool: { page: 'examples', item: 'foundry-assistant', label: 'Preview Basic Foundry Assistant' }, next: [costs, { page: 'costs', item: 'explore', label: 'Explore changes' }], related: ['foundry-usage', 'billing-units'], sections: [
       s('open', 'Open and inspect the example', 'The example uses a fictional 1,000 runs/month, one request/run, and 1,500 input and 300 output tokens/request. It links one agent, one usage profile and one GPT-4.1 mini deployment.'),
       s('reconcile', 'Change usage and compare amounts', 'Open an editable copy and choose Estimate usage. Enter 2,000 executions directly or preview a fictional 200 users × 10 interactions at one request per run in Help me estimate usage. In Cost & Value Analysis check both monthly token quantities doubled, from 1.5 to 3 million input and from 300,000 to 600,000 output. Multiply each verified rate by its exact unit conversion and round at the line boundary. If the matching rate is absent, the charge remains unresolved.'),
       s('compare-without-editing', 'Try a temporary usage comparison', 'Start from the original 1,000-run copy. In Cost & Value Analysis, choose Explore changes and preview 2,000 monthly executions for the assistant. Compare the new token quantities and monthly costs. Return to Costs to see the accepted 1,000-run estimate.'),
     ] },
   { id: 'example-copilot-agent', topic: 'Worked examples', title: 'Walk through the Copilot Studio Business Agent',
     intro: 'Estimate a platform-managed Copilot agent from declared monthly credits.',
-    tool: { page: 'examples', item: 'copilot-agent', label: 'Preview Copilot Studio Business Agent' }, related: ['copilot-credits', 'licence-evidence'], sections: [
+    tool: { page: 'examples', item: 'copilot-agent', label: 'Preview Copilot Studio Business Agent' }, next: [costs, { page: 'costs', item: 'explore', label: 'Explore changes' }], related: ['copilot-credits', 'licence-evidence'], sections: [
       s('open', 'Inspect the credit basis', 'Open an editable copy. The fictional starting value is 12,000 credits/month. Cost & Value Analysis uses the verified matching PAYG rate where present. The example has one platform-managed agent.'),
       s('reconcile', 'Try a different workload', 'Change monthly credits to 15,000 under Estimate usage. You can enter the total or preview and apply a hypothetical breakdown of 10,000 credits for answers and 5,000 for actions. The known charge is 15,000 times the applicable per-credit rate when available. Review a separate allowance only if it applies to your customer plan.'),
       s('adoption', 'Explore adoption using your own credit assumption', 'Start from a fresh copy. In Potential value, accept fictional assumptions of 100 target users and 50% adoption. In Explore changes, enter 25% and 75% and link the business agent using 240 monthly Copilot Credits per active user. Record that this is a fictional customer forecast. The comparison uses 6,000, 12,000 and 18,000 monthly credits. Microsoft evidence defines applicable billing and allowances separately.'),
     ] },
   { id: 'example-existing-licensing', topic: 'Worked examples', title: 'Walk through the Enterprise AI Environment',
     intro: 'Compare two groups’ licence assignments, new spend and a supporting Azure service.',
-    tool: { page: 'examples', item: 'enterprise-ai', label: 'Preview Enterprise AI Environment' }, related: ['existing-and-new-spend', 'agreements-and-manual-rates'], sections: [
+    tool: { page: 'examples', item: 'enterprise-ai', label: 'Preview Enterprise AI Environment' }, next: [costs, { page: 'review', label: 'Open Environment Review' }], related: ['existing-and-new-spend', 'agreements-and-manual-rates'], sections: [
       s('open', 'Inspect fictional purchases and existing spend', 'The fictional example uses 200 existing E3 seats for two groups, 40 new Copilot add-on seats, 18,000 monthly credits and 240 search-unit-hours. It declares £4,000 of existing monthly spend and a hypothetical 10% Search discount.'),
       s('reconcile', 'Compare the two scopes', 'Open Cost & Value Analysis and compare the new seat amount, credit amount and Search agreement amount with the proposed environment including retained E3 spend. Open the Search line to see its retail amount multiplied by 0.90 before line rounding. Review the prerequisite and then change an assignment in Advanced.'),
       s('review', 'Review the plan and its evidence', 'In Environment Review, open Architecture to trace group assignments and the Search resource. Open Technical fit to inspect licensing and technical evidence for this scope. Controls shows which safeguards still need assessment. Customer declarations describe plans or reported implementation. Confirm both assignments and controls in the tenant.'),
     ] },
   { id: 'example-shared-deployment', topic: 'Worked examples', title: 'Walk through the Shared Model Deployment',
     intro: 'Verify shared fixed capacity and its reporting allocation.',
-    tool: { page: 'examples', item: 'shared-deployment', label: 'Preview Shared Model Deployment' }, related: ['share-and-connect', 'ptu-and-reservations'], sections: [
+    tool: { page: 'examples', item: 'shared-deployment', label: 'Preview Shared Model Deployment' }, next: [costs, { page: 'review', item: 'architecture', label: 'Open the architecture register' }], related: ['share-and-connect', 'ptu-and-reservations'], sections: [
       s('open', 'Find the shared bill', 'Two fictional Foundry workloads share one deployment. 15 PTUs × 400 hours gives 6,000 PTU-hours. The 6,000 and 2,000 runs have equal input tokens per request, so the figure is apportioned 75/25.'),
       s('reconcile', 'Change allocation without changing the charge', 'In Environment Review, open Architecture and use the register to trace both agents to the same deployment. In Cost & Value Analysis, open the single Shared provisioned capacity line. Change one agent’s executions in Advanced. The allocation shares change while capacity stays at 6,000 PTU-hours billed once. Check actual capacity and quota separately.'),
     ] },
   { id: 'example-ai-adoption-business-case', topic: 'Worked examples', title: 'Walk through AI Adoption & Business Case',
     intro: 'Follow a fictional Foundry assistant from workload and AI spend through adoption, productivity assumptions and stakeholder reporting.',
     tool: { page: 'examples', item: 'ai-adoption-business-case', label: 'Preview AI Adoption & Business Case' },
+    next: [costs, { page: 'costs', item: 'value', label: 'Open Potential value' },
+      { page: 'costs', item: 'explore', label: 'Explore changes' }, { page: 'review', label: 'Open Environment Review' }, reports],
+    guidance: [
+      { collection: 'guide', article: 'potential-business-value', heading: 'adoption-link', label: 'How adoption can change workload usage' },
+      { collection: 'technical', article: 'worked-reconciliations', heading: 'ai-adoption-and-business-case', label: 'Read the independent financial reconciliation' },
+    ],
     related: ['potential-business-value', 'read-your-estimate', 'architecture-and-controls', 'save-and-reopen'], sections: [
       s('open', 'Open the example and check its accepted assumptions', 'The example contains one Foundry assistant, a GPT-4.1 mini deployment, a dedicated usage profile and a planned identity control.', [
         'Open the preview and choose Open editable copy.',
@@ -222,7 +229,9 @@ export const articles: Article[] = [
       s('options', 'Review reservations and PAYG comparison', 'In the deployment’s Advanced Usage, enter a documented customer reservation only if its scope and allocation apply. Compare the declared workload with a verified PAYG alternative when available. This comparison estimates costs. Customer throughput, quota and performance still need confirmation.'),
     ] },
   { id: 'architecture-and-controls', topic: 'Technical reference', title: 'Review the environment design and controls', intro: 'Explain the cost relationships, intended controls and outstanding decisions in your plan.',
-    tool: { page: 'review', label: 'Open Environment Review' }, related: ['share-and-connect', 'limits-of-an-estimate'], sections: [
+    tool: { page: 'review', label: 'Open Environment Review' },
+    next: [{ page: 'review', item: 'architecture', label: 'Open Architecture' }, { page: 'review', item: 'technical', label: 'Open Technical fit' }],
+    related: ['share-and-connect', 'limits-of-an-estimate'], sections: [
       s('architecture', 'Inspect relationships', 'Open Environment Review from the sidebar or choose Review your design from the workspace. Open Architecture. Use the diagram or its text register to select an object. Shared links explain cost attribution and the diagram can be exported as SVG.'),
       s('technical-fit', 'Check technical fit and licensing', 'Open Technical fit to see which combinations were checked, the current evidence, and what to confirm. Open Review input to reach the existing editor. Return to Environment Review after inspecting the field.'),
       s('governance', 'Review declared controls', 'Open Controls in Environment Review. A declaration records a planned or existing safeguard. It still needs confirmation in the actual environment. Use the existing Advanced editor for relevant declarations. The report retains the scope and guidance.'),

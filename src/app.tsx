@@ -111,7 +111,7 @@ export default function App() {
   const [estimateChanged, setEstimateChanged] = useState(false);
   const [route, setRoute] = useState(currentRoute);
   const [step, setStep] = useState(0);
-  const [costView, setCostView] = useState<'costs' | 'explore' | 'value'>('costs');
+  const costView = route.page === 'costs' && (route.item === 'explore' || route.item === 'value') ? route.item : 'costs';
   const [mode, setMode] = useState<View>('guided');
   const [intent, setIntent] = useState<Intent>();
   const [selected, setSelected] = useState<string>();
@@ -187,6 +187,7 @@ export default function App() {
     if (!navigationStarted.current) return;
     if (!restoreContext.current && target && ((route.page === 'builder' && !target.line) || (route.page === 'costs' && target.line))) return;
     if (route.section && route.page === 'documentation') return;
+    if (from === 'costs' && route.page === 'costs' && document.activeElement?.closest('[aria-label="Analysis view"]')) return;
     const frame = requestAnimationFrame(() => {
       if (from === 'documentation' && restoreContext.current && contextField.current) {
         const { field, line } = contextField.current;
@@ -257,7 +258,7 @@ export default function App() {
   function edit(target: EditTarget) {
     setReturnView({ page: route.page, item: route.item, step, mode });
     setTarget({ ...target });
-    if (target.line) { setCostView('costs'); navigate('costs'); }
+    if (target.line) navigate('costs');
     else { setSelected(target.id); setMode('advanced'); navigate('builder'); }
   }
   function returnToReview() {
@@ -281,7 +282,7 @@ export default function App() {
     setPrintComparison(undefined);
     setWorkspace(value.env); setDirty(value.kind === 'copy' || value.kind === 'example');
     setExported(value.kind === 'import'); setEstimateChanged(false); setSelected(undefined); setTarget(undefined); setReturnView(undefined);
-    setIntent(undefined); setGenerated(new Set()); setMode('guided'); setCostView('costs'); setStep(value.kind === 'new' ? 0 : 4); setOpening(undefined); setError('');
+    setIntent(undefined); setGenerated(new Set()); setMode('guided'); setStep(value.kind === 'new' ? 0 : 4); setOpening(undefined); setError('');
     if (value.kind === 'import') setToast('Environment imported. Costs have been recalculated with the applied catalogue.');
     navigate('builder');
   }
@@ -399,12 +400,12 @@ export default function App() {
         </>}
         {workspace && route.page === 'costs' && <div className="page-stack">
           <div className="mode-control view-choice" role="group" aria-label="Analysis view">
-            <button className="button" aria-pressed={costView === 'costs'} aria-controls="analysis-content" onClick={() => setCostView('costs')}>Costs</button>
-            <button className="button" aria-pressed={costView === 'explore'} aria-controls="analysis-content" onClick={() => setCostView('explore')}>Explore changes</button>
-            <button className="button" aria-pressed={costView === 'value'} aria-controls="analysis-content" onClick={() => setCostView('value')}>Potential value</button>
+            <button className="button" aria-pressed={costView === 'costs'} aria-controls="analysis-content" onClick={() => navigate('costs')}>Costs</button>
+            <button className="button" aria-pressed={costView === 'explore'} aria-controls="analysis-content" onClick={() => navigate('costs', 'explore')}>Explore changes</button>
+            <button className="button" aria-pressed={costView === 'value'} aria-controls="analysis-content" onClick={() => navigate('costs', 'value')}>Potential value</button>
           </div>
           <div id="analysis-content" className="page-stack">
-          {costView === 'explore' ? <ExploreChanges {...{ env, result, catalogue }} showValue={() => setCostView('value')} include={comparison => {
+          {costView === 'explore' ? <ExploreChanges {...{ env, result, catalogue }} showValue={() => navigate('costs', 'value')} include={comparison => {
             setPrintComparison({ env, catalogue, comparison }); setToast('Illustrative comparison added to the Full Report.');
           }} /> : costView === 'value' ?
             <PotentialValue {...{ env, result, update }} /> : <>

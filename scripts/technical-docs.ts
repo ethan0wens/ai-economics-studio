@@ -109,6 +109,9 @@ export async function validateTechnicalDocs() {
   for (const [key, link] of [...Object.entries(helpTopics), ...Object.entries(contextualGuides)]) {
     await validateLink(documentationHref(link), `help registry (${key})`);
   }
+  for (const guide of guides) {
+    for (const link of guide.guidance ?? []) await validateLink(documentationHref(link), guide.id);
+  }
 
   let diagramCount = 0;
   for (const article of articles) {

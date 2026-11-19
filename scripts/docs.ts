@@ -12,6 +12,8 @@ import { validateTechnicalDocs } from './technical-docs';
 const fail = (message: string) => { throw new Error(message); };
 const slug = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
 const ids = new Map(articles.map(article => [article.id, article]));
+const exampleIds = new Set(examples.map(example => example.id));
+if (exampleIds.size !== examples.length) fail('Built-in example IDs must be unique.');
 if (ids.size !== articles.length) fail('Documentation article IDs must be unique.');
 for (const topic of topics) if (!articles.some(article => article.topic === topic)) fail(`Missing topic: ${topic}`);
 for (const article of articles) {
@@ -21,7 +23,14 @@ for (const article of articles) {
     fail(`Invalid article content or anchors: ${article.id}`);
   }
   for (const related of article.related) if (!ids.has(related) || related === article.id) fail(`Invalid related article: ${article.id} → ${related}`);
-  if (article.tool && !Object.hasOwn(destinations, article.tool.page)) fail(`Removed studio destination in ${article.id}`);
+  for (const link of [...(article.tool ? [article.tool] : []), ...article.next ?? []]) {
+    if (!Object.hasOwn(destinations, link.page) || !link.label.trim()) fail(`Invalid studio destination in ${article.id}`);
+    if (link.item && !(
+      (link.page === 'examples' && exampleIds.has(link.item)) ||
+      (link.page === 'costs' && ['explore', 'value'].includes(link.item)) ||
+      (link.page === 'review' && ['architecture', 'technical', 'controls'].includes(link.item))
+    )) fail(`Invalid studio subview in ${article.id}: ${link.item}`);
+  }
   if (article.tool?.page === 'examples' && !examples.some(example => example.id === article.tool?.item && example.article === article.id)) {
     fail(`Example walkthrough target does not resolve: ${article.id}`);
   }
@@ -47,7 +56,10 @@ for (const path of (await readdir(resolve('src'))).filter(name => /\.tsx?$/.test
 for (const id of startingArticles) if (!ids.has(id)) fail(`Missing starting article: ${id}`);
 for (const example of examples) {
   openExample(example);
-  if (!ids.has(example.article)) fail(`Missing walkthrough for ${example.id}`);
+  const walkthrough = ids.get(example.article);
+  if (walkthrough?.tool?.page !== 'examples' || walkthrough.tool.item !== example.id) fail(`Missing reciprocal walkthrough for ${example.id}`);
+  if (!slug.test(example.id) || example.purpose.trim().length < 20 || !example.assumptions.some(text => text.trim()) ||
+      example.explore.length < 2 || example.explore.some(text => text.trim().length < 20)) fail(`Incomplete example guidance for ${example.id}`);
 }
 
 const pricing = await validate(resolve('public/pricing'));

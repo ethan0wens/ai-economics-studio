@@ -6,7 +6,7 @@ import { documentationReference } from './documentation-reference';
 import { compatibilityLabels } from './compatibility';
 import { CatalogueHealth } from './catalogue-health-ui';
 import type { Catalogue } from './catalogue';
-import { startingArticles } from './help-links';
+import { documentationHref, startingArticles } from './help-links';
 import { routeHref, technicalHref } from './navigation';
 import { DocumentationNavigation, RelatedTechnical, TechnicalDocumentation, technicalSearch } from './technical-ui';
 
@@ -119,6 +119,10 @@ function UserDocumentation({ item, section, catalogue, hasWorkspace, back }: {
     </section>)}
     {article.reference && <Reference key={article.id} kind={article.reference} catalogue={catalogue} />}
     {article.tool && <a className="button primary" href={routeHref(article.tool.page, article.tool.item)}>{article.tool.label}</a>}
+    {(article.next || article.guidance) && <section className="doc-section"><h2>Continue exploring</h2><ul>
+      {article.next?.map(tool => <li key={routeHref(tool.page, tool.item)}><a href={routeHref(tool.page, tool.item)}>{tool.label}</a></li>)}
+      {article.guidance?.map(link => <li key={documentationHref(link)}><a href={documentationHref(link)}>{link.label}</a></li>)}
+    </ul></section>}
     {article.sources && <section className="doc-section"><h2>External Microsoft sources</h2><ul>{article.sources.map(([label, href]) =>
       <li key={href}><a href={href} target="_blank" rel="noreferrer" aria-description="External Microsoft evidence">{label}</a></li>)}</ul></section>}
     <section className="doc-section"><h2>Related articles</h2><ul>{article.related.map(id => <li key={id}>

@@ -69,6 +69,8 @@ export const guides = {
   valueAssumptions: guide('potential-business-value', 'benefit-scopes'),
   adoptionLink: guide('potential-business-value', 'adoption-link'),
   environmentReview: guide('architecture-and-controls', 'technical-fit'),
+  reviewArchitecture: guide('architecture-and-controls', 'architecture'),
+  reviewControls: guide('architecture-and-controls', 'governance'),
   catalogue: guide('pricing-sources', 'azure', 'How the studio verifies prices'),
   catalogueMaintenance: guide('coverage-and-freshness', 'maintenance', 'How catalogue updates work'),
   privacy: guide('privacy', 'storage', 'Privacy and storage'),

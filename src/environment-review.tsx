@@ -111,5 +111,8 @@ export function EnvironmentReview({ env, result, advice, view, edit, select, ope
     {view === 'architecture' && <Suspense fallback={<p role="status">Preparing diagram…</p>}><Architecture {...{ env, result, select }} /></Suspense>}
     {view === 'technical' && <TechnicalFit {...{ env, result, edit }} />}
     {view === 'controls' && <Controls {...{ env, advice, edit, openAdvanced }} />}
+    {view === 'architecture' && <LearnMore guide="reviewArchitecture">How to read the architecture</LearnMore>}
+    {view === 'technical' && <LearnMore guide="environmentReview">How to read review findings</LearnMore>}
+    {view === 'controls' && <LearnMore guide="reviewControls">How to interpret control declarations</LearnMore>}
   </div>;
 }

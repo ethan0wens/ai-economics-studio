@@ -55,7 +55,15 @@ test('selected model applies both catalogue meters, restores retail and opens ex
 });
 
 if (process.env.STUDIO_CHECK_PUBLISHED_CATALOGUE === '1') {
-  test('dashboard and ledger verify the published inventory and exact regional retail', async ({ page }) => {
+  test('dashboard and ledger verify the published inventory and exact regional retail', async ({ page }, info) => {
+    const expected = process.env.STUDIO_EXPECTED_CATALOGUE_ID;
+    if (expected) {
+      info.setTimeout(95_000);
+      await expect.poll(async () => {
+        const response = await page.request.get('/pricing/manifest.json', { headers: { 'Cache-Control': 'no-cache' } });
+        return response.ok() ? (await response.json()).catalogueId : String(response.status());
+      }, { timeout: 60_000, message: 'The public edge should serve the catalogue hash deployed by this run' }).toBe(expected);
+    }
     const manifestResponse = await page.request.get('/pricing/manifest.json');
     expect(manifestResponse.ok()).toBe(true);
     const manifest = await manifestResponse.json();

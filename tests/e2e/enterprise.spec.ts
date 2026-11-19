@@ -53,7 +53,15 @@ for (const item of scenarios) {
 }
 
 if (process.env.STUDIO_CHECK_PUBLISHED_CATALOGUE === '1') {
-  test('published UK licence price and technical availability come from independent evidence', async ({ page }) => {
+  test('published UK licence price and technical availability come from independent evidence', async ({ page }, info) => {
+    const expected = process.env.STUDIO_EXPECTED_CATALOGUE_ID;
+    if (expected) {
+      info.setTimeout(95_000);
+      await expect.poll(async () => {
+        const response = await page.request.get('/pricing/manifest.json', { headers: { 'Cache-Control': 'no-cache' } });
+        return response.ok() ? (await response.json()).catalogueId : String(response.status());
+      }, { timeout: 60_000, message: 'The public edge should serve the catalogue hash deployed by this run' }).toBe(expected);
+    }
     const response = await page.request.get('/pricing/manifest.json');
     expect(response.ok()).toBe(true);
     const manifest = await response.json();

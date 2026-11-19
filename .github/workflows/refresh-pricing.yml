@@ -64,7 +64,12 @@ jobs:
       - name: Verify pricing, evidence and enterprise reports on the live Worker
         run: |
           export STUDIO_EXPECTED_CATALOGUE_ID="$(jq -r .catalogueId public/pricing/manifest.json)"
-          npm run test:e2e -- tests/e2e/field-help.spec.ts tests/e2e/retail-first.spec.ts tests/e2e/enterprise.spec.ts
+          if ! npm run test:e2e -- --retries=1 tests/e2e/field-help.spec.ts tests/e2e/retail-first.spec.ts tests/e2e/enterprise.spec.ts > "$RUNNER_TEMP/production-browser.log" 2>&1; then
+            cat "$RUNNER_TEMP/production-browser.log"
+            tail -c 5800 "$RUNNER_TEMP/production-browser.log" | jq -Rsr 'gsub("%"; "%25") | gsub("\r"; "%0D") | gsub("\n"; "%0A")' | sed 's/^/::error title=Production browser verification::/'
+            exit 1
+          fi
+          cat "$RUNNER_TEMP/production-browser.log"
         env:
           STUDIO_CHECK_PUBLISHED_CATALOGUE: '1'
           STUDIO_TEST_URL: https://ai-econmics-studio.ethan0wens.workers.dev

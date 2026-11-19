@@ -174,6 +174,7 @@ test('keyboard selects Executive Summary and both exports reconcile with the ope
     expect(pages.join(' ')).toContain(`${sample.expected.missing} unresolved charge`);
   }
   expect(compact[0]).toContain('Executive Summary');
+  expect(compact[0]).toContain('Planning estimates do not establish quotes, licence eligibility or compliance.');
   expect(complete[0]).toContain('Full Report');
   expect(compact.length).toBeLessThan(complete.length);
   await expect(page.getByRole('status').filter({ hasText: 'Your Executive Summary PDF is ready.' })).toBeVisible();

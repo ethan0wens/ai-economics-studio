@@ -5,6 +5,8 @@ import { expect, test, type Page } from '@playwright/test';
 import { enterpriseInventory, referenceAt, scenarios } from '../../fixtures/enterprise-scenarios';
 import type { Environment } from '../../src/domain';
 import type { ValuePlan } from '../../src/value';
+import { businessCase } from '../../fixtures/adoption-business-case';
+import { prices } from './studio-fixture';
 import { reportText } from './report-text';
 
 async function openSample(page: Page, index = 0, valuePlan?: ValuePlan, withEnvironment: (env: Environment) => Environment = env => env) {
@@ -233,4 +235,95 @@ test.describe('narrow guided and optional views', () => {
     expect(await overflow()).toBe(0);
     expect((await new AxeBuilder({ page }).include('#main').analyze()).violations).toEqual([]);
   });
+});
+
+test('the built-in business case reconciles through the walkthrough, reports and JSON', async ({ page }) => {
+  await prices(page);
+  await page.goto('/');
+  await page.getByRole('link', { name: 'Explore examples' }).click();
+  const title = 'AI Adoption & Business Case';
+  const preview = page.getByRole('link', { name: `Preview ${title}` });
+  await expect(page.locator('.example-card')).toHaveCount(5);
+  await preview.press('Enter');
+  await expect(page.getByRole('heading', { name: 'What you’ll learn' })).toBeVisible();
+  expect((await new AxeBuilder({ page }).include('#main').analyze()).violations).toEqual([]);
+  await page.getByRole('link', { name: 'Read the walkthrough' }).click();
+  await page.getByRole('link', { name: 'Read the independent financial reconciliation' }).press('Enter');
+  await expect(page.getByRole('heading', { name: 'AI Adoption and Business Case', exact: true })).toBeFocused();
+  await page.goBack();
+  await page.getByRole('link', { name: `Preview ${title}` }).click();
+  await page.getByRole('button', { name: 'Open editable copy' }).click();
+  await expect(page.getByRole('group', { name: 'Builder mode' }).getByRole('button', { name: 'Guided' })).toHaveAttribute('aria-pressed', 'true');
+  await navigate(page, 'Cost & Value Analysis');
+  await expect(page.getByRole('button', { name: 'Costs', exact: true })).toHaveAttribute('aria-pressed', 'true');
+  await expect(page.locator('.metric').first()).toContainText('£450.00');
+
+  await page.goto('/#/documentation/example-ai-adoption-business-case');
+  await page.getByRole('link', { name: 'Open Potential value' }).click();
+  await expect(page.getByRole('button', { name: 'Potential value', exact: true })).toHaveAttribute('aria-pressed', 'true');
+  await expect(page.getByText('240 hours monthly · 2,880 hours annualised')).toBeVisible();
+  await expect(page.getByText('Declared cashable savings', { exact: true }).locator('..')).toContainText('Unknown');
+
+  await page.goto('/#/documentation/example-ai-adoption-business-case');
+  await page.getByRole('link', { name: 'Explore changes', exact: true }).click();
+  await page.getByLabel('What would you like to change?').selectOption('adoption');
+  await page.getByLabel('Lower adoption (%)').fill('25');
+  await expect(page.getByLabel('Expected adoption (%)')).toHaveValue('50');
+  await page.getByLabel('Higher adoption (%)').fill('75');
+  const compare = page.getByRole('button', { name: 'Compare adoption assumptions' });
+  await compare.press('Enter');
+  const rows = page.getByRole('table', { name: 'Monthly adoption comparison' }).getByRole('row');
+  await expect(rows.nth(1).getByRole('cell', { name: 'Unknown', exact: true })).toHaveCount(4);
+  await page.getByText('Link adoption to workload usage', { exact: true }).click();
+  await page.getByLabel('Workload affected by adoption').selectOption({ label: 'Internal support assistant' });
+  await page.getByLabel('Monthly interactions per active user').fill('10');
+  await compare.click();
+  for (const [index, row] of businessCase.cases.entries()) {
+    await expect(rows.nth(index + 1)).toContainText(`${Number(row.executions).toLocaleString('en-GB')} executions`);
+    await expect(rows.nth(index + 1)).toContainText(`£${row.monthlySpend}`);
+  }
+  await page.getByRole('button', { name: 'Include comparison in Full Report' }).click();
+
+  await navigate(page, 'Environment Review');
+  const views = page.getByRole('navigation', { name: 'Environment review views' });
+  await views.getByRole('link', { name: 'Architecture' }).click();
+  await expect(page.getByRole('table', { name: 'Architecture objects and outgoing links' })).toBeVisible();
+  await page.getByRole('link', { name: 'How to read the architecture' }).click();
+  await expect(page.getByRole('heading', { name: 'Inspect relationships' })).toBeFocused();
+  await page.getByRole('button', { name: 'Back to workspace' }).click();
+  await expect(views.getByRole('link', { name: 'Architecture' })).toHaveAttribute('aria-current', 'page');
+  await views.getByRole('link', { name: 'Technical fit' }).click();
+  await expect(page.getByRole('heading', { name: 'Technical fit' })).toBeVisible();
+  await views.getByRole('link', { name: 'Controls' }).click();
+  await page.getByText('Identity and access', { exact: true }).click();
+  await expect(page.getByText('Fictional identity control', { exact: true }).first()).toBeVisible();
+
+  await navigate(page, 'Reports & Export');
+  const full = (await reportText(await download(page, 'Generate PDF'))).join(' ');
+  await page.getByRole('radio', { name: /Executive Summary/ }).check();
+  const executive = (await reportText(await download(page, 'Generate PDF'))).join(' ');
+  for (const pdf of [full, executive]) {
+    expect(pdf).toContain('Current estimate £450.00 £5,400.00 0');
+    expect(pdf).toContain('Assumed economic equivalent £6,000.00 £72,000.00');
+    expect(pdf).toContain('Cashable savings require a separate declaration.');
+    expect(pdf).not.toMatch(/Declared cashable savings £/);
+  }
+  expect(full).toContain('Illustrative adoption comparison');
+  expect(full).toContain('Fictional example input');
+  expect(full).toContain('£675.00');
+  expect(executive).not.toContain('Illustrative adoption comparison');
+  const file = await download(page, 'Export JSON');
+  const saved = JSON.parse(file.toString());
+  expect(saved.sourceSnapshot.currentKnown).toBe('450.00');
+  expect(saved.valuePlan.assumptions.adoption).toEqual({ value: 50, source: 'fictional' });
+  expect(saved.objects.find((object: { kind: string }) => object.kind === 'usage-profile').executions).toBe(1000);
+  expect(file.toString()).not.toContain('Higher adoption');
+  await page.reload();
+  await page.locator('input[type=file]').setInputFiles({ name: 'business-case.json', mimeType: 'application/json', buffer: file });
+  await expect(page.getByRole('heading', { name: 'Environment Builder' })).toBeVisible();
+  await navigate(page, 'Reports & Export');
+  const reopened = JSON.parse((await download(page, 'Export JSON')).toString());
+  expect(reopened.valuePlan).toEqual(saved.valuePlan);
+  expect(reopened.sourceSnapshot).toEqual(saved.sourceSnapshot);
+  await expect(page.getByText('Includes the selected illustrative adoption comparison.')).toHaveCount(0);
 });

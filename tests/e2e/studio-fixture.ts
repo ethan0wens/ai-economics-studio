@@ -1,6 +1,7 @@
 import { readFile } from 'node:fs/promises';
 import { createHash } from 'node:crypto';
 import { expect, type Page } from '@playwright/test';
+import { businessCase } from '../../fixtures/adoption-business-case';
 import { offeringMeter } from '../../src/offerings';
 import type { Catalogue, RetailRecord } from '../../src/catalogue';
 
@@ -12,7 +13,7 @@ export const nav = (page: Page, name: string) => page.getByRole('navigation', { 
 export const mode = (page: Page, name: string) => page.getByRole('group', { name: 'Builder mode' }).getByRole('button', { name, exact: true });
 export const monthly = (page: Page) => page.getByRole('region', { name: 'Running estimate' }).locator('.metric').first();
 const specs = [
-  ['gpt-4-1-mini-global-uksouth', 'input', '0.20'], ['gpt-4-1-mini-global-uksouth', 'output', '0.50'],
+  ...businessCase.rateSpecs,
   ['copilot-payg-uksouth', 'credits', '0.02'], ['m365-copilot-enterprise-gb', 'seats', '20'],
   ['search-basic-uksouth', 'usage', '2'], ['openai-global-ptu-uksouth', 'capacity', '0.50'],
 ] as const;

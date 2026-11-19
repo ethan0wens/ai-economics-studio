@@ -1,40 +1,40 @@
 {
   "schemaVersion": 1,
-  "reviewedAt": "2026-11-19T14:31:28.336Z",
+  "reviewedAt": "2026-11-19T15:14:53.856Z",
   "reviews": {
     "commercial": {
-      "attemptedAt": "2026-11-19T14:31:28.336Z",
-      "successfulAt": "2026-11-19T14:31:28.336Z",
+      "attemptedAt": "2026-11-19T15:14:53.856Z",
+      "successfulAt": "2026-11-19T15:14:53.856Z",
       "checked": 37,
       "state": "partial"
     },
     "licensing": {
-      "attemptedAt": "2026-11-19T14:31:28.336Z",
-      "successfulAt": "2026-11-19T14:31:28.336Z",
+      "attemptedAt": "2026-11-19T15:14:53.856Z",
+      "successfulAt": "2026-11-19T15:14:53.856Z",
       "checked": 7,
       "state": "partial"
     },
     "compatibility": {
-      "attemptedAt": "2026-11-19T14:31:28.336Z",
-      "successfulAt": "2026-11-19T14:31:28.336Z",
+      "attemptedAt": "2026-11-19T15:14:53.856Z",
+      "successfulAt": "2026-11-19T15:14:53.856Z",
       "checked": 746,
       "state": "partial"
     },
     "ptu": {
-      "attemptedAt": "2026-11-19T14:31:28.336Z",
-      "successfulAt": "2026-11-19T14:31:28.336Z",
+      "attemptedAt": "2026-11-19T15:14:53.856Z",
+      "successfulAt": "2026-11-19T15:14:53.856Z",
       "checked": 56,
       "state": "checked"
     },
     "lifecycle": {
-      "attemptedAt": "2026-11-19T14:31:28.336Z",
-      "successfulAt": "2026-11-19T14:31:28.336Z",
+      "attemptedAt": "2026-11-19T15:14:53.856Z",
+      "successfulAt": "2026-11-19T15:14:53.856Z",
       "checked": 109,
       "state": "checked"
     },
     "reservations": {
-      "attemptedAt": "2026-11-19T14:31:28.336Z",
-      "successfulAt": "2026-11-19T14:31:28.336Z",
+      "attemptedAt": "2026-11-19T15:14:53.856Z",
+      "successfulAt": "2026-11-19T15:14:53.856Z",
       "checked": 2,
       "state": "checked"
     }
@@ -44,279 +44,279 @@
       "url": "https://www.microsoft.com/en-gb/copilot/pricing/business",
       "group": "commercial",
       "state": "retrieved",
-      "checkedAt": "2026-11-19T14:31:28.336Z",
-      "digest": "5647674866e04b1cb7c9c97014e4cb0372bd7ba14ecc8aa0b253b2b07e5c953e"
+      "checkedAt": "2026-11-19T15:14:53.856Z",
+      "digest": "fe48fc23d73b8dd09247dde8565b59304641d51ee79359d19d8445021218531f"
     },
     {
       "url": "https://www.microsoft.com/en-gb/microsoft-365-copilot/microsoft-copilot-studio",
       "group": "commercial",
       "state": "retrieved",
-      "checkedAt": "2026-11-19T14:31:28.336Z",
-      "digest": "8f18ec93b002fde4c788d17cc632edd17734443473ff8c91c66f75072c9976ad"
+      "checkedAt": "2026-11-19T15:14:53.856Z",
+      "digest": "b7b10d48a1fa0f583be0438803516d94b1fc5f8a2237ec3d0a56502d982d08a0"
     },
     {
       "url": "https://www.microsoft.com/en-gb/microsoft-365/business/microsoft-365-business-premium",
       "group": "commercial",
       "state": "retrieved",
-      "checkedAt": "2026-11-19T14:31:28.336Z",
-      "digest": "c4d74c153adccd2e298d262e8b2c126140aa94a08bdee8fb154d6f730e97ac40"
+      "checkedAt": "2026-11-19T15:14:53.856Z",
+      "digest": "b0dc2f5ede5c64c46b61fd994b0ae9eebbeaa6081e08454a0f63e46bd5ac8320"
     },
     {
       "url": "https://www.microsoft.com/en-gb/microsoft-365/business/microsoft-365-business-standard",
       "group": "commercial",
       "state": "retrieved",
-      "checkedAt": "2026-11-19T14:31:28.336Z",
-      "digest": "67ecccee2d2abedb8a1e1215cf82e5c5c714f9691e6935424a49695a365932ad"
+      "checkedAt": "2026-11-19T15:14:53.856Z",
+      "digest": "9eeaca7a8a9512a137350ac4502f3c5d86af94df3dca9da599405089c4adf7d0"
     },
     {
       "url": "https://www.microsoft.com/en-gb/microsoft-365/business/microsoft-365-plans-and-pricing",
       "group": "commercial",
       "state": "retrieved",
-      "checkedAt": "2026-11-19T14:31:28.336Z",
-      "digest": "325cfeb7cfa03a99b2befc4d062de5fb1c987a700a11853e0936079c8c977792"
+      "checkedAt": "2026-11-19T15:14:53.856Z",
+      "digest": "9436bd37eaf1b653d7cd1f5825367c11b89f1ec1277df781861a1759992ec292"
     },
     {
       "url": "https://www.microsoft.com/en-gb/microsoft-365/enterprise/frontline-plans-and-pricing",
       "group": "commercial",
       "state": "retrieved",
-      "checkedAt": "2026-11-19T14:31:28.336Z",
-      "digest": "26d63e0758568334f533e67746b8a1185aecc331325a1be17a000bb26693afae"
+      "checkedAt": "2026-11-19T15:14:53.856Z",
+      "digest": "fe98076083fa94de11e4fa5df04380ccc82e2127c59099561a97e5de93b45e27"
     },
     {
       "url": "https://www.microsoft.com/en-gb/microsoft-365/enterprise/microsoft-365-plans-and-pricing",
       "group": "commercial",
       "state": "retrieved",
-      "checkedAt": "2026-11-19T14:31:28.336Z",
-      "digest": "18f75892faa5ab2b3961d91450f6bcc555c10b3328c47a93a7429c2066b39940"
+      "checkedAt": "2026-11-19T15:14:53.856Z",
+      "digest": "941c71324631317816d9680c44a975a28f7e057f7144e622be6b2754b29b5519"
     },
     {
       "url": "https://www.microsoft.com/en-gb/microsoft-365/enterprise/office-365-plans-and-pricing",
       "group": "commercial",
       "state": "retrieved",
-      "checkedAt": "2026-11-19T14:31:28.336Z",
-      "digest": "7071cf39f7c8ad0475fb8d3259507e39a8aa3c498029dd569298968fe3246a50"
+      "checkedAt": "2026-11-19T15:14:53.856Z",
+      "digest": "13a9900ee22ba2a6566034296dae3398c22738dcf298cd9a9431b43ef0fba012"
     },
     {
       "url": "https://www.microsoft.com/en-gb/microsoft-agent-365",
       "group": "commercial",
       "state": "retrieved",
-      "checkedAt": "2026-11-19T14:31:28.336Z",
-      "digest": "15721538295d9e08d96115b1d649d2cd620065444f2841c1aefa8017fa51500f"
+      "checkedAt": "2026-11-19T15:14:53.856Z",
+      "digest": "ab7c08047aa29a7755d28fa6dca7cb4d1e5c6cf2199c0b4d7e7bad5d943d0204"
     },
     {
       "url": "https://www.microsoft.com/en-gb/microsoft-teams/compare-microsoft-teams-business-options",
       "group": "commercial",
       "state": "retrieved",
-      "checkedAt": "2026-11-19T14:31:28.336Z",
-      "digest": "7e91fc629be3db1d4085b696d77d08f06d522af009330c49a5451159ab749490"
+      "checkedAt": "2026-11-19T15:14:53.856Z",
+      "digest": "7a85a81589c87a4de977f3729c47f75bf2afbf5f397af814eccdbe135a23df35"
     },
     {
       "url": "https://www.microsoft.com/en-gb/security/business/endpoint-security/microsoft-defender-endpoint",
       "group": "commercial",
       "state": "retrieved",
-      "checkedAt": "2026-11-19T14:31:28.336Z",
-      "digest": "d93be394ba763a4611478412221e6796cdfa19462131bbb80fe771b2623fbab5"
+      "checkedAt": "2026-11-19T15:14:53.856Z",
+      "digest": "f6678bfd8012b30501aabe038210d7e91693226a30a7135fe93b6ce5c4284c8d"
     },
     {
       "url": "https://www.microsoft.com/en-gb/security/business/identity-access/microsoft-defender-identity",
       "group": "commercial",
       "state": "unavailable",
-      "checkedAt": "2026-11-19T14:31:28.336Z"
+      "checkedAt": "2026-11-19T15:14:53.856Z"
     },
     {
       "url": "https://www.microsoft.com/en-gb/security/business/microsoft-purview",
       "group": "commercial",
       "state": "retrieved",
-      "checkedAt": "2026-11-19T14:31:28.336Z",
-      "digest": "9524e45503ee477c5b6b83be585c1ce1d972b01a445b1a5a9490411e8239e1ad"
+      "checkedAt": "2026-11-19T15:14:53.856Z",
+      "digest": "4297d1814153e107ffa48dd94968f10bbbd2a2cf4f9489c44ebd24b0e1f2d855"
     },
     {
       "url": "https://www.microsoft.com/en-gb/security/business/siem-and-xdr/microsoft-defender-cloud-apps",
       "group": "commercial",
       "state": "retrieved",
-      "checkedAt": "2026-11-19T14:31:28.336Z",
-      "digest": "a5a69e7f525c846f5bddb609ed326a4cf3e03cd079b19ebd17ad8c1450b6a4f8"
+      "checkedAt": "2026-11-19T15:14:53.856Z",
+      "digest": "6c34709137d900f85f11d95ef209b6ede218d240d1b9bb729f7ba30fe9864ad0"
     },
     {
       "url": "https://www.microsoft.com/en-gb/security/business/siem-and-xdr/microsoft-defender-office-365",
       "group": "commercial",
       "state": "retrieved",
-      "checkedAt": "2026-11-19T14:31:28.336Z",
-      "digest": "3153935bad40d3bb74d01ce69037ed9468d1a8d5c3b0393d9240a10abdad43fd"
+      "checkedAt": "2026-11-19T15:14:53.856Z",
+      "digest": "866ef485442aee5b0b2303cb54d4696f45e62da67302e6b6283d7251860433b7"
     },
     {
       "url": "https://www.microsoft.com/en-gb/security/microsoft-entra-pricing",
       "group": "commercial",
       "state": "retrieved",
-      "checkedAt": "2026-11-19T14:31:28.336Z",
-      "digest": "8dc051f7e4ae0ea4130ddb41573dcc76705290985bd788f13ea8b8bdf9f9a15d"
+      "checkedAt": "2026-11-19T15:14:53.856Z",
+      "digest": "75d681743903df3a265602c6e0d6dbd3496e5d2f354f9ec6cc0fc4fb99b17fa0"
     },
     {
       "url": "https://learn.microsoft.com/en-us/azure/foundry-classic/agents/concepts/model-region-support",
       "group": "compatibility",
       "state": "retrieved",
-      "checkedAt": "2026-11-19T14:31:28.336Z",
-      "digest": "d43ea3a71bb485cb2e7f614bcd5f3bd46bbfd9e01df23df41d7005441aba7ab5"
+      "checkedAt": "2026-11-19T15:14:53.856Z",
+      "digest": "ad9076f71d0a9377bcaa328b47a86c68b850f7b4d338645667d586ee64e46221"
     },
     {
       "url": "https://learn.microsoft.com/en-us/azure/foundry-classic/agents/how-to/tools-classic/azure-ai-search",
       "group": "compatibility",
       "state": "retrieved",
-      "checkedAt": "2026-11-19T14:31:28.336Z",
-      "digest": "e11dca20a58300f51d746893261947d007cda7b69896010a1d1a95d665946120"
+      "checkedAt": "2026-11-19T15:14:53.856Z",
+      "digest": "9ea443b0f04afc296a08dad485f3170d9ee956f4b5af2ee267093930929d384c"
     },
     {
       "url": "https://learn.microsoft.com/en-us/azure/foundry/agents/how-to/connected-models",
       "group": "compatibility",
       "state": "retrieved",
-      "checkedAt": "2026-11-19T14:31:28.336Z",
-      "digest": "970ff412aef8d9a3920deebf9c8a525e4823ee33b7e1f2c4e09991d67b69ae89"
+      "checkedAt": "2026-11-19T15:14:53.856Z",
+      "digest": "3845ce1329c9fbf8fb6eb18655735a263c1fe475ebf0feec1802431c1a9205c6"
     },
     {
       "url": "https://learn.microsoft.com/en-us/azure/foundry/agents/how-to/tools/ai-search",
       "group": "compatibility",
       "state": "retrieved",
-      "checkedAt": "2026-11-19T14:31:28.336Z",
-      "digest": "207c3e9c273dc309b4dd47f857863340b154e4d947826c2991878b6f9e6e4ad2"
+      "checkedAt": "2026-11-19T15:14:53.856Z",
+      "digest": "ad03453ba6cb552999c19c84502a451e74b3d6336e0b3f8fdee465c21fc89bb7"
     },
     {
       "url": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "group": "compatibility",
       "state": "retrieved",
-      "checkedAt": "2026-11-19T14:31:28.336Z",
-      "digest": "d470685018ecfabdce8550520cbba166f25dc2486f32d50e08b5b867932d72d9"
+      "checkedAt": "2026-11-19T15:14:53.856Z",
+      "digest": "f4b56b01c16d65768b06dbd8e4bd55bb2c56e145cdf2b59d158481abbe4c2e54"
     },
     {
       "url": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability",
       "group": "compatibility",
       "state": "retrieved",
-      "checkedAt": "2026-11-19T14:31:28.336Z",
-      "digest": "e2350f688b9154071b448197d748fa9b02cb09c96a350cdc7c0c5e6d60ead289"
+      "checkedAt": "2026-11-19T15:14:53.856Z",
+      "digest": "7d627c711a4fbca87469f812fe39c97b6deac8893607a09f30cfaa5c4186ffe3"
     },
     {
       "url": "https://learn.microsoft.com/en-us/azure/foundry/openai/concepts/provisioned-throughput",
       "group": "compatibility",
       "state": "retrieved",
-      "checkedAt": "2026-11-19T14:31:28.336Z",
-      "digest": "29cc4810178242ab50ef2d04294a994b5f85763d218b4e0ee7a9550d2139b965"
+      "checkedAt": "2026-11-19T15:14:53.856Z",
+      "digest": "fd89e0c582458fa50233323a5a8712edcdff0efc56a0b3afaa7e238271de9a92"
     },
     {
       "url": "https://learn.microsoft.com/en-us/microsoft-copilot-studio/bring-your-own-model-prompts",
       "group": "compatibility",
       "state": "retrieved",
-      "checkedAt": "2026-11-19T14:31:28.336Z",
-      "digest": "6cc781471697e5a1d29ed287dc3cdc9ca45a925752e30d66bfe824887f071ec0"
+      "checkedAt": "2026-11-19T15:14:53.856Z",
+      "digest": "5c2a0971de39cbbe43098aaea033a7708ca4f09baf11578ec6d13014d6b0adde"
     },
     {
       "url": "https://learn.microsoft.com/en-us/microsoft-copilot-studio/requirements-messages-management",
       "group": "compatibility",
       "state": "retrieved",
-      "checkedAt": "2026-11-19T14:31:28.336Z",
-      "digest": "ed565f0d3e33352dfa2e8f1364ff8d78d283f571a0685861c78a891173557a5a"
+      "checkedAt": "2026-11-19T15:14:53.856Z",
+      "digest": "49718a4ab50f1e6cfc0aec1c1e4a861f9683ff4ed524cc720006fa14419ef493"
     },
     {
       "url": "https://learn.microsoft.com/en-us/copilot/plan/copilot-license-options",
       "group": "licensing",
       "state": "retrieved",
-      "checkedAt": "2026-11-19T14:31:28.336Z",
-      "digest": "4dadf5fdca38622fe3935448525e682fef7f52d1c4eb15437af889543b845a1a"
+      "checkedAt": "2026-11-19T15:14:53.856Z",
+      "digest": "0b5e4af956775ff9419ef3822186f8253411a19c11a9b23675b8ea91c2cc1c5b"
     },
     {
       "url": "https://learn.microsoft.com/en-us/defender-xdr/prerequisites",
       "group": "licensing",
       "state": "retrieved",
-      "checkedAt": "2026-11-19T14:31:28.336Z",
-      "digest": "a14cc4b5d58fa6df81cec8981deb915eee4edaad30e066146e7d9f331eac9dcf"
+      "checkedAt": "2026-11-19T15:14:53.856Z",
+      "digest": "4668eee8df9d1dfb958d14ff3c9cf38d8a8ed06c8057b471429f1886e82ee543"
     },
     {
       "url": "https://learn.microsoft.com/en-us/microsoft-copilot-studio/requirements-messages-management",
       "group": "licensing",
       "state": "retrieved",
-      "checkedAt": "2026-11-19T14:31:28.336Z",
-      "digest": "ed565f0d3e33352dfa2e8f1364ff8d78d283f571a0685861c78a891173557a5a"
+      "checkedAt": "2026-11-19T15:14:53.856Z",
+      "digest": "49718a4ab50f1e6cfc0aec1c1e4a861f9683ff4ed524cc720006fa14419ef493"
     },
     {
       "url": "https://learn.microsoft.com/en-us/purview/ediscovery-assign-permissions",
       "group": "licensing",
       "state": "retrieved",
-      "checkedAt": "2026-11-19T14:31:28.336Z",
-      "digest": "d96b340affb35d901be166d60539f2b3f9473813b767e6b48fabca3ad7566102"
+      "checkedAt": "2026-11-19T15:14:53.856Z",
+      "digest": "5e74bbcd7afffe380ffb39b0851377bf5a4c3be64a2f52c154a13f808dec752e"
     },
     {
       "url": "https://www.microsoft.com/en-gb/microsoft-365/enterprise/microsoft-365-plans-and-pricing",
       "group": "licensing",
       "state": "retrieved",
-      "checkedAt": "2026-11-19T14:31:28.336Z",
-      "digest": "18f75892faa5ab2b3961d91450f6bcc555c10b3328c47a93a7429c2066b39940"
+      "checkedAt": "2026-11-19T15:14:53.856Z",
+      "digest": "941c71324631317816d9680c44a975a28f7e057f7144e622be6b2754b29b5519"
     },
     {
       "url": "https://www.microsoft.com/en-gb/microsoft-agent-365",
       "group": "licensing",
       "state": "retrieved",
-      "checkedAt": "2026-11-19T14:31:28.336Z",
-      "digest": "15721538295d9e08d96115b1d649d2cd620065444f2841c1aefa8017fa51500f"
+      "checkedAt": "2026-11-19T15:14:53.856Z",
+      "digest": "ab7c08047aa29a7755d28fa6dca7cb4d1e5c6cf2199c0b4d7e7bad5d943d0204"
     },
     {
       "url": "https://www.microsoft.com/en-gb/security/business/siem-and-xdr/microsoft-defender-cloud-apps",
       "group": "licensing",
       "state": "retrieved",
-      "checkedAt": "2026-11-19T14:31:28.336Z",
-      "digest": "a5a69e7f525c846f5bddb609ed326a4cf3e03cd079b19ebd17ad8c1450b6a4f8"
+      "checkedAt": "2026-11-19T15:14:53.856Z",
+      "digest": "6c34709137d900f85f11d95ef209b6ede218d240d1b9bb729f7ba30fe9864ad0"
     },
     {
       "url": "https://www.microsoft.com/en-gb/security/business/siem-and-xdr/microsoft-defender-office-365",
       "group": "licensing",
       "state": "retrieved",
-      "checkedAt": "2026-11-19T14:31:28.336Z",
-      "digest": "3153935bad40d3bb74d01ce69037ed9468d1a8d5c3b0393d9240a10abdad43fd"
+      "checkedAt": "2026-11-19T15:14:53.856Z",
+      "digest": "866ef485442aee5b0b2303cb54d4696f45e62da67302e6b6283d7251860433b7"
     },
     {
       "url": "https://www.microsoft.com/en-gb/security/microsoft-entra-pricing",
       "group": "licensing",
       "state": "retrieved",
-      "checkedAt": "2026-11-19T14:31:28.336Z",
-      "digest": "8dc051f7e4ae0ea4130ddb41573dcc76705290985bd788f13ea8b8bdf9f9a15d"
+      "checkedAt": "2026-11-19T15:14:53.856Z",
+      "digest": "75d681743903df3a265602c6e0d6dbd3496e5d2f354f9ec6cc0fc4fb99b17fa0"
     },
     {
       "url": "https://www.microsoft.com/licensing/terms",
       "group": "licensing",
       "state": "retrieved",
-      "checkedAt": "2026-11-19T14:31:28.336Z",
+      "checkedAt": "2026-11-19T15:14:53.856Z",
       "digest": "b10bf21143c00f32934e047725c816681cb0fd39c2cd585bcb62eddd8b2a7c4a"
     },
     {
       "url": "https://www.microsoft.com/licensing/terms/productoffering/Microsoft365/MCA",
       "group": "licensing",
       "state": "retrieved",
-      "checkedAt": "2026-11-19T14:31:28.336Z",
+      "checkedAt": "2026-11-19T15:14:53.856Z",
       "digest": "f7c385df7a66a1a6694af00ccc45e22afdcb887908a06d21b7cd30d696e5385f"
     },
     {
       "url": "https://learn.microsoft.com/en-us/azure/foundry/openai/concepts/model-retirement-schedule",
       "group": "lifecycle",
       "state": "retrieved",
-      "checkedAt": "2026-11-19T14:31:28.336Z",
-      "digest": "032dda890c440466565db5c362142f8b3a5ba78887172ba83806494e3003c4e6"
+      "checkedAt": "2026-11-19T15:14:53.856Z",
+      "digest": "5616a1a28b751ebce5ea02dbb9b55001ddf8018703b0ca12d0bf2d72b635ec46"
     },
     {
       "url": "https://learn.microsoft.com/en-us/azure/foundry/openai/how-to/provisioned-throughput-sizing",
       "group": "ptu",
       "state": "retrieved",
-      "checkedAt": "2026-11-19T14:31:28.336Z",
-      "digest": "210ed25eabba56d8b515b0f008a1def24356e96b9a62dac6ddd90d1a98e9952a"
+      "checkedAt": "2026-11-19T15:14:53.856Z",
+      "digest": "830a65caed34bb8a43462ca878eaa9fca5a9dd6cb343fdd64dd5370a0274834a"
     },
     {
       "url": "https://learn.microsoft.com/en-us/azure/foundry/openai/concepts/provisioned-throughput-billing",
       "group": "reservations",
       "state": "retrieved",
-      "checkedAt": "2026-11-19T14:31:28.336Z",
-      "digest": "1622cba8c37079f4eab6f033c16aef795dda6ce6aa025fcf78b4b699a46c486d"
+      "checkedAt": "2026-11-19T15:14:53.856Z",
+      "digest": "887d66007dbca997a6707ec93b2b3c3459adf984360db44c1e4db3be87c7cea3"
     },
     {
       "url": "https://prices.azure.com/api/retail/prices?api-version=2023-01-01-preview&currencyCode=%27GBP%27&%24filter=priceType+eq+%27Reservation%27+and+productName+eq+%27Azure+OpenAI%27",
       "group": "reservations",
       "state": "retrieved",
-      "checkedAt": "2026-11-19T14:31:28.336Z"
+      "checkedAt": "2026-11-19T15:14:53.856Z"
     }
   ],
   "changes": [],

@@ -66,15 +66,16 @@ await Promise.all((sources[process.argv[2]] ?? []).map(async ([title, source, te
       const models = result.filter(row => /^(gpt-4(?:o(?:-mini)?|\.1(?:-mini|-nano)?)|deepseek-v3\.2|grok-4\.1|llama-4-maverick) \|/i.test(row));
       const preceding = body.slice(0, table.index);
       const section = [...preceding.matchAll(/<(?:section|div)[^>]*(?:tabpanel|data-tab)[^>]*>/gi)].at(-1)?.[0];
-      const links = [...preceding.matchAll(/<a[^>]*(?:data-tab|href="#tab)[^>]*>([\s\S]*?)<\/a>/gi)].slice(-12).map(link => plain(link[1]));
-      return models.length && targetColumns.length ? [
-        `Table ${ordinal} | ${section?.replaceAll('<', '[').replaceAll('>', ']') ?? ''} | ${links.join(' / ')}`,
+      const heading = [...preceding.matchAll(/<h[2-5]\b[^>]*>([\s\S]*?)<\/h[2-5]>/gi)].map(item => plain(item[1]))
+        .filter(value => /global|regional|data zone|standard|provisioned|batch/i.test(value)).at(-1);
+      return models.length && targetColumns.length ? [[
+        `Table ${ordinal} | ${heading ?? ''} | ${section?.replaceAll('<', '[').replaceAll('>', ']') ?? ''}`,
         ['Model', 'Version', ...targetColumns.map(index => columns[index])].join(' | '),
         ...models.map(row => {
           const cells = row.split('|').map(cell => cell.trim());
           return [cells[0], cells[1], ...targetColumns.map(index => cells[index])].join(' | ');
         }),
-      ] : [];
+      ].join('\n')] : [];
     }) : [];
     const links = ['Search classic linked sources', 'GLOBAL region matrix'].includes(title) ? [...body.matchAll(/<a\b[^>]*href="([^"]+)"[^>]*>([\s\S]*?)<\/a>/gi)]
       .filter(link => /new Foundry IQ|new agents|Region availability for Foundry Models|Model availability/i.test(plain(link[2]))).map(link => new URL(link[1], response.url).href) : [];

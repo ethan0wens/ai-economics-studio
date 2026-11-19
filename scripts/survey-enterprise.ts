@@ -63,7 +63,20 @@ await Promise.all((sources[process.argv[2]] ?? []).map(async ([title, source, te
       const regions = result.filter(row => /^(uksouth|westeurope|eastus2|UK South|West Europe|East US 2)( |\|)/i.test(row));
       const before = body.slice(0, table.index);
       const heading = [...before.matchAll(/<h[2-5]\b[^>]*>([\s\S]*?)<\/h[2-5]>/gi)].at(-1);
-      return regions.length ? [plain(heading?.[1] ?? ''), result[0], ...regions] : [];
+      const header = result.find(row => /model.*\|.*version/i.test(row));
+      const columns = header?.split('|').map(cell => cell.trim()) ?? [];
+      const targetColumns = columns.flatMap((cell, index) => /^(eastus2|uksouth|westeurope)$/i.test(cell) ? [index] : []);
+      const models = result.filter(row => /^(gpt-4(?:o(?:-mini)?|\.1(?:-mini|-nano)?)|deepseek-v3\.2|grok-4\.1|llama-4-maverick) \|/i.test(row));
+      const tabs = [...before.matchAll(/<(?:section|div)\b[^>]*(?:id|data-tab)="([^"]*(?:standard|provisioned)[^"]*)"/gi)].at(-1)?.[1];
+      return [
+        ...(regions.length ? [plain(heading?.[1] ?? ''), result[0], ...regions] : []),
+        ...(models.length && targetColumns.length ? [`${plain(heading?.[1] ?? '')} · ${tabs ?? ''}`,
+          ['Model', 'Version', ...targetColumns.map(index => columns[index])].join(' | '),
+          ...models.map(row => {
+            const cells = row.split('|').map(cell => cell.trim());
+            return [cells[0], cells[1], ...targetColumns.map(index => cells[index])].join(' | ');
+          })] : []),
+      ];
     }) : [];
     const links = ['Search classic linked sources', 'GLOBAL region matrix'].includes(title) ? [...body.matchAll(/<a\b[^>]*href="([^"]+)"[^>]*>([\s\S]*?)<\/a>/gi)]
       .filter(link => /new Foundry IQ|new agents|Region availability for Foundry Models|Model availability/i.test(plain(link[2]))).map(link => new URL(link[1], response.url).href) : [];
@@ -75,7 +88,7 @@ await Promise.all((sources[process.argv[2]] ?? []).map(async ([title, source, te
     const pageText = plain(body);
     const near = ['M365 enterprise', 'UK enterprise exact', 'Business', 'Office 365', 'Entra', 'Copilot commercial'].includes(title)
       ? [...pageText.matchAll(/£[0-9]+\.[0-9]+/g)].slice(0, 32).map(match => pageText.slice(Math.max(0, match.index - 90), match.index + 150)) : [];
-    const output = [`HTTP ${response.status} ${response.url}`, ...[...new Set([...tables, ...markup, ...links, ...near, ...pricing, ...rows])].slice(0, 34)];
+    const output = [`HTTP ${response.status} ${response.url}`, ...[...new Set([...tables, ...markup, ...links, ...near, ...pricing, ...rows])].slice(0, title.includes('region matrix') ? 90 : 34)];
     console.log(`::notice title=${title}::${output.join('\n').replaceAll('%', '%25').replaceAll('\r', '%0D').replaceAll('\n', '%0A')}`);
     await import('node:fs/promises').then(fs => fs.writeFile(`enterprise-${title.toLowerCase().replaceAll(' ', '-')}.txt`, output.join('\n')));
   } catch (error) {

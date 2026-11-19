@@ -39,6 +39,7 @@ const groups: Record<string, [string, string][]> = {
     ['Frontline service', learn + 'office365/servicedescriptions/office-365-platform-service-description/office-365-plan-options'],
   ],
   meters: [
+    ['GPT-family Azure product pages', "https://prices.azure.com/api/retail/prices?api-version=2023-01-01-preview&currencyCode='GBP'&%24filter=armRegionName%20eq%20'uksouth'%20and%20priceType%20eq%20'Consumption'%20and%20productName%20eq%20'Azure%20OpenAI'"],
     ['GPT-family Azure meter identities', "https://prices.azure.com/api/retail/prices?api-version=2023-01-01-preview&currencyCode='GBP'&%24filter=armRegionName%20eq%20'uksouth'%20and%20priceType%20eq%20'Consumption'%20and%20productName%20eq%20'Azure%20OpenAI'%20and%20(contains(skuName,'gpt%205')%20or%20contains(skuName,'gpt-5')%20or%20contains(skuName,'GPT-5'))"],
     ['Public reservation tariff check by product', "https://prices.azure.com/api/retail/prices?api-version=2023-01-01-preview&currencyCode='GBP'&%24filter=priceType%20eq%20'Reservation'%20and%20contains(productName,'OpenAI')"],
   ],
@@ -107,10 +108,20 @@ await Promise.all((groups[group] ?? []).map(async ([title, url]) => {
     if (title === 'Public baseline') output.push(html);
     if (group === 'meters' && response.ok) {
       const parsed = JSON.parse(html) as { Items: Record<string, unknown>[]; NextPageLink?: string };
+      let link = parsed.NextPageLink;
+      if (title === 'GPT-family Azure product pages') for (let n = 1; link && n < 8; n++) {
+        const continuation = new URL(link);
+        if (continuation.origin !== 'https://prices.azure.com' || continuation.pathname !== '/api/retail/prices') break;
+        const next = await fetch(continuation, { signal: AbortSignal.timeout(12_000) });
+        if (!next.ok) break;
+        const page = await next.json() as typeof parsed;
+        parsed.Items.push(...page.Items);
+        link = page.NextPageLink;
+      }
       const keys = ['serviceName','productName','skuName','meterName','unitOfMeasure','tierMinimumUnits','type','reservationTerm'];
       const observed = [...new Set(parsed.Items.map(row => keys.map(key => row[key] ?? '').join(' | ')))];
-      output.push(`Returned ${parsed.Items.length} rows; has continuation ${!!parsed.NextPageLink}`,
-        ...observed.filter(row => !title.startsWith('GPT-') || /(?:gpt[- ]5(?:[ -]mini|[ -]nano|[ .-]2|[ .-]4)?)(?![0-9.a-z])/i.test(row)).slice(0,120));
+      output.push(`Returned ${parsed.Items.length} rows; has continuation ${!!link}`,
+        ...observed.filter(row => !title.startsWith('GPT-') || /(?:gpt[- ]*[56](?:[ -]mini|[ -]nano|[ .-]2|[ .-]4)?|[56][.]\d{1,2} (?:Inp|Outp|Cached))(?![0-9.a-z])/i.test(row)).slice(0,120));
     }
     if (title.includes('reservation tariff') && response.ok) {
       const rows = JSON.parse(html) as { Items: Record<string, unknown>[]; NextPageLink?: string };

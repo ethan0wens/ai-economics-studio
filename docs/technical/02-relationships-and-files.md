@@ -53,3 +53,7 @@ Save the file with a `.json` extension and select **Import existing** on Home. T
 ## Usage assistance in exported files
 
 Applying a Foundry preview updates the existing profile linked by `agent-uses-usage`. It replaces `executions`, `calls`, `input` and `output`. The identifiers, relationships and specialist quantities remain intact. A Copilot preview updates `credits` or `creditBreakdown` for the agent's active method. JSON and PDF represent applied inputs. The temporary business inputs and measured, customer forecast or illustrative label can be recorded in the existing environment description when needed. See [saving and reopening](#/documentation/save-and-reopen?section=save).
+
+## Value plans in exported files
+
+Accepted `valuePlan` assumptions round-trip with the environment. Fictional labels are preserved and previously entered sources are labelled imported. Legacy files without a plan remain valid. Temporary workload, price and adoption comparisons are excluded from JSON even when an illustration is explicitly included in a Full Report.

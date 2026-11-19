@@ -60,3 +60,13 @@ For data interfaces and round-trip behaviour, see [relationships, drafts and ver
 ## Guided usage preview
 
 **Estimate usage** still edits the existing usage profile or Copilot agent. Open **Help me estimate usage** to preview an optional Foundry workload or a sum of declared Copilot Credits. Preview and cancel change only component state. Apply calls the same validated environment update as direct entry. The usage profile needs to belong to one agent. Copy a shared profile first. Provisioned pricing continues to use deployment capacity and billable hours. See [quantity derivation](03-ledger-methodology.md#assisted-usage-and-sensitivity).
+
+## Cost and value views
+
+**Cost & Value Analysis** opens on Costs, with known subtotals, unresolved charges, cost drivers and the accepted ledger. **Explore changes** compares hypothetical workload, price and adoption using a copy of the environment, the same applied catalogue and the same valuation time. **Potential value** updates the optional value plan only when the user accepts it. Accepting that plan leaves usage and the accepted ledger unchanged. See [optional value estimates](03-ledger-methodology.md#optional-value-estimates).
+
+## Review and export boundaries
+
+**Environment Review** opens from the sidebar at `#/review` or from **Review your design**. Its views are Overview, Architecture (`#/review/architecture`), Technical fit (`#/review/technical`) and Controls (`#/review/controls`). The old `#/architecture` and `#/governance` links still work. Architecture shows the logical diagram and relationship register. Technical fit groups compatibility and licence findings. Controls shows declared status and advisory findings. A finding can focus an existing editor input or cost line and let the user return to the same review view. Review is optional.
+
+Both PDFs take AI spend from the accepted ledger and show accepted [potential value](../../src/report-value.ts) separately. Full Report adds detailed pricing and evidence provenance and can include an explicitly selected illustrative adoption comparison. That inclusion applies to the current environment and catalogue and expires when either changes. JSON preserves accepted inputs and a pricing snapshot. Temporary comparisons are excluded.

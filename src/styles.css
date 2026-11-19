@@ -437,3 +437,5 @@ dialog::backdrop{background:#17243b70}dialog p{margin:8px 0 12px}dialog ul{list-
 .scenario-choice { margin-block: 14px; max-width: 24rem; }
 .assumption-note { display: block; font-weight: 400; color: var(--muted); }
 .adoption-form { grid-template-columns: minmax(0, 1fr); }
+.mode-control a[aria-current=page] { background: #e8efff; border-color: #d9e4ff; color: #194bbd; }
+.review-disclosure { margin-block: 9px; overflow-wrap: anywhere; }

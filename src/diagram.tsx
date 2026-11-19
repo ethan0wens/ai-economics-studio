@@ -15,7 +15,7 @@ export default function Architecture({ env, result, select }: { env: Environment
         if (svg.current) download(new XMLSerializer().serializeToString(svg.current), 'logical-architecture.svg', 'image/svg+xml');
       }}><ArrowDownToLine size={16} /> Export SVG</button></div>
     {!graph.nodes.length ? <div className="empty"><span className="empty-icon"><GitFork size={24} /></span><h3>No architecture to show yet</h3><p>Add and link items in Environment Builder to draw your planned architecture.</p></div> :
-      <div className="diagram-frame">
+      <div className="diagram-frame" tabIndex={0} role="region" aria-label="Scrollable logical diagram">
         <svg ref={svg} width={graph.width} height={graph.height} viewBox={`0 0 ${graph.width} ${graph.height}`}
           xmlns="http://www.w3.org/2000/svg" aria-label="Logical architecture graph" fontFamily="system-ui" role="group">
           <title>AI Economics Studio logical architecture</title>
@@ -33,7 +33,7 @@ export default function Architecture({ env, result, select }: { env: Environment
         </svg>
       </div>}
     <p className="muted">Conceptual model for planning. Deployment topology, traffic and security boundaries are outside its scope.</p>
-    {graph.nodes.length > 0 && <div className="table-wrap"><table><caption>Architecture objects and outgoing links</caption><thead><tr><th>Object</th><th>Type</th><th>Status</th><th>Current cost</th><th>Declared dependencies</th></tr></thead>
+    {graph.nodes.length > 0 && <div className="table-wrap" tabIndex={0} role="region" aria-label="Scrollable component and relationship register"><table><caption>Architecture objects and outgoing links</caption><thead><tr><th>Object</th><th>Type</th><th>Status</th><th>Current cost</th><th>Declared dependencies</th></tr></thead>
       <tbody>{env.objects.map(item => <tr key={item.id}><td><button className="link-button" onClick={() => select(item.id)}>{item.name}</button></td><td>{kindLabels[item.kind]}</td>
         <td>{graph.nodes.find(node => node.id === item.id)?.compatibility.join(' · ') ||
           (graph.nodes.find(node => node.id === item.id)?.incomplete ? 'Needs review' : 'Configured')}</td>

@@ -60,7 +60,8 @@ test('draft creation, shared costing, keyboard graph, reconciled report and JSON
   await expect(page.locator('.compare-grid > div').last()).toContainText('£840.00');
 
   await page.getByRole('link', { name: 'Reports & Export' }).click();
-  await page.getByRole('link', { name: 'Architecture', exact: true }).click();
+  await page.getByRole('link', { name: 'Review your design', exact: true }).click();
+  await page.getByRole('navigation', { name: 'Environment review views' }).getByRole('link', { name: 'Architecture', exact: true }).click();
   const node = page.getByRole('button', { name: 'Inspect Fictional capacity' });
   await expect(node).toBeVisible();
   await node.focus();

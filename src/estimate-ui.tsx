@@ -3,6 +3,8 @@ import Decimal from 'decimal.js';
 import { ArrowRight, CircleHelp } from 'lucide-react';
 import type { Catalogue } from './catalogue';
 import type { Environment, StudioObject } from './domain';
+import type { TechnicalFinding } from './compatibility';
+import { routeHref } from './navigation';
 import { fieldHelp, type FieldId } from './field-help';
 import { missingInputs } from './inspector-status';
 import { categories, formatMoney, summarize, type Ledger } from './ledger';
@@ -72,11 +74,18 @@ const techFields: Record<string, FieldId> = {
   'Foundry agent model': 'agentSetup', 'External prompt model': 'promptEndpoint', 'Azure AI Search integration': 'resourceIntegration',
   'Azure AI Search resource availability': 'deploymentRegion', 'Supporting resource configuration': 'deploymentRegion',
 };
-function licensingTarget(item: StudioObject, title: string): EditTarget {
+export function licensingTarget(item: StudioObject, title: string): EditTarget {
   if (item.kind === 'agent') return { id: item.id, field: 'allowanceExpiry', section: 'Usage' };
   if (title === 'Contract replacement') return { id: item.id, field: 'replacementDate', section: 'Dependencies' };
   if (title === 'Seat overlap' || title === 'Potential duplicate seats') return { id: item.id, field: title === 'Seat overlap' ? 'seats' : 'seatScope' };
   return { id: item.id, field: 'relationship', section: 'Dependencies' };
+}
+
+export function technicalTarget(item: Pick<TechnicalFinding, 'id' | 'title'>): EditTarget {
+  const field = techFields[item.title];
+  return { id: item.id, field,
+    section: field === 'resourceIntegration' ? 'Dependencies'
+      : field && (usageFields.includes(field) || ['promptEndpoint', 'peakInput'].includes(field)) ? 'Usage' : 'Configuration' };
 }
 
 export function readiness(env: Environment, result: Ledger) {
@@ -113,12 +122,11 @@ export function readiness(env: Environment, result: Ledger) {
     if (item.status === 'compatible') continue;
     const object = objects.get(item.id);
     if (!object) continue;
-    const field = techFields[item.title];
+    const target = technicalTarget(item);
+    const field = target.field;
     if (missing.some(row => row.target.id === item.id && (row.target.field === field ||
       item.title === 'Agent platform' || item.title === 'Foundry agent model' && row.target.field === 'linkedDeployment'))) continue;
     const status = item.status === 'incompatible' ? 'Verified incompatible' : item.status === 'conditional' ? 'Conditional' : 'Unverified';
-    const target: EditTarget = { id: item.id, field,
-      section: field === 'resourceIntegration' ? 'Dependencies' : field && (usageFields.includes(field) || ['promptEndpoint', 'peakInput'].includes(field)) ? 'Usage' : 'Configuration' };
     (item.status === 'incompatible' ? blockers : advice).push({ key: `${item.id}:${item.title}:${item.related ?? ''}`, name: object.name,
       title: item.title, status, impact: 'advisory', detail: item.detail, source: item.source, date: item.verifiedOn, target });
   }
@@ -155,8 +163,7 @@ export function EstimateReadiness({ env, result, edit }: { env: Environment; res
       : <p className="muted">{result.lines.length ? 'All entered billable costs are resolved. Check any evidence that still needs confirming below.' : 'Add a workload or a billable service to review its costs.'}</p>}
     {tasks.length > 3 && <button className="link-button" aria-expanded={expanded} onClick={() => setExpanded(!expanded)}>
       {expanded ? 'Show fewer actions' : `View all ${tasks.length} actions`}</button>}
-    {!!advice.length && <details className="guided-disclosure"><summary>Evidence to confirm ({advice.length})</summary>
-      <p className="muted">These conditions are separate from whether an amount has been priced.</p>{render(advice)}</details>}
+    {!!advice.length && <a href={routeHref('review', 'technical')}>Review technical and licensing evidence</a>}
   </section>;
 }
 

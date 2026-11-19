@@ -474,7 +474,7 @@ export function governance(env: Environment) {
     const statuses = new Set(policies.map(policy => policy.kind === 'security-policy' ? policy.status : undefined));
     const status = statuses.size > 1 ? 'Conflicting declarations' : statuses.has('implemented') ? 'Modelled control' : statuses.has('planned')
       ? 'Planned' : statuses.has('absent') ? 'Requires validation' : 'Unknown';
-    return { ...rule, id: agent.id, object: agent.name, status, version: '1.0.0', confidence: 'Declared inputs only' };
+    return { ...rule, id: agent.id, object: agent.name, status, declarationIds: policies.map(policy => policy.id), version: '1.0.0', confidence: 'Declared inputs only' };
   }));
 }
 

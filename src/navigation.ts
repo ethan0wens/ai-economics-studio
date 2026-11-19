@@ -1,7 +1,7 @@
 export const destinations = {
   home: 'Home', builder: 'Environment Builder', costs: 'Cost & Value Analysis',
   reports: 'Reports & Export', documentation: 'Documentation', catalogue: 'Pricing Catalogue',
-  examples: 'Example environments', architecture: 'Architecture', governance: 'Security & Governance',
+  examples: 'Example environments', review: 'Environment Review', architecture: 'Architecture', governance: 'Security & Governance',
 } as const;
 export type Destination = keyof typeof destinations;
 export type Route = { page: Destination; item?: string; technicalArticle?: string; section?: string };

@@ -11,19 +11,19 @@ import { hasUnknownPrice, missingInputs } from './inspector-status';
 import { download, exportName } from './download';
 import { CapacityComparisons } from './capacity-ui';
 import { LicenceEstate } from './validation-ui';
-import { currentRoute, destinations, routeHref, type Destination } from './navigation';
+import { currentRoute, destinations, routeHref, type Destination, type Route } from './navigation';
 import { Home, Modal, StudioNavigation } from './workspace-ui';
 import { GuidedBuilder } from './guided-ui';
 import type { Intent } from './guided-state';
 import { CostDrivers, EstimateReadiness, EstimateSummary, type EditTarget } from './estimate-ui';
 import { ExploreChanges } from './scenario-ui';
 import { PotentialValue } from './value-ui';
+import { EnvironmentReview, type ReviewView } from './environment-review';
 import { openExample } from './examples';
 import { LearnMore } from './learn-more';
 
 import type { ReportFormat } from './report';
 
-const Architecture = lazy(() => import('./diagram'));
 const Examples = lazy(() => import('./examples-ui').then(module => ({ default: module.Examples })));
 const Documentation = lazy(() => import('./documentation-ui').then(module => ({ default: module.Documentation })));
 const icons = {
@@ -34,6 +34,7 @@ const kinds = Object.keys(kindLabels) as Kind[];
 const publicViews = new Set<Destination>(['home', 'documentation', 'examples', 'catalogue']);
 type Opening = { env: Environment; kind: 'new' | 'import' | 'example' | 'copy' };
 type View = 'guided' | 'advanced';
+const reviewPages = new Set<Destination>(['review', 'architecture', 'governance']);
 
 function Comparison({ env, result }: { env: Environment; result: Ledger }) {
   return <div className="compare-grid">{Object.entries(result.summary).map(([key, summary]) => <div key={key}>
@@ -116,7 +117,7 @@ export default function App() {
   const [selected, setSelected] = useState<string>();
   const [generated, setGenerated] = useState<ReadonlySet<string>>(() => new Set());
   const [target, setTarget] = useState<EditTarget>();
-  const [returnView, setReturnView] = useState<{ page: Destination; mode: View; step: number }>();
+  const [returnView, setReturnView] = useState<{ page: Destination; item?: string; mode: View; step: number }>();
   const [modal, setModal] = useState<'add' | 'delete' | 'settings' | null>(null);
   const [opening, setOpening] = useState<Opening>();
   const [catalogue, setCatalogue] = useState(emptyCatalogue);
@@ -132,7 +133,7 @@ export default function App() {
   }, []);
   const imported = useRef<HTMLInputElement>(null);
   const main = useRef<HTMLElement>(null);
-  const workspaceRoute = useRef<Destination>('builder');
+  const workspaceRoute = useRef<Pick<Route, 'page' | 'item'>>({ page: 'builder' });
   const navigationStarted = useRef(false);
   const contextField = useRef<Pick<EditTarget, 'field' | 'line' | 'section' | 'level'> | undefined>(undefined);
   const restoreContext = useRef(false);
@@ -180,7 +181,7 @@ export default function App() {
   useEffect(() => {
     const from = previousPage.current;
     previousPage.current = route.page;
-    if (!publicViews.has(route.page)) workspaceRoute.current = route.page;
+    if (!publicViews.has(route.page)) workspaceRoute.current = { page: route.page, item: route.item };
     if (!navigationStarted.current) return;
     if (!restoreContext.current && target && ((route.page === 'builder' && !target.line) || (route.page === 'costs' && target.line))) return;
     if (route.section && route.page === 'documentation') return;
@@ -230,14 +231,15 @@ export default function App() {
   function backFromDocumentation() {
     restoreContext.current = true;
     const context = contextField.current;
-    if (workspaceRoute.current === 'builder' && mode === 'advanced' && selected && context?.section) {
+    if (workspaceRoute.current.page === 'builder' && mode === 'advanced' && selected && context?.section) {
       setTarget({ id: selected, field: context.field, section: context.section, level: context.level });
     }
-    navigate(workspaceRoute.current);
+    navigate(workspaceRoute.current.page, workspaceRoute.current.item);
   }
 
-  function navigate(page: Destination) {
-    if (window.location.hash !== routeHref(page)) window.location.hash = routeHref(page);
+  function navigate(page: Destination, item?: string) {
+    const next = routeHref(page, item);
+    if (window.location.hash !== next) window.location.hash = next;
   }
   function update(value: Environment) {
     const checked = environmentSchema.safeParse({ ...value, updatedAt: new Date().toISOString() });
@@ -251,7 +253,7 @@ export default function App() {
     setSelected(id); setMode('advanced'); navigate('builder');
   }
   function edit(target: EditTarget) {
-    setReturnView({ page: route.page, step, mode });
+    setReturnView({ page: route.page, item: route.item, step, mode });
     setTarget({ ...target });
     if (target.line) { setCostView('costs'); navigate('costs'); }
     else { setSelected(target.id); setMode('advanced'); navigate('builder'); }
@@ -260,7 +262,7 @@ export default function App() {
     if (!returnView) return;
     const returnTo = returnView;
     setTarget(undefined); setReturnView(undefined); setMode(returnTo.mode); setStep(returnTo.step);
-    navigate(returnTo.page);
+    navigate(returnTo.page, returnTo.item);
     requestAnimationFrame(() => document.getElementById('readiness-title')?.focus());
   }
   function add(kind: Kind) {
@@ -347,13 +349,15 @@ export default function App() {
     }}>Apply catalogue</button>}
     {snapshotNote}
   </section>;
+  const reviewView: ReviewView = route.page === 'architecture' || route.item === 'architecture' ? 'architecture'
+    : route.page === 'governance' || route.item === 'controls' ? 'controls' : route.item === 'technical' ? 'technical' : 'overview';
   const workspaceHeading = route.page !== 'home' && !publicViews.has(route.page);
   const editActions = <div className="builder-tools">
     <div className="mode-control" role="group" aria-label="Builder mode">
       <button className="button" aria-pressed={mode === 'guided'} onClick={() => { setMode('guided'); setTarget(undefined); }}>Guided</button>
       <button className="button" aria-pressed={mode === 'advanced'} onClick={() => { setMode('advanced'); setTarget(undefined); }}>Advanced</button>
     </div>
-    {mode === 'advanced' && <div className="actions"><a href={routeHref('architecture')}>Architecture</a><a href={routeHref('governance')}>Security & Governance</a></div>}
+    {mode === 'advanced' && <div className="actions"><a href={routeHref('review')}>Review your design</a></div>}
   </div>;
   return <div className="studio ux-studio">
     <a className="skip" href="#main" onClick={event => { event.preventDefault(); main.current?.focus(); }}>Skip to content</a>
@@ -364,15 +368,15 @@ export default function App() {
         <span className={`save-state ${dirty ? 'dirty' : ''}`}>{status}</span>
       </header>}
       <main id="main" ref={main} tabIndex={-1} className={route.page === 'home' ? 'home-main' : undefined}>
-        {workspaceHeading && <header className="page-heading"><div><h1 tabIndex={-1}>{destinations[route.page]}</h1>
+        {workspaceHeading && <header className="page-heading"><div><h1 tabIndex={-1}>{reviewPages.has(route.page) ? destinations.review : destinations[route.page]}</h1>
           {route.page === 'costs' && <p>See your estimated costs, review what needs confirming and check how each charge was calculated.</p>}
           {route.page === 'builder' && <p>Build your AI solution and estimate the cost of agents, usage and supporting services.</p>}</div>
           {route.page === 'builder' && workspace && editActions}</header>}
         {route.page !== 'home' && error && <div role="alert" className="notice error">{error}
           <button className="button" onClick={() => setError('')}>Dismiss</button></div>}
-        {returnView && (route.page === 'costs' || route.page === 'builder') && <button className="link-button return-link" onClick={returnToReview}>Back to estimate checks</button>}
+        {returnView && (route.page === 'costs' || route.page === 'builder') && <button className="link-button return-link" onClick={returnToReview}>{reviewPages.has(returnView.page) ? 'Back to Environment Review' : 'Back to estimate checks'}</button>}
         {route.page === 'home' && <Home env={workspace} status={status} error={error} create={name => requestOpen({ kind: 'new', env: { ...blankEnvironment(), name } })}
-          importFile={() => imported.current?.click()} resume={() => navigate(workspaceRoute.current)} />}
+          importFile={() => imported.current?.click()} resume={() => navigate(workspaceRoute.current.page, workspaceRoute.current.item)} />}
         {workspaceHeading && !workspace && <section className="panel padded empty workspace-empty"><h2>Open an environment</h2>
           <p>Start a new environment or reopen one you previously exported as JSON.</p><div className="actions">
             <a className="button primary" href={routeHref('home')}>Create environment</a>
@@ -386,6 +390,7 @@ export default function App() {
                 <a className="button primary" href={routeHref('costs')}>Open Cost & Value Analysis <ArrowRight size={17} aria-hidden="true" /></a>
                 <button className="button" disabled={exporting || !env.objects.length} onClick={exportPdf}>{exporting ? 'Generating PDF…' : 'Generate PDF'}</button>
                 <a className="button" href={routeHref('reports')}>Reports & Export</a></div>
+                <a href={routeHref('review')}>Review your design</a>
             </div>} /> : <Inventory {...{ env, catalogue, result, update, selected, target }} select={id => selectObject(id)}
               clear={() => { setSelected(undefined); setTarget(undefined); }} add={() => setModal('add')} remove={() => setModal('delete')} />}
         </>}
@@ -414,15 +419,8 @@ export default function App() {
           {sourcePanel}</>}
           </div>
         </div>}
-        {workspace && route.page === 'architecture' && <Suspense fallback={<p role="status">Preparing diagram…</p>}>
-          <Architecture env={env} result={result} select={id => selectObject(id)} /></Suspense>}
-        {workspace && route.page === 'governance' && <section className="panel padded"><h2>Advisory assessment</h2>
-          <p className="muted">{advice.length} advisory checks based on the controls you entered. Ruleset 1.0.0.</p>
-          {!advice.length && <a href={routeHref('builder')}>Add an agent to assess controls</a>}
-          {advice.map(item => <article className="finding" key={item.id + item.control}><div><button className="link-button" onClick={() => selectObject(item.id)}>{item.object}</button>
-            <h3>{item.title}</h3><p>{item.why}</p><a href={item.source} target="_blank" rel="noreferrer" aria-description="External Microsoft evidence">Microsoft guidance</a></div>
-            <span className="status warning">{item.status} · {item.critical ? 'High priority' : 'Advisory'}</span></article>)}
-        </section>}
+        {workspace && reviewPages.has(route.page) && <EnvironmentReview {...{ env, result, advice, edit }} view={reviewView}
+          select={id => edit({ id })} openAdvanced={() => { setMode('advanced'); navigate('builder'); }} />}
         {workspace && route.page === 'reports' && <div className="page-stack">
           <EstimateSummary {...{ env, result, catalogue }} />
           {result.summary.current.incomplete > 0 && <a href={routeHref('costs')}>Review unresolved charges before sharing</a>}
@@ -442,7 +440,7 @@ export default function App() {
               </fieldset>
               <div className="actions"><button className="button primary" disabled={exporting || !env.objects.length} onClick={exportPdf}>
                 <ArrowDownToLine size={17} aria-hidden="true" />{exporting ? 'Generating PDF…' : 'Generate PDF'}</button>
-                <a href={routeHref('architecture')}>Architecture</a></div>
+                <a href={routeHref('review')}>Review your design</a></div>
               {!env.objects.length && <p className="muted">Add an agent or billable item to generate a report.</p>}
             </section>
             <section className="panel padded report-options"><h2>Editable environment file</h2>

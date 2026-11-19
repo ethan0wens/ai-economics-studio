@@ -2,9 +2,10 @@ import { createHash } from 'node:crypto';
 import { readFile } from 'node:fs/promises';
 import { expect, test, type Page } from '@playwright/test';
 import { enterpriseInventory, referenceAt, scenarios } from '../../fixtures/enterprise-scenarios';
+import type { Environment } from '../../src/domain';
 import type { ValuePlan } from '../../src/value';
 
-async function openSample(page: Page, index = 0, valuePlan?: ValuePlan) {
+async function openSample(page: Page, index = 0, valuePlan?: ValuePlan, withEnvironment: (env: Environment) => Environment = env => env) {
   const sample = scenarios[index];
   const payload = JSON.stringify({ schemaVersion: '1.0.0', records: sample.records, inventory: enterpriseInventory });
   const catalogueId = createHash('sha256').update(payload).digest('hex');
@@ -14,7 +15,7 @@ async function openSample(page: Page, index = 0, valuePlan?: ValuePlan) {
   }));
   await page.route(`**/pricing/catalogue-${catalogueId}.json`, route => route.fulfill({ body: payload, contentType: 'application/json' }));
   await page.goto('/');
-  await page.locator('input[type=file]').setInputFiles({ name: 'fictional-value.json', mimeType: 'application/json', buffer: Buffer.from(JSON.stringify({ ...sample.env, valuePlan })) });
+  await page.locator('input[type=file]').setInputFiles({ name: 'fictional-value.json', mimeType: 'application/json', buffer: Buffer.from(JSON.stringify(withEnvironment({ ...sample.env, valuePlan }))) });
   await expect(page.getByRole('heading', { name: 'Environment Builder' })).toBeVisible();
 }
 async function navigate(page: Page, name: string) {
@@ -106,4 +107,44 @@ test('adoption changes productivity and only projects costs after an explicit wo
   expect(json.valuePlan).toEqual(accepted);
   expect(json.objects.find((object: { id: string }) => object.id === 'Enterprise demand').executions).toBe(20_000);
   expect(json.sourceSnapshot.currentKnown).toBe('1893.80');
+});
+
+test('Environment Review groups evidence and declarations and opens the existing focused editor', async ({ page }) => {
+  await openSample(page, 4, undefined, env => ({
+    ...env,
+    objects: [...env.objects.map(object => object.kind === 'agent' && object.id === 'Audio pilot' ?
+      { ...object, autonomy: 'read-only' as const } : object),
+    { id: 'fictional-policy', name: 'Fictional identity policy', kind: 'security-policy', control: 'identity', status: 'implemented' }],
+    relationships: [...env.relationships, { type: 'policy-applies-to-environment', from: 'fictional-policy', to: env.id }],
+  }));
+  await page.getByRole('link', { name: 'Review your design', exact: true }).click();
+  await expect(page.getByRole('heading', { name: 'Environment Review' })).toBeVisible();
+  await expect(page.getByText('1 policy declarations')).toBeVisible();
+  const primary = page.getByRole('navigation', { name: 'Studio navigation' });
+  await expect(primary.getByRole('link', { name: 'Environment Review' })).toHaveCount(0);
+  const views = page.getByRole('navigation', { name: 'Environment review views' });
+  await views.getByRole('link', { name: 'Technical fit' }).press('Enter');
+  await page.locator('summary').filter({ hasText: 'Incompatible audio output' }).click();
+  await expect(page.getByText('Technical · Verified incompatible', { exact: true })).toBeVisible();
+  await page.getByRole('button', { name: 'Review model output modality for Incompatible audio output' }).click();
+  await expect(page.getByLabel('Required output modality', { exact: true })).toBeFocused();
+  await page.getByRole('button', { name: 'Back to Environment Review' }).click();
+  await expect(views.getByRole('link', { name: 'Technical fit' })).toHaveAttribute('aria-current', 'page');
+
+  await views.getByRole('link', { name: 'Controls' }).click();
+  await page.getByText('Identity and access', { exact: true }).click();
+  await expect(page.getByText('Declared implemented', { exact: true }).first()).toBeVisible();
+  await page.getByRole('button', { name: 'Review Fictional identity policy' }).first().click();
+  await expect(page.getByLabel('Declared status', { exact: true })).toBeFocused();
+  await page.getByRole('button', { name: 'Back to Environment Review' }).click();
+  await page.getByText('Human approval', { exact: true }).click();
+  await expect(page.getByText('Not assessed', { exact: true })).toBeVisible();
+  await expect(page.getByText('Unknown', { exact: true }).first()).toBeVisible();
+
+  await page.evaluate(() => { location.hash = '#/architecture'; });
+  await expect(page.getByRole('table', { name: 'Architecture objects and outgoing links' })).toBeVisible();
+  const svg = await download(page, 'Export SVG');
+  expect(svg.toString()).toContain('AI Economics Studio logical architecture');
+  await page.evaluate(() => { location.hash = '#/governance'; });
+  await expect(views.getByRole('link', { name: 'Controls' })).toHaveAttribute('aria-current', 'page');
 });

@@ -32,7 +32,8 @@ for (const item of scenarios) {
     await expect(page.getByRole('heading', { name: 'Improve your estimate' })).toBeVisible();
     await expect(page.locator('.metric').first()).toContainText(money(item.expected.monthly));
     await navigate(page, 'Reports & Export');
-    await page.getByRole('link', { name: 'Architecture', exact: true }).click();
+    await page.getByRole('link', { name: 'Review your design', exact: true }).click();
+    await page.getByRole('navigation', { name: 'Environment review views' }).getByRole('link', { name: 'Architecture', exact: true }).click();
     await expect(page.getByRole('table', { name: 'Architecture objects and outgoing links' })).toBeVisible();
     if (item.expected.missing) await expect(page.getByRole('cell', { name: /Verified incompatible/ })).toBeVisible();
     await navigate(page, 'Reports & Export');
@@ -131,7 +132,8 @@ test('provisioned reservation and PAYG comparison reconcile in the builder, arch
   await expect(page.getByRole('heading', { name: 'Provisioned and PAYG costs' })).toBeVisible();
   await expect(page.getByText('£5,400.00 provisioned · £3.77 PAYG retail')).toBeVisible();
   await navigate(page, 'Reports & Export');
-  await page.getByRole('link', { name: 'Architecture', exact: true }).click();
+  await page.getByRole('link', { name: 'Review your design', exact: true }).click();
+  await page.getByRole('navigation', { name: 'Environment review views' }).getByRole('link', { name: 'Architecture', exact: true }).click();
   await expect(page.getByRole('cell', { name: /PAYG comparison £3.77/ })).toBeVisible();
   await navigate(page, 'Reports & Export');
   const json = JSON.parse((await exported(page, 'Export JSON')).toString());

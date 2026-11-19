@@ -1,5 +1,6 @@
 import { blankEnvironment, cloneEnvironment, environmentSchema, type Edge, type Environment, type StudioObject } from './domain';
 import { offeringMeter, offerings } from './offerings';
+import type { ValuePlan } from './value';
 
 const foundry = (id: string, name: string): StudioObject => ({ id, kind: 'agent', name, platform: 'foundry-agent-service', modelSource: 'deployment-ref' });
 const copilot = (name: string, credits: number): StudioObject => ({ id: 'agent', kind: 'agent', name, platform: 'copilot-studio',
@@ -15,7 +16,7 @@ const standard: StudioObject = {
 };
 
 export type Example = { id: string; version: number; article: string; name: string; platform: string; purpose: string;
-  assumptions: string[]; explore: string[]; objects: StudioObject[]; links: Edge[]; discount?: boolean };
+  assumptions: string[]; explore: string[]; objects: StudioObject[]; links: Edge[]; discount?: boolean; valuePlan?: ValuePlan };
 export const examples: Example[] = [
   {
     id: 'foundry-assistant', version: 1, article: 'example-foundry-assistant', name: 'Basic Foundry Assistant', platform: 'Microsoft Foundry',
@@ -79,6 +80,32 @@ export const examples: Example[] = [
     links: [link('agent-uses-deployment', 'alpha', 'model'), link('agent-uses-deployment', 'beta', 'model'),
       link('agent-uses-usage', 'alpha', 'alpha-usage'), link('agent-uses-usage', 'beta', 'beta-usage')],
   },
+  {
+    id: 'ai-adoption-business-case', version: 1, article: 'example-ai-adoption-business-case', name: 'AI Adoption & Business Case',
+    platform: 'Microsoft Foundry',
+    purpose: 'Connect an AI cost estimate to adoption and potential productivity, then share the assumptions in a report.',
+    assumptions: [
+      'One Foundry assistant uses GPT-4.1 mini and a dedicated workload of 1,000 monthly executions, one request per execution, and 1,500 input and 300 output tokens per request.',
+      'The fictional value plan assumes 200 target users, 50% active adoption, 20 tasks per active user each month, 12 minutes saved per task, 60% realisation and £25 per productive hour.',
+      'Cashable savings and additional expenditure are undeclared. The planned identity control is a fictional declaration.',
+    ],
+    explore: [
+      'Compare the accepted AI estimate with potential productivity. Try 25% and 75% adoption before and after linking the workload.',
+      'Review the architecture, technical evidence and declaration. Generate both PDFs and reopen the editable JSON.',
+    ],
+    objects: [
+      foundry('agent', 'Internal support assistant'), standard, usage('usage', 1000, 1500),
+      { id: 'identity', kind: 'security-policy', name: 'Fictional identity control', control: 'identity', status: 'planned',
+        detail: 'Illustrative declaration. The project team plans to confirm the identity configuration before rollout.' },
+    ],
+    links: [link('agent-uses-deployment', 'agent', 'model'), link('agent-uses-usage', 'agent', 'usage'),
+      link('policy-applies-to-agent', 'identity', 'agent')],
+    valuePlan: { currency: 'GBP', assumptions: {
+      audience: { value: 200, source: 'fictional' }, adoption: { value: 50, source: 'fictional' },
+      tasks: { value: 20, source: 'fictional' }, minutes: { value: 12, source: 'fictional' },
+      realisation: { value: 60, source: 'fictional' }, hourlyValue: { value: 25, source: 'fictional' },
+    } },
+  },
 ];
 
 export function openExample(example: Example): Environment {
@@ -86,7 +113,7 @@ export function openExample(example: Example): Environment {
   const draft = environmentSchema.parse({
     ...blankEnvironment(), name: example.name,
     description: 'Example environment with fictional planning assumptions. Usage, customer spend and any agreement discounts are illustrative. Retail amounts use the applied Microsoft catalogue.',
-    objects: example.objects, relationships: example.links,
+    objects: example.objects, relationships: example.links, valuePlan: example.valuePlan,
     pricingOverrides: example.discount && meter ? [{ mode: 'discount', meter, objectId: 'search', currency: 'GBP', value: 10,
       reason: 'Fictional customer agreement for the example environment.' }] : [],
   });

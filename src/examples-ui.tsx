@@ -15,12 +15,13 @@ export function Examples({ item, catalogue, open }: { item?: string; catalogue: 
   }, [example, catalogue]);
   if (example && data) return <div className="example-preview">
     <a className="learn-more" href={routeHref('examples')}><ChevronLeft size={16} aria-hidden="true" /> All examples</a>
-    <header><h1 tabIndex={-1}>{example.name}</h1><p>{example.purpose}</p></header>
+    <header><h1 tabIndex={-1}>{example.name}</h1></header>
     <p className="status warning">Illustrative example. Usage is for demonstration.</p>
     <div className="actions"><button className="button primary" onClick={() => open(example)}>Open editable copy <ArrowRight size={16} aria-hidden="true" /></button>
       <a href={routeHref('documentation', example.article)}>Read the walkthrough</a></div>
     <EstimateSummary {...data} catalogue={catalogue} />
-    <div className="example-details panel padded"><h2>What’s included</h2><ul>{example.assumptions.map(item => <li key={item}>{item}</li>)}</ul>
+    <div className="example-details panel padded"><h2>What you’ll learn</h2><p>{example.purpose}</p>
+      <h2>What’s included</h2><ul>{example.assumptions.map(item => <li key={item}>{item}</li>)}</ul>
       <h2>What to try</h2><ol>{example.explore.map(item => <li key={item}>{item}</li>)}</ol></div>
   </div>;
   return <div>

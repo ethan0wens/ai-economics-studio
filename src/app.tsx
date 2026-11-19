@@ -21,6 +21,7 @@ import { PotentialValue } from './value-ui';
 import { EnvironmentReview, type ReviewView } from './environment-review';
 import { openExample } from './examples';
 import { LearnMore } from './learn-more';
+import { EconomicSignalMotif } from './brand';
 
 import type { ReportFormat } from './report';
 import type { AdoptionComparison } from './adoption';
@@ -374,6 +375,8 @@ export default function App() {
       <main id="main" ref={main} tabIndex={-1} className={route.page === 'home' ? 'home-main' : undefined}>
         {workspaceHeading && <header className="page-heading"><div><h1 tabIndex={-1}>{reviewPages.has(route.page) ? destinations.review : destinations[route.page]}</h1>
           {route.page === 'costs' && <p>See your estimated costs, review what needs confirming and check how each charge was calculated.</p>}
+          {reviewPages.has(route.page) && <p>Review the logical design, technical evidence and declared controls.</p>}
+          {route.page === 'reports' && <p>Share the accepted estimate or keep an editable copy of your environment.</p>}
           {route.page === 'builder' && <p>Build your AI solution and estimate the cost of agents, usage and supporting services.</p>}</div>
           {route.page === 'builder' && workspace && editActions}</header>}
         {route.page !== 'home' && error && <div role="alert" className="notice error">{error}
@@ -381,7 +384,7 @@ export default function App() {
         {returnView && (route.page === 'costs' || route.page === 'builder') && <button className="link-button return-link" onClick={returnToReview}>{reviewPages.has(returnView.page) ? 'Back to Environment Review' : 'Back to estimate checks'}</button>}
         {route.page === 'home' && <Home env={workspace} status={status} error={error} create={name => requestOpen({ kind: 'new', env: { ...blankEnvironment(), name } })}
           importFile={() => imported.current?.click()} resume={() => navigate(workspaceRoute.current.page, workspaceRoute.current.item)} />}
-        {workspaceHeading && !workspace && <section className="panel padded empty workspace-empty"><h2>Open an environment</h2>
+        {workspaceHeading && !workspace && <section className="panel padded empty workspace-empty"><EconomicSignalMotif size="section" /><h2>Open an environment</h2>
           <p>Start a new environment or reopen one you previously exported as JSON.</p><div className="actions">
             <a className="button primary" href={routeHref('home')}>Create environment</a>
             <button className="button" onClick={() => imported.current?.click()}>Import existing</button>
@@ -432,7 +435,7 @@ export default function App() {
           {result.summary.current.incomplete > 0 && <a href={routeHref('costs')}>Review unresolved charges before sharing</a>}
           <div className="overview-grid">
             <section className="panel padded report-options"><h2>Shareable PDF report</h2>
-              <p>Generate a PDF from the current estimate. Both formats show known costs and unresolved charges.</p>
+              <p>Both formats use the accepted estimate and show known costs, unresolved charges and the basis of the assessment.</p>
               <fieldset className="report-formats" disabled={exporting}>
                 <legend>Report format</legend>
                 <label>

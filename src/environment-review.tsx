@@ -5,6 +5,7 @@ import { routeHref } from './navigation';
 import type { governance, Ledger } from './ledger';
 import { findingStatus } from './validation-ui';
 import { LearnMore } from './learn-more';
+import { EconomicSignalMotif } from './brand';
 
 const Architecture = lazy(() => import('./diagram'));
 const tabs = { overview: 'Overview', architecture: 'Architecture', technical: 'Technical fit', controls: 'Controls' } as const;
@@ -98,15 +99,20 @@ export function EnvironmentReview({ env, result, advice, view, edit, select, ope
       {Object.entries(tabs).map(([id, text]) => <a className="button" key={id} href={routeHref('review', id === 'overview' ? undefined : id)}
         aria-current={view === id ? 'page' : undefined}>{text}</a>)}
     </nav>
-    {view === 'overview' && <section className="panel padded">
-      <h2>Review your design</h2>
-      <p className="muted">Explore the modelled design, compatibility evidence and declared controls.</p>
+    {view === 'overview' && <section className="panel review-overview">
+      <header className="review-intro">
+        <EconomicSignalMotif size="section" />
+        <h2>Review your design</h2>
+        <p className="muted">Explore the modelled design, compatibility evidence and declared controls.</p>
+      </header>
+      <div className="padded">
       <dl className="usage-values">
         <div><dt>Modelled design</dt><dd>{count('agent')} agents · {count('model-deployment')} deployments · {env.relationships.length} declared relationships</dd></div>
         <div><dt>Technical and licence checks</dt><dd>{fit ? `${fit} items to check` : assessed ? 'No outstanding findings in the assessed scope' : 'No applicable checks yet'}</dd></div>
         <div><dt>Declared controls</dt><dd>{policyCount ? `${policyCount} policy ${policyCount === 1 ? 'declaration' : 'declarations'}` : 'No policy declarations entered'}</dd></div>
       </dl>
       <LearnMore guide="environmentReview">How to read review findings</LearnMore>
+      </div>
     </section>}
     {view === 'architecture' && <Suspense fallback={<p role="status">Preparing diagram…</p>}><Architecture {...{ env, result, select }} /></Suspense>}
     {view === 'technical' && <TechnicalFit {...{ env, result, edit }} />}

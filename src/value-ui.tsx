@@ -24,7 +24,7 @@ function Results({ plan, result, currency }: { plan: ValuePlan; result: Ledger; 
   return <>
     <h2>Potential business value</h2>
     <p className="muted">These planning estimates use your accepted assumptions. Economic value represents released capacity. Cashable savings are a separate declaration.</p>
-    <dl className="usage-values">
+    <dl className="usage-values value-outcomes">
       <div><dt>Expected active users</dt><dd>{value.activeUsers === null ? 'Unknown' : formatQuantity(value.activeUsers)}</dd></div>
       <div><dt>Potential productivity capacity</dt><dd>{both(shownHours(value.grossHours.monthly), shownHours(value.grossHours.annual))}</dd></div>
       <div><dt>Realised capacity</dt><dd>{both(shownHours(value.realisedHours.monthly), shownHours(value.realisedHours.annual))}</dd></div>
@@ -33,7 +33,7 @@ function Results({ plan, result, currency }: { plan: ValuePlan; result: Ledger; 
     </dl>
     <LearnMore guide="valueAssumptions">How capacity and financial value differ</LearnMore>
     <h3>Investment context</h3>
-    <dl className="usage-values">
+    <dl className="usage-values value-investment">
       <div><dt>Modelled AI expenditure</dt><dd>{formatMoney(costKnown ? result.summary.current.known : null, currency)} monthly
         {result.summary.current.incomplete > 0 && ` · ${result.summary.current.incomplete} unresolved charges`}</dd></div>
       <div><dt>One-off implementation costs</dt><dd>{formatMoney(value.implementation, plan.currency)}</dd></div>
@@ -76,7 +76,7 @@ export function PotentialValue({ env, result, update }: { env: Environment; resu
     if (!parsed.success) { setError('Enter at least one valid assumption. Check percentages and other values before accepting.'); return; }
     if (update({ ...env, valuePlan: parsed.data })) close();
   }
-  return <section className="panel padded">
+  return <section className="panel padded analysis-panel analysis-value">
     {draft ? <form className="usage-assistance-form" onSubmit={event => { event.preventDefault(); if (step === steps.length - 1) finish(); else move(step + 1); }}>
       <p className="field-hint">Step {step + 1} of {steps.length}</p>
       <h2 tabIndex={-1} ref={heading}>{current.title}</h2>

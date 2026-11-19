@@ -179,7 +179,7 @@ export function CostDrivers({ env, result, edit }: { env: Environment; result: L
     return lines.length ? [{ category, ...summarize(lines, env.currency).current, resolved: lines.some(line => line.amounts.current !== null) }] : [];
   }).sort((a, b) => new Decimal(b.known).comparedTo(a.known));
   if (!rows.length) return null;
-  return <section className="panel padded"><h2>Where your money goes</h2><p className="muted">A breakdown of estimated monthly costs by service and category.</p>
+  return <section className="panel padded cost-breakdown"><h2>Where your money goes</h2><p className="muted">A breakdown of estimated monthly costs by service and category.</p>
     <dl className="cost-drivers">{rows.map(row => <div key={row.category}><dt>{categoryNames[row.category]}{row.incomplete > 0 && <small>{row.incomplete} unresolved</small>}</dt>
       <dd>{formatMoney(row.resolved ? row.known : null, env.currency)}</dd></div>)}</dl>
     {!!largest.length && <details className="guided-disclosure">

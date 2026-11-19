@@ -78,7 +78,7 @@ export function ExploreChanges({ env, result, catalogue, showValue, include }: {
   env: Environment; result: Ledger; catalogue: Catalogue; showValue: () => void; include: (comparison: AdoptionComparison) => void;
 }) {
   const [choice, setChoice] = useState('');
-  return <section className="panel padded">
+  return <section className="panel padded analysis-panel analysis-scenario">
     <h2>Explore changes</h2>
     <p className="muted">Compare one temporary change with your current estimate. Your accepted inputs and exports stay as they are.</p>
     <label className="plain-label scenario-choice">What would you like to change?

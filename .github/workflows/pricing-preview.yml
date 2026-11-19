@@ -49,13 +49,16 @@ jobs:
             exit 1
           fi
           npm run pricing:validate
-      - run: npm run typecheck && npm run lint && npm test && npm run build
-      - uses: ./.github/actions/setup-browser
-      - run: npm run test:e2e
       - name: Report verified preview catalogue
         run: |
           printf '### Read-only Azure retail preview\n\n' >> "$GITHUB_STEP_SUMMARY"
           jq -r '"Validated records: \(.records)\n\nChecked at: \(.lastCheckedAt)\n\nCatalogue ID: \(.catalogueId)"' public/pricing/manifest.json >> "$GITHUB_STEP_SUMMARY"
+          npx tsx scripts/pricing.ts coverage >> "$GITHUB_STEP_SUMMARY"
+      - run: npm run typecheck && npm run lint && npm test && npm run build
+      - uses: ./.github/actions/setup-browser
+      - run: npm run test:e2e
+        env:
+          STUDIO_CHECK_PUBLISHED_CATALOGUE: '1'
       - uses: actions/upload-artifact@v7
         with:
           name: verified-retail-preview

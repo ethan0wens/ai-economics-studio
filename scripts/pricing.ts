@@ -5,6 +5,7 @@ import { fileURLToPath, pathToFileURL } from 'node:url';
 import Decimal from 'decimal.js';
 import { z } from 'zod';
 import { catalogueFilename, catalogueSchema, manifestSchema, type Manifest, type RetailRecord } from '../src/catalogue';
+import { catalogueCoverage } from '../src/coverage';
 import { meterKey, version } from '../src/domain';
 import { curatedPrices } from './commercial-pricing';
 import { discoverPrices, inventoryPlan, retailOrigin as origin, retailPath as pathname } from './discovery';
@@ -174,7 +175,15 @@ if (process.argv[1] && pathToFileURL(process.argv[1]).href === import.meta.url) 
     else if (command === 'validate') {
       const { manifest } = await validate(directory);
       console.log(`Catalogue valid: ${manifest.records} verified records${manifest.catalogueId ? ` (${manifest.catalogueId})` : ' in unpublished bootstrap state'}.`);
-    } else throw new Error('Expected refresh or validate.');
+    } else if (command === 'coverage') {
+      const catalogue = await validate(directory);
+      const groups = catalogueCoverage(catalogue);
+      console.log('\n| Product family | Inventory | Fully priced | Partial | Unpriced | Unsupported |');
+      console.log('| --- | ---: | ---: | ---: | ---: | ---: |');
+      for (const group of groups) console.log(`| ${group.name} | ${group.discovered} | ${group.fully} | ${group.partial} | ${group.manual} | ${group.unsupported} |`);
+      const sums = (['discovered', 'fully', 'partial', 'manual', 'unsupported'] as const).map(key => groups.reduce((sum, group) => sum + group[key], 0));
+      console.log(`| **Total** | ${sums.join(' | ')} |\n`);
+    } else throw new Error('Expected refresh, validate or coverage.');
   } catch (error) {
     console.error(error instanceof Error ? error.message : error);
     process.exitCode = 1;

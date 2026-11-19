@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { ArrowUpRight, Link2, Trash2 } from 'lucide-react';
-import { edgeKinds, kindLabels, meterKey, objectSchema, type Edge, type EdgeType, type Environment, type StudioObject } from './domain';
+import { creditCategories, edgeKinds, kindLabels, meterKey, objectSchema, type CreditCategory, type Edge, type EdgeType, type Environment, type StudioObject } from './domain';
 import { resolveOffering, type Catalogue } from './catalogue';
 import { Field, NumberField, Select, Text } from './fields';
 import { compatibility } from './microsoft';
@@ -81,7 +81,8 @@ export function Inspector({ item, env, catalogue, result, update, select, remove
         else if (item.kind === 'agent') save({ ...item, offeringId: offer?.id, platformMeter: undefined });
       }} />
       {activeOffer && <div className="retail-preview">
-        <strong>Latest verified Microsoft retail</strong>
+        <strong>Microsoft retail pricing</strong>
+        {activeOffer.evidence && <p><a href={activeOffer.evidence} target="_blank" rel="noreferrer">Microsoft product guidance</a></p>}
         <ul>{activeOffer.components.map(part => {
           const rate = resolveOffering(catalogue.records, activeOffer, part.id, env.currency, new Date().toISOString());
           return <li key={part.id}>{part.label} · {rate
@@ -192,6 +193,7 @@ export function Inspector({ item, env, catalogue, result, update, select, remove
         {number('calls', 'calls', item.calls)}
         <div className="field-group"><h3>Tokens per request</h3>
           {number('input', 'input', item.input, undefined, 1)}
+          {detailed && number('cachedInput', 'cachedInput', item.cachedInput, undefined, 1)}
           {number('output', 'output', item.output, undefined, 1)}
         </div>
         {detailed && number('retries', 'retries', item.retries, 100, undefined, 'Enter only extra calls. If retries are already included in your base call count, leave this blank.')}
@@ -236,7 +238,23 @@ export function Inspector({ item, env, catalogue, result, update, select, remove
       {tab === 'Configuration' && <><Text field="objectName" value={item.name} onChange={value => change('name', value)} />{renderConfiguration()}</>}
       {tab === 'Usage' && (item.kind === 'agent' ? <>
         {item.platform === 'copilot-studio' && item.modelSource === 'platform-managed'
-          ? number('credits', 'credits', item.credits, undefined, undefined, 'Enter credits for the month. Review the plan-specific rate separately under Costs.')
+          ? <>
+            <Select field="creditMethod" value={item.creditMethod} options={[[ 'breakdown', 'Break down by activity' ]]}
+              empty="Enter a monthly total" onChange={value => change('creditMethod', value || undefined)} />
+            {item.creditMethod === 'breakdown'
+              ? <div className="field-group"><h3>Monthly billable Copilot Credits</h3>
+                <p className="field-hint">Enter measured or documented credits for each applicable activity. Include billable credits only and enter each activity once. The studio adds these amounts before applying linked monthly packs.</p>
+                {(Object.entries(creditCategories) as [CreditCategory, string][]).map(([category, label]) => <NumberField
+                  key={category} field="creditCategory" label={`${label} credits`} value={item.creditBreakdown?.[category]}
+                  onChange={value => {
+                    const next = { ...item.creditBreakdown, [category]: value };
+                    if (value === undefined) delete next[category];
+                    change('creditBreakdown', next);
+                  }} />)}
+                {missing.includes('creditCategory') && <p className="field-missing">Enter credits for at least one category to complete the estimate.</p>}
+              </div>
+              : number('credits', 'credits', item.credits, undefined, undefined, 'Enter billable credits for the month. Review the plan-specific rate separately under Costs.')}
+          </>
           : canUseProfile ? edgeSelect('agent-uses-usage')
           : <p className="field-hint">Choose a supported platform and model source in Configuration to see the applicable usage inputs.</p>}
         {detailed && canUseProfile && <p className="field-hint">Use a separate profile for each distinct workload. Connections do not multiply traffic. Provisioned deployments use profiles only for cost allocation.</p>}

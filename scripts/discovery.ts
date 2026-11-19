@@ -2,7 +2,7 @@ import Decimal from 'decimal.js';
 import { z } from 'zod';
 import type { RetailRecord } from '../src/catalogue';
 import { inventorySchema, offeringMeter, offerings, priceComponentSchema, type Component, type Offering } from '../src/offerings';
-import scope from '../catalogue/scope.json';
+import scope from '../catalogue/scope.json' with { type: 'json' };
 
 export const retailOrigin = 'https://prices.azure.com';
 export const retailPath = '/api/retail/prices';
@@ -10,6 +10,8 @@ const regionCode = z.string().regex(/^[a-z0-9-]+$/);
 const signature = z.strictObject({
   service: z.string().min(1), product: z.string().min(1), sku: z.string().min(1), meter: z.string().min(1),
   armSku: z.string().min(1).optional(),
+  tierStarts: z.array(z.number().nonnegative()).min(2).max(20)
+    .refine(starts => starts[0] === 0 && starts.slice(1).every((value, index) => value > starts[index])).optional(),
 });
 const scopeSchema = z.strictObject({
   currency: z.literal('GBP'), regions: z.array(regionCode).min(1),
@@ -37,10 +39,7 @@ export function inventoryPlan(definition: unknown = scope, retained: readonly Of
   const targets: Target[] = [];
   for (const template of parsed.templates) {
     const { id, regions, retained: aliases, components, ...details } = template;
-    const plain = components.map(({ azure, ...component }) => {
-      void azure;
-      return component;
-    });
+    const plain = components.map(({ id, label, unit, quantityPerUnit, meterId, sku }) => ({ id, label, unit, quantityPerUnit, meterId, sku }));
     if (new Set(regions).size !== regions.length || Object.keys(aliases ?? {}).some(region => !regions.includes(region))) {
       throw new Error(`Invalid region list for ${id}.`);
     }
@@ -55,7 +54,7 @@ export function inventoryPlan(definition: unknown = scope, retained: readonly Of
           existing.currency !== proposed.currency || (existing.kind === 'model-deployment' && proposed.kind === 'model-deployment' &&
           (existing.model.id !== proposed.model.id || existing.model.version !== proposed.model.version ||
             existing.model.sku !== proposed.model.sku || existing.model.mode !== proposed.model.mode)))) {
-        throw new Error(`Billing identity changed for retained configuration ${existing.id}: ${JSON.stringify([existing.kind, existing.family, existing.region, existing.currency, "model" in existing && existing.model])} ${JSON.stringify([proposed.kind, proposed.family, region, proposed.currency, "model" in proposed && proposed.model])}.`);
+        throw new Error(`Billing identity changed for retained configuration ${existing.id}.`);
       }
       const original = existing ? existing.components : [];
       const offer = existing ? {
@@ -122,14 +121,18 @@ async function scan(group: ProductGroup, readPage: ReadPage, checkedAt: string) 
     }
     const latest = Math.max(...eligible.map(row => row.date));
     const active = eligible.filter(row => row.date === latest);
-    const current = active[0];
-    if (!current || new Set(eligible.map(row => row.meterId)).size !== 1 ||
-        active.some(row => row.tierMinimumUnits !== 0 || row.retailPrice !== current.retailPrice) || current.retailPrice <= 0) return [];
+    if (new Set(eligible.map(row => row.meterId)).size !== 1) return [];
+    const listed = new Map(active.map(row => [row.tierMinimumUnits, row.retailPrice]));
+    const expected = signature.tierStarts ?? [0];
+    if (listed.size !== expected.length || expected.some(start => !listed.has(start)) ||
+        active.some(row => listed.get(row.tierMinimumUnits) !== row.retailPrice) || ![...listed.values()].some(price => price > 0)) return [];
+    const tiers = expected.map(from => ({ from, price: new Decimal(listed.get(from)!).toFixed() }));
     const rate: RetailRecord = {
-      ...meter, currency: offer.currency, product: signature.product, price: new Decimal(current.retailPrice).toFixed(),
-      effectiveAt: current.effectiveStartDate, source: first.href, verification: 'azure-retail-api',
+      ...meter, currency: offer.currency, product: signature.product, price: tiers[0].price,
+      tiers: signature.tierStarts ? tiers : undefined,
+      effectiveAt: active[0].effectiveStartDate, source: first.href, verification: 'azure-retail-api',
       offeringId: offer.id, component, meterName: signature.meter, publishedSku: signature.sku,
-      sourceMeterId: current.meterId, publishedUnit: meter.unit,
+      sourceMeterId: active[0].meterId, publishedUnit: meter.unit,
     };
     return [rate];
   });

@@ -1,5 +1,5 @@
 import type { Component } from '../src/offerings';
-import pinned from '../catalogue/pinned.json';
+import pinned from '../catalogue/pinned.json' with { type: 'json' };
 
 export type Mapping = {
   name: string; service: string; region: string; currency: string; product: string;

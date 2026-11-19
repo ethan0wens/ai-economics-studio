@@ -103,5 +103,26 @@
       "expiresAt": "2027-01-17T23:59:59Z",
       "terms": "UK per user per month paid yearly, excluding VAT. Prerequisite eligibility and overlapping licences are separate."
     }
+  },
+  {
+    "meterId": "m365-premium-copilot-gb/seats",
+    "sku": "m365-premium-copilot-gb",
+    "region": "gb",
+    "unit": "seat/month",
+    "quantityPerUnit": 1,
+    "priceType": "Consumption",
+    "currency": "GBP",
+    "price": "24.60",
+    "effectiveAt": "2026-11-18T00:00:00Z",
+    "source": "https://www.microsoft.com/en-gb/microsoft-365-copilot/pricing",
+    "product": "Microsoft 365 Business Premium with Copilot",
+    "verification": "microsoft-commercial",
+    "offeringId": "m365-premium-copilot-gb",
+    "component": "seats",
+    "review": {
+      "checkedAt": "2026-11-18T00:00:00Z",
+      "expiresAt": "2027-01-17T23:59:00Z",
+      "terms": "UK public bundle. Per user/month, paid yearly, annual subscription with auto-renewal, excluding VAT. Usage-based billing for select advanced AI features is separate."
+    }
   }
 ]

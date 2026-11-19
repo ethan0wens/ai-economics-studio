@@ -40,9 +40,13 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npm run pricing:refresh
+      - name: Report verified catalogue coverage
+        run: npx tsx scripts/pricing.ts coverage >> "$GITHUB_STEP_SUMMARY"
       - run: npm run typecheck && npm run lint && npm test && npm run build
       - uses: ./.github/actions/setup-browser
       - run: npm run test:e2e
+        env:
+          STUDIO_CHECK_PUBLISHED_CATALOGUE: '1'
       - name: Persist the validated catalogue
         run: |
           git config user.name 'github-actions[bot]'
@@ -58,7 +62,9 @@ jobs:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
       - name: Check field guidance and verified pricing on the live Worker
-        run: npm run test:e2e -- tests/e2e/field-help.spec.ts tests/e2e/retail-first.spec.ts
+        run: |
+          export STUDIO_EXPECTED_CATALOGUE_ID="$(jq -r .catalogueId public/pricing/manifest.json)"
+          npm run test:e2e -- tests/e2e/field-help.spec.ts tests/e2e/retail-first.spec.ts
         env:
           STUDIO_CHECK_PUBLISHED_CATALOGUE: '1'
           STUDIO_TEST_URL: https://ai-econmics-studio.ethan0wens.workers.dev

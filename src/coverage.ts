@@ -5,16 +5,21 @@ import { families, offerings, unresolved, type Family } from './offerings';
 export function catalogueCoverage(catalogue: Catalogue, at = new Date().toISOString()) {
   const records = catalogue.records.filter(record => isCurrentRate(record, at));
   return (Object.keys(families) as Family[]).map(family => {
-    const configurations = offerings.filter(offer => offer.family === family).map(offer => {
+    const configurations = (catalogue.inventory ?? offerings).filter(offer => offer.family === family).map(offer => {
       const components = offer.components.map(component => ({ ...component,
         rate: resolveOffering(records, offer, component.id, offer.currency, at),
       }));
       const found = components.filter(component => component.rate).length;
-      return { ...offer, components, status: found === components.length ? 'verified' : found ? 'partial' : 'manual' };
+      const status: 'unsupported' | 'verified' | 'partial' | 'manual' =
+        offer.selectable === false ? 'unsupported' : found === components.length ? 'verified' : found ? 'partial' : 'manual';
+      return { ...offer, components, status };
     });
     const gaps = unresolved.filter(item => item.family === family);
     const fully = configurations.filter(item => item.status === 'verified').length;
     const partial = configurations.filter(item => item.status === 'partial').length;
+    const manual = configurations.filter(item => item.status === 'manual').length;
+    const unsupported = configurations.filter(item => item.status === 'unsupported').length;
+    const supported = configurations.length - unsupported;
     const automated = configurations.filter(item => item.status === 'verified' && item.components.every(part => part.rate?.verification === 'azure-retail-api')).length;
     const curated = configurations.filter(item => item.status === 'verified' && item.components.every(part => part.rate?.verification === 'microsoft-commercial')).length;
     const checkedAt = configurations.flatMap(item => item.components.flatMap(part => {
@@ -22,10 +27,9 @@ export function catalogueCoverage(catalogue: Catalogue, at = new Date().toISOStr
       return date ? [date] : [];
     })).sort().at(-1);
     return {
-      family, name: families[family], configurations, gaps, supported: configurations.length, fully, partial,
-      manual: configurations.length - fully - partial, automated, curated, mixed: fully - automated - curated,
-      unsupported: gaps.filter(item => item.status === 'unsupported').length,
-      percent: configurations.length ? 100 * fully / configurations.length : null, checkedAt,
+      family, name: families[family], configurations, gaps, discovered: configurations.length, supported, fully, partial,
+      manual, automated, curated, mixed: fully - automated - curated, unsupported,
+      percent: supported ? 100 * fully / supported : null, checkedAt,
     };
   });
 }

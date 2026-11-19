@@ -1,6 +1,6 @@
 import Decimal from 'decimal.js';
 import { findRetail, resolveOffering, type RetailRecord } from './catalogue';
-import { meterKey, type Environment, type Meter, type Override, type StudioObject } from './domain';
+import { declaredCopilotCredits, meterKey, type Environment, type Meter, type Override, type StudioObject } from './domain';
 import { applicableOffering, copilotPack, offeringMeter, offerings, type Component, type Offering } from './offerings';
 import { compatibility, microsoft } from './microsoft';
 
@@ -105,6 +105,10 @@ export function ledger(env: Environment, records: RetailRecord[], at = new Date(
   function selection(object: StudioObject) {
     return applicableOffering(object, 'region' in object ? object.region ?? env.region : env.region, code, inventory);
   }
+  function copilotCredits(agent: Extract<StudioObject, { kind: 'agent' }>) {
+    const amounts = declaredCopilotCredits(agent);
+    return amounts.length ? Money.sum(...amounts) : undefined;
+  }
   const tariffScopes = new Map<string, number>();
   for (const object of env.objects) {
     if (object.kind !== 'supporting-resource') continue;
@@ -130,13 +134,15 @@ export function ledger(env: Environment, records: RetailRecord[], at = new Date(
   const creditAllocations = new Map<string, Decimal>();
   for (const [id, links] of [...poolLinks].sort(([a], [b]) => a.localeCompare(b))) {
     const agent = objects.get(id);
-    if (agent?.kind !== 'agent' || agent.platform !== 'copilot-studio' || agent.modelSource !== 'platform-managed' || agent.credits === undefined) continue;
+    if (agent?.kind !== 'agent' || agent.platform !== 'copilot-studio' || agent.modelSource !== 'platform-managed') continue;
+    const credits = copilotCredits(agent);
+    if (credits === undefined) continue;
     if (links.length !== 1) {
       note(id, 'Multiple credit packs are linked. Link one pooled resource per agent to allocate credits.');
       continue;
     }
     const pool = remaining.get(links[0])!;
-    const used = Money.min(pool, agent.credits);
+    const used = Money.min(pool, credits);
     creditAllocations.set(id, used);
     remaining.set(links[0], pool.minus(used));
   }
@@ -154,7 +160,7 @@ export function ledger(env: Environment, records: RetailRecord[], at = new Date(
           const included = creditAllocations.get(object.id) ?? zero();
           bill(object, 'Orchestration', 'Copilot Studio credits', {
             meter: (offer && offeringMeter(offer, 'credits')) ?? (object.platformMeter?.region === env.region ? object.platformMeter : undefined) ?? assumedMeter('copilot-credits', 'Copilot Studio', env.region, 'credit'),
-            quantity: assessment.status === 'verified-supported' && object.credits !== undefined ? new Money(object.credits).minus(included) : undefined,
+            quantity: assessment.status === 'verified-supported' ? copilotCredits(object)?.minus(included) : undefined,
             offer: assessment.status === 'verified-supported' ? offer : undefined, componentId: 'credits', includedCredits: included.gt(0) ? included : undefined,
             reason: assessment.status === 'verified-supported' ? undefined : assessment.reason,
           });
@@ -182,6 +188,13 @@ export function ledger(env: Environment, records: RetailRecord[], at = new Date(
           meter: modelMeter('input'),
           quantity: input, owner: model.id, offer, componentId: 'input',
         });
+        if (profile?.cachedInput) {
+          const cached = (offer && offeringMeter(offer, 'cached')) ?? assumedMeter(
+            `model-cached${model.modelVersion ? ':' + model.modelVersion : ''}`, sku, region, 'million cached input tokens', 1_000_000);
+          bill(object, 'Inference', 'Cached input tokens', {
+            meter: cached, quantity: calls?.times(profile.cachedInput), owner: model.id, offer, componentId: 'cached',
+          });
+        }
         bill(object, 'Inference', 'Output tokens', {
           meter: modelMeter('output'),
           quantity: profile?.output === undefined ? undefined : calls?.times(profile.output), owner: model.id, offer, componentId: 'output',
@@ -201,7 +214,7 @@ export function ledger(env: Environment, records: RetailRecord[], at = new Date(
             if (agent?.kind !== 'agent' || agent.platform !== 'foundry-agent-service' || agent.modelSource !== 'deployment-ref') return [];
             const usage = objects.get(outgoing(agent.id, 'agent-uses-usage')[0]?.to ?? '');
             if (usage?.kind === 'usage-profile' && usage.executions !== undefined && usage.calls !== undefined && usage.input !== undefined) {
-              shares.set(agent.id, new Money(usage.executions).times(usage.calls).times(usage.input).times(new Money(usage.retries ?? 0).div(100).plus(1)));
+              shares.set(agent.id, new Money(usage.executions).times(usage.calls).times(Money.sum(usage.input, usage.cachedInput ?? 0)).times(new Money(usage.retries ?? 0).div(100).plus(1)));
             }
             return [agent.id];
           });

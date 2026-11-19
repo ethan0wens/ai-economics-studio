@@ -1,7 +1,7 @@
 import { z } from 'zod';
 import type { Meter, StudioObject } from './domain';
-import retained from '../catalogue/retained.json';
-import gaps from '../catalogue/gaps.json';
+import retained from '../catalogue/retained.json' with { type: 'json' };
+import gaps from '../catalogue/gaps.json' with { type: 'json' };
 
 export const copilotPack = { offeringId: 'copilot-credit-pack-gb', credits: 25_000 };
 

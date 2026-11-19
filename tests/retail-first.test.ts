@@ -1,4 +1,5 @@
 import { describe, expect, it } from 'vitest';
+import { inventoryPlan } from '../scripts/discovery';
 import { emptyCatalogue, resolveOffering, sourceRecord, type RetailRecord } from '../src/catalogue';
 import { catalogueCoverage, environmentCompleteness } from '../src/coverage';
 import { blankEnvironment, importEnvironment, type Environment } from '../src/domain';
@@ -59,6 +60,22 @@ describe('retail-first pricing and completeness', () => {
       const changed = { ...base, objects: base.objects.map(item => item.kind === 'model-deployment' ? { ...item, ...change } : item) };
       expect(ledger(changed, rates, now).summary.current.incomplete).toBe(2);
     }
+  });
+
+  it('costs declared cached tokens separately and preserves their contract override in JSON', () => {
+    const { inventory } = inventoryPlan();
+    const offering = inventory.find(item => item.id === modelId)!;
+    const meter = offeringMeter(offering, 'cached')!;
+    const data = importEnvironment(JSON.stringify({ ...base, objects: base.objects.map(item => item.kind === 'usage-profile'
+      ? { ...item, cachedInput: 1000 } : item) }));
+    const uncached = [price(modelId, 'input', '0.20'), price(modelId, 'output', '0.50')];
+    expect(ledger(data, uncached, now, inventory).summary.current).toMatchObject({ known: '1100.00', incomplete: 1 });
+    const cached = { ...price(modelId, 'input', '0.05'), ...meter, component: 'cached' as const };
+    expect(ledger(data, [...uncached, cached], now, inventory).summary.current.known).toBe('1150.00');
+    const override = importEnvironment(JSON.stringify({ ...data, pricingOverrides: [{
+      objectId: 'model', meter, mode: 'fixed', value: '0.04', currency: 'GBP', reason: 'Fictional test agreement',
+    }] }));
+    expect(ledger(override, uncached, now, inventory).summary.current).toMatchObject({ known: '1140.00', incomplete: 0 });
   });
 
   it('counts a provisioned deployment once and ignores agent token usage for its capacity bill', () => {
@@ -125,6 +142,22 @@ describe('retail-first pricing and completeness', () => {
     expect(result.lines.filter(line => line.includedCredits).map(line => [line.quantity, line.includedCredits])).toEqual([['0', '15000'], ['5000', '10000']]);
     expect(result.lines.find(line => line.objectId === 'owned')?.amounts).toEqual({ retail: '50.00', current: '0.00', forecast: '0.00' });
     expect(ledger(data, rates, '2027-01-01T00:00:00Z').summary.current.incomplete).toBe(2);
+  });
+
+  it('sums declared Copilot activity credits once instead of adding a saved monthly total or a second tariff', () => {
+    const copilot = 'copilot-payg-uksouth';
+    const agent = {
+      id: 'agent', name: 'Fictional credit breakdown', kind: 'agent', platform: 'copilot-studio', modelSource: 'platform-managed',
+      creditMethod: 'breakdown', credits: 100_000, creditBreakdown: { generative: 13_000, actions: 12_500, classic: 0 },
+    };
+    const pack = 'copilot-credit-pack-gb';
+    const data = importEnvironment(JSON.stringify({ ...blankEnvironment(), objects: [agent, {
+      kind: 'supporting-resource', name: 'Fictional pack', id: 'pack', monthlyQuantity: 1, offeringId: pack,
+    }], relationships: [{ from: 'agent', to: 'pack', type: 'agent-uses-resource' }] }));
+    const result = ledger(data, [price(copilot, 'credits', '0.01'), commercial(pack, 'usage', '100')], now);
+    expect(result.lines).toHaveLength(2);
+    expect(result.lines.find(line => line.objectId === 'agent')).toMatchObject({ quantity: '500', includedCredits: '25000', amounts: { current: '5.00' } });
+    expect(result.summary.current.known).toBe('105.00');
   });
 
   it('separates finite coverage from partial environment pricing and customer rates', () => {

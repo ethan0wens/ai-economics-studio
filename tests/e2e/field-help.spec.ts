@@ -50,6 +50,10 @@ test('every registered field is reachable with an accessible help trigger', asyn
     if (['agent', 'model-deployment'].includes(object.kind)) {
       await inspector.getByRole('button', { name: 'Usage', exact: true }).click();
       await inspect();
+      if (object.id === 'copilot') {
+        await inspector.getByLabel('Copilot credit input method', { exact: true }).selectOption('breakdown');
+        await inspect();
+      }
     }
   }
   await inspector.getByRole('button', { name: 'Dependencies' }).click();
@@ -64,6 +68,8 @@ test('every registered field is reachable with an accessible help trigger', asyn
   await page.locator('.ledger-row[open] .price-more summary').click();
   await inspect();
   await page.getByRole('combobox', { name: 'Price agreement', exact: true }).selectOption('discount');
+  await inspect();
+  await page.getByRole('button', { name: 'Pricing Catalogue', exact: true }).click();
   await inspect();
   expect([...revealed].sort()).toEqual(Object.keys(fieldHelp).sort());
 });

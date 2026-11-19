@@ -116,7 +116,7 @@ export function Lines({ lines, env, update, compact = false, checkedAt }: {
           {line.source.review ? ` · reviewed ${line.source.review.checkedAt.slice(0, 10)}. ${line.source.review.terms}` : ` · source effective ${line.source.effectiveAt.slice(0, 10)} · verified ${checkedAt?.slice(0, 10) ?? 'date unavailable'}`}</p>}
         {line.source && <details className="price-more">
           <summary>Advanced meter details</summary>
-          <p>{line.source.product} · {line.source.publishedSku ?? line.source.sku} · {line.source.meterName ?? line.component} · {line.source.meterId}</p>
+          <p>{line.source.product} · {line.source.publishedSku ?? line.source.sku} · {line.source.meterName ?? line.component} · {line.source.sourceMeterId ?? line.source.meterId} · {line.source.publishedUnit ?? line.source.unit}</p>
           {line.source.tiers && <ul className="meter-tiers">{line.source.tiers.map(tier => <li key={tier.from}>From {tier.from} base units · {line.currency} {tier.price} per billed unit</li>)}</ul>}
         </details>}
         {line.agreement && line.agreement.mode !== 'retail' && <p>Agreement basis {line.agreement.mode} · {line.agreement.reason}{line.agreement.effectiveAt && ` · effective ${line.agreement.effectiveAt}`}</p>}

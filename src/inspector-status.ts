@@ -1,4 +1,4 @@
-import type { Environment, StudioObject } from './domain';
+import { declaredCopilotCredits, type Environment, type StudioObject } from './domain';
 import type { FieldId } from './field-help';
 import type { Line } from './ledger';
 
@@ -11,7 +11,9 @@ export function missingInputs(item: StudioObject, env: Environment): FieldId[] {
     case 'agent': {
       needs('platform', item.platform);
       needs('modelSource', item.modelSource);
-      if (item.modelSource === 'platform-managed' && item.platform === 'copilot-studio') needs('credits', item.credits);
+      if (item.modelSource === 'platform-managed' && item.platform === 'copilot-studio') {
+        needs(item.creditMethod === 'breakdown' ? 'creditCategory' : 'credits', declaredCopilotCredits(item)[0]);
+      }
       if (item.modelSource === 'deployment-ref' && item.platform === 'foundry-agent-service') {
         const deployment = env.relationships.find(edge => edge.type === 'agent-uses-deployment' && edge.from === item.id);
         needs('linkedDeployment', deployment);

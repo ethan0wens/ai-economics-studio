@@ -20,6 +20,8 @@ const meter = z.strictObject({
   priceType: z.literal('Consumption'),
 });
 export type Meter = z.infer<typeof meter>;
+export const creditCategories = { classic: 'Classic answers', generative: 'Generative answers', actions: 'Agent actions and tools', flows: 'Agent flows', other: 'Other billable activity' } as const;
+export type CreditCategory = keyof typeof creditCategories;
 const parts = {
   'model-deployment': z.strictObject({
     ...common, kind: z.literal('model-deployment'), offeringId: id.optional(), modelId: text.optional(), modelVersion: text.optional(),
@@ -35,6 +37,8 @@ const parts = {
     sensitivity: z.enum(['public', 'internal', 'confidential', 'regulated']).optional(),
     identity: z.enum(['delegated', 'application']).optional(),
     tools: text.optional(), credits: quantity.optional(), platformMeter: meter.optional(),
+    creditMethod: z.literal('breakdown').optional(),
+    creditBreakdown: z.partialRecord(z.enum(Object.keys(creditCategories) as CreditCategory[]), quantity).optional(),
   }),
   'usage-profile': z.strictObject({
     ...common, kind: z.literal('usage-profile'),
@@ -65,6 +69,10 @@ export const objectSchema = z.discriminatedUnion('kind', [
   parts['licence-entitlement'], parts['supporting-resource'], parts['security-policy'],
 ]);
 export type StudioObject = z.infer<typeof objectSchema>;
+export function declaredCopilotCredits(agent: Extract<StudioObject, { kind: 'agent' }>) {
+  if (agent.creditMethod !== 'breakdown') return agent.credits === undefined ? [] : [agent.credits];
+  return Object.values(agent.creditBreakdown ?? {});
+}
 export type Kind = StudioObject['kind'];
 export const kindLabels: Record<Kind, string> = {
   'model-deployment': 'Model deployment', agent: 'Agent', 'usage-profile': 'Usage profile',

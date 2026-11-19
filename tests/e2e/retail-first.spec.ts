@@ -55,24 +55,44 @@ test('selected model applies both catalogue meters, restores retail and opens ex
 });
 
 if (process.env.STUDIO_CHECK_PUBLISHED_CATALOGUE === '1') {
-  test('live dashboard verifies the actual published catalogue across all five families', async ({ page }) => {
-    const total = offerings.reduce((sum, offering) => sum + offering.components.length, 0);
+  test('dashboard and ledger verify the published inventory and exact regional retail', async ({ page }) => {
     const manifestResponse = await page.request.get('/pricing/manifest.json');
     expect(manifestResponse.ok()).toBe(true);
     const manifest = await manifestResponse.json();
-    expect(manifest.records).toBe(total);
+    if (process.env.STUDIO_EXPECTED_CATALOGUE_ID) expect(manifest.catalogueId).toBe(process.env.STUDIO_EXPECTED_CATALOGUE_ID);
     const catalogueResponse = await page.request.get(`/pricing/catalogue-${manifest.catalogueId}.json`);
     expect(catalogueResponse.ok()).toBe(true);
     const raw = await catalogueResponse.body();
     expect(createHash('sha256').update(raw).digest('hex')).toBe(manifest.catalogueId);
     const catalogue = catalogueSchema.parse(JSON.parse(raw.toString()));
-    const verified = catalogueCoverage({ manifest, records: catalogue.records }).reduce((sum, family) => sum + family.fully, 0);
+    expect(catalogue.records).toHaveLength(manifest.records);
+    expect(catalogue.inventory!.length).toBeGreaterThan(offerings.length * 5);
+    const coverage = catalogueCoverage({ manifest, ...catalogue });
+    const verified = coverage.reduce((sum, family) => sum + family.fully, 0);
+    const supported = coverage.reduce((sum, family) => sum + family.supported, 0);
+    expect(verified).toBeGreaterThan(offerings.length);
+    expect(supported).toBeGreaterThan(verified);
     await page.goto('/');
-    await expect(page.getByText(new RegExp(`${total} published rates`))).toBeVisible();
+    await expect(page.getByText(new RegExp(`${manifest.records} published rates`))).toBeVisible();
     await page.getByRole('button', { name: 'Pricing Catalogue', exact: true }).click();
-    await expect(page.getByText(new RegExp(`${verified} of ${offerings.length} reviewed configurations`))).toBeVisible();
+    await expect(page.getByText(new RegExp(`${verified} of ${supported} supported configurations`))).toBeVisible();
     for (const name of ['Microsoft Foundry models', 'Copilot Studio', 'Microsoft licensing', 'Supporting Azure services', 'Security and governance']) {
       await expect(page.getByText(name, { exact: true })).toBeVisible();
     }
+    const offer = coverage.flatMap(family => family.configurations).find(item => item.kind === 'supporting-resource' && item.family === 'infrastructure' && item.region === 'westeurope' && item.status === 'verified' && !item.components[0].rate?.tiers)!;
+    expect(offer).toBeDefined();
+    await page.getByLabel('Filter by billing region or market').selectOption(offer.region);
+    await page.getByLabel('Find a catalogue configuration').fill(offer.id);
+    await page.getByText('Supporting Azure services', { exact: true }).click();
+    await expect(page.getByText(offer.name, { exact: true })).toBeVisible();
+    const env = { ...blankEnvironment(), region: offer.region, objects: [
+      { kind: 'supporting-resource', id: 'azure-resource', name: 'Regional service test', monthlyQuantity: offer.components[0].quantityPerUnit * 1000 },
+    ] };
+    await page.locator('input[type=file]').setInputFiles({ name: 'fictional.json', mimeType: 'application/json', buffer: Buffer.from(JSON.stringify(env)) });
+    await page.getByRole('button', { name: /^Regional service test / }).click();
+    await page.getByLabel('Microsoft retail configuration', { exact: true }).selectOption(offer.id);
+    await expect(page.locator('.inspector .retail-preview').getByRole('link', { name: /^GBP / })).toBeVisible();
+    const amount = Number(offer.components[0].rate!.price) * 1000;
+    await expect(page.locator('.metric').first()).toContainText(new Intl.NumberFormat('en-GB', { style: 'currency', currency: 'GBP' }).format(amount));
   });
 }

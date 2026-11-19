@@ -2950,7 +2950,7 @@
           "quantityPerUnit": 1
         }
       ],
-      "evidence": "https://learn.microsoft.com/en-us/microsoft-copilot-studio/requirements-licensing-subscriptions",
+      "evidence": "https://learn.microsoft.com/en-us/microsoft-copilot-studio/requirements-messages-management",
       "selectable": false,
       "note": "Calculate applicable Copilot Credits per the published billing table. Include these in consumption without creating a second charge."
     },
@@ -2970,7 +2970,7 @@
           "quantityPerUnit": 1
         }
       ],
-      "evidence": "https://learn.microsoft.com/en-us/microsoft-copilot-studio/requirements-licensing-subscriptions",
+      "evidence": "https://learn.microsoft.com/en-us/microsoft-copilot-studio/requirements-messages-management",
       "selectable": false,
       "note": "Use the documented credit rate for each applicable answer."
     },
@@ -2990,7 +2990,7 @@
           "quantityPerUnit": 1
         }
       ],
-      "evidence": "https://learn.microsoft.com/en-us/microsoft-copilot-studio/requirements-licensing-subscriptions",
+      "evidence": "https://learn.microsoft.com/en-us/microsoft-copilot-studio/requirements-messages-management",
       "selectable": false,
       "note": "Action execution can contribute credits; underlying connectors or services can have separate tariffs."
     },
@@ -3010,7 +3010,7 @@
           "quantityPerUnit": 1
         }
       ],
-      "evidence": "https://learn.microsoft.com/en-us/microsoft-copilot-studio/requirements-licensing-subscriptions",
+      "evidence": "https://learn.microsoft.com/en-us/microsoft-copilot-studio/requirements-messages-management",
       "selectable": false,
       "note": "Review billing based on flow actions and scope."
     },
@@ -3223,7 +3223,7 @@
         }
       ],
       "evidence": "https://www.microsoft.com/en-gb/microsoft-365-copilot/pricing",
-      "note": "Verify the exact commercial agreement, prerequisites and existing entitlement. No price is assigned without a reviewed rate."
+      "note": "Public UK annual commitment displayed as a monthly per-seat equivalent. Verify programme eligibility and separately billed features."
     },
     {
       "id": "entra-p2",
@@ -3603,6 +3603,204 @@
             "meter": "Grok 4.1 Outp DZone Tokens",
             "armSku": "Grok 6 Outp DZone"
           }
+        }
+      ]
+    },
+    {
+      "id": "bandwidth-internet-out",
+      "name": "Azure Internet egress · Internet routing preference",
+      "family": "infrastructure",
+      "kind": "supporting-resource",
+      "note": "Enter total monthly GB in the eligible billing scope once. Keep other routing preferences and separately billed traffic outside this line.",
+      "regions": [
+        "uksouth",
+        "westeurope",
+        "eastus2"
+      ],
+      "retained": {
+        "uksouth": "bandwidth-internet-out-uksouth"
+      },
+      "evidence": "https://azure.microsoft.com/en-gb/pricing/details/bandwidth/",
+      "components": [
+        {
+          "id": "usage",
+          "label": "GB transferred",
+          "unit": "1 GB",
+          "quantityPerUnit": 1,
+          "azure": {
+            "service": "Bandwidth",
+            "product": "Bandwidth - Routing Preference: Internet",
+            "sku": "Standard",
+            "meter": "Standard Data Transfer Out",
+            "tierStarts": [
+              0,
+              100,
+              10100,
+              50100,
+              150100
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "blob-hot-lrs-capacity",
+      "name": "Azure Blob Storage Hot LRS · capacity",
+      "family": "infrastructure",
+      "kind": "supporting-resource",
+      "note": "Enter total average GB-month allocated to this billing scope. Add operations as separate items.",
+      "regions": [
+        "uksouth",
+        "westeurope",
+        "eastus2"
+      ],
+      "retained": {
+        "uksouth": "blob-hot-lrs-capacity-uksouth"
+      },
+      "evidence": "https://azure.microsoft.com/en-gb/pricing/details/storage/blobs/",
+      "components": [
+        {
+          "id": "usage",
+          "label": "GB-month",
+          "unit": "1 GB/Month",
+          "quantityPerUnit": 1,
+          "azure": {
+            "service": "Storage",
+            "product": "General Block Blob v2",
+            "sku": "Hot LRS",
+            "meter": "Hot LRS Data Stored",
+            "tierStarts": [
+              0,
+              51200,
+              512000
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "private-link-endpoint-hour",
+      "name": "Azure Private Link · private endpoint hours",
+      "family": "infrastructure",
+      "kind": "supporting-resource",
+      "regions": [
+        "uksouth",
+        "westeurope",
+        "eastus2"
+      ],
+      "note": "Enter total provisioned private endpoint-hours. Data processed has separate pricing. Use a reviewed manual rate.",
+      "evidence": "https://azure.microsoft.com/en-gb/pricing/details/private-link/",
+      "components": [
+        {
+          "id": "usage",
+          "label": "Billable hour",
+          "unit": "hour",
+          "quantityPerUnit": 1
+        }
+      ]
+    },
+    {
+      "id": "private-link-data",
+      "name": "Azure Private Link · data processed",
+      "family": "infrastructure",
+      "kind": "supporting-resource",
+      "regions": [
+        "uksouth",
+        "westeurope",
+        "eastus2"
+      ],
+      "note": "Use measured GB and the exact billed traffic tier and direction. Enter a reconciled manual rate.",
+      "evidence": "https://azure.microsoft.com/en-gb/pricing/details/private-link/",
+      "components": [
+        {
+          "id": "usage",
+          "label": "Billable GB",
+          "unit": "GB",
+          "quantityPerUnit": 1
+        }
+      ]
+    },
+    {
+      "id": "nat-gateway-hours",
+      "name": "Azure NAT Gateway · gateway hours",
+      "family": "infrastructure",
+      "kind": "supporting-resource",
+      "regions": [
+        "uksouth",
+        "westeurope",
+        "eastus2"
+      ],
+      "note": "Enter provisioned gateway-hours. Data processing and bandwidth may be billed separately. Use a reviewed manual rate.",
+      "evidence": "https://azure.microsoft.com/en-gb/pricing/details/azure-nat-gateway/",
+      "components": [
+        {
+          "id": "usage",
+          "label": "Billable hour",
+          "unit": "hour",
+          "quantityPerUnit": 1
+        }
+      ]
+    },
+    {
+      "id": "nat-gateway-data",
+      "name": "Azure NAT Gateway · data processed",
+      "family": "infrastructure",
+      "kind": "supporting-resource",
+      "regions": [
+        "uksouth",
+        "westeurope",
+        "eastus2"
+      ],
+      "note": "Enter billed GB processed. Use a reviewed manual rate for this dimension.",
+      "evidence": "https://azure.microsoft.com/en-gb/pricing/details/azure-nat-gateway/",
+      "components": [
+        {
+          "id": "usage",
+          "label": "Billable GB",
+          "unit": "GB",
+          "quantityPerUnit": 1
+        }
+      ]
+    },
+    {
+      "id": "monitor-log-retention",
+      "name": "Azure Monitor · billable log retention",
+      "family": "infrastructure",
+      "kind": "supporting-resource",
+      "regions": [
+        "uksouth",
+        "westeurope",
+        "eastus2"
+      ],
+      "note": "Use the billable quantity after the retention included in your exact plan. Enter an evidenced manual unit rate.",
+      "evidence": "https://azure.microsoft.com/en-gb/pricing/details/monitor/",
+      "components": [
+        {
+          "id": "usage",
+          "label": "Billable GB-month",
+          "unit": "GB-month",
+          "quantityPerUnit": 1
+        }
+      ]
+    },
+    {
+      "id": "monitor-workspace-analytics",
+      "name": "Azure Monitor · billable Analytics Logs",
+      "family": "infrastructure",
+      "kind": "supporting-resource",
+      "regions": [
+        "uksouth",
+        "westeurope",
+        "eastus2"
+      ],
+      "note": "Use separately reconciled billable ingestion after included plan quantities and commitments. Enter a manual rate.",
+      "evidence": "https://azure.microsoft.com/en-gb/pricing/details/monitor/",
+      "components": [
+        {
+          "id": "usage",
+          "label": "Billable GB",
+          "unit": "GB",
+          "quantityPerUnit": 1
         }
       ]
     }

@@ -5,6 +5,7 @@ import { ledger, type Ledger } from './ledger';
 import { DraftQuantity } from './usage-assistance-ui';
 import { compareCosts, pricePreview } from './scenario';
 import { CostComparison } from './cost-comparison';
+import { AdoptionPreview } from './adoption-ui';
 import { LearnMore } from './learn-more';
 import { formatQuantity } from './presentation';
 import { sensitivityTargets, sensitivityValue, usageSensitivity, workloadFields, type SensitivityField } from './usage-estimation';
@@ -72,17 +73,21 @@ function PricePreview({ env, result, catalogue }: { env: Environment; result: Le
   </form>;
 }
 
-export function ExploreChanges({ env, result, catalogue }: { env: Environment; result: Ledger; catalogue: Catalogue }) {
+export function ExploreChanges({ env, result, catalogue, showValue }: { env: Environment; result: Ledger; catalogue: Catalogue; showValue: () => void }) {
   const [choice, setChoice] = useState('');
   return <section className="panel padded">
     <h2>Explore changes</h2>
     <p className="muted">Compare one temporary change with your current estimate. Your accepted inputs and exports stay as they are.</p>
     <label className="plain-label scenario-choice">What would you like to change?
       <select value={choice} onChange={event => setChoice(event.target.value)}>
-        <option value="">Choose a change</option><option value="usage">Workload usage</option><option value="price">Prices</option>
+        <option value="">Choose a change</option><option value="usage">Workload usage</option><option value="price">Prices</option><option value="adoption">Adoption and value</option>
       </select>
     </label>
     {choice === 'usage' && <UsageSensitivity {...{ env, result, catalogue }} />}
     {choice === 'price' && <PricePreview {...{ env, result, catalogue }} />}
+    {choice === 'adoption' && (env.valuePlan ? <AdoptionPreview {...{ env, result, catalogue }} plan={env.valuePlan} /> : <div>
+      <p>Accept value assumptions first to compare how adoption affects productivity.</p>
+      <button className="button" onClick={showValue}>Open Potential value</button>
+    </div>)}
   </section>;
 }

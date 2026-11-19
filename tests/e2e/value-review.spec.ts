@@ -2,8 +2,9 @@ import { createHash } from 'node:crypto';
 import { readFile } from 'node:fs/promises';
 import { expect, test, type Page } from '@playwright/test';
 import { enterpriseInventory, referenceAt, scenarios } from '../../fixtures/enterprise-scenarios';
+import type { ValuePlan } from '../../src/value';
 
-async function openSample(page: Page, index = 0) {
+async function openSample(page: Page, index = 0, valuePlan?: ValuePlan) {
   const sample = scenarios[index];
   const payload = JSON.stringify({ schemaVersion: '1.0.0', records: sample.records, inventory: enterpriseInventory });
   const catalogueId = createHash('sha256').update(payload).digest('hex');
@@ -13,7 +14,7 @@ async function openSample(page: Page, index = 0) {
   }));
   await page.route(`**/pricing/catalogue-${catalogueId}.json`, route => route.fulfill({ body: payload, contentType: 'application/json' }));
   await page.goto('/');
-  await page.locator('input[type=file]').setInputFiles({ name: 'fictional-value.json', mimeType: 'application/json', buffer: Buffer.from(JSON.stringify(sample.env)) });
+  await page.locator('input[type=file]').setInputFiles({ name: 'fictional-value.json', mimeType: 'application/json', buffer: Buffer.from(JSON.stringify({ ...sample.env, valuePlan })) });
   await expect(page.getByRole('heading', { name: 'Environment Builder' })).toBeVisible();
 }
 async function navigate(page: Page, name: string) {
@@ -68,4 +69,41 @@ test('guided value assumptions are optional, explicitly accepted and reopened fr
   await page.getByRole('button', { name: 'Potential value', exact: true }).click();
   await page.getByText('Accepted assumptions and sources', { exact: true }).click();
   await expect(page.getByText('37.5 · Imported customer assumption')).toBeVisible();
+});
+
+const input = (value: number) => ({ value, source: 'fictional' as const });
+const accepted: ValuePlan = { currency: 'GBP', assumptions: { audience: input(200), adoption: input(50), tasks: input(20), minutes: input(12),
+  realisation: input(60), hourlyValue: input(25), cashableSavings: input(200) } };
+
+test('adoption changes productivity and only projects costs after an explicit workload link', async ({ page }) => {
+  await page.setViewportSize({ width: 320, height: 780 });
+  await openSample(page, 0, accepted);
+  await page.getByRole('button', { name: 'Toggle navigation' }).click();
+  await navigate(page, 'Cost & Value Analysis');
+  await page.getByRole('button', { name: 'Explore changes', exact: true }).click();
+  await page.getByLabel('What would you like to change?').selectOption('adoption');
+  await page.getByLabel('Lower adoption (%)', { exact: true }).fill('25');
+  await page.getByLabel('Higher adoption (%)', { exact: true }).fill('75');
+  const compare = page.getByRole('button', { name: 'Compare adoption assumptions' });
+  await compare.press('Enter');
+  const low = page.getByRole('row').filter({ hasText: 'Lower adoption' });
+  await expect(low.getByRole('cell', { name: '200', exact: true })).toBeVisible();
+  await expect(low.getByRole('cell', { name: 'Unknown', exact: true })).toHaveCount(3);
+  await expect(page.getByText('AI cost effects need an explicit, usable workload link.', { exact: false })).toBeVisible();
+  await page.getByText('Link adoption to workload usage', { exact: true }).click();
+  await page.getByLabel('Workload affected by adoption').selectOption({ label: 'Support assistant' });
+  await page.getByLabel('Monthly interactions per active user', { exact: true }).fill('10');
+  await compare.click();
+  await expect(low).toContainText('500 executions');
+  await expect(low).toContainText('£1,617.10');
+  await expect(page.getByRole('row').filter({ hasText: 'Higher adoption' })).toContainText('£1,631.29');
+  expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBe(320);
+  await page.getByRole('button', { name: 'Clear comparison' }).click();
+  await expect(page.getByRole('table', { name: 'Monthly adoption comparison' })).toHaveCount(0);
+  await page.getByRole('button', { name: 'Toggle navigation' }).click();
+  await navigate(page, 'Reports & Export');
+  const json = JSON.parse((await download(page, 'Export JSON')).toString());
+  expect(json.valuePlan).toEqual(accepted);
+  expect(json.objects.find((object: { id: string }) => object.id === 'Enterprise demand').executions).toBe(20_000);
+  expect(json.sourceSnapshot.currentKnown).toBe('1893.80');
 });

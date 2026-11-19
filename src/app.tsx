@@ -396,7 +396,7 @@ export default function App() {
             <button className="button" aria-pressed={costView === 'value'} aria-controls="analysis-content" onClick={() => setCostView('value')}>Potential value</button>
           </div>
           <div id="analysis-content" className="page-stack">
-          {costView === 'explore' ? <ExploreChanges {...{ env, result, catalogue }} /> : costView === 'value' ?
+          {costView === 'explore' ? <ExploreChanges {...{ env, result, catalogue }} showValue={() => setCostView('value')} /> : costView === 'value' ?
             <PotentialValue {...{ env, result, update }} /> : <>
           <EstimateSummary {...{ env, result, catalogue }} />
           <EstimateReadiness env={env} result={result} edit={edit} />

@@ -64,7 +64,8 @@ function cover(layout: ReportLayout, env: Environment, generated: Date, format: 
     layout.at(display, x, 237, columnWidth - 16, style);
   });
   layout.at('Independent planning report', margin, 145, layout.width, { size: 11, bold: true, color: colour.navy });
-  layout.at('Estimates are for planning and review. The studio is independent of Microsoft.', margin, 122, layout.width, { size: 9.6, color: colour.muted });
+  layout.at('The studio is independent of Microsoft. Planning estimates do not establish quotes, licence eligibility or compliance.',
+    margin, 122, layout.width, { size: 9.6, color: colour.muted });
 }
 
 function executive(layout: ReportLayout, env: Environment, result: Ledger, catalogue: Catalogue, largest: Ledger['lines'][number] | undefined) {
@@ -217,7 +218,7 @@ export async function report(env: Environment, result: Ledger, catalogue: Catalo
     architecture(layout, env, result);
     financialAppendix(layout, env, result, sources);
     assumptions(layout, env, result, catalogue, generated, sources, disclaimer);
-  } else layout.paragraph(disclaimer, { size: 8.4, color: colour.muted });
+  }
   layout.finish();
   return doc.save();
 }

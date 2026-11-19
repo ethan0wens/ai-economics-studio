@@ -127,6 +127,7 @@ for (const { key, env, records, expected } of cases) {
       expect(text.match(/https:\/\/prices\.azure\.com\/api\/retail\/prices/g)).toHaveLength(1);
     }
     if (key === '03-shared-capacity') expect(text).toContain('Shared allocation by input tokens');
+    if (key === '04-enterprise') expect(summaries).toHaveLength(3);
     if (key === '05-unresolved') expect(text).toContain('Known-cost subtotal');
     if (key === '06-contracts') {
       expect(fullPages[1]).toContain('Retail baseline £605.00');

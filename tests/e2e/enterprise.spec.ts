@@ -179,3 +179,35 @@ test('keyboard selects Executive Summary and both exports reconcile with the ope
   expect(compact.length).toBeLessThan(complete.length);
   await expect(page.getByRole('status').filter({ hasText: 'Your Executive Summary PDF is ready.' })).toBeVisible();
 });
+
+test('a precise fixed contract stays distinct from the graduated retail rate in the PDF', async ({ page }) => {
+  const sample = scenarios[0];
+  const storage = sample.records.find(record => record.tiers)!;
+  const { meterId, sku, unit, quantityPerUnit, region, priceType } = storage;
+  const agreedRate = '0.012345678901234';
+  const environment = { ...sample.env, pricingOverrides: [{
+    objectId: 'Indexed documents', meter: { meterId, sku, unit, quantityPerUnit, region, priceType },
+    mode: 'fixed', currency: 'GBP', value: agreedRate, reason: 'Fictional fixed storage contract',
+  }] };
+  const payload = JSON.stringify({ schemaVersion: '1.0.0', records: sample.records, inventory: enterpriseInventory });
+  const catalogueId = createHash('sha256').update(payload).digest('hex');
+  await page.clock.setFixedTime(new Date(referenceAt));
+  await page.route('**/pricing/manifest.json', route => route.fulfill({
+    json: { schemaVersion: '1.0.0', catalogueId, records: sample.records.length, lastCheckedAt: referenceAt, previous: null },
+  }));
+  await page.route(`**/pricing/catalogue-${catalogueId}.json`, route => route.fulfill({ body: payload, contentType: 'application/json' }));
+  await page.goto('/');
+  await page.locator('input[type=file]').setInputFiles({
+    name: 'fictional-fixed-storage.json', mimeType: 'application/json', buffer: Buffer.from(JSON.stringify(environment)),
+  });
+  await expect(page.locator('.metric').first()).toContainText('£1,478.54');
+  await navigate(page, 'Reports & Export');
+  const pages = await reportText(await exported(page, 'Generate PDF'));
+  expect(pages[1]).toContain('Retail baseline £1,893.80 £22,725.60 0');
+  expect(pages[1]).toContain('Current estimate £1,478.54 £17,742.48 0');
+  const itemised = pages.filter(text => text.includes('Charge component')).join(' ');
+  expect(itemised).toContain('£740.74 Fixed customer rate');
+  expect(itemised.replace(/\s+/g, '')).toContain(agreedRate);
+  expect(itemised).not.toContain('Blended');
+  expect(pages.join(' ')).toContain('Graduated retail bands');
+});

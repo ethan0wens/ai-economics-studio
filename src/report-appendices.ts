@@ -13,7 +13,9 @@ const quantity = (value: string | number | null | undefined) => value === null |
 const amount = (value: string | null, currency: string) => formatMoney(value, currency);
 function mainRate(line: Ledger['lines'][number]) {
   const rate = line.rates.current;
-  if (!line.source?.tiers || rate === null || rate.length <= 13) return quantity(rate);
+  const retailBased = !line.agreement || ['retail', 'discount'].includes(line.agreement.mode);
+  const blended = retailBased && !!line.source?.tiers && line.quantity !== null && new Decimal(line.quantity).gt(0);
+  if (!blended || rate === null || rate.length <= 13) return quantity(rate);
   return `≈${quantity(new Decimal(rate).toSignificantDigits(8).toFixed())}\nBlended`;
 }
 export function chargeBasis(line: Ledger['lines'][number]) {
@@ -148,7 +150,7 @@ export function financialAppendix(layout: ReportLayout, env: Environment, result
         line.reason && (costExplanation(line) ?? line.reason),
         line.retailQuantity && `Retail comparison quantity without reservation: ${line.retailQuantity} PTU-hours.`,
         line.agreement && `Agreement · ${agreementLabels[line.agreement.mode]}${line.agreement.mode === 'discount' ? ` (${line.agreement.value}%)` : ''}\n${line.agreement.reason}\nEffective ${line.agreement.effectiveAt ?? 'undated'}`,
-        line.source?.tiers && `Graduated bands, base-unit threshold → rate\n${line.source.tiers.map(tier => `${quantity(tier.from)} → ${quantity(tier.price)}`).join('\n')}\nDisplayed retail rates are blended at this usage.`,
+        line.source?.tiers && `Graduated retail bands, base-unit threshold → rate\n${line.source.tiers.map(tier => `${quantity(tier.from)} → ${quantity(tier.price)}`).join('\n')}\nThe retail rate is blended for positive usage.`,
         line.includedCredits && `${quantity(line.includedCredits)} Copilot Credits covered by linked packs.`,
         line.entitledCredits && `${quantity(line.entitledCredits)} credits offset by a customer-declared allowance before pack allocation.`,
         ...reserved,

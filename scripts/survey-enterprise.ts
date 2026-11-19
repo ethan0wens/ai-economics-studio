@@ -79,7 +79,7 @@ await Promise.all((sources[process.argv[2]] ?? []).map(async ([title, source, te
     }) : [];
     const links = ['Search classic linked sources', 'GLOBAL region matrix'].includes(title) ? [...body.matchAll(/<a\b[^>]*href="([^"]+)"[^>]*>([\s\S]*?)<\/a>/gi)]
       .filter(link => /new Foundry IQ|new agents|Region availability for Foundry Models|Model availability/i.test(plain(link[2]))).map(link => new URL(link[1], response.url).href) : [];
-    if (title === 'GLOBAL region matrix reinforced') for (const group of tables) {
+    if (title === 'GLOBAL region matrix reinforced') for (const group of tables.filter(table => /Regional Provisioned|Data Zone Provisioned/.test(table))) {
       const weekly = group.split('\n').filter((row, index) => index < 2 || /^gpt-4\.1|^gpt-4o-mini|^DeepSeek/i.test(row));
       if (weekly.length > 2) console.log(`::notice title=Exact regional evidence::${weekly.join('%0A')}`);
     }

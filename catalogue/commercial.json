@@ -7,17 +7,18 @@
     "quantityPerUnit": 1,
     "priceType": "Consumption",
     "currency": "GBP",
-    "product": "Microsoft Entra ID P1",
     "price": "5.40",
-    "source": "https://www.microsoft.com/en-gb/security/business/microsoft-entra-pricing",
-    "offeringId": "entra-p1-gb",
-    "component": "seats",
     "effectiveAt": "2026-11-18T00:00:00Z",
     "verification": "microsoft-commercial",
+    "product": "Microsoft Entra ID P1",
+    "source": "https://www.microsoft.com/en-gb/security/microsoft-entra-pricing",
+    "offeringId": "entra-p1-gb",
+    "component": "seats",
     "review": {
-      "checkedAt": "2026-11-18T00:00:00Z",
-      "expiresAt": "2027-01-17T23:59:59Z",
-      "terms": "UK per user per month paid yearly, excluding VAT. Verify whether P1 is already included in a declared licence."
+      "checkedAt": "2026-11-19T12:08:05.001Z",
+      "expiresAt": "2027-01-03T12:08:05.001Z",
+      "terms": "UK per user per month paid yearly, excluding VAT. Verify whether P1 is already included in a declared licence.",
+      "term": "annual"
     }
   },
   {
@@ -28,17 +29,18 @@
     "quantityPerUnit": 1,
     "priceType": "Consumption",
     "currency": "GBP",
-    "product": "Microsoft Agent 365",
     "price": "11.50",
+    "effectiveAt": "2026-11-18T00:00:00Z",
+    "verification": "microsoft-commercial",
+    "product": "Microsoft Agent 365",
     "source": "https://www.microsoft.com/en-gb/microsoft-agent-365",
     "offeringId": "agent-365-gb",
     "component": "seats",
-    "effectiveAt": "2026-11-18T00:00:00Z",
-    "verification": "microsoft-commercial",
     "review": {
-      "checkedAt": "2026-11-18T00:00:00Z",
-      "expiresAt": "2027-01-17T23:59:59Z",
-      "terms": "UK per user per month, annual commitment, excluding VAT. Do not infer prerequisite eligibility or consumption allowances."
+      "checkedAt": "2026-11-19T12:08:05.001Z",
+      "expiresAt": "2027-01-03T12:08:05.001Z",
+      "terms": "UK per user per month, annual commitment, excluding VAT. Do not infer prerequisite eligibility or consumption allowances.",
+      "term": "annual"
     }
   },
   {
@@ -70,17 +72,18 @@
     "quantityPerUnit": 1,
     "priceType": "Consumption",
     "currency": "GBP",
-    "product": "Microsoft 365 Business Standard with Copilot",
     "price": "18.10",
-    "source": "https://www.microsoft.com/en-gb/microsoft-365-copilot/pricing",
-    "offeringId": "m365-standard-copilot-gb",
-    "component": "seats",
     "effectiveAt": "2026-11-18T00:00:00Z",
     "verification": "microsoft-commercial",
+    "product": "Microsoft 365 Business Standard with Copilot",
+    "source": "https://www.microsoft.com/en-gb/copilot/pricing/business",
+    "offeringId": "m365-standard-copilot-gb",
+    "component": "seats",
     "review": {
-      "checkedAt": "2026-11-18T00:00:00Z",
-      "expiresAt": "2027-01-17T23:59:59Z",
-      "terms": "Microsoft 365 Business Standard with Copilot. UK per user per month paid yearly, excluding VAT. Bundle, not the standalone Copilot add-on."
+      "checkedAt": "2026-11-19T12:08:05.001Z",
+      "expiresAt": "2027-01-03T12:08:05.001Z",
+      "terms": "Microsoft 365 Business Standard with Copilot. UK per user per month paid yearly, excluding VAT. Bundle, not the standalone Copilot add-on.",
+      "term": "annual"
     }
   },
   {
@@ -91,17 +94,18 @@
     "quantityPerUnit": 1,
     "priceType": "Consumption",
     "currency": "GBP",
-    "product": "Microsoft Entra Suite",
     "price": "9.20",
-    "source": "https://www.microsoft.com/en-gb/security/business/microsoft-entra-pricing",
-    "offeringId": "entra-suite-gb",
-    "component": "seats",
     "effectiveAt": "2026-11-18T00:00:00Z",
     "verification": "microsoft-commercial",
+    "product": "Microsoft Entra Suite",
+    "source": "https://www.microsoft.com/en-gb/security/microsoft-entra-pricing",
+    "offeringId": "entra-suite-gb",
+    "component": "seats",
     "review": {
-      "checkedAt": "2026-11-18T00:00:00Z",
-      "expiresAt": "2027-01-17T23:59:59Z",
-      "terms": "UK per user per month paid yearly, excluding VAT. Prerequisite eligibility and overlapping licences are separate."
+      "checkedAt": "2026-11-19T12:08:05.001Z",
+      "expiresAt": "2027-01-03T12:08:05.001Z",
+      "terms": "UK per user per month paid yearly, excluding VAT. Prerequisite eligibility and overlapping licences are separate.",
+      "term": "annual"
     }
   },
   {
@@ -114,15 +118,16 @@
     "currency": "GBP",
     "price": "24.60",
     "effectiveAt": "2026-11-18T00:00:00Z",
-    "source": "https://www.microsoft.com/en-gb/microsoft-365-copilot/pricing",
-    "product": "Microsoft 365 Business Premium with Copilot",
     "verification": "microsoft-commercial",
+    "product": "Microsoft 365 Business Premium with Copilot",
+    "source": "https://www.microsoft.com/en-gb/copilot/pricing/business",
     "offeringId": "m365-premium-copilot-gb",
     "component": "seats",
     "review": {
-      "checkedAt": "2026-11-18T00:00:00Z",
-      "expiresAt": "2027-01-17T23:59:00Z",
-      "terms": "UK public bundle. Per user/month, paid yearly, annual subscription with auto-renewal, excluding VAT. Usage-based billing for select advanced AI features is separate."
+      "checkedAt": "2026-11-19T12:08:05.001Z",
+      "expiresAt": "2027-01-03T12:08:05.001Z",
+      "terms": "UK public bundle. Per user/month, paid yearly, annual subscription with auto-renewal, excluding VAT. Usage-based billing for select advanced AI features is separate.",
+      "term": "annual"
     }
   },
   {
@@ -135,15 +140,16 @@
     "currency": "GBP",
     "price": "4.20",
     "effectiveAt": "2026-11-19T00:00:00Z",
-    "source": "https://www.microsoft.com/en-gb/microsoft-365/business/microsoft-365-plans-and-pricing",
-    "product": "Microsoft 365 Business Basic (no Teams)",
     "verification": "microsoft-commercial",
+    "product": "Microsoft 365 Business Basic (no Teams)",
+    "source": "https://www.microsoft.com/en-gb/microsoft-365/business/microsoft-365-plans-and-pricing",
     "offeringId": "m365-business-basic-no-teams-gb",
     "component": "seats",
     "review": {
-      "checkedAt": "2026-11-19T00:00:00Z",
-      "expiresAt": "2027-01-17T23:59:00Z",
-      "terms": "UK public offer per user/month, paid yearly. Annual subscription auto-renews. Price excludes VAT."
+      "checkedAt": "2026-11-19T12:08:05.001Z",
+      "expiresAt": "2027-01-03T12:08:05.001Z",
+      "terms": "UK public offer per user/month, paid yearly. Annual subscription auto-renews. Price excludes VAT.",
+      "term": "annual"
     }
   },
   {
@@ -156,15 +162,16 @@
     "currency": "GBP",
     "price": "13.70",
     "effectiveAt": "2026-11-19T00:00:00Z",
-    "source": "https://www.microsoft.com/en-gb/microsoft-365/enterprise/office-365-plans-and-pricing",
-    "product": "Microsoft 365 Apps for enterprise",
     "verification": "microsoft-commercial",
+    "product": "Microsoft 365 Apps for enterprise",
+    "source": "https://www.microsoft.com/en-gb/microsoft-365/enterprise/office-365-plans-and-pricing",
     "offeringId": "m365-apps-enterprise-gb",
     "component": "seats",
     "review": {
-      "checkedAt": "2026-11-19T00:00:00Z",
-      "expiresAt": "2027-01-17T23:59:00Z",
-      "terms": "UK public offer per user/month, paid yearly. Annual subscription auto-renews. Price excludes VAT."
+      "checkedAt": "2026-11-19T12:08:05.001Z",
+      "expiresAt": "2027-01-03T12:08:05.001Z",
+      "terms": "UK public offer per user/month, paid yearly. Annual subscription auto-renews. Price excludes VAT.",
+      "term": "annual"
     }
   },
   {
@@ -177,15 +184,16 @@
     "currency": "GBP",
     "price": "7.70",
     "effectiveAt": "2026-11-19T00:00:00Z",
-    "source": "https://www.microsoft.com/en-gb/microsoft-365/enterprise/office-365-plans-and-pricing",
-    "product": "Office 365 E1",
     "verification": "microsoft-commercial",
+    "product": "Office 365 E1",
+    "source": "https://www.microsoft.com/en-gb/microsoft-365/enterprise/office-365-plans-and-pricing",
     "offeringId": "o365-e1-gb",
     "component": "seats",
     "review": {
-      "checkedAt": "2026-11-19T00:00:00Z",
-      "expiresAt": "2027-01-17T23:59:00Z",
-      "terms": "UK public offer per user/month, paid yearly. Annual subscription auto-renews. Price excludes VAT."
+      "checkedAt": "2026-11-19T12:08:05.001Z",
+      "expiresAt": "2027-01-03T12:08:05.001Z",
+      "terms": "UK public offer per user/month, paid yearly. Annual subscription auto-renews. Price excludes VAT.",
+      "term": "annual"
     }
   },
   {
@@ -198,15 +206,16 @@
     "currency": "GBP",
     "price": "23.30",
     "effectiveAt": "2026-11-19T00:00:00Z",
-    "source": "https://www.microsoft.com/en-gb/microsoft-365/enterprise/office-365-plans-and-pricing",
-    "product": "Office 365 E3",
     "verification": "microsoft-commercial",
+    "product": "Office 365 E3",
+    "source": "https://www.microsoft.com/en-gb/microsoft-365/enterprise/office-365-plans-and-pricing",
     "offeringId": "o365-e3-gb",
     "component": "seats",
     "review": {
-      "checkedAt": "2026-11-19T00:00:00Z",
-      "expiresAt": "2027-01-17T23:59:00Z",
-      "terms": "UK public offer per user/month, paid yearly. Annual subscription auto-renews. Price excludes VAT."
+      "checkedAt": "2026-11-19T12:08:05.001Z",
+      "expiresAt": "2027-01-03T12:08:05.001Z",
+      "terms": "UK public offer per user/month, paid yearly. Annual subscription auto-renews. Price excludes VAT.",
+      "term": "annual"
     }
   },
   {
@@ -219,15 +228,16 @@
     "currency": "GBP",
     "price": "36.80",
     "effectiveAt": "2026-11-19T00:00:00Z",
-    "source": "https://www.microsoft.com/en-gb/microsoft-365/enterprise/office-365-plans-and-pricing",
-    "product": "Office 365 E5",
     "verification": "microsoft-commercial",
+    "product": "Office 365 E5",
+    "source": "https://www.microsoft.com/en-gb/microsoft-365/enterprise/office-365-plans-and-pricing",
     "offeringId": "o365-e5-gb",
     "component": "seats",
     "review": {
-      "checkedAt": "2026-11-19T00:00:00Z",
-      "expiresAt": "2027-01-17T23:59:00Z",
-      "terms": "UK public offer per user/month, paid yearly. Annual subscription auto-renews. Price excludes VAT."
+      "checkedAt": "2026-11-19T12:08:05.001Z",
+      "expiresAt": "2027-01-03T12:08:05.001Z",
+      "terms": "UK public offer per user/month, paid yearly. Annual subscription auto-renews. Price excludes VAT.",
+      "term": "annual"
     }
   },
   {
@@ -240,15 +250,16 @@
     "currency": "GBP",
     "price": "5.20",
     "effectiveAt": "2026-11-19T00:00:00Z",
-    "source": "https://www.microsoft.com/en-gb/microsoft-365/enterprise/office-365-plans-and-pricing",
-    "product": "Office 365 E1 (no Teams)",
     "verification": "microsoft-commercial",
+    "product": "Office 365 E1 (no Teams)",
+    "source": "https://www.microsoft.com/en-gb/microsoft-365/enterprise/office-365-plans-and-pricing",
     "offeringId": "o365-e1-no-teams-gb",
     "component": "seats",
     "review": {
-      "checkedAt": "2026-11-19T00:00:00Z",
-      "expiresAt": "2027-01-17T23:59:00Z",
-      "terms": "UK public offer per user/month, paid yearly. Annual subscription auto-renews. Price excludes VAT."
+      "checkedAt": "2026-11-19T12:08:05.001Z",
+      "expiresAt": "2027-01-03T12:08:05.001Z",
+      "terms": "UK public offer per user/month, paid yearly. Annual subscription auto-renews. Price excludes VAT.",
+      "term": "annual"
     }
   },
   {
@@ -261,15 +272,16 @@
     "currency": "GBP",
     "price": "16.70",
     "effectiveAt": "2026-11-19T00:00:00Z",
-    "source": "https://www.microsoft.com/en-gb/microsoft-365/enterprise/office-365-plans-and-pricing",
-    "product": "Office 365 E3 (no Teams)",
     "verification": "microsoft-commercial",
+    "product": "Office 365 E3 (no Teams)",
+    "source": "https://www.microsoft.com/en-gb/microsoft-365/enterprise/office-365-plans-and-pricing",
     "offeringId": "o365-e3-no-teams-gb",
     "component": "seats",
     "review": {
-      "checkedAt": "2026-11-19T00:00:00Z",
-      "expiresAt": "2027-01-17T23:59:00Z",
-      "terms": "UK public offer per user/month, paid yearly. Annual subscription auto-renews. Price excludes VAT."
+      "checkedAt": "2026-11-19T12:08:05.001Z",
+      "expiresAt": "2027-01-03T12:08:05.001Z",
+      "terms": "UK public offer per user/month, paid yearly. Annual subscription auto-renews. Price excludes VAT.",
+      "term": "annual"
     }
   },
   {
@@ -282,15 +294,16 @@
     "currency": "GBP",
     "price": "30.20",
     "effectiveAt": "2026-11-19T00:00:00Z",
-    "source": "https://www.microsoft.com/en-gb/microsoft-365/enterprise/office-365-plans-and-pricing",
-    "product": "Office 365 E5 (no Teams)",
     "verification": "microsoft-commercial",
+    "product": "Office 365 E5 (no Teams)",
+    "source": "https://www.microsoft.com/en-gb/microsoft-365/enterprise/office-365-plans-and-pricing",
     "offeringId": "o365-e5-no-teams-gb",
     "component": "seats",
     "review": {
-      "checkedAt": "2026-11-19T00:00:00Z",
-      "expiresAt": "2027-01-17T23:59:00Z",
-      "terms": "UK public offer per user/month, paid yearly. Annual subscription auto-renews. Price excludes VAT."
+      "checkedAt": "2026-11-19T12:08:05.001Z",
+      "expiresAt": "2027-01-03T12:08:05.001Z",
+      "terms": "UK public offer per user/month, paid yearly. Annual subscription auto-renews. Price excludes VAT.",
+      "term": "annual"
     }
   },
   {
@@ -303,15 +316,16 @@
     "currency": "GBP",
     "price": "5.40",
     "effectiveAt": "2026-11-19T00:00:00Z",
-    "source": "https://www.microsoft.com/en-gb/microsoft-365/business/microsoft-365-plans-and-pricing",
-    "product": "Microsoft 365 Business Basic",
     "verification": "microsoft-commercial",
+    "product": "Microsoft 365 Business Basic",
+    "source": "https://www.microsoft.com/en-gb/microsoft-365/business/microsoft-365-plans-and-pricing",
     "offeringId": "m365-business-basic-gb",
     "component": "seats",
     "review": {
-      "checkedAt": "2026-11-19T00:00:00Z",
-      "expiresAt": "2027-01-17T23:59:00Z",
-      "terms": "UK public offer per user/month, paid yearly. Annual subscription auto-renews. Price excludes VAT."
+      "checkedAt": "2026-11-19T12:08:05.001Z",
+      "expiresAt": "2027-01-03T12:08:05.001Z",
+      "terms": "UK public offer per user/month, paid yearly. Annual subscription auto-renews. Price excludes VAT.",
+      "term": "annual"
     }
   },
   {
@@ -324,15 +338,16 @@
     "currency": "GBP",
     "price": "23.10",
     "effectiveAt": "2026-11-19T00:00:00Z",
-    "source": "https://www.microsoft.com/en-gb/microsoft-365/enterprise/office-365-plans-and-pricing",
-    "product": "Microsoft 365 Copilot enterprise add-on",
     "verification": "microsoft-commercial",
+    "product": "Microsoft 365 Copilot enterprise add-on",
+    "source": "https://www.microsoft.com/en-gb/microsoft-365/enterprise/office-365-plans-and-pricing",
     "offeringId": "m365-copilot-enterprise-gb",
     "component": "seats",
     "review": {
-      "checkedAt": "2026-11-19T00:00:00Z",
-      "expiresAt": "2027-01-17T23:59:00Z",
-      "terms": "UK public offer per user/month, paid yearly. Annual subscription auto-renews. Price excludes VAT. Eligible Microsoft 365 or Office 365 licence required under Microsoft terms."
+      "checkedAt": "2026-11-19T12:08:05.001Z",
+      "expiresAt": "2027-01-03T12:08:05.001Z",
+      "terms": "UK public offer per user/month, paid yearly. Annual subscription auto-renews. Price excludes VAT. Eligible Microsoft 365 or Office 365 licence required under Microsoft terms.",
+      "term": "annual"
     }
   },
   {
@@ -345,15 +360,16 @@
     "currency": "GBP",
     "price": "7.70",
     "effectiveAt": "2026-11-19T00:00:00Z",
-    "source": "https://www.microsoft.com/en-gb/security/microsoft-entra-pricing",
-    "product": "Microsoft Entra ID P2",
     "verification": "microsoft-commercial",
+    "product": "Microsoft Entra ID P2",
+    "source": "https://www.microsoft.com/en-gb/security/microsoft-entra-pricing",
     "offeringId": "entra-p2-gb",
     "component": "seats",
     "review": {
-      "checkedAt": "2026-11-19T00:00:00Z",
-      "expiresAt": "2027-01-17T23:59:00Z",
-      "terms": "UK public offer per user/month, paid yearly. Annual subscription auto-renews. Price excludes VAT."
+      "checkedAt": "2026-11-19T12:08:05.001Z",
+      "expiresAt": "2027-01-03T12:08:05.001Z",
+      "terms": "UK public offer per user/month, paid yearly. Annual subscription auto-renews. Price excludes VAT.",
+      "term": "annual"
     }
   },
   {
@@ -366,15 +382,16 @@
     "currency": "GBP",
     "price": "5.40",
     "effectiveAt": "2026-11-19T00:00:00Z",
-    "source": "https://www.microsoft.com/en-gb/security/microsoft-entra-pricing",
-    "product": "Microsoft Entra ID Governance",
     "verification": "microsoft-commercial",
+    "product": "Microsoft Entra ID Governance",
+    "source": "https://www.microsoft.com/en-gb/security/microsoft-entra-pricing",
     "offeringId": "entra-governance-gb",
     "component": "seats",
     "review": {
-      "checkedAt": "2026-11-19T00:00:00Z",
-      "expiresAt": "2027-01-17T23:59:00Z",
-      "terms": "UK public offer per user/month, paid yearly. Annual subscription auto-renews. Price excludes VAT. Customer prerequisite and plan eligibility require separate review."
+      "checkedAt": "2026-11-19T12:08:05.001Z",
+      "expiresAt": "2027-01-03T12:08:05.001Z",
+      "terms": "UK public offer per user/month, paid yearly. Annual subscription auto-renews. Price excludes VAT. Customer prerequisite and plan eligibility require separate review.",
+      "term": "annual"
     }
   },
   {
@@ -387,15 +404,16 @@
     "currency": "GBP",
     "price": "33.50",
     "effectiveAt": "2026-11-19T00:00:00Z",
-    "source": "https://www.microsoft.com/en-gb/microsoft-365/enterprise/microsoft-365-plans-and-pricing",
-    "product": "Microsoft 365 E3",
     "verification": "microsoft-commercial",
+    "product": "Microsoft 365 E3",
+    "source": "https://www.microsoft.com/en-gb/microsoft-365/enterprise/microsoft-365-plans-and-pricing",
     "offeringId": "m365-e3-gb",
     "component": "seats",
     "review": {
-      "checkedAt": "2026-11-19T00:00:00Z",
-      "expiresAt": "2027-01-17T23:59:00Z",
-      "terms": "UK public offer per user/month, paid yearly. Annual commitment. Price excludes VAT."
+      "checkedAt": "2026-11-19T12:08:05.001Z",
+      "expiresAt": "2027-01-03T12:08:05.001Z",
+      "terms": "UK public offer per user/month, paid yearly. Annual commitment. Price excludes VAT.",
+      "term": "annual"
     }
   },
   {
@@ -408,15 +426,16 @@
     "currency": "GBP",
     "price": "51.60",
     "effectiveAt": "2026-11-19T00:00:00Z",
-    "source": "https://www.microsoft.com/en-gb/microsoft-365/enterprise/microsoft-365-plans-and-pricing",
-    "product": "Microsoft 365 E5",
     "verification": "microsoft-commercial",
+    "product": "Microsoft 365 E5",
+    "source": "https://www.microsoft.com/en-gb/microsoft-365/enterprise/microsoft-365-plans-and-pricing",
     "offeringId": "m365-e5-gb",
     "component": "seats",
     "review": {
-      "checkedAt": "2026-11-19T00:00:00Z",
-      "expiresAt": "2027-01-17T23:59:00Z",
-      "terms": "UK public offer per user/month, paid yearly. Annual commitment. Price excludes VAT."
+      "checkedAt": "2026-11-19T12:08:05.001Z",
+      "expiresAt": "2027-01-03T12:08:05.001Z",
+      "terms": "UK public offer per user/month, paid yearly. Annual commitment. Price excludes VAT.",
+      "term": "annual"
     }
   },
   {
@@ -429,15 +448,16 @@
     "currency": "GBP",
     "price": "81.60",
     "effectiveAt": "2026-11-19T00:00:00Z",
-    "source": "https://www.microsoft.com/en-gb/microsoft-365/enterprise/microsoft-365-plans-and-pricing",
-    "product": "Microsoft 365 E7",
     "verification": "microsoft-commercial",
+    "product": "Microsoft 365 E7",
+    "source": "https://www.microsoft.com/en-gb/microsoft-365/enterprise/microsoft-365-plans-and-pricing",
     "offeringId": "m365-e7-gb",
     "component": "seats",
     "review": {
-      "checkedAt": "2026-11-19T00:00:00Z",
-      "expiresAt": "2027-01-17T23:59:00Z",
-      "terms": "UK public offer per user/month, paid yearly. Annual commitment. Price excludes VAT."
+      "checkedAt": "2026-11-19T12:08:05.001Z",
+      "expiresAt": "2027-01-03T12:08:05.001Z",
+      "terms": "UK public offer per user/month, paid yearly. Annual commitment. Price excludes VAT.",
+      "term": "annual"
     }
   },
   {
@@ -450,15 +470,16 @@
     "currency": "GBP",
     "price": "75.00",
     "effectiveAt": "2026-11-19T00:00:00Z",
-    "source": "https://www.microsoft.com/en-gb/microsoft-365/enterprise/microsoft-365-plans-and-pricing",
-    "product": "Microsoft 365 E7 (no Teams)",
     "verification": "microsoft-commercial",
+    "product": "Microsoft 365 E7 (no Teams)",
+    "source": "https://www.microsoft.com/en-gb/microsoft-365/enterprise/microsoft-365-plans-and-pricing",
     "offeringId": "m365-e7-no-teams-gb",
     "component": "seats",
     "review": {
-      "checkedAt": "2026-11-19T00:00:00Z",
-      "expiresAt": "2027-01-17T23:59:00Z",
-      "terms": "UK public offer per user/month, paid yearly. Annual commitment. Price excludes VAT."
+      "checkedAt": "2026-11-19T12:08:05.001Z",
+      "expiresAt": "2027-01-03T12:08:05.001Z",
+      "terms": "UK public offer per user/month, paid yearly. Annual commitment. Price excludes VAT.",
+      "term": "annual"
     }
   },
   {
@@ -471,15 +492,16 @@
     "currency": "GBP",
     "price": "27.00",
     "effectiveAt": "2026-11-19T00:00:00Z",
-    "source": "https://www.microsoft.com/en-gb/microsoft-365/enterprise/microsoft-365-plans-and-pricing",
-    "product": "Microsoft 365 E3 (no Teams)",
     "verification": "microsoft-commercial",
+    "product": "Microsoft 365 E3 (no Teams)",
+    "source": "https://www.microsoft.com/en-gb/microsoft-365/enterprise/microsoft-365-plans-and-pricing",
     "offeringId": "m365-e3-no-teams-gb",
     "component": "seats",
     "review": {
-      "checkedAt": "2026-11-19T00:00:00Z",
-      "expiresAt": "2027-01-17T23:59:00Z",
-      "terms": "UK public offer per user/month, paid yearly. Annual commitment. Price excludes VAT."
+      "checkedAt": "2026-11-19T12:08:05.001Z",
+      "expiresAt": "2027-01-03T12:08:05.001Z",
+      "terms": "UK public offer per user/month, paid yearly. Annual commitment. Price excludes VAT.",
+      "term": "annual"
     }
   },
   {
@@ -492,15 +514,16 @@
     "currency": "GBP",
     "price": "45.00",
     "effectiveAt": "2026-11-19T00:00:00Z",
-    "source": "https://www.microsoft.com/en-gb/microsoft-365/enterprise/microsoft-365-plans-and-pricing",
-    "product": "Microsoft 365 E5 (no Teams)",
     "verification": "microsoft-commercial",
+    "product": "Microsoft 365 E5 (no Teams)",
+    "source": "https://www.microsoft.com/en-gb/microsoft-365/enterprise/microsoft-365-plans-and-pricing",
     "offeringId": "m365-e5-no-teams-gb",
     "component": "seats",
     "review": {
-      "checkedAt": "2026-11-19T00:00:00Z",
-      "expiresAt": "2027-01-17T23:59:00Z",
-      "terms": "UK public offer per user/month, paid yearly. Annual commitment. Price excludes VAT."
+      "checkedAt": "2026-11-19T12:08:05.001Z",
+      "expiresAt": "2027-01-03T12:08:05.001Z",
+      "terms": "UK public offer per user/month, paid yearly. Annual commitment. Price excludes VAT.",
+      "term": "annual"
     }
   },
   {
@@ -513,15 +536,16 @@
     "currency": "GBP",
     "price": "2.30",
     "effectiveAt": "2026-11-19T00:00:00Z",
-    "source": "https://www.microsoft.com/en-gb/microsoft-365/business/microsoft-365-plans-and-pricing",
-    "product": "Microsoft Defender for Business",
     "verification": "microsoft-commercial",
+    "product": "Microsoft Defender for Business",
+    "source": "https://www.microsoft.com/en-gb/microsoft-365/business/microsoft-365-plans-and-pricing",
     "offeringId": "defender-business-gb",
     "component": "seats",
     "review": {
-      "checkedAt": "2026-11-19T00:00:00Z",
-      "expiresAt": "2027-01-17T23:59:00Z",
-      "terms": "UK public offer per user/month, paid yearly. Annual subscription auto-renews. Price excludes VAT."
+      "checkedAt": "2026-11-19T12:08:05.001Z",
+      "expiresAt": "2027-01-03T12:08:05.001Z",
+      "terms": "UK public offer per user/month, paid yearly. Annual subscription auto-renews. Price excludes VAT.",
+      "term": "annual"
     }
   },
   {
@@ -534,15 +558,16 @@
     "currency": "GBP",
     "price": "9.80",
     "effectiveAt": "2026-11-19T00:00:00Z",
-    "source": "https://www.microsoft.com/en-gb/microsoft-365/business/microsoft-365-plans-and-pricing",
-    "product": "Microsoft 365 Apps for Business",
     "verification": "microsoft-commercial",
+    "product": "Microsoft 365 Apps for Business",
+    "source": "https://www.microsoft.com/en-gb/microsoft-365/business/microsoft-365-plans-and-pricing",
     "offeringId": "m365-apps-business-gb",
     "component": "seats",
     "review": {
-      "checkedAt": "2026-11-19T00:00:00Z",
-      "expiresAt": "2027-01-17T23:59:00Z",
-      "terms": "UK public offer per user/month, paid yearly. Annual subscription auto-renews. Price excludes VAT."
+      "checkedAt": "2026-11-19T12:08:05.001Z",
+      "expiresAt": "2027-01-03T12:08:05.001Z",
+      "terms": "UK public offer per user/month, paid yearly. Annual subscription auto-renews. Price excludes VAT.",
+      "term": "annual"
     }
   },
   {
@@ -555,15 +580,16 @@
     "currency": "GBP",
     "price": "7.70",
     "effectiveAt": "2026-11-19T00:00:00Z",
-    "source": "https://www.microsoft.com/en-gb/microsoft-365/enterprise/frontline-plans-and-pricing",
-    "product": "Microsoft 365 F3",
     "verification": "microsoft-commercial",
+    "product": "Microsoft 365 F3",
+    "source": "https://www.microsoft.com/en-gb/microsoft-365/enterprise/frontline-plans-and-pricing",
     "offeringId": "m365-f3-gb",
     "component": "seats",
     "review": {
-      "checkedAt": "2026-11-19T00:00:00Z",
-      "expiresAt": "2027-01-17T23:59:00Z",
-      "terms": "UK public offer per user/month. Annual commitment, paid yearly. Excludes VAT. With Teams edition. Confirm frontline eligibility."
+      "checkedAt": "2026-11-19T12:08:05.001Z",
+      "expiresAt": "2027-01-03T12:08:05.001Z",
+      "terms": "UK public offer per user/month. Annual commitment, paid yearly. Excludes VAT. With Teams edition. Confirm frontline eligibility.",
+      "term": "annual"
     }
   },
   {
@@ -576,15 +602,17 @@
     "currency": "GBP",
     "price": "10.80",
     "effectiveAt": "2026-11-19T00:00:00Z",
-    "source": "https://www.microsoft.com/en-gb/microsoft-365/business/microsoft-365-business-standard",
-    "product": "Microsoft 365 Business Standard",
     "verification": "microsoft-commercial",
+    "product": "Microsoft 365 Business Standard",
+    "source": "https://www.microsoft.com/en-gb/microsoft-365/business/microsoft-365-business-standard",
     "offeringId": "m365-business-standard-gb",
     "component": "seats",
     "review": {
-      "checkedAt": "2026-11-19T00:00:00Z",
-      "expiresAt": "2027-01-17T23:59:00Z",
-      "terms": "UK public offer per user/month. Annual subscription, paid yearly, auto-renews. Excludes VAT. Standalone Business Standard with Teams."
+      "checkedAt": "2026-11-19T12:08:05.001Z",
+      "expiresAt": "2027-01-03T12:08:05.001Z",
+      "terms": "UK public offer per user/month. Annual subscription, paid yearly, auto-renews. Excludes VAT. Standalone Business Standard with Teams.",
+      "term": "annual",
+      "identity": "CFQ7TTC0LDPB:0001"
     }
   },
   {
@@ -597,15 +625,17 @@
     "currency": "GBP",
     "price": "16.90",
     "effectiveAt": "2026-11-19T00:00:00Z",
-    "source": "https://www.microsoft.com/en-gb/microsoft-365/business/microsoft-365-business-premium",
-    "product": "Microsoft 365 Business Premium",
     "verification": "microsoft-commercial",
+    "product": "Microsoft 365 Business Premium",
+    "source": "https://www.microsoft.com/en-gb/microsoft-365/business/microsoft-365-business-premium",
     "offeringId": "m365-business-premium-gb",
     "component": "seats",
     "review": {
-      "checkedAt": "2026-11-19T00:00:00Z",
-      "expiresAt": "2027-01-17T23:59:00Z",
-      "terms": "UK public offer per user/month. Annual subscription, paid yearly, auto-renews. Excludes VAT. Standalone Business Premium with Teams."
+      "checkedAt": "2026-11-19T12:08:05.001Z",
+      "expiresAt": "2027-01-03T12:08:05.001Z",
+      "terms": "UK public offer per user/month. Annual subscription, paid yearly, auto-renews. Excludes VAT. Standalone Business Premium with Teams.",
+      "term": "annual",
+      "identity": "CFQ7TTC0LCHC:0002"
     }
   },
   {
@@ -618,15 +648,16 @@
     "currency": "GBP",
     "price": "3.10",
     "effectiveAt": "2026-11-19T00:00:00Z",
-    "source": "https://www.microsoft.com/en-gb/microsoft-teams/compare-microsoft-teams-business-options",
-    "product": "Microsoft Teams Essentials",
     "verification": "microsoft-commercial",
+    "product": "Microsoft Teams Essentials",
+    "source": "https://www.microsoft.com/en-gb/microsoft-teams/compare-microsoft-teams-business-options",
     "offeringId": "teams-essentials-gb",
     "component": "seats",
     "review": {
-      "checkedAt": "2026-11-19T00:00:00Z",
-      "expiresAt": "2027-01-17T23:59:00Z",
-      "terms": "UK public offer per user/month. Annual subscription, paid yearly, auto-renews. Excludes VAT. Exact Teams Essentials subscription."
+      "checkedAt": "2026-11-19T12:08:05.001Z",
+      "expiresAt": "2027-01-03T12:08:05.001Z",
+      "terms": "UK public offer per user/month. Annual subscription, paid yearly, auto-renews. Excludes VAT. Exact Teams Essentials subscription.",
+      "term": "annual"
     }
   },
   {
@@ -639,15 +670,16 @@
     "currency": "GBP",
     "price": "19.32",
     "effectiveAt": "2026-11-19T00:00:00Z",
-    "source": "https://www.microsoft.com/en-gb/copilot/pricing/business",
-    "product": "Microsoft 365 Copilot Business add-on",
     "verification": "microsoft-commercial",
+    "product": "Microsoft 365 Copilot Business add-on",
+    "source": "https://www.microsoft.com/en-gb/copilot/pricing/business",
     "offeringId": "m365-business-copilot-gb",
     "component": "seats",
     "review": {
-      "checkedAt": "2026-11-19T00:00:00Z",
-      "expiresAt": "2027-01-17T23:59:00Z",
-      "terms": "UK public offer per user/month. Monthly subscription, auto-renews. Excludes VAT. Exact non-promotional monthly offer for the standalone Business add-on with an eligible Microsoft subscription. Advanced usage can be billed separately."
+      "checkedAt": "2026-11-19T12:08:05.001Z",
+      "expiresAt": "2027-01-03T12:08:05.001Z",
+      "terms": "UK public offer per user/month. Monthly subscription, auto-renews. Excludes VAT. Exact non-promotional monthly offer for the standalone Business add-on with an eligible Microsoft subscription. Advanced usage can be billed separately.",
+      "term": "monthly"
     }
   },
   {
@@ -660,15 +692,16 @@
     "currency": "GBP",
     "price": "1.54",
     "effectiveAt": "2026-11-19T00:00:00Z",
-    "source": "https://www.microsoft.com/en-gb/security/business/siem-and-xdr/microsoft-defender-office-365",
-    "product": "Microsoft Defender for Office 365 Plan 1",
     "verification": "microsoft-commercial",
+    "product": "Microsoft Defender for Office 365 Plan 1",
+    "source": "https://www.microsoft.com/en-gb/security/business/siem-and-xdr/microsoft-defender-office-365",
     "offeringId": "defender-o365-p1-gb",
     "component": "seats",
     "review": {
-      "checkedAt": "2026-11-19T00:00:00Z",
-      "expiresAt": "2027-01-17T23:59:00Z",
-      "terms": "UK public offer per user/month. Annual subscription, paid yearly, auto-renews. Excludes VAT. Plan 1. Confirm email and workload prerequisites."
+      "checkedAt": "2026-11-19T12:08:05.001Z",
+      "expiresAt": "2027-01-03T12:08:05.001Z",
+      "terms": "UK public offer per user/month. Annual subscription, paid yearly, auto-renews. Excludes VAT. Plan 1. Confirm email and workload prerequisites.",
+      "term": "annual"
     }
   },
   {
@@ -681,15 +714,16 @@
     "currency": "GBP",
     "price": "3.80",
     "effectiveAt": "2026-11-19T00:00:00Z",
-    "source": "https://www.microsoft.com/en-gb/security/business/siem-and-xdr/microsoft-defender-office-365",
-    "product": "Microsoft Defender for Office 365 Plan 2",
     "verification": "microsoft-commercial",
+    "product": "Microsoft Defender for Office 365 Plan 2",
+    "source": "https://www.microsoft.com/en-gb/security/business/siem-and-xdr/microsoft-defender-office-365",
     "offeringId": "defender-o365-p2-gb",
     "component": "seats",
     "review": {
-      "checkedAt": "2026-11-19T00:00:00Z",
-      "expiresAt": "2027-01-17T23:59:00Z",
-      "terms": "UK public offer per user/month. Annual subscription, paid yearly, auto-renews. Excludes VAT. Plan 2. Confirm email and workload prerequisites."
+      "checkedAt": "2026-11-19T12:08:05.001Z",
+      "expiresAt": "2027-01-03T12:08:05.001Z",
+      "terms": "UK public offer per user/month. Annual subscription, paid yearly, auto-renews. Excludes VAT. Plan 2. Confirm email and workload prerequisites.",
+      "term": "annual"
     }
   },
   {
@@ -702,15 +736,20 @@
     "currency": "GBP",
     "price": "9.20",
     "effectiveAt": "2026-11-19T00:00:00Z",
-    "source": "https://www.microsoft.com/en-gb/security/business/siem-and-xdr/microsoft-defender-cloud-apps",
-    "product": "Microsoft Defender Suite",
     "verification": "microsoft-commercial",
+    "product": "Microsoft Defender Suite",
+    "source": "https://www.microsoft.com/en-gb/security/business/siem-and-xdr/microsoft-defender-cloud-apps",
     "offeringId": "defender-suite-gb",
     "component": "seats",
     "review": {
-      "checkedAt": "2026-11-19T00:00:00Z",
-      "expiresAt": "2027-01-17T23:59:00Z",
-      "terms": "UK public offer per user/month. Annual subscription, paid yearly, auto-renews. Excludes VAT. Requires Microsoft 365 E3, or Office 365 E3 and Enterprise Mobility + Security E3."
+      "checkedAt": "2026-11-19T12:08:05.001Z",
+      "expiresAt": "2027-01-03T12:08:05.001Z",
+      "terms": "UK public offer per user/month. Annual subscription, paid yearly, auto-renews. Excludes VAT. Requires Microsoft 365 E3, or Office 365 E3 and Enterprise Mobility + Security E3.",
+      "term": "annual",
+      "corroboration": [
+        "https://www.microsoft.com/en-gb/security/business/siem-and-xdr/microsoft-defender-office-365",
+        "https://www.microsoft.com/en-gb/security/business/endpoint-security/microsoft-defender-endpoint"
+      ]
     }
   },
   {
@@ -723,15 +762,16 @@
     "currency": "GBP",
     "price": "6.90",
     "effectiveAt": "2026-11-19T00:00:00Z",
-    "source": "https://www.microsoft.com/en-gb/microsoft-365/enterprise/frontline-plans-and-pricing",
-    "product": "Microsoft 365 F3 (no Teams)",
     "verification": "microsoft-commercial",
+    "product": "Microsoft 365 F3 (no Teams)",
+    "source": "https://www.microsoft.com/en-gb/microsoft-365/enterprise/frontline-plans-and-pricing",
     "offeringId": "m365-f3-no-teams-gb",
     "component": "seats",
     "review": {
-      "checkedAt": "2026-11-19T00:00:00Z",
-      "expiresAt": "2027-01-17T23:59:00Z",
-      "terms": "UK public offer per user/month. Annual commitment, paid yearly. Excludes VAT. Frontline eligibility and the no-Teams edition apply."
+      "checkedAt": "2026-11-19T12:08:05.001Z",
+      "expiresAt": "2027-01-03T12:08:05.001Z",
+      "terms": "UK public offer per user/month. Annual commitment, paid yearly. Excludes VAT. Frontline eligibility and the no-Teams edition apply.",
+      "term": "annual"
     }
   },
   {
@@ -744,15 +784,17 @@
     "currency": "GBP",
     "price": "8.30",
     "effectiveAt": "2026-11-19T00:00:00Z",
-    "source": "https://www.microsoft.com/en-gb/microsoft-365/business/microsoft-365-business-standard",
-    "product": "Microsoft 365 Business Standard (no Teams)",
     "verification": "microsoft-commercial",
+    "product": "Microsoft 365 Business Standard (no Teams)",
+    "source": "https://www.microsoft.com/en-gb/microsoft-365/business/microsoft-365-business-standard",
     "offeringId": "m365-business-standard-no-teams-gb",
     "component": "seats",
     "review": {
-      "checkedAt": "2026-11-19T00:00:00Z",
-      "expiresAt": "2027-01-17T23:59:00Z",
-      "terms": "UK public offer per user/month. Annual subscription, paid yearly, auto-renews. Excludes VAT. No Teams edition."
+      "checkedAt": "2026-11-19T12:08:05.001Z",
+      "expiresAt": "2027-01-03T12:08:05.001Z",
+      "terms": "UK public offer per user/month. Annual subscription, paid yearly, auto-renews. Excludes VAT. No Teams edition.",
+      "term": "annual",
+      "identity": "CFQ7TTC0LDPB:0011"
     }
   },
   {
@@ -765,15 +807,17 @@
     "currency": "GBP",
     "price": "14.40",
     "effectiveAt": "2026-11-19T00:00:00Z",
-    "source": "https://www.microsoft.com/en-gb/microsoft-365/business/microsoft-365-business-premium",
-    "product": "Microsoft 365 Business Premium (no Teams)",
     "verification": "microsoft-commercial",
+    "product": "Microsoft 365 Business Premium (no Teams)",
+    "source": "https://www.microsoft.com/en-gb/microsoft-365/business/microsoft-365-business-premium",
     "offeringId": "m365-business-premium-no-teams-gb",
     "component": "seats",
     "review": {
-      "checkedAt": "2026-11-19T00:00:00Z",
-      "expiresAt": "2027-01-17T23:59:00Z",
-      "terms": "UK public offer per user/month. Annual subscription, paid yearly, auto-renews. Excludes VAT. No Teams edition."
+      "checkedAt": "2026-11-19T12:08:05.001Z",
+      "expiresAt": "2027-01-03T12:08:05.001Z",
+      "terms": "UK public offer per user/month. Annual subscription, paid yearly, auto-renews. Excludes VAT. No Teams edition.",
+      "term": "annual",
+      "identity": "CFQ7TTC0LCHC:000N"
     }
   },
   {
@@ -786,15 +830,16 @@
     "currency": "GBP",
     "price": "9.30",
     "effectiveAt": "2026-11-19T00:00:00Z",
-    "source": "https://www.microsoft.com/en-gb/microsoft-365/enterprise/office-365-plans-and-pricing",
-    "product": "Enterprise Mobility + Security E3",
     "verification": "microsoft-commercial",
+    "product": "Enterprise Mobility + Security E3",
+    "source": "https://www.microsoft.com/en-gb/microsoft-365/enterprise/office-365-plans-and-pricing",
     "offeringId": "ems-e3-gb",
     "component": "seats",
     "review": {
-      "checkedAt": "2026-11-19T00:00:00Z",
-      "expiresAt": "2027-01-17T23:59:00Z",
-      "terms": "UK public offer per user/month. Annual subscription, paid yearly, auto-renews. Excludes VAT. The separately purchased offer can be part of the Defender Suite prerequisite."
+      "checkedAt": "2026-11-19T12:08:05.001Z",
+      "expiresAt": "2027-01-03T12:08:05.001Z",
+      "terms": "UK public offer per user/month. Annual subscription, paid yearly, auto-renews. Excludes VAT. The separately purchased offer can be part of the Defender Suite prerequisite.",
+      "term": "annual"
     }
   }
 ]

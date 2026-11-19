@@ -46,5 +46,29 @@
     "name": "Defender, Purview and unlisted Sentinel or Entra plans",
     "status": "manual",
     "reason": "Enter each separately billable service as a resource or licence. A security policy records a declaration and does not imply a charge."
+  },
+  {
+    "family": "foundry",
+    "name": "GPT-5",
+    "status": "manual",
+    "reason": "Product discovery identified this model family. Exact version, deployment mode, regional availability and compatible billable components still require source review. Use a customer-confirmed model and rate if needed."
+  },
+  {
+    "family": "foundry",
+    "name": "Anthropic Claude Sonnet",
+    "status": "manual",
+    "reason": "Product discovery identified this model family. Exact version, deployment mode, regional availability and compatible billable components still require source review. Use a customer-confirmed model and rate if needed."
+  },
+  {
+    "family": "foundry",
+    "name": "Mistral Large",
+    "status": "manual",
+    "reason": "Product discovery identified this model family. Exact version, deployment mode, regional availability and compatible billable components still require source review. Use a customer-confirmed model and rate if needed."
+  },
+  {
+    "family": "foundry",
+    "name": "Cohere Command",
+    "status": "manual",
+    "reason": "Product discovery identified this model family. Exact version, deployment mode, regional availability and compatible billable components still require source review. Use a customer-confirmed model and rate if needed."
   }
 ]

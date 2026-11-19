@@ -32,7 +32,9 @@
 - [ ] Blank-state, any-order object creation, search/filter, inspector editing, dependencies, warnings and live cost updates work with keyboard-only input.
 - [ ] Mobile viewport layout usable; 200% browser zoom and accessible focus/contrast pass targeted checks.
 - [ ] Logical diagram updates on graph edits, shows shared deployment and missing links, and node activation selects the object; accessible alternative exists.
-- [ ] PDF includes environment, diagram, retail/contract/forecast comparison, itemised ledger, governance, sources, pricing freshness and limitations; totals reconcile exactly.
+- [ ] Both report formats reconcile monthly, annualised, retail, current and forecast amounts and unresolved counts to the open estimate and JSON. Full Report defaults to the comprehensive architecture, ledger, findings and evidence.
+- [ ] Check PDF text and media bounds, embedded fonts, metadata, tables, margins, page numbering, readable architecture, unknown-charge visibility and absence of PDF actions. Render the fictional reports for visual review using the [report fixture procedure](34-pdf-report-redesign.md#reproduce-the-visual-review).
+- [ ] Keyboard selects the desired format, files download locally and switching workspaces invalidates an in-flight report.
 - [ ] No user-configured data sent through fetch/XHR/beacon/analytics; browser storage contains no environment objects; only same-origin static resource fetches in normal operation.
 - [ ] No runtime backend, Worker script, auth workflow or database in production output.
 

@@ -1,7 +1,7 @@
 import { readFile } from 'node:fs/promises';
 import AxeBuilder from '@axe-core/playwright';
 import { expect, test, type Page } from '@playwright/test';
-import { getDocument } from 'pdfjs-dist/legacy/build/pdf.mjs';
+import { reportText } from './report-text';
 
 async function add(page: Page, kind: string, name: string) {
   await page.getByRole('button', { name: 'Add object', exact: true }).first().click();
@@ -71,19 +71,14 @@ test('draft creation, shared costing, keyboard graph, reconciled report and JSON
 
   await page.getByRole('link', { name: 'Reports & Export' }).click();
   const pdf = await fileFrom(page, 'Generate PDF');
-  const loading = getDocument({ data: new Uint8Array(pdf), standardFontDataUrl: 'node_modules/pdfjs-dist/standard_fonts/' });
-  const pdfDocument = await loading.promise;
-  try {
-    expect(pdfDocument.numPages).toBeGreaterThanOrEqual(2);
-    expect(pdfDocument.numPages).toBeLessThan(10);
-    const text = (await Promise.all(Array.from({ length: pdfDocument.numPages }, async (_, index) =>
-      (await (await pdfDocument.getPage(index + 1)).getTextContent()).items
-        .map(item => 'str' in item ? item.str : '').join(' ')))).join(' ');
-    for (const expected of ['Logical architecture', 'Shared provisioned capacity', '£700.00', '£840.00', 'Governance advisory findings',
-      'Assumptions and sources', 'Unknown', 'Fictional Alpha']) expect(text).toContain(expected);
-    const itemised = text.split('Itemised monthly costs')[1]?.split('Governance advisory findings')[0];
-    expect(itemised?.match(/Shared provisioned capacity/g)?.length).toBe(1);
-  } finally { await loading.destroy(); }
+  const pages = await reportText(pdf);
+  expect(pages.length).toBeGreaterThanOrEqual(2);
+  expect(pages.length).toBeLessThan(10);
+  const text = pages.join(' ');
+  for (const expected of ['Logical architecture', 'Shared provisioned capacity', '£700.00', '£840.00', 'Governance advisory findings',
+    'Assumptions and sources', 'Unknown', 'Fictional Alpha']) expect(text).toContain(expected);
+  const itemised = pages.filter(pageText => pageText.includes('Charge component')).join(' ').split('Charge details')[0];
+  expect(itemised.match(/Shared provisioned capacity/g)?.length).toBe(1);
   const json = await fileFrom(page, 'Export JSON');
   expect(JSON.parse(json.toString()).sourceSnapshot).toMatchObject({ current: '700.00', incomplete: 0 });
   expect(await page.evaluate(async () => [localStorage.length, sessionStorage.length, document.cookie, (await indexedDB.databases()).length])).toEqual([0, 0, '', 0]);

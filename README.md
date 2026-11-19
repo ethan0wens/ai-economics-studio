@@ -11,7 +11,7 @@ npm ci
 npm run dev
 ```
 
-Name an environment on **Home** or preview a fictional example. **Environment Builder** opens in Guided mode, where you can choose platforms, add agents, enter usage and see the estimate update. Advanced opens the same inventory and its settings. **Cost Analysis** shows known costs, unresolved items, the cost ledger and the fields that need attention. Use **Reports & Export** for a PDF or to save editable JSON. **Documentation** offers searchable instructions and **Pricing Catalogue** shows the scope and evidence behind the rates. Cloud accounts and credentials are needed for production deployment.
+Name an environment on **Home** or preview a fictional example. **Environment Builder** opens in Guided mode, where you can choose platforms, add agents, enter usage and see the estimate update. Advanced opens the same inventory and its settings. **Cost Analysis** shows known costs, unresolved items, the cost ledger and the fields that need attention. Use **Reports & Export** for an Executive Summary or Full Report PDF, or to save editable JSON. **Documentation** offers searchable instructions and **Pricing Catalogue** shows the scope and evidence behind the rates. Cloud accounts and credentials are needed for production deployment.
 
 ```sh
 npm run typecheck

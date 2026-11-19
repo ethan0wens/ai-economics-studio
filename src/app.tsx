@@ -1,4 +1,4 @@
-import { lazy, Suspense, useEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, lazy, Suspense, useEffect, useMemo, useRef, useState } from 'react';
 import { Activity, ArrowDownToLine, ArrowRight, Boxes, ChevronRight, Cloud, Cpu, FileText, Gauge, Plus, ShieldCheck, Users } from 'lucide-react';
 import { blankEnvironment, cloneEnvironment, disclaimer, environmentSchema, importEnvironment, kindLabels, maxBytes, maxObjects, removeObject, type Environment, type Kind } from './domain';
 import { emptyCatalogue, loadCatalogue, type Catalogue } from './catalogue';
@@ -19,6 +19,8 @@ import { CostDrivers, EstimateReadiness, EstimateSummary, type EditTarget } from
 import { UsageSensitivity } from './usage-sensitivity-ui';
 import { openExample } from './examples';
 import { LearnMore } from './learn-more';
+
+import type { ReportFormat } from './report';
 
 const Architecture = lazy(() => import('./diagram'));
 const Examples = lazy(() => import('./examples-ui').then(module => ({ default: module.Examples })));
@@ -98,7 +100,7 @@ export default function App() {
   const [dirty, setDirtyState] = useState(false);
   const dirtyNow = useRef(false);
   const openSequence = useRef(0);
-  const workspaceVersion = useRef(0);
+  const pdfJob = useRef<symbol | undefined>(undefined);
   function setDirty(value: boolean) {
     dirtyNow.current = value;
     setDirtyState(value);
@@ -121,6 +123,11 @@ export default function App() {
   const [error, setError] = useState('');
   const [toast, setToast] = useState('');
   const [exporting, setExporting] = useState(false);
+  const [reportFormat, setReportFormat] = useState<ReportFormat>('full');
+  const cancelPdf = useCallback(() => {
+    pdfJob.current = undefined;
+    setExporting(false);
+  }, []);
   const imported = useRef<HTMLInputElement>(null);
   const main = useRef<HTMLElement>(null);
   const workspaceRoute = useRef<Destination>('builder');
@@ -200,11 +207,12 @@ export default function App() {
     let alive = true;
     loadCatalogue().then(value => {
       if (!alive) return;
+      cancelPdf();
       setCatalogue(value);
       setCatalogueNote(value.fallback ? 'Using the last validated catalogue. The latest check time is unavailable.' : '');
     }).catch(() => { if (alive) setCatalogueNote('The pricing catalogue is unavailable. You can continue editing and review any unresolved charges in Cost Analysis.'); });
     return () => { alive = false; };
-  }, []);
+  }, [cancelPdf]);
   useEffect(() => {
     if (!dirty) return;
     function warn(event: BeforeUnloadEvent) { event.preventDefault(); event.returnValue = ''; }
@@ -232,6 +240,7 @@ export default function App() {
   function update(value: Environment) {
     const checked = environmentSchema.safeParse({ ...value, updatedAt: new Date().toISOString() });
     if (!checked.success) { setError(checked.error.issues[0].message); return false; }
+    cancelPdf();
     setError(''); setWorkspace(checked.data); setDirty(true);
     return true;
   }
@@ -261,8 +270,7 @@ export default function App() {
   }
   function finishOpen(value: Opening) {
     openSequence.current++;
-    workspaceVersion.current++;
-    setExporting(false);
+    cancelPdf();
     setToast('');
     setWorkspace(value.env); setDirty(value.kind === 'copy' || value.kind === 'example');
     setExported(value.kind === 'import'); setEstimateChanged(false); setSelected(undefined); setTarget(undefined); setReturnView(undefined);
@@ -298,18 +306,22 @@ export default function App() {
     setDirty(false); setExported(true); setEstimateChanged(false); setToast('JSON copy downloaded. Use it to reopen this environment later.');
   }
   async function exportPdf() {
-    const version = workspaceVersion.current;
+    if (pdfJob.current || !env.objects.length) return;
+    const job = Symbol();
+    pdfJob.current = job;
+    setError('');
     setExporting(true);
     try {
       const { report } = await import('./report');
-      const bytes = await report(env, result, catalogue, advice);
-      if (version !== workspaceVersion.current) return;
-      download(new Uint8Array(bytes).buffer, `${fileName}.pdf`, 'application/pdf');
-      setToast('Your PDF report is ready.');
+      const bytes = await report(env, result, catalogue, advice, reportFormat);
+      if (pdfJob.current !== job) return;
+      const suffix = reportFormat === 'executive' ? '-executive-summary' : '';
+      download(new Uint8Array(bytes).buffer, `${fileName}${suffix}.pdf`, 'application/pdf');
+      setToast(reportFormat === 'executive' ? 'Your Executive Summary PDF is ready.' : 'Your Full Report PDF is ready.');
     } catch {
-      if (version === workspaceVersion.current) setError('Could not create the PDF. Try again or export JSON to keep your work.');
+      if (pdfJob.current === job) setError('Could not create the PDF. Try again or export JSON to keep your work.');
     } finally {
-      if (version === workspaceVersion.current) setExporting(false);
+      if (pdfJob.current === job) cancelPdf();
     }
   }
   async function refreshCatalogue() {
@@ -328,6 +340,7 @@ export default function App() {
     <div className="actions"><LearnMore guide="catalogue" /><button className="button" onClick={refreshCatalogue}>Check for updates</button></div>
     {catalogueNote && <p role="status">{catalogueNote}</p>}
     {candidate && <button className="button primary" onClick={() => {
+      cancelPdf();
       setCatalogue(candidate); setCandidate(undefined); setEstimateChanged(exported); setCatalogueNote('Catalogue applied. Your customer pricing agreements and forecast assumptions still apply.');
     }}>Apply catalogue</button>}
     {snapshotNote}
@@ -406,7 +419,18 @@ export default function App() {
           {result.summary.current.incomplete > 0 && <a href={routeHref('costs')}>Review unresolved charges before sharing</a>}
           <div className="overview-grid">
             <section className="panel padded report-options"><h2>Shareable PDF report</h2>
-              <p>Share your estimate with its assumptions, itemised costs, sources and a logical diagram. The report also lists unresolved charges.</p>
+              <p>Generate a PDF from the current estimate. Both formats show known costs and unresolved charges.</p>
+              <fieldset className="report-formats" disabled={exporting}>
+                <legend>Report format</legend>
+                <label>
+                  <input type="radio" name="report-format" checked={reportFormat === 'executive'} onChange={() => setReportFormat('executive')} />
+                  <span><strong>Executive Summary</strong><small>For stakeholders reviewing estimated spend, cost drivers, scope and key uncertainties.</small></span>
+                </label>
+                <label>
+                  <input type="radio" name="report-format" checked={reportFormat === 'full'} onChange={() => setReportFormat('full')} />
+                  <span><strong>Full Report</strong><small>For detailed review. Includes the logical architecture, ledger, findings and pricing evidence.</small></span>
+                </label>
+              </fieldset>
               <div className="actions"><button className="button primary" disabled={exporting || !env.objects.length} onClick={exportPdf}>
                 <ArrowDownToLine size={17} aria-hidden="true" />{exporting ? 'Generating PDF…' : 'Generate PDF'}</button>
                 <a href={routeHref('architecture')}>Architecture</a></div>

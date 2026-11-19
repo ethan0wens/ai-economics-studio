@@ -1,5 +1,5 @@
 import { expect, test, type Page } from '@playwright/test';
-import { getDocument } from 'pdfjs-dist/legacy/build/pdf.mjs';
+import { reportText } from './report-text';
 import AxeBuilder from '@axe-core/playwright';
 import { addAgent, example, getFile, mode, monthly, nav, prices, show, start } from './studio-fixture';
 
@@ -36,13 +36,10 @@ test('named Home, Foundry guidance, automatic links, progressive cost, JSON and 
   expect(before.relationships.map((edge: { type: string }) => edge.type).sort()).toEqual(['agent-uses-deployment', 'agent-uses-usage']);
   expect(before.sourceSnapshot).toMatchObject({ current: '900.00', annualKnown: '10800.00', incomplete: 0 });
   const pdf = await getFile(page, 'Generate PDF');
-  const loading = getDocument({ data: new Uint8Array(pdf), standardFontDataUrl: 'node_modules/pdfjs-dist/standard_fonts/' });
-  try {
-    const report = await loading.promise;
-    const pageContent = await (await report.getPage(1)).getTextContent();
-    const text = pageContent.items.flatMap(item => 'str' in item ? [item.str] : []).join(' ');
-    expect(text).toContain('Current estimate | Estimated monthly cost £900.00');
-  } finally { await loading.destroy(); }
+  const pages = await reportText(pdf);
+  expect(pages[0]).toContain('AI Environment Cost Assessment');
+  expect(pages[1]).toContain('Estimated monthly cost £900.00');
+  expect(pages[1]).toContain('Current estimate £900.00 £10,800.00 0');
   await page.reload();
   await expect(page.getByRole('heading', { name: 'Open an environment' })).toBeVisible();
   await page.locator('input[type=file]').setInputFiles({ name: 'fictional-export.json', mimeType: 'application/json', buffer: json });

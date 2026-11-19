@@ -1,7 +1,7 @@
 import { createHash } from 'node:crypto';
 import { readFile } from 'node:fs/promises';
 import { expect, test, type Page } from '@playwright/test';
-import { getDocument } from 'pdfjs-dist/legacy/build/pdf.mjs';
+import { reportText } from './report-text';
 import { enterpriseInventory, referenceAt, scenarios } from '../../fixtures/enterprise-scenarios';
 
 const money = (value: string) => new Intl.NumberFormat('en-GB', { style: 'currency', currency: 'GBP' }).format(Number(value));
@@ -40,20 +40,16 @@ for (const item of scenarios) {
     const snapshot = JSON.parse(raw.toString()).sourceSnapshot;
     expect(snapshot).toMatchObject({ catalogueId, currentKnown: item.expected.monthly, annualKnown: item.expected.annual, incomplete: item.expected.missing });
     const pdf = await exported(page, 'Generate PDF');
-    const loading = getDocument({ data: new Uint8Array(pdf), standardFontDataUrl: 'node_modules/pdfjs-dist/standard_fonts/' });
-    const document = await loading.promise;
-    try {
-      const text = (await Promise.all(Array.from({ length: document.numPages }, async (_, index) =>
-        (await (await document.getPage(index + 1)).getTextContent()).items.map(entry => 'str' in entry ? entry.str : '').join(' ')))).join(' ').replace(/\s+/g, ' ');
-      expect(text).toContain(`Current estimate | ${item.expected.missing ? 'Monthly known-cost subtotal' : 'Estimated monthly cost'} ${money(item.expected.monthly)} | Annualised estimate ${money(item.expected.annual)} | ${item.expected.missing} unresolved ${item.expected.missing === 1 ? 'charge' : 'charges'}`);
-      expect(text).toContain('Technical compatibility and licensing evidence');
-      expect(text).toContain('Itemised monthly costs');
-      if (item.expected.forecast) expect(text).toContain(`Price forecast | Estimated monthly cost ${money(item.expected.forecast)}`);
-      if (item.expected.existing) expect(text).toContain(`Existing licence spend: ${money(item.expected.existing)} known monthly`);
-      if (item.expected.proposed) expect(text).toContain(`Proposed licence spend: ${money(item.expected.proposed)} known monthly`);
-    } finally {
-      await loading.destroy();
-    }
+    const pages = await reportText(pdf);
+    const text = pages.join(' ');
+    expect(pages[1]).toContain(`${item.expected.missing ? 'Monthly known-cost subtotal' : 'Estimated monthly cost'} ${money(item.expected.monthly)}`);
+    expect(pages[1]).toContain(`Annualised estimate ${money(item.expected.annual)}`);
+    expect(pages[1]).toContain(`Current estimate ${money(item.expected.monthly)} ${money(item.expected.annual)} ${item.expected.missing}`);
+    expect(text).toContain('Technical compatibility and licensing evidence');
+    expect(text).toContain('Itemised monthly costs');
+    if (item.expected.forecast) expect(pages[1]).toContain(`Price forecast ${money(item.expected.forecast)}`);
+    if (item.expected.existing) expect(pages[1]).toContain(`Existing licence spend ${money(item.expected.existing)}`);
+    if (item.expected.proposed) expect(pages[1]).toContain(`Proposed licence spend ${money(item.expected.proposed)}`);
   });
 }
 
@@ -144,15 +140,41 @@ test('provisioned reservation and PAYG comparison reconcile in the builder, arch
     reservation: { term: '12', ptus: 30, coveredHours: 400 }, comparisonOfferingId: offer,
   });
   const pdf = await exported(page, 'Generate PDF');
-  const loading = getDocument({ data: new Uint8Array(pdf), standardFontDataUrl: 'node_modules/pdfjs-dist/standard_fonts/' });
-  const doc = await loading.promise;
-  try {
-    const texts = (await Promise.all(Array.from({ length: doc.numPages }, async (_, i) =>
-      (await (await doc.getPage(i + 1)).getTextContent()).items.map(item => 'str' in item ? item.str : '').join(' ')))).join(' ').replace(/\s+/g, ' ');
-    expect(texts).toContain('Current estimate | Estimated monthly cost £5,600.00 | Annualised estimate £67,200.00');
-    expect(texts).toContain('£5,400.00 provisioned | £3.77 PAYG retail | Provisioned minus PAYG £5,396.23');
-    expect(texts).toContain('Retail comparison quantity without reservation: 18000 PTU-hours.');
-  } finally {
-    await loading.destroy();
+  const pages = await reportText(pdf);
+  const texts = pages.join(' ');
+  expect(pages[1]).toContain('Current estimate £5,600.00 £67,200.00 0');
+  expect(texts).toContain('Provisioned minus PAYG');
+  expect(texts).toContain('£5,400.00 £3.77 £5,396.23');
+  expect(texts).toContain('Retail comparison quantity without reservation: 18000 PTU-hours.');
+
+});
+
+test('keyboard selects Executive Summary and both exports reconcile with the open estimate', async ({ page }) => {
+  const sample = scenarios[4];
+  const payload = JSON.stringify({ schemaVersion: '1.0.0', records: sample.records, inventory: enterpriseInventory });
+  const catalogueId = createHash('sha256').update(payload).digest('hex');
+  await page.clock.setFixedTime(new Date(referenceAt));
+  await page.route('**/pricing/manifest.json', route => route.fulfill({
+    json: { schemaVersion: '1.0.0', catalogueId, records: sample.records.length, lastCheckedAt: referenceAt, previous: null },
+  }));
+  await page.route(`**/pricing/catalogue-${catalogueId}.json`, route => route.fulfill({ body: payload, contentType: 'application/json' }));
+  await page.goto('/');
+  await page.locator('input[type=file]').setInputFiles({ name: 'fictional-formats.json', mimeType: 'application/json', buffer: Buffer.from(JSON.stringify(sample.env)) });
+  await navigate(page, 'Reports & Export');
+  const full = page.getByRole('radio', { name: /Full Report/ });
+  const summary = page.getByRole('radio', { name: /Executive Summary/ });
+  await expect(full).toBeChecked();
+  const complete = await reportText(await exported(page, 'Generate PDF'));
+  await full.focus();
+  await full.press('ArrowUp');
+  await expect(summary).toBeChecked();
+  const compact = await reportText(await exported(page, 'Generate PDF'));
+  for (const pages of [complete, compact]) {
+    expect(pages[1]).toContain(`Current estimate ${money(sample.expected.monthly)} ${money(sample.expected.annual)} ${sample.expected.missing}`);
+    expect(pages.join(' ')).toContain(`${sample.expected.missing} unresolved charge`);
   }
+  expect(compact[0]).toContain('Executive Summary');
+  expect(complete[0]).toContain('Full Report');
+  expect(compact.length).toBeLessThan(complete.length);
+  await expect(page.getByRole('status').filter({ hasText: 'Your Executive Summary PDF is ready.' })).toBeVisible();
 });

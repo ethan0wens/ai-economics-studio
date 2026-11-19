@@ -425,3 +425,10 @@ dialog::backdrop{background:#17243b70}dialog p{margin:8px 0 12px}dialog ul{list-
 .usage-values > div { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(9rem, 100%), 1fr)); gap: 4px 14px; border-top: 1px solid var(--border); padding-block: 6px; }
 .usage-values dd { margin: 0; font-weight: 640; overflow-wrap: anywhere; }
 .usage-helper .inset-editor button { justify-self: start; }
+
+.report-formats { display: grid; gap: 8px; border: 0; margin: 0; padding: 0; }
+.report-formats legend { margin-bottom: 7px; font-weight: 650; color: var(--text); }
+.report-formats label { display: grid; grid-template-columns: auto 1fr; gap: 10px; align-items: start; padding: 10px 12px; border: 1px solid var(--border); border-radius: 9px; cursor: pointer; }
+.report-formats label:has(input:checked) { background: #eef4ff; border-color: #4d7fdf; }
+.report-formats input { width: auto; min-height: 0; margin-top: 4px; accent-color: #2563eb; }
+.report-formats small { display: block; color: var(--muted); margin-top: 3px; font-size: .86rem; }

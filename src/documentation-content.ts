@@ -45,6 +45,11 @@ export const articles: Article[] = [
   { id: 'save-and-reopen', topic: 'Getting started', title: 'How do I share or reopen an estimate?', intro: 'Export JSON to keep editing later. Generate a PDF to share the estimate and its recorded assumptions.',
     tool: reports, related: ['privacy', 'environment-file', 'import-or-export-problems'], sections: [
       s('save', 'Export before leaving', 'In Reports & Export, choose Export JSON. It includes objects, relationships, pricing assumptions and the last estimate snapshot. The export includes applied usage quantities and any notes in the environment description. Temporary usage previews and comparisons are outside both formats. Check your browser’s downloads to find the file.'),
+      s('report-formats', 'Choose a PDF format', 'Choose Executive Summary to share monthly and annualised figures, cost drivers and significant gaps. Choose Full Report for the diagram, itemised charges, evidence and sources. Full Report is selected by default.', [
+        'The report uses applied usage. Annualised estimates use the same monthly quantities and rates for 12 months. The forecast varies price at the same usage.',
+        'Chart shares use known costs. Check the unresolved charge count before treating a known-cost subtotal as complete. Full Report identifies rate sources and gives separate catalogue check and report generation dates.',
+        'The diagram shows declared relationships. For large environments, the grouped view and registers trace the individual links.',
+      ]),
       s('restore', 'Restore a saved environment', 'Choose Import existing on Home. Select a Studio JSON file. A valid import opens Review your estimate and uses the applied catalogue to recalculate costs. Compare the previous known subtotal and unresolved count to the current estimate.', [
         'If another environment has changes, choose Keep editing, Export JSON first or Replace environment.',
         'Use Advanced to inspect saved dependencies, agreements and specialised configuration.',

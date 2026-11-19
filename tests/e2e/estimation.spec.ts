@@ -1,5 +1,5 @@
 import { expect, test, type Page } from '@playwright/test';
-import { getDocument } from 'pdfjs-dist/legacy/build/pdf.mjs';
+import { reportText } from './report-text';
 import { addAgent, getFile, monthly, nav, prices, show, start } from './studio-fixture';
 
 async function addFoundry(page: Page, narrow = false) {
@@ -71,14 +71,11 @@ test('Foundry previews and confirms values, with temporary sensitivity and recon
   expect(exported.sourceSnapshot).toMatchObject({ current: '2250.00', annualKnown: '27000.00', incomplete: 0 });
   expect(json.toString()).not.toContain('Customer forecast');
   const pdf = await getFile(page, 'Generate PDF');
-  const loading = getDocument({ data: new Uint8Array(pdf), standardFontDataUrl: 'node_modules/pdfjs-dist/standard_fonts/' });
-  try {
-    const report = await loading.promise;
-    const content = await (await report.getPage(1)).getTextContent();
-    const text = content.items.flatMap(item => 'str' in item ? [item.str] : []).join(' ');
-    expect(text).toContain('Current estimate | Estimated monthly cost £2,250.00 | Annualised estimate £27,000.00 | 0 unresolved charges');
-    expect(text).not.toContain('£4,500.00');
-  } finally { await loading.destroy(); }
+  const pages = await reportText(pdf);
+  expect(pages[1]).toContain('Estimated monthly cost £2,250.00');
+  expect(pages[1]).toContain('Annualised estimate £27,000.00');
+  expect(pages[1]).toContain('Current estimate £2,250.00 £27,000.00 0');
+  expect(pages.join(' ')).not.toContain('£4,500.00');
   await page.reload();
   await expect(page.getByRole('heading', { name: 'Open an environment' })).toBeVisible();
   await page.locator('input[type=file]').setInputFiles({ name: 'fictional-assisted.json', mimeType: 'application/json', buffer: json });

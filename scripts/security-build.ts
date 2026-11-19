@@ -1,4 +1,4 @@
-import { readdir, readFile } from 'node:fs/promises';
+import { readdir, readFile, writeFile } from 'node:fs/promises';
 import { dirname, join, resolve } from 'node:path';
 import { createHash } from 'node:crypto';
 import { catalogueFilename, manifestSchema, maxCatalogueBytes } from '../src/catalogue';
@@ -26,10 +26,19 @@ for (const file of assets) {
   if (credentials.test(contents)) throw new Error(`Credential-like material in ${file}.`);
   if (file.endsWith('.js') && /\/\/#[\t ]*sourceMappingURL\s*=/.test(contents)) throw new Error(`Source map directive in ${file}.`);
 }
-const headers = await readFile(join(dist, '_headers'), 'utf8');
-if (headers !== await readFile('public/_headers', 'utf8')) throw new Error('Built security headers differ from the reviewed static configuration.');
+const reviewedHeaders = await readFile('public/_headers', 'utf8');
+const headersPath = join(dist, '_headers');
+const stylesheetHeaders = assets.filter(file => file.endsWith('.css')).sort()
+  .map(file => `\n/${file}\n  Content-Type: text/css; charset=utf-8\n`).join('');
+const expectedHeaders = reviewedHeaders + stylesheetHeaders;
+const headers = await readFile(headersPath, 'utf8');
+const prepare = process.argv.length === 3 && process.argv[2] === '--prepare';
+if (prepare) {
+  if (headers !== reviewedHeaders) throw new Error('Vite did not copy the reviewed static security configuration.');
+  await writeFile(headersPath, expectedHeaders);
+} else if (headers !== expectedHeaders) throw new Error('Built security headers differ from the reviewed static configuration and exact stylesheets.');
 const configured = new Headers();
-for (const line of headers.split('\n').slice(1)) {
+for (const line of reviewedHeaders.split('\n').slice(1)) {
   if (line.startsWith('/')) break;
   const colon = line.indexOf(':');
   if (colon > 0) configured.set(line.slice(0, colon).trim(), line.slice(colon + 1).trim());

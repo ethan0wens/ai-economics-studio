@@ -34,6 +34,7 @@ type Overrides = {
   alternate?: string;
   missingHeaders?: string[];
   mime?: string;
+  cssMime?: string;
   cache?: string;
   catalogue?: string;
   receipt?: string;
@@ -52,7 +53,7 @@ function fixture(options: Overrides = {}) {
     if (url.pathname.endsWith('.js')) return new Response('', { headers: {
       ...immutable, 'cache-control': options.cache ?? immutable['cache-control'], 'content-type': options.mime ?? 'text/javascript',
     } });
-    if (url.pathname.endsWith('.css')) return new Response('', { headers: { ...immutable, 'content-type': 'text/css; charset=utf-8' } });
+    if (url.pathname.endsWith('.css')) return new Response('', { headers: { ...immutable, 'content-type': options.cssMime ?? 'text/css; charset=utf-8' } });
     const headers = new Headers(documentHeaders);
     for (const key of options.missingHeaders ?? []) headers.delete(key);
     return new Response(url.pathname === '/documentation' && options.alternate !== undefined
@@ -101,6 +102,7 @@ describe('preview delivery', () => {
     ['bad asset cache', { cache: 'no-cache' }, 'cache policy'],
     ['catalogue tampering', { catalogue: raw + ' ' }, 'manifest hash'],
     ['wrong script MIME', { mime: 'text/plain' }, 'asset MIME type'],
+    ['wrong stylesheet MIME', { cssMime: 'application/octet-stream' }, 'application/octet-stream'],
     ['unexpected static resource', { html: html.replace('/assets/index-Abcd1234.js', '/unexpected.js') }, 'unexpected resource'],
     ['SPA byte mismatch', { alternate: html + ' ' }, 'did not serve the application shell'],
     ['unrelated HTTP network failure', { http: () => { throw new Error('fixture connection refused'); } }, 'fixture connection refused'],

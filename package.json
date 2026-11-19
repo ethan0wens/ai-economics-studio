@@ -13,7 +13,7 @@
     "lint": "eslint . --max-warnings 0",
     "test": "vitest run",
     "test:e2e": "playwright test",
-    "build": "npm run pricing:validate && npm run evidence:validate && npm run docs:validate && vite build && npm run security:build",
+    "build": "npm run pricing:validate && npm run evidence:validate && npm run docs:validate && vite build && npm run security:build -- --prepare",
     "pricing:refresh": "tsx scripts/pricing.ts refresh",
     "pricing:validate": "tsx scripts/pricing.ts validate",
     "deploy": "tsx scripts/deploy.ts",

@@ -24,7 +24,7 @@ npm run test:e2e
 
 ## Delivery configuration
 
-[Wrangler](../../wrangler.jsonc) specifies `assets.directory: "./dist"`, SPA handling, the Worker name and workers.dev enablement. It has no custom script or runtime bindings. Vite copies public assets such as pricing JSON and `_headers` into the build. App navigation uses URL hashes. Pasting a deep link reaches the same static app document and React interprets the destination. The security policy and cache directives are defined in [public/_headers](../../public/_headers). The default is revalidation via `no-cache`, with one-year immutable caching for fingerprinted bundles and the digest-addressed catalogue. The manifest and the release health response use the default revalidation policy.
+[Wrangler](../../wrangler.jsonc) specifies `assets.directory: "./dist"`, SPA handling, the Worker name and workers.dev enablement. It has no custom script or runtime bindings. Vite copies public assets such as pricing JSON and `_headers` into the build. The security build step adds the CSS media type for the exact generated stylesheet paths. The staged build check compares those entries and the reviewed base rules before promotion. App navigation uses URL hashes. Pasting a deep link reaches the same static app document and React interprets the destination. The security policy and cache directives are defined in [public/_headers](../../public/_headers). The default is revalidation via `no-cache`, with one-year immutable caching for fingerprinted bundles and the digest-addressed catalogue. The manifest and the release health response use the default revalidation policy.
 
 ## GitHub responsibilities
 

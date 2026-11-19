@@ -81,8 +81,8 @@ if (process.env.STUDIO_CHECK_PUBLISHED_CATALOGUE === '1') {
     }
     const offer = coverage.flatMap(family => family.configurations).find(item => item.kind === 'supporting-resource' && item.family === 'infrastructure' && item.region === 'westeurope' && item.status === 'verified' && !item.components[0].rate?.tiers)!;
     expect(offer).toBeDefined();
-    await page.getByLabel('Filter by billing region or market').selectOption(offer.region);
-    await page.getByLabel('Find a catalogue configuration').fill(offer.id);
+    await page.getByLabel('Filter by billing region or market', { exact: true }).selectOption(offer.region);
+    await page.getByLabel('Find a catalogue configuration', { exact: true }).fill(offer.id);
     await page.getByText('Supporting Azure services', { exact: true }).click();
     await expect(page.getByText(offer.name, { exact: true })).toBeVisible();
     const env = { ...blankEnvironment(), region: offer.region, objects: [

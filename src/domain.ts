@@ -13,8 +13,11 @@ const quantity = z.number().min(0).max(1e15);
 const count = quantity.int();
 const percent = z.number().min(-100).max(10000);
 const decimal = z.string().regex(/^\d{1,16}(\.\d{1,15})?$/);
+const moneySnapshot = z.string().regex(/^\d{1,70}(\.\d{1,4})?$/);
+const scopeSnapshot = z.strictObject({ known: moneySnapshot, annual: moneySnapshot, incomplete: count });
 const common = { id, name };
 const region = text.regex(/^[a-z0-9-]+$/);
+const modality = z.enum(['text', 'image', 'audio', 'video']);
 const meter = z.strictObject({
   meterId: id, sku: id, unit: name, quantityPerUnit: quantity.gt(0), region,
   priceType: z.literal('Consumption'),
@@ -26,6 +29,9 @@ const parts = {
   'model-deployment': z.strictObject({
     ...common, kind: z.literal('model-deployment'), offeringId: id.optional(), modelId: text.optional(), modelVersion: text.optional(),
     region: region.optional(), sku: text.optional(), mode: z.enum(['payg', 'provisioned']).optional(),
+    deploymentRegion: region.optional(), inputModality: modality.optional(), outputModality: modality.optional(),
+    requiredFeature: z.enum(['function-calling', 'structured-outputs', 'responses']).optional(),
+    deployedModel: text.optional(), deployedVersion: text.optional(),
     inputMeter: meter.optional(), outputMeter: meter.optional(), capacityMeter: meter.optional(),
     capacity: quantity.optional(), billableHours: quantity.max(744).optional(), allocationBasis: z.literal('input-tokens').optional(),
   }),
@@ -37,8 +43,11 @@ const parts = {
     sensitivity: z.enum(['public', 'internal', 'confidential', 'regulated']).optional(),
     identity: z.enum(['delegated', 'application']).optional(),
     tools: text.optional(), credits: quantity.optional(), platformMeter: meter.optional(),
+    agentSetup: z.enum(['current', 'classic-basic', 'classic-standard']).optional(),
+    promptEndpoint: z.enum(['chat-completions', 'responses']).optional(),
     creditMethod: z.literal('breakdown').optional(),
     creditBreakdown: z.partialRecord(z.enum(Object.keys(creditCategories) as CreditCategory[]), quantity).optional(),
+    includedUsage: z.strictObject({ credits: quantity.optional(), basis: text.optional(), expiresOn: z.iso.date().optional() }).optional(),
   }),
   'usage-profile': z.strictObject({
     ...common, kind: z.literal('usage-profile'),
@@ -52,11 +61,12 @@ const parts = {
   'licence-entitlement': z.strictObject({
     ...common, kind: z.literal('licence-entitlement'), offeringId: id.optional(),
     product: text.optional(), procurement: z.enum(['existing', 'incremental', 'unknown']).optional(),
-    seats: count.optional(), meter: meter.optional(),
+    seats: count.optional(), meter: meter.optional(), existingMonthly: quantity.optional(),
+    overlapSeats: count.optional(), seatScope: text.optional(),
   }),
   'supporting-resource': z.strictObject({
     ...common, kind: z.literal('supporting-resource'), offeringId: id.optional(), category: text.optional(), region: region.optional(),
-    monthlyQuantity: quantity.optional(), meter: meter.optional(),
+    monthlyQuantity: quantity.optional(), meter: meter.optional(), deploymentRegion: region.optional(),
   }),
   'security-policy': z.strictObject({
     ...common, kind: z.literal('security-policy'), control: z.enum(['identity', 'approval', 'audit', 'dlp', 'budget']).optional(),
@@ -84,6 +94,9 @@ export const edgeKinds = {
   'agent-uses-usage': ['agent', 'usage-profile'],
   'group-can-access-agent': ['user-group', 'agent'],
   'group-has-entitlement': ['user-group', 'licence-entitlement'],
+  'agent-has-entitlement': ['agent', 'licence-entitlement'],
+  'licence-replaces-entitlement': ['licence-entitlement', 'licence-entitlement'],
+  'agent-uses-prompt-model': ['agent', 'model-deployment'],
   'agent-invokes-agent': ['agent', 'agent'],
   'agent-uses-resource': ['agent', 'supporting-resource'],
   'policy-applies-to-agent': ['security-policy', 'agent'],
@@ -92,7 +105,17 @@ export const edgeKinds = {
   'deployment-uses-resource': ['model-deployment', 'supporting-resource'],
 } as const;
 export type EdgeType = keyof typeof edgeKinds;
-const edgeSchema = z.strictObject({ type: z.enum(Object.keys(edgeKinds) as EdgeType[]), from: id, to: id });
+const edgeSchema = z.strictObject({
+  type: z.enum(Object.keys(edgeKinds) as EdgeType[]), from: id, to: id,
+  seats: count.optional(), effectiveOn: z.iso.date().optional(),
+  integration: z.enum(['foundry-search', 'foundry-private-search']).optional(),
+}).superRefine((edge, ctx) => {
+  if ((edge.seats !== undefined && !['group-has-entitlement', 'licence-replaces-entitlement'].includes(edge.type)) ||
+      (edge.effectiveOn && edge.type !== 'licence-replaces-entitlement') ||
+      (edge.integration && edge.type !== 'agent-uses-resource')) {
+    ctx.addIssue({ code: 'custom', message: 'Relationship details must match the relationship type.' });
+  }
+});
 export type Edge = z.infer<typeof edgeSchema>;
 const scope = { objectId: id.optional(), meter };
 export const overrideSchema = z.discriminatedUnion('mode', [
@@ -118,7 +141,9 @@ const baseEnvironment = z.strictObject({
   pricingOverrides: z.array(overrideSchema).max(1500),
   forecast: z.strictObject({ percent, applyToFixed: z.boolean(), exceptions: z.array(forecastException).max(1500) }),
   sourceSnapshot: z.strictObject({
-    catalogueId: id.nullable(), checkedAt: datetime.nullable(), current: z.string().regex(/^\d{1,70}(\.\d{1,4})?$/).nullable(), incomplete: count,
+    catalogueId: id.nullable(), checkedAt: datetime.nullable(), current: moneySnapshot.nullable(), incomplete: count,
+    currentKnown: moneySnapshot.optional(), annualKnown: moneySnapshot.optional(), forecastKnown: moneySnapshot.optional(),
+    licenceEstate: z.strictObject({ existing: scopeSnapshot, proposed: scopeSnapshot }).optional(),
   }).optional(),
   disclaimer: z.literal(disclaimer),
 });
@@ -136,7 +161,7 @@ export function graphErrors(env: Environment) {
       errors.push('A relationship has a missing target, a self-link, or an incompatible object type.');
       continue;
     }
-    const key = JSON.stringify([type, from, type === 'agent-uses-deployment' || type === 'agent-uses-usage' ? null : to]);
+    const key = JSON.stringify([type, from, ['agent-uses-deployment', 'agent-uses-prompt-model', 'agent-uses-usage'].includes(type) ? null : to]);
     if (links.has(key)) errors.push('Duplicate relationship or more than one model or usage profile per agent.');
     links.add(key);
     if (type === 'agent-invokes-agent') invocations.set(from, [...(invocations.get(from) ?? []), to]);

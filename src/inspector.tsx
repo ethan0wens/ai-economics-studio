@@ -3,22 +3,26 @@ import { ArrowUpRight, Link2, Trash2 } from 'lucide-react';
 import { creditCategories, edgeKinds, kindLabels, meterKey, objectSchema, type CreditCategory, type Edge, type EdgeType, type Environment, type StudioObject } from './domain';
 import { resolveOffering, type Catalogue } from './catalogue';
 import { Field, NumberField, Select, Text } from './fields';
-import { compatibility } from './microsoft';
 import { type Ledger } from './ledger';
 import { Lines } from './pricing-ui';
 import { hasUnknownPrice, missingInputs } from './inspector-status';
 import { applicableOffering, copilotPack, offeringMeter, offerings } from './offerings';
 import type { FieldId } from './field-help';
+import { EvidenceFindings } from './validation-ui';
+import { deploymentFindings } from './compatibility';
 
 const edgeLabels: Record<EdgeType, string> = {
   'agent-uses-deployment': 'Model deployment', 'agent-uses-usage': 'Usage profile', 'group-can-access-agent': 'Can access agent',
   'group-has-entitlement': 'Assigned entitlement', 'agent-invokes-agent': 'Invokes agent', 'agent-uses-resource': 'Uses resource',
+  'agent-has-entitlement': 'Uses licence entitlement', 'licence-replaces-entitlement': 'Replaces an existing entitlement',
+  'agent-uses-prompt-model': 'External prompt model',
   'policy-applies-to-agent': 'Applies to agent', 'policy-applies-to-group': 'Applies to user group', 'policy-applies-to-environment': 'Applies to environment', 'deployment-uses-resource': 'Uses resource',
 };
 export const platformOptions: [string, string][] = [['foundry-agent-service', 'Foundry Agent Service'], ['copilot-studio', 'Copilot Studio']];
 
 const levels = ['Essential', 'Detailed', 'Advanced'] as const;
 type Level = typeof levels[number];
+const modalities = ['text', 'image', 'audio', 'video'];
 
 export function Inspector({ item, env, catalogue, result, update, select, remove }: {
   item: StudioObject; env: Environment; catalogue: Catalogue; result: Ledger;
@@ -35,7 +39,8 @@ export function Inspector({ item, env, catalogue, result, update, select, remove
   const [link, setLink] = useState('');
   const [target, setTarget] = useState('');
   const options = (Object.keys(edgeKinds) as EdgeType[]).filter(key => edgeKinds[key][0] === item.kind &&
-    !(item.kind === 'agent' && item.platform === 'copilot-studio' && (key === 'agent-uses-deployment' || key === 'agent-uses-usage')));
+    !(item.kind === 'agent' && ((item.platform === 'copilot-studio' && key === 'agent-uses-deployment') ||
+      (key === 'agent-uses-prompt-model' && (item.platform !== 'copilot-studio' || item.modelSource !== 'platform-managed')))));
   const related = env.relationships.filter(edge => edge.from === item.id || edge.to === item.id);
   const name = (id: string) => id === env.id ? env.name : env.objects.find(object => object.id === id)?.name ?? 'Missing object';
   const save = (draft: StudioObject) => {
@@ -64,7 +69,13 @@ export function Inspector({ item, env, catalogue, result, update, select, remove
     const choices = inventory.filter(offer => offer.selectable !== false && offer.kind === item.kind &&
       (offer.id === activeOffer?.id || (offer.currency === env.currency && (offer.region === regionForOffer || offer.region === 'gb'))));
     return <><Select field="retailOffering" value={activeOffer?.id}
-      options={choices.map(offer => [offer.id, `${offer.name} · ${offer.region === 'gb' ? 'UK market' : offer.region} · ${offer.currency}`])}
+      options={choices.map(offer => {
+        const unavailable = item.kind === 'model-deployment' && offer.kind === 'model-deployment' && deploymentFindings({
+          ...item, modelId: offer.model.id, modelVersion: offer.model.version, sku: offer.model.sku, mode: offer.model.mode,
+          deployedVersion: offer.model.id === item.modelId ? item.deployedVersion : undefined,
+        }, new Date().toISOString()).find(check => check.status === 'incompatible');
+        return [offer.id, `${offer.name} · ${offer.region === 'gb' ? 'UK market' : offer.region} · ${offer.currency}${unavailable ? ` · Unavailable — ${unavailable.title}` : ''}`, !!unavailable];
+      })}
       hint={activeOffer
         ? activeOffer.currency !== env.currency ? `This offer is published in ${activeOffer.currency}. The environment uses ${env.currency}.` : activeOffer.note
         : undefined}
@@ -105,6 +116,8 @@ export function Inspector({ item, env, catalogue, result, update, select, remove
     const edge: Edge = { type, from: item.id, to };
     update({ ...env, relationships: to ? [...current, edge] : current });
   };
+  const editEdge = (edge: Edge, details: Partial<Edge>) =>
+    update({ ...env, relationships: env.relationships.map(link => link === edge ? { ...edge, ...details } : link) });
   const edgeSelect = (type: 'agent-uses-deployment' | 'agent-uses-usage') => {
     const field = type === 'agent-uses-deployment' ? 'linkedDeployment' : 'usageLink';
     return <Select field={field} missing={missing.includes(field)}
@@ -116,7 +129,7 @@ export function Inspector({ item, env, catalogue, result, update, select, remove
   const deploymentId = related.find(edge => edge.from === item.id && edge.type === 'agent-uses-deployment')?.to;
   const candidate = env.objects.find(object => object.id === deploymentId);
   const model = candidate?.kind === 'model-deployment' ? candidate : undefined;
-  const evidence = item.kind === 'agent' ? compatibility(item, model) : undefined;
+  const promptModel = item.kind === 'agent' && related.some(edge => edge.from === item.id && edge.type === 'agent-uses-prompt-model');
 
   function renderConfiguration() {
     switch (item.kind) {
@@ -137,15 +150,22 @@ export function Inspector({ item, env, catalogue, result, update, select, remove
           {advanced && <div className="field-group"><h3>Access and integrations</h3>
             {option('identity', 'identity', item.identity, [['delegated', 'Delegated user identity'], ['application', 'Application identity']])}
             {string('tools', 'tools', item.tools)}
+            {item.platform === 'foundry-agent-service' && option('agentSetup', 'agentSetup', item.agentSetup,
+              [['current', 'Current Foundry'], ['classic-basic', 'Classic basic'], ['classic-standard', 'Classic standard']])}
           </div>}
-          {evidence && 'source' in evidence && <p className="field-hint">{evidence.reason} <a href={evidence.source} target="_blank" rel="noreferrer">Microsoft guidance</a></p>}
         </>;
       }
       case 'model-deployment': return <>
         {retailSelector()}
         {string('modelId', 'modelId', item.modelId)}
         {option('billingMode', 'mode', item.mode, [['payg', 'Pay as you go'], ['provisioned', 'Provisioned capacity']])}
-        {detailed && <div className="field-group"><h3>Deployment details</h3>{region(item.region)}{string('modelVersion', 'modelVersion', item.modelVersion)}</div>}
+        {detailed && <div className="field-group"><h3>Deployment details</h3>{region(item.region)}{string('modelVersion', 'modelVersion', item.modelVersion)}
+          <Text field="deploymentRegion" value={item.deploymentRegion} onChange={value => change('deploymentRegion', value || undefined)} />
+          {item.modelId === 'azure-openai' && string('deployedModel', 'deployedModel', item.deployedModel)}
+          {string('deployedVersion', 'deployedVersion', item.deployedVersion)}
+          {option('inputModality', 'inputModality', item.inputModality, modalities)}{option('outputModality', 'outputModality', item.outputModality, modalities)}
+          {option('requiredFeature', 'requiredFeature', item.requiredFeature, [['function-calling', 'Function calling'], ['structured-outputs', 'Structured outputs'], ['responses', 'Responses API']])}
+        </div>}
         {advanced && string('sku', 'sku', item.sku)}
       </>;
       case 'user-group': return <>
@@ -159,7 +179,11 @@ export function Inspector({ item, env, catalogue, result, update, select, remove
         {string('product', 'product', item.product)}
         {option('procurement', 'procurement', item.procurement, [['existing', 'Already owned'], ['incremental', 'Incremental'], ['unknown', 'Unknown']])}
         {(item.procurement === 'incremental' || (detailed && item.procurement === 'existing')) &&
-          number('seats', 'seats', item.seats, undefined, 1, 'Count each person once across linked groups.')}
+          number('seats', 'seats', item.seats, undefined, 1, 'Enter distinct seats, or derive the count from linked assignments.')}
+        {detailed && <>{string('seatScope', 'seatScope', item.seatScope)}
+          {related.filter(edge => edge.type === 'group-has-entitlement').length > 1 && number('overlapSeats', 'overlapSeats', item.overlapSeats, undefined, 1)}
+          {item.procurement === 'existing' && number('existingMonthly', 'existingMonthly', item.existingMonthly)}
+        </>}
       </>;
       case 'supporting-resource': {
         const meters = catalogue.records.filter(record => (!record.component || record.component === 'usage') && (!record.offeringId || record.offeringId === 'd2s-v3-uk-south') && record.currency === env.currency && record.region === (item.region ?? env.region));
@@ -179,7 +203,7 @@ export function Inspector({ item, env, catalogue, result, update, select, remove
           {number('resourceQuantity', 'monthlyQuantity', item.monthlyQuantity, undefined, activeOffer?.id === copilotPack.offeringId ? 1 : undefined, activeMeter
             ? `Enter base units per month. The selected meter bills per ${activeMeter.unit} (${activeMeter.quantityPerUnit} base units).`
             : 'Use the same unit for this quantity and your manual rate. For example, enter hours if your contract quotes a rate per hour.')}
-          {detailed && region(item.region)}
+          {detailed && <>{region(item.region)}<Text field="deploymentRegion" value={item.deploymentRegion} onChange={value => change('deploymentRegion', value || undefined)} /></>}
         </>;
       }
       case 'security-policy': return <>
@@ -201,9 +225,8 @@ export function Inspector({ item, env, catalogue, result, update, select, remove
       </>;
     }
   }
-  const rows = result.lines.filter(line => line.objectId === item.id || item.kind === 'model-deployment' &&
-    env.relationships.some(edge => edge.type === 'agent-uses-deployment' && edge.to === item.id && edge.from === line.objectId && line.category === 'Inference'));
-  const issues = result.issues.filter(issue => issue.id === item.id && issue.message !== evidence?.reason);
+  const rows = result.lines.filter(line => line.objectId === item.id || item.kind === 'model-deployment' && line.pricingOwner === item.id);
+  const issues = result.issues.filter(issue => issue.id === item.id);
   const unknownPrice = hasUnknownPrice(rows);
   const canUseProfile = item.kind === 'agent' && item.platform === 'foundry-agent-service' &&
     item.modelSource === 'deployment-ref' && model && (model.mode === 'payg' || model.mode === 'provisioned');
@@ -212,7 +235,7 @@ export function Inspector({ item, env, catalogue, result, update, select, remove
     : tab !== 'Configuration' ? []
     : item.kind === 'supporting-resource' || item.kind === 'security-policy' || (item.kind === 'licence-entitlement' && item.procurement === 'existing')
       ? levels.filter(choice => choice !== 'Advanced')
-      : item.kind === 'licence-entitlement' ? []
+    : item.kind === 'licence-entitlement' ? levels.filter(choice => choice !== 'Advanced')
       : levels;
   const selectedLevel = visibleLevels.includes(level) ? level : level === 'Advanced' ? 'Detailed' : 'Essential';
   const sections = ['Configuration', ...(item.kind === 'agent' || item.kind === 'model-deployment' ? ['Usage'] : []), 'Dependencies', 'Costs'];
@@ -230,12 +253,14 @@ export function Inspector({ item, env, catalogue, result, update, select, remove
       {error && <p role="alert" className="notice">{error}</p>}
       {issues.map(issue => <p className="notice" key={issue.message}>{issue.message}</p>)}
       {missing.length > 0 && <p className="draft-note">Keep editing or export JSON to save this draft. Marked fields are needed to complete it.</p>}
-      {tab === 'Configuration' && evidence?.status === 'draft' && missing.includes('linkedDeployment') && <p className="field-hint">{evidence.reason}</p>}
       {unknownPrice && <p className="field-hint">Usage is entered for at least one line without a current rate. Review the Costs tab for its pricing options.</p>}
       {visibleLevels.length > 0 && <div className="level-control" role="group" aria-label="Configuration detail">
         {visibleLevels.map(choice => <button type="button" key={choice} aria-pressed={visibleLevels.includes(selectedLevel) ? selectedLevel === choice : choice === 'Essential'} onClick={() => setLevel(choice)}>{choice}</button>)}
       </div>}
-      {tab === 'Configuration' && <><Text field="objectName" value={item.name} onChange={value => change('name', value)} />{renderConfiguration()}</>}
+      {tab === 'Configuration' && <>{missing.includes('linkedDeployment') && <p className="field-hint">Link a model deployment.</p>}<Text field="objectName" value={item.name} onChange={value => change('name', value)} />{renderConfiguration()}
+        <EvidenceFindings label="Technical compatibility" items={result.technicalFindings.filter(finding => finding.id === item.id || finding.related === item.id)} />
+        <EvidenceFindings label="Licensing evidence" items={result.licensingFindings.filter(finding => finding.id === item.id)} />
+      </>}
       {tab === 'Usage' && (item.kind === 'agent' ? <>
         {item.platform === 'copilot-studio' && item.modelSource === 'platform-managed'
           ? <>
@@ -254,6 +279,18 @@ export function Inspector({ item, env, catalogue, result, update, select, remove
                 {missing.includes('creditCategory') && <p className="field-missing">Enter credits for at least one category to complete the estimate.</p>}
               </div>
               : number('credits', 'credits', item.credits, undefined, undefined, 'Enter billable credits for the month. Review the plan-specific rate separately under Costs.')}
+            <Field field="usesAllowance"><input type="checkbox" checked={!!item.includedUsage} onChange={event =>
+              change('includedUsage', event.target.checked ? {} : undefined)} /></Field>
+            {item.includedUsage && <div className="field-group">
+              <NumberField field="allowanceCredits" value={item.includedUsage.credits} onChange={credits => change('includedUsage', { ...item.includedUsage, credits })} />
+              <Text field="allowanceBasis" value={item.includedUsage.basis} onChange={basis => change('includedUsage', { ...item.includedUsage, basis })} />
+              <Field field="allowanceExpiry"><input type="date" value={item.includedUsage.expiresOn ?? ''} onChange={event =>
+                change('includedUsage', { ...item.includedUsage, expiresOn: event.target.value || undefined })} /></Field>
+            </div>}
+            {promptModel && <div className="field-group"><h3>External prompt usage</h3>
+              {option('promptEndpoint', 'promptEndpoint', item.promptEndpoint, [['chat-completions', 'Chat completions'], ['responses', 'Responses API']])}
+              {edgeSelect('agent-uses-usage')}
+            </div>}
           </>
           : canUseProfile ? edgeSelect('agent-uses-usage')
           : <p className="field-hint">Choose a supported platform and model source in Configuration to see the applicable usage inputs.</p>}
@@ -269,9 +306,19 @@ export function Inspector({ item, env, catalogue, result, update, select, remove
         {related.length === 0 && <p className="muted">This object has no linked dependencies.</p>}
         {related.map(edge => {
           const other = edge.from === item.id ? edge.to : edge.from;
-          return <div className="dependency" key={JSON.stringify(edge)}>
+          return <div className="dependency" key={JSON.stringify([edge.type, edge.from, edge.to])}>
             <div><small>{edgeLabels[edge.type]}</small>{other === env.id ? <p>{env.name}</p> : <button onClick={() => select(other)}>{name(other)} <ArrowUpRight size={13} /></button>}</div>
             <button className="icon-button" aria-label={`Unlink ${name(other)}`} onClick={() => update({ ...env, relationships: env.relationships.filter(item => item !== edge) })}><Link2 size={16} /> Unlink</button>
+            {(edge.type === 'group-has-entitlement' || edge.type === 'licence-replaces-entitlement' || edge.type === 'agent-uses-resource') && <div className="dependency-details">
+            {edge.type === 'group-has-entitlement' && <NumberField field="assignedSeats" value={edge.seats} step={1} onChange={seats => editEdge(edge, { seats })} />}
+            {edge.type === 'licence-replaces-entitlement' && <>
+              <NumberField field="replacementSeats" value={edge.seats} step={1} onChange={seats => editEdge(edge, { seats })} />
+              <Field field="replacementDate"><input type="date" value={edge.effectiveOn ?? ''} onChange={event => editEdge(edge, { effectiveOn: event.target.value || undefined })} /></Field>
+            </>}
+            {edge.type === 'agent-uses-resource' && <Select field="resourceIntegration" value={edge.integration}
+              options={[[ 'foundry-search', 'Foundry AI Search tool' ], [ 'foundry-private-search', 'Foundry private AI Search tool' ]]}
+              empty="General resource use" onChange={value => editEdge(edge, { integration: value as Edge['integration'] || undefined })} />}
+            </div>}
           </div>;
         })}
         {options.length > 0 && <>
@@ -279,9 +326,10 @@ export function Inspector({ item, env, catalogue, result, update, select, remove
             onChange={value => { setLink(value); setTarget(''); }} />
           {link && <><Select field="relationshipTarget" value={target} options={
             edgeKinds[link as EdgeType][1] === 'environment' ? [[env.id, env.name]] :
-              env.objects.filter(object => object.id !== item.id && object.kind === edgeKinds[link as EdgeType][1]).map(object => [object.id, object.name])}
+              env.objects.filter(object => object.id !== item.id && object.kind === edgeKinds[link as EdgeType][1] &&
+                (link !== 'licence-replaces-entitlement' || (object.kind === 'licence-entitlement' && object.procurement === 'existing'))).map(object => [object.id, object.name])}
           onChange={setTarget} />
-          <button className="button" disabled={!target} onClick={() => setEdge(link as EdgeType, target, link === 'agent-uses-deployment' || link === 'agent-uses-usage')}>Link object</button></>}
+          <button className="button" disabled={!target} onClick={() => setEdge(link as EdgeType, target, ['agent-uses-deployment', 'agent-uses-usage', 'agent-uses-prompt-model'].includes(link))}>Link object</button></>}
         </>}
       </>}
       {tab === 'Costs' && <Lines lines={rows} env={env} update={update} checkedAt={catalogue.manifest.lastCheckedAt} compact />}

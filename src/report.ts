@@ -4,6 +4,7 @@ import { environmentCompleteness } from './coverage';
 import { logicalGraph } from './graph';
 import { retailDocs, type Catalogue } from './catalogue';
 import { bases, categories, formatMoney, summarize, type Ledger, type governance } from './ledger';
+import { compatibilityLabels } from './compatibility';
 
 const navy = rgb(.09, .14, .23);
 const muted = rgb(.28, .35, .44);
@@ -85,6 +86,14 @@ export async function report(env: Environment, result: Ledger, catalogue: Catalo
     paragraph(`${labels[basis]}: ${any ? money(total.known) : 'Unknown'} monthly known subtotal | ${any ? money(total.annual) : 'Unknown'} annual run-rate | ${total.incomplete} incomplete`, { font: bold });
   }
   paragraph('Annual figures are steady-state monthly subtotals multiplied by 12. Unknown amounts are excluded from known subtotals. Taxes, contractual FX and usage growth are outside the estimate.', { color: muted });
+  if (result.licenceEstate.owned || result.lines.some(line => line.component === 'Monthly seats')) {
+    heading('Existing and proposed expenditure');
+    const estate = result.licenceEstate;
+    for (const [label, total] of [
+      ['Existing licence spend', estate.existing], ['New licence spend', estate.incremental],
+      ['Proposed licence estate', estate.proposed], ['Proposed environment including retained licences', estate.proposedEnvironment],
+    ] as const) paragraph(`${label}: ${money(total.known)} known monthly | ${money(total.annual)} known annual | ${total.incomplete} unresolved`);
+  }
   heading('Environment and source coverage');
   const completeness = environmentCompleteness(result);
   paragraph(`${completeness.fully} fully priced | ${completeness.partial} partial | ${completeness.unresolved} unresolved | ${completeness.excluded} missing configuration | ${completeness.retail} using verified retail | ${completeness.manual} using customer rates`);
@@ -135,8 +144,20 @@ export async function report(env: Environment, result: Ledger, catalogue: Catalo
     }
     y -= graph.height * scale + 22;
     heading('Architecture register');
-    for (const node of graph.nodes) paragraph(`${node.name} | ${node.type}${node.shared ? ' | Shared' : ''}${node.incomplete ? ' | Needs review' : ''}${node.annotation ? ' | ' + node.annotation : ''}`, { gap: 0 });
+    for (const node of graph.nodes) paragraph(`${node.name} | ${node.type}${node.shared ? ' | Shared' : ''}${node.compatibility.length ? ' | ' + node.compatibility.join(', ') : node.incomplete ? ' | Needs review' : ''}${node.annotation ? ' | ' + node.annotation : ''}`, { gap: 0 });
     for (const edge of env.relationships) paragraph(`${names.get(edge.from)} → ${names.get(edge.to)} | ${edge.type}`, { size: 9, color: muted, gap: 0 });
+  }
+  heading('Technical compatibility and licensing evidence');
+  if (!result.technicalFindings.length && !result.licensingFindings.length) paragraph('No evidence checks apply to this workspace.');
+  for (const item of result.technicalFindings) {
+    paragraph(`${names.get(item.id)} | ${item.title} | ${compatibilityLabels[item.status]}${item.related ? ' | ' + names.get(item.related) : ''}`, { font: bold, gap: 1 });
+    paragraph(item.detail, { gap: 1 });
+    if (item.source) paragraph(`${item.source} | Reviewed ${item.verifiedOn}`, { size: 9, color: muted, gap: 1 });
+  }
+  for (const item of result.licensingFindings) {
+    paragraph(`${names.get(item.id)} | ${item.title} | ${item.status}`, { font: bold, gap: 1 });
+    paragraph(item.detail, { gap: 1 });
+    if (item.source) paragraph(`${item.source} | Reviewed ${item.verifiedOn}`, { size: 9, color: muted, gap: 1 });
   }
   heading('Itemised monthly cost ledger');
   if (!result.lines.length) paragraph('No ledger entries.');
@@ -150,6 +171,7 @@ export async function report(env: Environment, result: Ledger, catalogue: Catalo
     if (line.source) paragraph(`Retail source: ${line.source.source} | ${line.source.review ? 'Reviewed ' + line.source.review.checkedAt + ' | ' + line.source.review.terms : 'Effective ' + line.source.effectiveAt + ' | Validated ' + (catalogue.manifest.lastCheckedAt ?? 'unknown')}`, { size: 9, color: muted, gap: 1 });
     if (line.source?.tiers) paragraph(`Graduated bands (base units / rate): ${line.source.tiers.map(tier => `${tier.from} / ${tier.price}`).join(' | ')}. Displayed rates are blended at this usage.`, { size: 9, color: muted, gap: 1 });
     if (line.includedCredits) paragraph(`${line.includedCredits} Copilot credits covered by linked packs. Quantity shown is residual billable usage.`, { size: 9, color: muted, gap: 1 });
+    if (line.entitledCredits) paragraph(`${line.entitledCredits} credits reconciled under a customer-declared allowance, before pack allocation.`, { size: 9, color: muted, gap: 1 });
     if (line.allocatesTo.length) paragraph(line.allocation ? `Shared allocation by input tokens: ${line.allocation.map(share => `${names.get(share.agentId)} ${money(share.amount)}`).join(' / ')}`
       : 'Shared charge counted once. Allocation unassigned.', { gap: 1 });
     paragraph(`Scenario for this line: ${line.scenario}%`, { color: muted });

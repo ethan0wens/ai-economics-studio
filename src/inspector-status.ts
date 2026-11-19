@@ -1,6 +1,7 @@
 import { declaredCopilotCredits, type Environment, type StudioObject } from './domain';
 import type { FieldId } from './field-help';
 import type { Line } from './ledger';
+import { assignedSeatCount } from './entitlements';
 
 export function missingInputs(item: StudioObject, env: Environment): FieldId[] {
   const missing: FieldId[] = [];
@@ -13,6 +14,11 @@ export function missingInputs(item: StudioObject, env: Environment): FieldId[] {
       needs('modelSource', item.modelSource);
       if (item.modelSource === 'platform-managed' && item.platform === 'copilot-studio') {
         needs(item.creditMethod === 'breakdown' ? 'creditCategory' : 'credits', declaredCopilotCredits(item)[0]);
+        if (item.includedUsage) {
+          needs('allowanceCredits', item.includedUsage.credits);
+          needs('allowanceBasis', item.includedUsage.basis);
+          needs('allowanceExpiry', item.includedUsage.expiresOn);
+        }
       }
       if (item.modelSource === 'deployment-ref' && item.platform === 'foundry-agent-service') {
         const deployment = env.relationships.find(edge => edge.type === 'agent-uses-deployment' && edge.from === item.id);
@@ -38,7 +44,8 @@ export function missingInputs(item: StudioObject, env: Environment): FieldId[] {
       break;
     case 'licence-entitlement':
       needs('procurement', item.procurement === 'unknown' ? undefined : item.procurement);
-      if (item.procurement === 'incremental') needs('seats', item.seats);
+      if (item.procurement === 'incremental') needs('seats', assignedSeatCount(item,
+        env.relationships.filter(edge => edge.to === item.id && edge.type === 'group-has-entitlement')));
       break;
     case 'supporting-resource':
       needs('resourceQuantity', item.monthlyQuantity);

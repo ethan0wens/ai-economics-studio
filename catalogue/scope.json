@@ -2934,7 +2934,7 @@
           "quantityPerUnit": 1
         }
       ],
-      "evidence": "https://www.microsoft.com/en-gb/microsoft-365/enterprise/microsoft365-plans-and-pricing",
+      "evidence": "https://www.microsoft.com/en-gb/microsoft-365/enterprise/microsoft-365-plans-and-pricing",
       "note": "Verify the exact commercial agreement, prerequisites and existing entitlement. No price is assigned without a reviewed rate."
     },
     {
@@ -2953,7 +2953,7 @@
           "quantityPerUnit": 1
         }
       ],
-      "evidence": "https://www.microsoft.com/en-gb/microsoft-365/enterprise/microsoft365-plans-and-pricing",
+      "evidence": "https://www.microsoft.com/en-gb/microsoft-365/enterprise/microsoft-365-plans-and-pricing",
       "note": "Verify the exact commercial agreement, prerequisites and existing entitlement. No price is assigned without a reviewed rate."
     },
     {
@@ -2991,7 +2991,7 @@
           "quantityPerUnit": 1
         }
       ],
-      "evidence": "https://www.microsoft.com/en-gb/microsoft-365/business/compare-all-microsoft-365-business-products",
+      "evidence": "https://www.microsoft.com/en-gb/microsoft-365/business/microsoft-365-plans-and-pricing",
       "note": "Verify the exact commercial agreement, prerequisites and existing entitlement. No price is assigned without a reviewed rate."
     },
     {
@@ -3067,7 +3067,7 @@
           "quantityPerUnit": 1
         }
       ],
-      "evidence": "https://www.microsoft.com/en-gb/microsoft-365-copilot/pricing",
+      "evidence": "https://www.microsoft.com/en-gb/microsoft-365/enterprise/office-365-plans-and-pricing",
       "note": "Verify the exact commercial agreement, prerequisites and existing entitlement. No price is assigned without a reviewed rate."
     },
     {
@@ -3105,7 +3105,7 @@
           "quantityPerUnit": 1
         }
       ],
-      "evidence": "https://www.microsoft.com/en-gb/security/business/microsoft-entra-pricing",
+      "evidence": "https://www.microsoft.com/en-gb/security/microsoft-entra-pricing",
       "note": "Verify the exact commercial agreement, prerequisites and existing entitlement. No price is assigned without a reviewed rate."
     },
     {
@@ -3124,7 +3124,7 @@
           "quantityPerUnit": 1
         }
       ],
-      "evidence": "https://www.microsoft.com/en-gb/security/business/microsoft-entra-pricing",
+      "evidence": "https://www.microsoft.com/en-gb/security/microsoft-entra-pricing",
       "note": "Verify the exact commercial agreement, prerequisites and existing entitlement. No price is assigned without a reviewed rate."
     },
     {
@@ -3143,7 +3143,7 @@
           "quantityPerUnit": 1
         }
       ],
-      "evidence": "https://www.microsoft.com/en-gb/security/business/endpoint-security/microsoft-defender-business",
+      "evidence": "https://www.microsoft.com/en-gb/microsoft-365/business/microsoft-365-plans-and-pricing",
       "note": "Verify the exact commercial agreement, prerequisites and existing entitlement. No price is assigned without a reviewed rate."
     },
     {
@@ -3219,7 +3219,7 @@
           "quantityPerUnit": 1
         }
       ],
-      "evidence": "https://www.microsoft.com/en-gb/security/business/microsoft-purview-pricing",
+      "evidence": "https://www.microsoft.com/licensing/terms",
       "note": "Verify the exact commercial agreement, prerequisites and existing entitlement. No price is assigned without a reviewed rate."
     },
     {
@@ -3238,7 +3238,7 @@
           "quantityPerUnit": 1
         }
       ],
-      "evidence": "https://azure.microsoft.com/en-gb/pricing/details/purview/",
+      "evidence": "https://www.microsoft.com/licensing/terms",
       "note": "Verify the exact commercial agreement, prerequisites and existing entitlement. No price is assigned without a reviewed rate.",
       "selectable": false
     },
@@ -3667,6 +3667,367 @@
           "quantityPerUnit": 1
         }
       ]
+    },
+    {
+      "id": "m365-e7",
+      "name": "Microsoft 365 E7",
+      "family": "licensing",
+      "kind": "licence-entitlement",
+      "regions": [
+        "gb"
+      ],
+      "evidence": "https://www.microsoft.com/en-gb/microsoft-365/enterprise/microsoft-365-plans-and-pricing",
+      "note": "Confirm customer eligibility, term and included capabilities separately.",
+      "components": [
+        {
+          "id": "seats",
+          "label": "Monthly seats",
+          "unit": "seat/month",
+          "quantityPerUnit": 1
+        }
+      ]
+    },
+    {
+      "id": "m365-e7-no-teams",
+      "name": "Microsoft 365 E7 (no Teams)",
+      "family": "licensing",
+      "kind": "licence-entitlement",
+      "regions": [
+        "gb"
+      ],
+      "evidence": "https://www.microsoft.com/en-gb/microsoft-365/enterprise/microsoft-365-plans-and-pricing",
+      "note": "Confirm customer eligibility, term and included capabilities separately.",
+      "components": [
+        {
+          "id": "seats",
+          "label": "Monthly seats",
+          "unit": "seat/month",
+          "quantityPerUnit": 1
+        }
+      ]
+    },
+    {
+      "id": "m365-business-basic-no-teams",
+      "name": "Microsoft 365 Business Basic (no Teams)",
+      "family": "licensing",
+      "kind": "licence-entitlement",
+      "regions": [
+        "gb"
+      ],
+      "evidence": "https://www.microsoft.com/en-gb/microsoft-365/business/microsoft-365-plans-and-pricing",
+      "note": "Confirm customer eligibility, term and included capabilities separately.",
+      "components": [
+        {
+          "id": "seats",
+          "label": "Monthly seats",
+          "unit": "seat/month",
+          "quantityPerUnit": 1
+        }
+      ]
+    },
+    {
+      "id": "m365-apps-enterprise",
+      "name": "Microsoft 365 Apps for enterprise",
+      "family": "licensing",
+      "kind": "licence-entitlement",
+      "regions": [
+        "gb"
+      ],
+      "evidence": "https://www.microsoft.com/en-gb/microsoft-365/enterprise/office-365-plans-and-pricing",
+      "note": "Confirm customer eligibility, term and included capabilities separately.",
+      "components": [
+        {
+          "id": "seats",
+          "label": "Monthly seats",
+          "unit": "seat/month",
+          "quantityPerUnit": 1
+        }
+      ]
+    },
+    {
+      "id": "m365-apps-business",
+      "name": "Microsoft 365 Apps for Business",
+      "family": "licensing",
+      "kind": "licence-entitlement",
+      "regions": [
+        "gb"
+      ],
+      "evidence": "https://www.microsoft.com/en-gb/microsoft-365/business/microsoft-365-plans-and-pricing",
+      "note": "Confirm customer eligibility, term and included capabilities separately.",
+      "components": [
+        {
+          "id": "seats",
+          "label": "Monthly seats",
+          "unit": "seat/month",
+          "quantityPerUnit": 1
+        }
+      ]
+    },
+    {
+      "id": "o365-e1",
+      "name": "Office 365 E1",
+      "family": "licensing",
+      "kind": "licence-entitlement",
+      "regions": [
+        "gb"
+      ],
+      "evidence": "https://www.microsoft.com/en-gb/microsoft-365/enterprise/office-365-plans-and-pricing",
+      "note": "Confirm customer eligibility, term and included capabilities separately.",
+      "components": [
+        {
+          "id": "seats",
+          "label": "Monthly seats",
+          "unit": "seat/month",
+          "quantityPerUnit": 1
+        }
+      ]
+    },
+    {
+      "id": "o365-e3",
+      "name": "Office 365 E3",
+      "family": "licensing",
+      "kind": "licence-entitlement",
+      "regions": [
+        "gb"
+      ],
+      "evidence": "https://www.microsoft.com/en-gb/microsoft-365/enterprise/office-365-plans-and-pricing",
+      "note": "Confirm customer eligibility, term and included capabilities separately.",
+      "components": [
+        {
+          "id": "seats",
+          "label": "Monthly seats",
+          "unit": "seat/month",
+          "quantityPerUnit": 1
+        }
+      ]
+    },
+    {
+      "id": "o365-e5",
+      "name": "Office 365 E5",
+      "family": "licensing",
+      "kind": "licence-entitlement",
+      "regions": [
+        "gb"
+      ],
+      "evidence": "https://www.microsoft.com/en-gb/microsoft-365/enterprise/office-365-plans-and-pricing",
+      "note": "Confirm customer eligibility, term and included capabilities separately.",
+      "components": [
+        {
+          "id": "seats",
+          "label": "Monthly seats",
+          "unit": "seat/month",
+          "quantityPerUnit": 1
+        }
+      ]
+    },
+    {
+      "id": "o365-e1-no-teams",
+      "name": "Office 365 E1 (no Teams)",
+      "family": "licensing",
+      "kind": "licence-entitlement",
+      "regions": [
+        "gb"
+      ],
+      "evidence": "https://www.microsoft.com/en-gb/microsoft-365/enterprise/office-365-plans-and-pricing",
+      "note": "Confirm customer eligibility, term and included capabilities separately.",
+      "components": [
+        {
+          "id": "seats",
+          "label": "Monthly seats",
+          "unit": "seat/month",
+          "quantityPerUnit": 1
+        }
+      ]
+    },
+    {
+      "id": "o365-e3-no-teams",
+      "name": "Office 365 E3 (no Teams)",
+      "family": "licensing",
+      "kind": "licence-entitlement",
+      "regions": [
+        "gb"
+      ],
+      "evidence": "https://www.microsoft.com/en-gb/microsoft-365/enterprise/office-365-plans-and-pricing",
+      "note": "Confirm customer eligibility, term and included capabilities separately.",
+      "components": [
+        {
+          "id": "seats",
+          "label": "Monthly seats",
+          "unit": "seat/month",
+          "quantityPerUnit": 1
+        }
+      ]
+    },
+    {
+      "id": "o365-e5-no-teams",
+      "name": "Office 365 E5 (no Teams)",
+      "family": "licensing",
+      "kind": "licence-entitlement",
+      "regions": [
+        "gb"
+      ],
+      "evidence": "https://www.microsoft.com/en-gb/microsoft-365/enterprise/office-365-plans-and-pricing",
+      "note": "Confirm customer eligibility, term and included capabilities separately.",
+      "components": [
+        {
+          "id": "seats",
+          "label": "Monthly seats",
+          "unit": "seat/month",
+          "quantityPerUnit": 1
+        }
+      ]
+    },
+    {
+      "id": "o365-f3",
+      "name": "Office 365 F3",
+      "family": "licensing",
+      "kind": "licence-entitlement",
+      "regions": [
+        "gb"
+      ],
+      "evidence": "https://learn.microsoft.com/en-us/copilot/plan/copilot-license-options",
+      "note": "Confirm customer eligibility, term and included capabilities separately.",
+      "components": [
+        {
+          "id": "seats",
+          "label": "Monthly seats",
+          "unit": "seat/month",
+          "quantityPerUnit": 1
+        }
+      ]
+    },
+    {
+      "id": "teams-essentials",
+      "name": "Microsoft Teams Essentials",
+      "family": "licensing",
+      "kind": "licence-entitlement",
+      "regions": [
+        "gb"
+      ],
+      "evidence": "https://learn.microsoft.com/en-us/copilot/plan/copilot-license-options",
+      "note": "Confirm customer eligibility, term and included capabilities separately.",
+      "components": [
+        {
+          "id": "seats",
+          "label": "Monthly seats",
+          "unit": "seat/month",
+          "quantityPerUnit": 1
+        }
+      ]
+    },
+    {
+      "id": "defender-o365-p1",
+      "name": "Microsoft Defender for Office 365 Plan 1",
+      "family": "security",
+      "kind": "licence-entitlement",
+      "regions": [
+        "gb"
+      ],
+      "evidence": "https://learn.microsoft.com/en-us/defender-office-365/mdo-about",
+      "note": "Confirm customer eligibility, term and included capabilities separately.",
+      "components": [
+        {
+          "id": "seats",
+          "label": "Monthly seats",
+          "unit": "seat/month",
+          "quantityPerUnit": 1
+        }
+      ]
+    },
+    {
+      "id": "defender-o365-p2",
+      "name": "Microsoft Defender for Office 365 Plan 2",
+      "family": "security",
+      "kind": "licence-entitlement",
+      "regions": [
+        "gb"
+      ],
+      "evidence": "https://learn.microsoft.com/en-us/defender-xdr/prerequisites",
+      "note": "Confirm customer eligibility, term and included capabilities separately.",
+      "components": [
+        {
+          "id": "seats",
+          "label": "Monthly seats",
+          "unit": "seat/month",
+          "quantityPerUnit": 1
+        }
+      ]
+    },
+    {
+      "id": "defender-cloud-apps",
+      "name": "Microsoft Defender for Cloud Apps",
+      "family": "security",
+      "kind": "licence-entitlement",
+      "regions": [
+        "gb"
+      ],
+      "evidence": "https://learn.microsoft.com/en-us/defender-xdr/prerequisites",
+      "note": "Confirm customer eligibility, term and included capabilities separately.",
+      "components": [
+        {
+          "id": "seats",
+          "label": "Monthly seats",
+          "unit": "seat/month",
+          "quantityPerUnit": 1
+        }
+      ]
+    },
+    {
+      "id": "defender-suite",
+      "name": "Microsoft Defender Suite",
+      "family": "security",
+      "kind": "licence-entitlement",
+      "regions": [
+        "gb"
+      ],
+      "evidence": "https://learn.microsoft.com/en-us/defender-xdr/prerequisites",
+      "note": "Confirm customer eligibility, term and included capabilities separately.",
+      "components": [
+        {
+          "id": "seats",
+          "label": "Monthly seats",
+          "unit": "seat/month",
+          "quantityPerUnit": 1
+        }
+      ]
+    },
+    {
+      "id": "m365-e3-no-teams",
+      "name": "Microsoft 365 E3 (no Teams)",
+      "family": "licensing",
+      "kind": "licence-entitlement",
+      "regions": [
+        "gb"
+      ],
+      "components": [
+        {
+          "id": "seats",
+          "label": "Monthly seats",
+          "unit": "seat/month",
+          "quantityPerUnit": 1
+        }
+      ],
+      "evidence": "https://www.microsoft.com/en-gb/microsoft-365/enterprise/microsoft-365-plans-and-pricing",
+      "note": "Verify the exact commercial agreement, prerequisites and existing entitlement. No price is assigned without a reviewed rate."
+    },
+    {
+      "id": "m365-e5-no-teams",
+      "name": "Microsoft 365 E5 (no Teams)",
+      "family": "licensing",
+      "kind": "licence-entitlement",
+      "regions": [
+        "gb"
+      ],
+      "components": [
+        {
+          "id": "seats",
+          "label": "Monthly seats",
+          "unit": "seat/month",
+          "quantityPerUnit": 1
+        }
+      ],
+      "evidence": "https://www.microsoft.com/en-gb/microsoft-365/enterprise/microsoft-365-plans-and-pricing",
+      "note": "Verify the exact commercial agreement, prerequisites and existing entitlement. No price is assigned without a reviewed rate."
     }
   ]
 }

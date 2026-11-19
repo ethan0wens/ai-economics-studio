@@ -110,6 +110,7 @@ export function Lines({ lines, env, update, compact = false, checkedAt }: {
         {line.reason && <p>{line.reason}</p>}
         <p className="muted">{line.meter ? `${line.currency} · ${line.meter.region === 'gb' ? 'UK market' : line.meter.region} · ${line.meter.unit === '1K' ? 'per 1,000 tokens' : line.meter.unit} · ${line.meter.quantityPerUnit} base units per billed unit` : 'Billing identity unresolved'} · Monthly billable quantity {line.quantity ?? 'unknown'}</p>
         {line.includedCredits && <p>{line.includedCredits} credits allocated from the linked monthly pack. The balance above is billable.</p>}
+        {line.entitledCredits && <p>{line.entitledCredits} credits reconciled under the customer-declared allowance before pack allocation.</p>}
         <dl className="rate-grid">{bases.map(basis => <div key={basis}><dt>{basisNames[basis]}</dt><dd>{formatMoney(line.amounts[basis], env.currency)}</dd>
           <small>{line.rates[basis] === null ? 'Rate unknown' : `${line.currency} ${line.rates[basis]} ${line.source?.tiers ? 'blended per billed unit' : 'per billed unit'}`}</small></div>)}</dl>
         {line.source && <p><a href={line.source.source} target="_blank" rel="noreferrer">{line.source.verification === 'azure-retail-api' ? 'Azure Retail Prices API' : 'Microsoft published offer'}</a>

@@ -11,7 +11,7 @@ npm ci
 npm run dev
 ```
 
-The studio starts with an empty workspace. Open **Pricing Catalogue** to search supported and unpriced Microsoft configurations by billing region and market, then use the builder to calculate your environment’s separate pricing completeness. Add an object of any type, then use the inspector to set its configuration, usage and relationships. In **Cost Analysis**, open a line to see its billed unit, sources, rate assumptions and forecast. Cloud accounts and credentials are only needed for production deployment.
+The studio starts with an empty workspace. Open **Pricing Catalogue** to search supported and unpriced Microsoft configurations by billing region and market, then use the builder to calculate your environment’s separate pricing completeness. Add an object of any type, then use the inspector to set its configuration, usage and relationships. In **Cost Analysis**, open a line to see its billed unit, sources, rate assumptions and forecast. Open **Environment validation** to review pricing, technical compatibility and licensing confidence independently. Cloud accounts and credentials are only needed for production deployment.
 
 ```sh
 npm run typecheck
@@ -23,6 +23,8 @@ npm run test:e2e
 ```
 
 See the [field guide](docs/13-field-guide.md) for configuration inputs, units and requirements. See [source coverage](SOURCES.md) for the pricing coverage matrix, exact Azure mappings, commercial review dates and remaining evidence gaps, and the [operations runbook](docs/12-operations.md) for publishing, incident response and checks.
+
+See the [licensing and technical evidence guide](docs/18-licensing-and-technical-evidence.md) and [enterprise financial reconciliations](docs/19-enterprise-financial-validation.md) for current coverage and test results.
 
 ## Locked architecture
 

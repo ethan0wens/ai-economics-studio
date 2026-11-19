@@ -20,9 +20,9 @@ const data: Environment = {
   ],
 };
 
-async function workspace(page: Page) {
+async function workspace(page: Page, fixture = data) {
   await page.goto('/');
-  await page.locator('input[type=file]').setInputFiles({ name: 'scenario.json', mimeType: 'application/json', buffer: Buffer.from(JSON.stringify(data)) });
+  await page.locator('input[type=file]').setInputFiles({ name: 'scenario.json', mimeType: 'application/json', buffer: Buffer.from(JSON.stringify(fixture)) });
   await expect(page.getByRole('heading', { name: 'Environment Builder' })).toBeVisible();
 }
 
@@ -40,9 +40,21 @@ test('every registered field is reachable with an accessible help trigger', asyn
 
   await page.goto('/');
   await inspect();
-  await workspace(page);
+  const fixture: Environment = {
+    ...data,
+    objects: [...data.objects.map(object => object.kind === 'model-deployment' ? { ...object, modelId: 'azure-openai' } : object),
+      { id: 'other', name: 'Other group', kind: 'user-group' },
+      { id: 'existing', name: 'Existing licence', kind: 'licence-entitlement', procurement: 'existing' }],
+    relationships: [...data.relationships,
+      { type: 'agent-uses-prompt-model', from: 'copilot', to: 'model' },
+      { type: 'agent-uses-resource', from: 'desk', to: 'resource' },
+      { type: 'group-has-entitlement', from: 'group', to: 'licence' },
+      { type: 'group-has-entitlement', from: 'other', to: 'licence' },
+      { type: 'licence-replaces-entitlement', from: 'licence', to: 'existing' }],
+  };
+  await workspace(page, fixture);
   const inspector = page.getByRole('complementary', { name: /.+/ }).filter({ has: page.getByRole('group', { name: 'Inspector sections' }) });
-  for (const object of data.objects) {
+  for (const object of fixture.objects) {
     await page.getByRole('button', { name: new RegExp(`^${object.name} `) }).click();
     const deeper = inspector.getByRole('button', { name: /^(Advanced|Detailed)$/ });
     if (await deeper.count()) await deeper.last().click();
@@ -52,10 +64,14 @@ test('every registered field is reachable with an accessible help trigger', asyn
       await inspect();
       if (object.id === 'copilot') {
         await inspector.getByLabel('Copilot credit input method', { exact: true }).selectOption('breakdown');
+        await inspector.getByLabel('Apply declared included usage', { exact: true }).check();
         await inspect();
       }
     }
+    await inspector.getByRole('button', { name: 'Dependencies' }).click();
+    await inspect();
   }
+  await page.getByRole('button', { name: /^Approval policy / }).click();
   await inspector.getByRole('button', { name: 'Dependencies' }).click();
   await inspector.getByLabel('Relationship type', { exact: true }).selectOption('policy-applies-to-environment');
   await inspect();

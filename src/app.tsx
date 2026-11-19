@@ -12,6 +12,7 @@ import { basisNames, CostAnalysis } from './pricing-ui';
 import { Field, FieldHelp } from './fields';
 import { hasUnknownPrice, missingInputs } from './inspector-status';
 import { download } from './download';
+import { LicenceEstate, ValidationDashboard } from './validation-ui';
 
 const Architecture = lazy(() => import('./diagram'));
 const pages = [
@@ -148,7 +149,9 @@ export default function App() {
     download(JSON.stringify({
       ...env,
       sourceSnapshot: { catalogueId: catalogue.manifest.catalogueId, checkedAt: catalogue.manifest.lastCheckedAt,
-        current: result.lines.length > result.summary.current.incomplete ? result.summary.current.known : null, incomplete: result.summary.current.incomplete },
+        current: result.lines.length > result.summary.current.incomplete ? result.summary.current.known : null, incomplete: result.summary.current.incomplete,
+        currentKnown: result.summary.current.known, annualKnown: result.summary.current.annual, forecastKnown: result.summary.forecast.known,
+        licenceEstate: { existing: result.licenceEstate.existing, proposed: result.licenceEstate.proposed } },
     }, null, 2), `${fileName}.json`, 'application/json');
     setDirty(false);
     setToast('Environment exported as JSON.');
@@ -244,6 +247,8 @@ export default function App() {
             </section>
           </div>
           <Comparison env={env} result={result} />
+          <ValidationDashboard env={env} result={result} select={selectObject} />
+          <LicenceEstate result={result} currency={env.currency} />
           {result.issues.length > 0 && <section className="panel padded"><h2>Open assumptions</h2><ul className="findings">{result.issues.slice(0, 12).map(issue =>
             <li key={issue.id + issue.message}><button className="link-button" onClick={() => selectObject(issue.id)}>{env.objects.find(item => item.id === issue.id)?.name}</button> · {issue.message}</li>)}</ul></section>}
         </>}
@@ -258,7 +263,9 @@ export default function App() {
               return group.length ? <section className="inventory-group" key={kind}><h3>{kindLabels[kind]} <small>{group.length}</small></h3>{group.map(item => {
                 const lines = result.lines.filter(line => line.objectId === item.id);
                 const status = missingInputs(item, env).length ? 'Draft' : hasUnknownPrice(lines) ? 'Unknown price'
-                  : result.issues.some(issue => issue.id === item.id) || lines.some(line => line.amounts.current === null) ? 'Needs review' : 'Configured';
+                  : result.issues.some(issue => issue.id === item.id) || lines.some(line => line.amounts.current === null) ||
+                    result.technicalFindings.some(finding => finding.id === item.id && finding.status !== 'compatible') ||
+                    result.licensingFindings.some(finding => finding.id === item.id && finding.status !== 'Verified') ? 'Needs review' : 'Configured';
                 const subtotal = summarize(lines, env.currency).current;
                 return <button key={item.id} className="object-row" aria-pressed={selected === item.id} onClick={() => setSelected(item.id)}>
                   <span className="tile blue"><Icon size={16} /></span><span className="object-name"><strong>{item.name}</strong><small>{env.relationships.filter(edge => edge.from === item.id || edge.to === item.id).length} links</small></span>
@@ -273,7 +280,9 @@ export default function App() {
         </div>}
         {page === 'Architecture' && <Suspense fallback={<p role="status">Preparing diagram…</p>}><Architecture env={env} result={result} select={selectObject} /></Suspense>}
         {page === 'Pricing Catalogue' && <Coverage catalogue={catalogue} result={result} select={selectObject} />}
-        {page === 'Cost Analysis' && <><Comparison env={env} result={result} /><CostAnalysis env={env} result={result} update={update} checkedAt={catalogue.manifest.lastCheckedAt} /></>}
+        {page === 'Cost Analysis' && <><Comparison env={env} result={result} /><LicenceEstate result={result} currency={env.currency} />
+          <ValidationDashboard env={env} result={result} select={selectObject} />
+          <CostAnalysis env={env} result={result} update={update} checkedAt={catalogue.manifest.lastCheckedAt} /></>}
         {page === 'Security & Governance' && <section className="panel padded"><h2>Advisory assessment</h2><p className="muted">Ruleset 1.0.0 · {advice.length} applicable checks · {advice.filter(item => item.status === 'Unknown').length} with unknown coverage. Based on declarations only.</p>
           {advice.length === 0 && <div className="empty"><span className="empty-icon"><ShieldCheck size={24} /></span><h3>Add an agent to assess controls</h3><button className="button" onClick={() => setModal('add')}>Add object</button></div>}
           {advice.map(item => <article className="finding" key={item.id + item.control}><div><button className="link-button" onClick={() => selectObject(item.id)}>{item.object}</button><h3>{item.title}</h3><p>{item.why}</p><a href={item.source} target="_blank" rel="noreferrer">Microsoft guidance</a></div><span className="status warning">{item.status} · {item.critical ? 'High priority' : 'Advisory'}</span></article>)}

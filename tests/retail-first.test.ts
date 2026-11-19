@@ -140,7 +140,7 @@ describe('retail-first pricing and completeness', () => {
     const result = ledger(data, rates, now);
     expect(result.summary.current.known).toBe('200.00');
     expect(result.lines.filter(line => line.includedCredits).map(line => [line.quantity, line.includedCredits])).toEqual([['0', '15000'], ['5000', '10000']]);
-    expect(result.lines.find(line => line.objectId === 'owned')?.amounts).toEqual({ retail: '50.00', current: '0.00', forecast: '0.00' });
+    expect(result.lines.find(line => line.objectId === 'owned')?.amounts).toEqual({ retail: '0.00', current: '0.00', forecast: '0.00' });
     expect(ledger(data, rates, '2027-01-01T00:00:00Z').summary.current.incomplete).toBe(2);
   });
 

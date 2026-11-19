@@ -99,7 +99,7 @@ describe('financial rules', () => {
     const output = ledger(env, []);
     expect(output.lines.filter(line => line.category === 'Inference')).toHaveLength(0);
     expect(output.lines.find(line => line.objectId === 'seat')?.amounts.current).toBe('0.00');
-    expect(output.issues.some(issue => issue.message.includes('overlap'))).toBe(true);
+    expect(output.licensingFindings.some(finding => finding.title === 'Seat overlap')).toBe(true);
     expect(governance(env).every(item => item.status === 'Unknown')).toBe(true);
   });
 });

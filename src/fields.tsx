@@ -92,13 +92,13 @@ export function NumberField({ value, onChange, min = 0, max = 1e15, step = 'any'
 }
 
 export function Select({ value, options, onChange, empty = 'Select…', ...field }: FieldProps & {
-  value?: string; options: (string | [string, string])[]; onChange: (value: string) => void; empty?: string | false;
+  value?: string; options: (string | [string, string, boolean?])[]; onChange: (value: string) => void; empty?: string | false;
 }) {
   return <Field {...field}><select value={value ?? ''} onChange={event => onChange(event.target.value)}>
     {empty !== false && <option value="">{empty}</option>}
     {options.map(item => {
-      const [key, label] = typeof item === 'string' ? [item, item] : item;
-      return <option key={key} value={key}>{label}</option>;
+      const [key, label, disabled] = typeof item === 'string' ? [item, item, false] : item;
+      return <option key={key} value={key} disabled={disabled}>{label}</option>;
     })}
   </select></Field>;
 }

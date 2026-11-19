@@ -44,8 +44,8 @@ export function environmentCompleteness(result: Ledger) {
     return {
       id, name: lines[0].object, lines, status,
       retail: lines.some(line => line.source && line.amounts.current !== null &&
-        (!line.agreement || ['retail', 'discount'].includes(line.agreement.mode)) && !['Already owned', 'Covered by linked packs'].includes(line.status)),
-      manual: lines.some(line => line.amounts.current !== null && !['Already owned', 'Covered by linked packs'].includes(line.status) &&
+        (!line.agreement || ['retail', 'discount'].includes(line.agreement.mode)) && !['Already owned', 'Covered by linked packs', 'Covered by declared entitlement or packs'].includes(line.status)),
+      manual: lines.some(line => line.amounts.current !== null && !['Already owned', 'Covered by linked packs', 'Covered by declared entitlement or packs'].includes(line.status) &&
         (line.agreement?.mode === 'fixed' || line.agreement?.mode === 'intentional-zero')),
     };
   });

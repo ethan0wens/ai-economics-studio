@@ -1,0 +1,268 @@
+[
+  {
+    "id": "copilot-enterprise-base",
+    "products": [
+      "m365-copilot-enterprise-gb"
+    ],
+    "market": "GB",
+    "kind": "requirement",
+    "capability": "Eligible Copilot base licence",
+    "source": "https://learn.microsoft.com/en-us/copilot/plan/copilot-license-options",
+    "verifiedOn": "2026-11-19",
+    "reviewBy": "2027-01-17",
+    "condition": "The Microsoft 365 Copilot add-on requires a qualifying subscription assigned to the same users. Check Product Terms for exact offer variants and purchase channel.",
+    "eligible": [
+      "m365-e3-gb",
+      "m365-e5-gb",
+      "m365-f3-gb",
+      "m365-business-basic-gb",
+      "m365-business-basic-no-teams-gb",
+      "m365-business-standard-gb",
+      "m365-business-premium-gb",
+      "m365-apps-enterprise-gb",
+      "m365-apps-business-gb",
+      "o365-e1-gb",
+      "o365-e3-gb",
+      "o365-e5-gb",
+      "o365-e1-no-teams-gb",
+      "o365-e3-no-teams-gb",
+      "o365-e5-no-teams-gb",
+      "o365-f3-gb",
+      "m365-e3-no-teams-gb",
+      "m365-e5-no-teams-gb"
+    ]
+  },
+  {
+    "id": "copilot-business-base",
+    "products": [
+      "m365-business-copilot-gb"
+    ],
+    "market": "GB",
+    "kind": "requirement",
+    "capability": "Eligible Copilot Business base licence",
+    "source": "https://learn.microsoft.com/en-us/copilot/plan/copilot-license-options",
+    "verifiedOn": "2026-11-19",
+    "reviewBy": "2027-01-17",
+    "condition": "The Copilot Business add-on requires an eligible small-business subscription. Confirm applicable customer limits and offer terms.",
+    "eligible": [
+      "m365-business-basic-gb",
+      "m365-business-basic-no-teams-gb",
+      "m365-business-standard-gb",
+      "m365-business-premium-gb",
+      "m365-apps-business-gb",
+      "teams-essentials-gb"
+    ]
+  },
+  {
+    "id": "copilot-bundles",
+    "products": [
+      "m365-standard-copilot-gb",
+      "m365-premium-copilot-gb",
+      "m365-e7-gb",
+      "m365-e7-no-teams-gb"
+    ],
+    "market": "GB",
+    "kind": "included",
+    "capability": "Microsoft 365 Copilot",
+    "source": "https://learn.microsoft.com/en-us/copilot/plan/copilot-license-options",
+    "verifiedOn": "2026-11-19",
+    "reviewBy": "2027-01-17",
+    "condition": "This offer includes Microsoft 365 Copilot for assigned users. Included agent activity is a separate condition.",
+    "eligible": [
+      "m365-copilot-enterprise-gb",
+      "m365-business-copilot-gb"
+    ]
+  },
+  {
+    "id": "copilot-included-use",
+    "products": [
+      "m365-copilot-enterprise-gb",
+      "m365-business-copilot-gb",
+      "m365-standard-copilot-gb",
+      "m365-premium-copilot-gb",
+      "m365-e7-gb",
+      "m365-e7-no-teams-gb"
+    ],
+    "market": "GB",
+    "kind": "conditional",
+    "capability": "Copilot Studio included activity",
+    "source": "https://learn.microsoft.com/en-us/microsoft-copilot-studio/requirements-messages-management",
+    "verifiedOn": "2026-11-19",
+    "reviewBy": "2027-01-17",
+    "condition": "Microsoft lists eligible activities for authenticated Microsoft 365 Copilot users and exceptions such as Computer-Using Agents. Determine entitled usage before entering a credit reduction."
+  },
+  {
+    "id": "agent365-e7",
+    "products": [
+      "m365-e7-gb",
+      "m365-e7-no-teams-gb"
+    ],
+    "market": "GB",
+    "kind": "included",
+    "capability": "Microsoft Agent 365",
+    "source": "https://www.microsoft.com/en-gb/microsoft-agent-365",
+    "verifiedOn": "2026-11-19",
+    "reviewBy": "2027-01-17",
+    "condition": "Microsoft 365 E7 includes Agent 365. Assignment and coverage of owners, managers, sponsors and users are subject to the applicable terms.",
+    "eligible": [
+      "agent-365-gb"
+    ]
+  },
+  {
+    "id": "agent365-user",
+    "products": [
+      "agent-365-gb"
+    ],
+    "market": "GB",
+    "kind": "conditional",
+    "capability": "Agent 365 per-user scope",
+    "source": "https://www.microsoft.com/en-gb/microsoft-agent-365",
+    "verifiedOn": "2026-11-19",
+    "reviewBy": "2027-01-17",
+    "condition": "Agent 365 is licensed per user. Determine the licence needs of people who interact with, own, manage or sponsor governed agents."
+  },
+  {
+    "id": "entra-e3",
+    "products": [
+      "m365-e3-gb",
+      "m365-business-premium-gb",
+      "m365-e3-no-teams-gb"
+    ],
+    "market": "GB",
+    "kind": "included",
+    "capability": "Microsoft Entra ID P1",
+    "source": "https://www.microsoft.com/en-gb/security/microsoft-entra-pricing",
+    "verifiedOn": "2026-11-19",
+    "reviewBy": "2027-01-17",
+    "condition": "This qualifying offer includes Entra ID P1. Verify assignment to the same users.",
+    "eligible": [
+      "entra-p1-gb"
+    ]
+  },
+  {
+    "id": "entra-e5",
+    "products": [
+      "m365-e5-gb",
+      "m365-e5-no-teams-gb"
+    ],
+    "market": "GB",
+    "kind": "included",
+    "capability": "Microsoft Entra ID P2",
+    "source": "https://www.microsoft.com/en-gb/security/microsoft-entra-pricing",
+    "verifiedOn": "2026-11-19",
+    "reviewBy": "2027-01-17",
+    "condition": "Microsoft 365 E5 includes Entra ID P2. Verify assignment to the same users.",
+    "eligible": [
+      "entra-p2-gb"
+    ]
+  },
+  {
+    "id": "entra-suite-base",
+    "products": [
+      "entra-suite-gb"
+    ],
+    "market": "GB",
+    "kind": "requirement",
+    "capability": "Microsoft Entra ID P1",
+    "source": "https://www.microsoft.com/en-gb/security/microsoft-entra-pricing",
+    "verifiedOn": "2026-11-19",
+    "reviewBy": "2027-01-17",
+    "condition": "Entra Suite requires Entra ID P1 or a package that includes it. P2 and Microsoft 365 E5 customers should confirm applicable offer terms.",
+    "eligible": [
+      "entra-p1-gb"
+    ]
+  },
+  {
+    "id": "entra-p2-base",
+    "products": [
+      "entra-p2-gb",
+      "m365-e5-gb"
+    ],
+    "market": "GB",
+    "kind": "conditional",
+    "capability": "Microsoft Entra ID P1",
+    "source": "https://www.microsoft.com/en-gb/security/microsoft-entra-pricing",
+    "verifiedOn": "2026-11-19",
+    "reviewBy": "2027-01-17",
+    "condition": "Entra ID P2 includes P1 capabilities. Check the qualifying product terms for the Entra Suite purchase.",
+    "eligible": [
+      "entra-p1-gb"
+    ]
+  },
+  {
+    "id": "entra-suite-e7",
+    "products": [
+      "m365-e7-gb",
+      "m365-e7-no-teams-gb"
+    ],
+    "market": "GB",
+    "kind": "included",
+    "capability": "Microsoft Entra Suite",
+    "source": "https://www.microsoft.com/en-gb/security/microsoft-entra-pricing",
+    "verifiedOn": "2026-11-19",
+    "reviewBy": "2027-01-17",
+    "condition": "Microsoft Entra Suite is included in Microsoft 365 E7. Reconcile existing identity agreements before recording savings.",
+    "eligible": [
+      "entra-suite-gb"
+    ]
+  },
+  {
+    "id": "entra-governance",
+    "products": [
+      "entra-governance-gb"
+    ],
+    "market": "GB",
+    "kind": "conditional",
+    "capability": "Identity governance",
+    "source": "https://www.microsoft.com/en-gb/security/microsoft-entra-pricing",
+    "verifiedOn": "2026-11-19",
+    "reviewBy": "2027-01-17",
+    "condition": "Confirm customer-specific prerequisites and whether Identity Governance capabilities are already covered by Entra Suite or another plan."
+  },
+  {
+    "id": "defender-xdr",
+    "products": [
+      "m365-e5-gb",
+      "o365-e5-gb",
+      "defender-cloud-apps-gb",
+      "defender-o365-p2-gb",
+      "defender-suite-gb",
+      "defender-endpoint-p2-gb",
+      "defender-identity-gb",
+      "m365-e5-no-teams-gb"
+    ],
+    "market": "GB",
+    "kind": "conditional",
+    "capability": "Microsoft Defender XDR capabilities",
+    "source": "https://learn.microsoft.com/en-us/defender-xdr/prerequisites",
+    "verifiedOn": "2026-11-19",
+    "reviewBy": "2027-01-17",
+    "condition": "Defender correlates signals available under the licensed products and provisioned access. Portal eligibility does not establish coverage of every component."
+  },
+  {
+    "id": "purview",
+    "products": [
+      "purview-suite-gb"
+    ],
+    "market": "GB",
+    "kind": "unverified",
+    "capability": "Purview capability and eligibility",
+    "source": "https://www.microsoft.com/licensing/terms",
+    "verifiedOn": "2026-11-19",
+    "reviewBy": "2027-01-17",
+    "condition": "Check the specific Purview workload and customer Product Terms. A Purview selection does not establish licensing for every data security or compliance feature."
+  },
+  {
+    "id": "agent365-base",
+    "products": [
+      "agent-365-gb"
+    ],
+    "market": "GB",
+    "kind": "conditional",
+    "capability": "Eligible Agent 365 base licence",
+    "source": "https://www.microsoft.com/en-gb/microsoft-365/enterprise/microsoft-365-plans-and-pricing",
+    "verifiedOn": "2026-11-19",
+    "reviewBy": "2027-01-17",
+    "condition": "Microsoft lists an eligible Microsoft 365 subscription as a prerequisite. Confirm the exact SKU and tenant offer under Product Terms."
+  }
+]

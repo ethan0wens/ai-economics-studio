@@ -1,6 +1,7 @@
 import dagre from '@dagrejs/dagre';
 import { kindLabels, type Environment, type Kind } from './domain';
 import { formatMoney, summarize, type Ledger } from './ledger';
+import { compatibilityLabels } from './compatibility';
 
 export const groupColors: Record<Kind, string> = {
   'user-group': '#2563eb', 'licence-entitlement': '#0d9488', agent: '#7c3aed', 'usage-profile': '#475569',
@@ -27,8 +28,10 @@ export function logicalGraph(env: Environment, result: Ledger) {
         ? 'Current cost unknown' : `${formatMoney(cost.known, env.currency)}/mo${cost.incomplete ? ' + unknown' : ''}`;
       return ({
       id: item.id, name: item.name, kind: item.kind, type: kindLabels[item.kind], color: groupColors[item.kind],
-      incomplete: result.issues.some(issue => issue.id === item.id) || result.lines.some(line => line.objectId === item.id && line.amounts.current === null),
-      shared: item.kind === 'model-deployment' && edges.filter(edge => edge.to === item.id && edge.type === 'agent-uses-deployment').length > 1,
+      incomplete: result.issues.some(issue => issue.id === item.id) || result.lines.some(line => line.objectId === item.id && line.amounts.current === null) ||
+        result.technicalFindings.some(finding => finding.id === item.id && finding.status !== 'compatible'),
+      compatibility: [...new Set(result.technicalFindings.filter(finding => finding.id === item.id).map(finding => compatibilityLabels[finding.status]))],
+      shared: item.kind === 'model-deployment' && edges.filter(edge => edge.to === item.id && ['agent-uses-deployment', 'agent-uses-prompt-model'].includes(edge.type)).length > 1,
       annotation, ...graph.node(key(item.id)),
     }); }),
     edges: edges.map(edge => ({ ...edge, points: graph.edge(key(edge.from), key(edge.to), edge.type).points as { x: number; y: number }[] })),

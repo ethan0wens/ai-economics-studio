@@ -2,7 +2,9 @@ import Decimal from 'decimal.js';
 import { findRetail, resolveOffering, type RetailRecord } from './catalogue';
 import { declaredCopilotCredits, meterKey, type Environment, type Meter, type Override, type StudioObject } from './domain';
 import { applicableOffering, copilotPack, offeringMeter, offerings, type Component, type Offering } from './offerings';
-import { compatibility, microsoft } from './microsoft';
+import { microsoft } from './microsoft';
+import { technical } from './compatibility';
+import { licensing, type LicensingFinding } from './entitlements';
 
 const Money = Decimal.clone({ precision: 50, rounding: Decimal.ROUND_HALF_UP });
 const zero = () => new Money(0);
@@ -39,7 +41,7 @@ export type Line = {
   id: string; objectId: string; pricingOwner: string; object: string; category: Category; component: string; fixed: boolean;
   meter?: Meter; quantity: string | null; currency: string; amounts: Values; rates: Values;
   source?: RetailRecord; status: string; reason?: string; agreement?: Override; scenario: number;
-  allocatesTo: string[]; includedCredits?: string; allocation?: { agentId: string; amount: string }[];
+  allocatesTo: string[]; includedCredits?: string; entitledCredits?: string; allocation?: { agentId: string; amount: string }[];
 };
 
 export function summarize(lines: Line[], code = 'GBP') {
@@ -62,6 +64,9 @@ export function ledger(env: Environment, records: RetailRecord[], at = new Date(
   const issues: { id: string; message: string }[] = [];
   const objects = new Map(env.objects.map(item => [item.id, item]));
   const code = env.currency;
+  const technicalFindings = technical(env, at);
+  const licencePlan = licensing(env, inventory, at);
+  const licensingFindings: LicensingFinding[] = [...licencePlan.findings];
   const digits = new Intl.NumberFormat('en-GB', { style: 'currency', currency: code }).resolvedOptions().maximumFractionDigits ?? 2;
   type EdgeType = Environment['relationships'][number]['type'];
   const outgoing = (id: string, type: EdgeType) => env.relationships.filter(edge => edge.from === id && edge.type === type);
@@ -69,9 +74,9 @@ export function ledger(env: Environment, records: RetailRecord[], at = new Date(
   const bill = (object: StudioObject, category: Category, component: string, options: {
     meter?: Meter; quantity?: Decimal | number; reason?: string; fixed?: boolean; existing?: boolean;
     owner?: string; allocatesTo?: string[]; allowRetail?: boolean;
-    offer?: Offering; componentId?: Component; includedCredits?: Decimal;
+    offer?: Offering; componentId?: Component; includedCredits?: Decimal; entitledCredits?: Decimal;
   } = {}) => {
-    const { meter, quantity, reason, fixed = false, existing, owner = object.id, allocatesTo = [], allowRetail = false, offer, componentId, includedCredits } = options;
+    const { meter, quantity, reason, fixed = false, existing, owner = object.id, allocatesTo = [], allowRetail = false, offer, componentId, includedCredits, entitledCredits } = options;
     const matches = (rule: {meter: Meter}) => meter && meterKey(rule.meter) === meterKey(meter);
     const compatibleLegacyCopilot = (rule: { meter: Meter }) => componentId === 'credits' && offer &&
       meterKey(rule.meter) === meterKey(assumedMeter('copilot-credits', 'Copilot Studio', env.region, 'credit'));
@@ -88,26 +93,46 @@ export function ledger(env: Environment, records: RetailRecord[], at = new Date(
     const blended = source?.tiers && quantity !== undefined && new Money(quantity).gt(0)
       ? graduatedAmount(quantity, source).times(source.quantityPerUnit).div(quantity).toFixed() : source?.price;
     const rate = financialRates(blended, agreement, scenario, exception?.applyToFixed ?? env.forecast.applyToFixed);
-    const fullyCovered = includedCredits?.gt(0) && quantity !== undefined && new Money(quantity).isZero();
+    const fullyCovered = ((includedCredits?.gt(0) || entitledCredits?.gt(0)) ?? false) && quantity !== undefined && new Money(quantity).isZero();
     const amounts = (value: Decimal | null) => value === null || quantity === undefined || !meter ? null : new Money(quantity).div(meter.quantityPerUnit).times(value).toFixed(digits);
-    const retail = amounts(rate.baseline);
+    const retail = existing ? zero().toFixed(digits) : amounts(rate.baseline);
     const current = existing || fullyCovered ? zero().toFixed(digits) : amounts(rate.current);
     const forecast = existing || fullyCovered ? zero().toFixed(digits) : amounts(rate.future);
     lines.push({
       id: `${object.id}:${component}`, objectId: object.id, pricingOwner: owner, object: object.name, category, component, meter, fixed,
       quantity: quantity?.toString() ?? null, currency: code, amounts: { retail, current, forecast },
       rates: { retail: rate.baseline?.toFixed() ?? null, current: existing ? '0' : rate.current?.toFixed() ?? null, forecast: existing ? '0' : rate.future?.toFixed() ?? null },
-      status: existing ? 'Already owned' : fullyCovered ? 'Covered by linked packs' : current === null ? 'Unknown' : agreement?.mode === 'intentional-zero' ? 'Intentional zero' : agreement?.mode && agreement.mode !== 'retail' ? 'User agreement' : 'Microsoft retail',
+      status: existing ? 'Already owned' : fullyCovered ? entitledCredits?.gt(0) ? 'Covered by declared entitlement or packs' : 'Covered by linked packs' : current === null ? 'Unknown' : agreement?.mode === 'intentional-zero' ? 'Intentional zero' : agreement?.mode && agreement.mode !== 'retail' ? 'User agreement' : 'Microsoft retail',
       reason: reason ?? (current === null ? (quantity === undefined ? 'Enter monthly usage.' : 'No current verified rate matches this configuration. Review the catalogue or enter an evidenced contract amount.') : undefined),
-      source, agreement, scenario, allocatesTo, includedCredits: includedCredits?.toFixed(),
+      source, agreement, scenario, allocatesTo, includedCredits: includedCredits?.toFixed(), entitledCredits: entitledCredits?.toFixed(),
     });
   };
   function selection(object: StudioObject) {
     return applicableOffering(object, 'region' in object ? object.region ?? env.region : env.region, code, inventory);
   }
-  function copilotCredits(agent: Extract<StudioObject, { kind: 'agent' }>) {
+  const declaredCredits = new Map<string, { remaining?: Decimal; included?: Decimal; reason?: string }>();
+  for (const agent of env.objects) {
+    if (agent.kind !== 'agent' || agent.platform !== 'copilot-studio' || agent.modelSource !== 'platform-managed') continue;
     const amounts = declaredCopilotCredits(agent);
-    return amounts.length ? Money.sum(...amounts) : undefined;
+    const total = amounts.length ? Money.sum(...amounts) : undefined;
+    const grant = agent.includedUsage;
+    if (!grant) declaredCredits.set(agent.id, { remaining: total });
+    else if (grant.credits === undefined || !grant.basis || !grant.expiresOn) {
+      declaredCredits.set(agent.id, { reason: 'Complete the customer allowance amount, basis and expiry or remove the allowance.' });
+      licensingFindings.push({ id: agent.id, title: 'Declared included usage', status: 'Unverified',
+        detail: 'The declared allowance is incomplete. Confirm the usage scope and expiry before applying the deduction.' });
+    }
+    else if (grant.expiresOn < at.slice(0, 10)) {
+      declaredCredits.set(agent.id, { remaining: total });
+      licensingFindings.push({ id: agent.id, title: 'Declared included usage', status: 'Action required',
+        detail: 'The customer-declared allowance expired. The estimate uses the declared gross usage without this reduction.' });
+    } else if (total === undefined || total.lt(grant.credits)) {
+      declaredCredits.set(agent.id, { reason: 'Enter gross credits at least equal to the customer-declared included usage.' });
+    } else {
+      declaredCredits.set(agent.id, { remaining: total.minus(grant.credits), included: new Money(grant.credits) });
+      licensingFindings.push({ id: agent.id, title: 'Declared included usage', status: 'Conditional',
+        detail: `Customer declaration through ${grant.expiresOn}. ${grant.basis}` });
+    }
   }
   const tariffScopes = new Map<string, number>();
   for (const object of env.objects) {
@@ -130,15 +155,20 @@ export function ledger(env: Environment, records: RetailRecord[], at = new Date(
       poolLinks.set(edge.from, [...(poolLinks.get(edge.from) ?? []), edge.to]);
     }
   }
-  // Stable order makes responsibility for any residual credits reproducible.
+  // Preserve inventory order across JSON round trips and duplication, including when per-agent rates differ.
   const creditAllocations = new Map<string, Decimal>();
-  for (const [id, links] of [...poolLinks].sort(([a], [b]) => a.localeCompare(b))) {
-    const agent = objects.get(id);
-    if (agent?.kind !== 'agent' || agent.platform !== 'copilot-studio' || agent.modelSource !== 'platform-managed') continue;
-    const credits = copilotCredits(agent);
+  const ambiguousPools = new Set<string>();
+  for (const agent of env.objects) {
+    const id = agent.id;
+    const links = poolLinks.get(id);
+    if (!links || agent.kind !== 'agent' || agent.platform !== 'copilot-studio' || agent.modelSource !== 'platform-managed') continue;
+    const credits = declaredCredits.get(id)?.remaining;
     if (credits === undefined) continue;
     if (links.length !== 1) {
-      note(id, 'Multiple credit packs are linked. Link one pooled resource per agent to allocate credits.');
+      ambiguousPools.add(id);
+      note(id, 'Multiple credit pools apply. Link exactly one eligible pooled resource per agent to resolve PAYG overage.');
+      licensingFindings.push({ id, title: 'Prepaid credit allocation', status: 'Action required',
+        detail: 'Multiple linked pools could cover these credits. The residual PAYG cost is unresolved.' });
       continue;
     }
     const pool = remaining.get(links[0])!;
@@ -147,58 +177,84 @@ export function ledger(env: Environment, records: RetailRecord[], at = new Date(
     remaining.set(links[0], pool.minus(used));
   }
 
+  const deploymentBlocked = (id: string) => technicalFindings.some(finding => finding.id === id && finding.status === 'incompatible');
+  const usageReferences = new Map<string, number>();
+  for (const edge of env.relationships) {
+    if (edge.type === 'agent-uses-usage') usageReferences.set(edge.to, (usageReferences.get(edge.to) ?? 0) + 1);
+  }
+  function usageFor(id: string) {
+    const profileId = outgoing(id, 'agent-uses-usage')[0]?.to;
+    const duplicate = !!profileId && (usageReferences.get(profileId) ?? 0) > 1;
+    const item = objects.get(profileId ?? '');
+    return { profile: !duplicate && item?.kind === 'usage-profile' ? item : undefined, duplicate };
+  }
+  function modelTokens(object: StudioObject, model: Extract<StudioObject, { kind: 'model-deployment' }>, prompt = false) {
+    const { profile, duplicate } = usageFor(object.id);
+    const reason = duplicate ? 'This usage profile is linked to several agents. Provide a distinct monthly workload for each agent to avoid counting demand twice.' : undefined;
+    if (reason) note(object.id, reason);
+    const calls = profile?.executions === undefined || profile.calls === undefined ? undefined
+      : new Money(profile.executions).times(profile.calls).times(new Money(profile.retries ?? 0).div(100).plus(1));
+    const region = model.region ?? env.region;
+    const sku = model.sku || model.modelId || 'Unspecified model';
+    const offer = selection(model);
+    const modelMeter = (part: 'input' | 'output') => {
+      const manual = part === 'input' ? model.inputMeter : model.outputMeter;
+      const custom = assumedMeter(`model-${part}${model.modelVersion ? ':' + model.modelVersion : ''}`, sku, region, `million ${part} tokens`, 1_000_000);
+      return (offer && offeringMeter(offer, part)) ?? (manual?.sku === sku && manual.region === region && !model.offeringId ? manual : custom);
+    };
+    const input = profile?.input === undefined ? undefined : calls?.times(profile.input);
+    bill(object, 'Inference', prompt ? 'Prompt input tokens' : 'Input tokens', {
+      meter: modelMeter('input'),
+      quantity: input, owner: model.id, offer, componentId: 'input', reason,
+    });
+    if (profile?.cachedInput) {
+      const cached = (offer && offeringMeter(offer, 'cached')) ?? assumedMeter(
+        `model-cached${model.modelVersion ? ':' + model.modelVersion : ''}`, sku, region, 'million cached input tokens', 1_000_000);
+      bill(object, 'Inference', prompt ? 'Prompt cached input tokens' : 'Cached input tokens', {
+        meter: cached, quantity: calls?.times(profile.cachedInput), owner: model.id, offer, componentId: 'cached',
+      });
+    }
+    bill(object, 'Inference', prompt ? 'Prompt output tokens' : 'Output tokens', {
+      meter: modelMeter('output'),
+      quantity: profile?.output === undefined ? undefined : calls?.times(profile.output), owner: model.id, offer, componentId: 'output', reason,
+    });
+  }
+
   for (const object of env.objects) {
     switch (object.kind) {
       case 'agent': {
         const target = objects.get(outgoing(object.id, 'agent-uses-deployment')[0]?.to ?? '');
         const model = target?.kind === 'model-deployment' ? target : undefined;
-        const assessment = compatibility(object, model);
-        if (assessment.status !== 'verified-supported') note(object.id, assessment.reason);
+        const assessment = technicalFindings.find(finding => finding.id === object.id && !finding.related);
+        const managed = object.platform === 'copilot-studio' && object.modelSource === 'platform-managed';
         if (outgoing(object.id, 'agent-invokes-agent').length) note(object.id, 'Invocation links are descriptive. Include downstream volume once in the downstream usage profile.');
         if (object.platform === 'copilot-studio') {
           const offer = selection(object);
           const included = creditAllocations.get(object.id) ?? zero();
+          const credits = declaredCredits.get(object.id);
           bill(object, 'Orchestration', 'Copilot Studio credits', {
             meter: (offer && offeringMeter(offer, 'credits')) ?? (object.platformMeter?.region === env.region ? object.platformMeter : undefined) ?? assumedMeter('copilot-credits', 'Copilot Studio', env.region, 'credit'),
-            quantity: assessment.status === 'verified-supported' ? copilotCredits(object)?.minus(included) : undefined,
-            offer: assessment.status === 'verified-supported' ? offer : undefined, componentId: 'credits', includedCredits: included.gt(0) ? included : undefined,
-            reason: assessment.status === 'verified-supported' ? undefined : assessment.reason,
+            quantity: managed && !ambiguousPools.has(object.id) ? credits?.remaining?.minus(included) : undefined,
+            offer: managed ? offer : undefined, componentId: 'credits', includedCredits: included.gt(0) ? included : undefined,
+            entitledCredits: credits?.included?.gt(0) ? credits.included : undefined,
+            reason: !managed ? assessment?.detail : ambiguousPools.has(object.id) ? 'Resolve the eligible prepaid pool before pricing PAYG overage.' : credits?.reason,
           });
+          const prompt = objects.get(outgoing(object.id, 'agent-uses-prompt-model')[0]?.to ?? '');
+          if (prompt?.kind === 'model-deployment') {
+            const connection = technicalFindings.find(finding => finding.id === object.id && finding.related === prompt.id && finding.title === 'External prompt model');
+            if (!managed || connection?.status === 'incompatible' || deploymentBlocked(prompt.id) || !prompt.modelId || !prompt.mode) {
+              bill(object, 'Inference', 'External prompt model', { reason: 'Resolve the external prompt compatibility or deployment details.' });
+            } else if (prompt.mode === 'payg') modelTokens(object, prompt, true);
+          }
           break;
         }
         if (object.platform !== 'foundry-agent-service' || object.modelSource !== 'deployment-ref' || !model?.mode || !model.modelId) {
-          bill(object, 'Inference', 'Agent inference', { reason: assessment.reason });
+          bill(object, 'Inference', 'Agent inference', { reason: assessment?.detail });
           break;
         }
         if (model.mode === 'provisioned') break;
-        const usage = objects.get(outgoing(object.id, 'agent-uses-usage')[0]?.to ?? '');
-        const profile = usage?.kind === 'usage-profile' ? usage : undefined;
-        const calls = profile?.executions === undefined || profile.calls === undefined ? undefined
-          : new Money(profile.executions).times(profile.calls).times(new Money(profile.retries ?? 0).div(100).plus(1));
-        const region = model.region ?? env.region;
-        const sku = model.sku || model.modelId;
-        const offer = selection(model);
-        const modelMeter = (part: 'input' | 'output') => {
-          const manual = part === 'input' ? model.inputMeter : model.outputMeter;
-          const custom = assumedMeter(`model-${part}${model.modelVersion ? ':' + model.modelVersion : ''}`, sku, region, `million ${part} tokens`, 1_000_000);
-          return (offer && offeringMeter(offer, part)) ?? (manual?.sku === sku && manual.region === region && !model.offeringId ? manual : custom);
-        };
-        const input = profile?.input === undefined ? undefined : calls?.times(profile.input);
-        bill(object, 'Inference', 'Input tokens', {
-          meter: modelMeter('input'),
-          quantity: input, owner: model.id, offer, componentId: 'input',
-        });
-        if (profile?.cachedInput) {
-          const cached = (offer && offeringMeter(offer, 'cached')) ?? assumedMeter(
-            `model-cached${model.modelVersion ? ':' + model.modelVersion : ''}`, sku, region, 'million cached input tokens', 1_000_000);
-          bill(object, 'Inference', 'Cached input tokens', {
-            meter: cached, quantity: calls?.times(profile.cachedInput), owner: model.id, offer, componentId: 'cached',
-          });
-        }
-        bill(object, 'Inference', 'Output tokens', {
-          meter: modelMeter('output'),
-          quantity: profile?.output === undefined ? undefined : calls?.times(profile.output), owner: model.id, offer, componentId: 'output',
-        });
+        if (deploymentBlocked(model.id)) bill(object, 'Inference', 'Agent inference', { reason: 'The linked deployment has a verified incompatible selection.' });
+        else modelTokens(object, model);
         break;
       }
       case 'model-deployment': {
@@ -208,12 +264,18 @@ export function ledger(env: Environment, records: RetailRecord[], at = new Date(
         }
         if (object.mode === 'provisioned') {
           const shares = new Map<string, Decimal>();
-          const linked = env.relationships.filter(edge => edge.type === 'agent-uses-deployment' && edge.to === object.id && objects.get(edge.from)?.kind === 'agent');
+          const linked = env.relationships.filter(edge => ['agent-uses-deployment', 'agent-uses-prompt-model'].includes(edge.type) &&
+            edge.to === object.id && objects.get(edge.from)?.kind === 'agent');
           const agents = linked.flatMap(edge => {
             const agent = objects.get(edge.from);
-            if (agent?.kind !== 'agent' || agent.platform !== 'foundry-agent-service' || agent.modelSource !== 'deployment-ref') return [];
-            const usage = objects.get(outgoing(agent.id, 'agent-uses-usage')[0]?.to ?? '');
-            if (usage?.kind === 'usage-profile' && usage.executions !== undefined && usage.calls !== undefined && usage.input !== undefined) {
+            if (agent?.kind !== 'agent' || deploymentBlocked(object.id)) return [];
+            const foundry = edge.type === 'agent-uses-deployment' && agent.platform === 'foundry-agent-service' && agent.modelSource === 'deployment-ref';
+            const prompt = edge.type === 'agent-uses-prompt-model' && agent.platform === 'copilot-studio' && agent.modelSource === 'platform-managed' &&
+              !technicalFindings.some(finding => finding.id === agent.id && finding.related === object.id && finding.status === 'incompatible');
+            if (!foundry && !prompt) return [];
+            const { profile: usage, duplicate } = usageFor(agent.id);
+            if (duplicate && object.allocationBasis) note(agent.id, 'Use one profile per agent to allocate shared provisioned cost by input tokens.');
+            if (usage && usage.executions !== undefined && usage.calls !== undefined && usage.input !== undefined) {
               shares.set(agent.id, new Money(usage.executions).times(usage.calls).times(Money.sum(usage.input, usage.cachedInput ?? 0)).times(new Money(usage.retries ?? 0).div(100).plus(1)));
             }
             return [agent.id];
@@ -267,18 +329,13 @@ export function ledger(env: Environment, records: RetailRecord[], at = new Date(
         }
         break;
       case 'licence-entitlement': {
-        const assignments = env.relationships.filter(edge => edge.type === 'group-has-entitlement' && edge.to === object.id);
-        if (assignments.length > 1) note(object.id, 'Verify group overlap. Enter one deduplicated billable seat count for this entitlement.');
-        if (env.objects.some(other => other.id !== object.id && other.kind === 'licence-entitlement' && other.product && other.product === object.product)) {
-          note(object.id, 'Multiple entitlements use this SKU. Verify they do not cover the same seats.');
-        }
         const offer = selection(object);
         const manual = object.meter && object.meter.sku === object.product && object.meter.region === env.region ? object.meter : undefined;
         bill(object, offer?.family === 'security' ? 'Governance' : 'Licensing', 'Monthly seats', {
           meter: (offer && offeringMeter(offer, 'seats')) ?? manual ?? assumedMeter('licence-seats', object.product || 'Unspecified licence', env.region, 'seat/month'),
-          quantity: object.procurement === 'incremental' || object.procurement === 'existing' ? object.seats : undefined,
+          quantity: !licencePlan.blocked.has(object.id) && (object.procurement === 'incremental' || object.procurement === 'existing') ? licencePlan.seats.get(object.id) : undefined,
           existing: object.procurement === 'existing', fixed: true, offer, componentId: 'seats',
-          reason: object.procurement === 'existing' ? 'Declared already owned. Incremental cost is zero; existing spend may be unknown.'
+          reason: licencePlan.blocked.has(object.id) ? 'Resolve duplicate or inconsistent licence seats.' : object.procurement === 'existing' ? 'Already owned. Declared existing spend is shown separately.'
             : object.procurement !== 'incremental' ? 'Confirm whether seats are owned or incremental.' : undefined,
         });
         break;
@@ -295,7 +352,20 @@ export function ledger(env: Environment, records: RetailRecord[], at = new Date(
         break;
     }
   }
-  return { lines, summary: summarize(lines, code), issues };
+  const summary = summarize(lines, code);
+  const licenceLines = lines.filter(line => objects.get(line.objectId)?.kind === 'licence-entitlement');
+  const incremental = summarize(licenceLines, code).current;
+  const retained = new Money(licencePlan.retainedKnown);
+  const asTotal = (known: Decimal, incomplete: number) => ({
+    known: known.toFixed(digits), annual: known.times(12).toFixed(digits), incomplete,
+  });
+  const licenceEstate = {
+    owned: licencePlan.owned, existingLines: licencePlan.existing,
+    existing: asTotal(new Money(licencePlan.existingKnown), licencePlan.existingMissing), incremental,
+    proposed: asTotal(retained.plus(incremental.known), licencePlan.retainedMissing + incremental.incomplete),
+    proposedEnvironment: asTotal(retained.plus(summary.current.known), licencePlan.retainedMissing + summary.current.incomplete),
+  };
+  return { lines, summary, issues, technicalFindings, licensingFindings, licenceEstate, assessedAt: at };
 }
 export type Ledger = ReturnType<typeof ledger>;
 

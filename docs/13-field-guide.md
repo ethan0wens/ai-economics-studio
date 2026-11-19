@@ -1,6 +1,6 @@
 # Studio field guide
 
-The studio provides contextual help for 64 fields. **Required** describes the inputs needed to complete a configuration or estimate. Drafts can be exported with missing inputs. **Conditional** means the requirement depends on the selected platform, billing mode, or action. **Optional** fields can be left blank.
+The studio provides contextual help for 83 fields. **Required** describes the inputs needed to complete a configuration or estimate. Drafts can be exported with missing inputs. **Conditional** means the requirement depends on the selected platform, billing mode, or action. **Optional** fields can be left blank.
 
 Essential shows the inputs needed to get started. Detailed adds context and secondary assumptions. Advanced reveals specialist settings where available. Switching levels preserves saved inputs and does not change the estimate.
 
@@ -109,3 +109,28 @@ An **Unknown price** badge means at least one line has a usage quantity but lack
 | Exception treatment of fixed contracts | Optional | Inherit, apply, or keep fixed | Choose how to treat fixed rates for this exception. The choice applies only when an exception percentage is entered. [Studio pricing methodology](https://github.com/ethan0wens/ai-economics-studio/blob/main/docs/04-pricing-and-tco.md) |
 | Filter by object, category or meter | Optional | Search text | Filter the visible ledger lines by a matching name, category, component or SKU. Totals are unchanged. |
 | Price status | Optional | One visible status | Show lines with the selected pricing status. Unknown means the current amount cannot be computed. Totals are unchanged. |
+
+
+## Enterprise evidence and reconciliation fields
+
+| Field | Requirement | What to enter |
+| --- | --- | --- |
+| Actual deployment region | Conditional | The actual Azure resource region. Billing region remains a separate pricing input. |
+| Deployed model for capacity | Conditional | The model identifier for a generic provisioned capacity tariff. |
+| Actual deployed version | Optional | Exact launched model version when the billing label differs. |
+| Required input modality | Optional | Text, image, audio or video input required by the design. |
+| Required output modality | Optional | Text, image, audio or video output required by the design. |
+| Required model feature | Optional | Function calling, structured outputs or the Responses API. |
+| Foundry agent setup | Optional | Current Foundry or the exact classic deployment setup. |
+| External prompt endpoint | Conditional | The API endpoint type used by the external prompt model. |
+| Existing monthly licence spend | Optional | Actual monthly cost for the current owned contract in the environment currency. |
+| Seat purchase pool | Optional | Identical labels for the same pool, distinct labels for verified disjoint pools. |
+| Repeated group assignments | Conditional | Number of repeated seat assignments to subtract from the linked group counts. |
+| Seats assigned to group | Optional | Count assigned seats for this entitlement and this user group. |
+| Seats replaced | Conditional | Number of seats released from the existing contract by this purchase. |
+| Contract replacement effective date | Conditional | First date on which that old spend actually ceases. |
+| Technical resource integration | Optional | The specific public or private Foundry Search connection being reviewed. |
+| Apply declared included usage | Optional | Enable a documented customer allowance and enter gross usage. |
+| Included credits to deduct | Conditional | Eligible monthly credits already reconciled within this agent’s scope. |
+| Included usage basis | Conditional | Evidence reference or rationale, without confidential terms. |
+| Included usage valid through | Conditional | Last date the entitlement applies. |

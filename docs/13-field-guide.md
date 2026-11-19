@@ -1,6 +1,6 @@
 # Studio field guide
 
-The studio provides contextual help for 59 fields. **Required** describes the inputs needed to complete a configuration or estimate. Drafts can be exported with missing inputs. **Conditional** means the requirement depends on the selected platform, billing mode, or action. **Optional** fields can be left blank.
+The studio provides contextual help for 64 fields. **Required** describes the inputs needed to complete a configuration or estimate. Drafts can be exported with missing inputs. **Conditional** means the requirement depends on the selected platform, billing mode, or action. **Optional** fields can be left blank.
 
 Essential shows the inputs needed to get started. Detailed adds context and secondary assumptions. Advanced reveals specialist settings where available. Switching levels preserves saved inputs and does not change the estimate.
 
@@ -16,6 +16,8 @@ An **Unknown price** badge means at least one line has a usage quantity but lack
 | ISO currency | Required | Three-letter ISO currency code | Enter a code such as GBP. The ledger matches rates in this currency. It does not convert prices from other currencies. [Studio pricing methodology](https://github.com/ethan0wens/ai-economics-studio/blob/main/docs/04-pricing-and-tco.md) |
 | Import JSON | Optional | Studio JSON file | Choose an exported Studio environment file. Import validates the file and replaces the open environment. |
 | Search inventory | Optional | Search text | Filter by object name or type. Search does not change the environment. |
+| Find a catalogue configuration | Optional | Search text | Find a product, SKU, deployment mode or billing region without changing coverage totals. |
+| Filter by billing region or market | Optional | Azure billing region or commercial market | Limit visible catalogue entries to one billing region or market. This does not change your environment or deployment eligibility. |
 | Object type | Optional | One inventory type | Show only objects of the selected type. Choose All types to clear the filter. |
 | Microsoft retail configuration | Optional | One exact product or billing configuration | Select a reviewed offer to apply the latest verified price for its region, currency and unit. [Pricing methodology](14-retail-catalogue.md) |
 | Object name | Required | Text | Use a name your team will recognise in the inventory and reports. The name does not change costs. |
@@ -32,6 +34,8 @@ An **Unknown price** badge means at least one line has a usage quantity but lack
 | Identity | Optional | One identity type | Record whether access uses a delegated user identity or an application identity. This records your design assumption without granting permissions. [Microsoft Zero Trust guidance](https://learn.microsoft.com/en-us/security/zero-trust/) |
 | Tools and knowledge sources | Optional | Short description | List the tools and data sources the agent uses. Model any billable consumption as a supporting resource. |
 | Monthly Copilot credits | Conditional | Credits per month | Enter your measured or planned total for a platform-managed Copilot agent. Use plan-specific evidence and supply a price separately. [Microsoft Copilot Studio licensing](https://learn.microsoft.com/en-us/microsoft-copilot-studio/requirements-licensing-subscriptions) |
+| Copilot credit input method | Optional | Monthly total or activity breakdown | The estimate uses one input method. Switching preserves both sets of entries. |
+| Billable Copilot credits by activity | Optional | Credits per month | Enter already measured or calculated billable credits. Enter at least one applicable activity to complete a breakdown. |
 | Usage profile | Conditional | One inventory profile | Link a profile for pay-as-you-go token estimates or to allocate provisioned cost by input tokens. Links do not multiply traffic. [Studio pricing methodology](https://github.com/ethan0wens/ai-economics-studio/blob/main/docs/04-pricing-and-tco.md) |
 | Relationship type | Conditional | One relationship type | Choose what the link represents. Model, usage, ownership and policy links have different effects. |
 | Target | Conditional | One compatible object | Select the target to enable linking. Only objects compatible with the relationship are listed. |
@@ -55,7 +59,8 @@ An **Unknown price** badge means at least one line has a usage quantity but lack
 | --- | --- | --- | --- |
 | Monthly executions | Required | Whole executions per month | Count how many times the workload runs in an average month. Include downstream runs only in the profile that owns them. [Studio pricing methodology](https://github.com/ethan0wens/ai-economics-studio/blob/main/docs/04-pricing-and-tco.md) |
 | Model calls per execution | Required | Average calls per execution | Enter the average number of model requests made by one run before retries. One run may make several requests. [Studio pricing methodology](https://github.com/ethan0wens/ai-economics-studio/blob/main/docs/04-pricing-and-tco.md) |
-| Input tokens per call | Required | Whole tokens per request | Enter the average tokens sent to the model, including prompt and context. Use token counts rather than words or characters. [Studio pricing methodology](https://github.com/ethan0wens/ai-economics-studio/blob/main/docs/04-pricing-and-tco.md) |
+| Input tokens per call | Required | Whole tokens per request | Enter uncached input tokens when using the separate cached input field. Use token counts, including prompt and context. [Studio pricing methodology](https://github.com/ethan0wens/ai-economics-studio/blob/main/docs/04-pricing-and-tco.md) |
+| Cached input tokens per call | Optional | Whole tokens per request | Enter tokens billed under a documented cache-hit meter. Exclude them from other input. A missing cache rate stays unknown and allows a manual rate. |
 | Output tokens per call | Required | Whole tokens per request | Enter the average tokens generated by the model. Output usage is priced separately from input usage. [Studio pricing methodology](https://github.com/ethan0wens/ai-economics-studio/blob/main/docs/04-pricing-and-tco.md) |
 | Additional retries (%) | Optional | 0 to 100% | Enter retries as extra calls above the base count. For example, 5 means five extra calls per 100 base calls. Blank adds no extra calls. [Studio pricing methodology](https://github.com/ethan0wens/ai-economics-studio/blob/main/docs/04-pricing-and-tco.md) |
 | Tool calls per execution | Optional | Average calls per execution | Record the expected number of tool calls for planning. Enter any billable tool consumption as a supporting resource. |

@@ -11,7 +11,7 @@ npm ci
 npm run dev
 ```
 
-The studio starts with an empty workspace. Add an object of any type, then use the inspector to set its configuration, usage and relationships. In **Cost Analysis**, open a line to see its billed unit, sources, rate assumptions and forecast. Cloud accounts and credentials are only needed for production deployment.
+The studio starts with an empty workspace. Open **Pricing Catalogue** to search supported and unpriced Microsoft configurations by billing region and market, then use the builder to calculate your environment’s separate pricing completeness. Add an object of any type, then use the inspector to set its configuration, usage and relationships. In **Cost Analysis**, open a line to see its billed unit, sources, rate assumptions and forecast. Cloud accounts and credentials are only needed for production deployment.
 
 ```sh
 npm run typecheck
@@ -28,7 +28,7 @@ See the [field guide](docs/13-field-guide.md) for configuration inputs, units an
 
 - **UI**: React + TypeScript + Vite, light-first Cloud Professional design system.
 - **Delivery**: Cloudflare **Workers Static Assets** (no runtime Worker script), deployed by GitHub Actions on changes merged to `main`.
-- **Pricing**: public, versioned catalogue; scheduled GitHub Actions updates from Microsoft's public Azure Retail Prices API for curated/mapped meters; separately curated Microsoft licence and consumption rules. Failed refreshes must not replace a good catalogue.
+- **Pricing**: public, versioned catalogue; scheduled GitHub Actions discover published rates within reviewed Microsoft product and SKU families. The static inventory includes manual-rate and unsupported configurations. UK commercial price reviews are maintained separately. Failed refreshes must not replace a good catalogue.
 - **Compute and privacy**: all app state, TCO, validation, diagrams and PDF generation in the user's browser. No login, telemetry, persistent environment storage, data collection, application server or database.
 - **Saving**: users explicitly export/import versioned JSON; no `localStorage`, `sessionStorage`, IndexedDB or automatic cloud saves for environment data.
 - **Financial accuracy**: latest verified published rates by default; user-fixed contract prices, retail percentage discounts and forecast adjustments; never use zero when price is unknown. An unverified cost is visibly **incomplete**.

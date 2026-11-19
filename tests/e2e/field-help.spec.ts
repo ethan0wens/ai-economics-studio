@@ -30,14 +30,21 @@ async function workspace(page: Page, fixture = data) {
 test('every registered field is reachable with an accessible help trigger', async ({ page }) => {
   const revealed = new Set<string>();
   async function inspect() {
-    for (const element of await page.locator('[data-help]:visible').all()) {
-      const key = (await element.getAttribute('data-help'))!;
+    const fields = await page.locator('[data-help]:visible').evaluateAll(elements => elements.map(element => {
+      const trigger = element.querySelector('button[aria-label^="Help for "]');
+      return { key: element.getAttribute('data-help')!, visible: !!trigger?.getClientRects().length,
+        controls: trigger?.getAttribute('aria-controls') };
+    }));
+    for (const { key, visible, controls } of fields) {
+      expect(visible, key).toBe(true);
+      expect(controls, key).toBeTruthy();
       revealed.add(key);
-      const trigger = element.getByRole('button', { name: /^Help for / });
-      await expect(trigger).toBeVisible();
-      expect(await trigger.getAttribute('aria-controls')).toBeTruthy();
     }
   }
+  const navigate = async (name: string) => {
+    await page.getByRole('navigation', { name: 'Studio navigation' }).getByRole('link', { name, exact: true }).click();
+    await expect(page.getByRole('heading', { name, level: 1, exact: true })).toBeVisible();
+  };
 
   await page.goto('/');
   await inspect();
@@ -85,7 +92,7 @@ test('every registered field is reachable with an accessible help trigger', asyn
   await page.getByRole('button', { name: 'Settings for Untitled environment' }).click();
   await inspect();
   await page.keyboard.press('Escape');
-  await page.getByRole('link', { name: 'Cost Analysis' }).click();
+  await navigate('Cost Analysis');
   await page.getByText('Shared provisioned capacity', { exact: true }).click();
   await page.getByRole('combobox', { name: 'Price agreement', exact: true }).selectOption('fixed');
   await page.locator('.ledger-row[open] .price-more summary').click();
@@ -94,9 +101,9 @@ test('every registered field is reachable with an accessible help trigger', asyn
   await inspect();
   await page.getByText('Compare pricing assumptions', { exact: true }).click();
   await inspect();
-  await page.getByRole('link', { name: 'Reports & Export' }).click();
+  await navigate('Reports & Export');
   await inspect();
-  await page.getByRole('link', { name: 'Pricing Catalogue', exact: true }).click();
+  await navigate('Pricing Catalogue');
   await inspect();
   expect([...revealed].sort()).toEqual(Object.keys(fieldHelp).sort());
 });

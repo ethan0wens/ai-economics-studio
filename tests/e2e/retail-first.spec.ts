@@ -104,3 +104,20 @@ if (process.env.STUDIO_CHECK_PUBLISHED_CATALOGUE === '1') {
     await expect(page.locator('.metric').first()).toContainText(new Intl.NumberFormat('en-GB', { style: 'currency', currency: 'GBP' }).format(amount));
   });
 }
+
+if (process.env.STUDIO_CHECK_RELEASE_HEALTH === '1') {
+  test('catalogue health reports the verified public release and catalogue', async ({ page }) => {
+    const response = await page.request.get('/pricing/health.json');
+    expect(response.ok()).toBe(true);
+    const { release, maintenance } = await response.json();
+    expect(release.status).toBe('published');
+    expect(release.catalogueId).toBe(process.env.STUDIO_EXPECTED_CATALOGUE_ID);
+    expect(release.application).toMatch(/^[a-f0-9]{40}$/);
+    expect(Array.isArray(maintenance.unresolved)).toBe(true);
+    await page.goto('/');
+    await page.getByRole('button', { name: 'Pricing Catalogue', exact: true }).click();
+    const health = page.getByRole('region', { name: 'Catalogue health' });
+    await expect(health.getByText(new RegExp('Published application ' + release.application.slice(0, 12)))).toBeVisible();
+    await expect(health.getByText('PTU sizing', { exact: true })).toBeVisible();
+  });
+}

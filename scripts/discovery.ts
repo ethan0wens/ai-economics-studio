@@ -3,6 +3,7 @@ import { z } from 'zod';
 import type { RetailRecord } from '../src/catalogue';
 import { inventorySchema, offeringMeter, offerings, priceComponentSchema, type Component, type Offering } from '../src/offerings';
 import scope from '../catalogue/scope.json' with { type: 'json' };
+import discovered from '../catalogue/discovered.json' with { type: 'json' };
 
 export const retailOrigin = 'https://prices.azure.com';
 export const retailPath = '/api/retail/prices';
@@ -32,7 +33,7 @@ const azureTariff = z.object({
   retailPrice: z.number().nonnegative().max(1e9), tierMinimumUnits: z.number().nonnegative(),
 });
 
-export function inventoryPlan(definition: unknown = scope, retained: readonly Offering[] = offerings) {
+export function inventoryPlan(definition: unknown = scope, retained: readonly Offering[] = [...offerings, ...inventorySchema.parse(discovered)]) {
   const parsed = scopeSchema.parse(definition);
   const offers = new Map(retained.map(offer => [offer.id, offer]));
   const usedAliases = new Set<string>();
@@ -164,4 +165,64 @@ export async function discoverPrices(targets: Target[], readPage: ReadPage, chec
     records.push(...prices.flat());
   }
   return records;
+}
+
+/** Discover only product/version-qualified Azure OpenAI token names. Family-only
+ * labels and different Azure products never acquire an automatic version mapping. */
+export async function discoverExactModelPrices(inventory: Offering[], readPage: ReadPage, checkedAt: string) {
+  const requested = inventory.filter(offer => offer.id.startsWith('foundry-') &&
+    offer.kind === 'model-deployment' && offer.model.mode === 'payg');
+  if (!requested.length) return [];
+  const regions = [...new Set(requested.map(offer => offer.region))];
+  return (await Promise.all(regions.map(async region => {
+    const first = new URL(retailPath, retailOrigin);
+    first.searchParams.set('api-version', '2023-01-01-preview');
+    first.searchParams.set('currencyCode', "'GBP'");
+    first.searchParams.set('$filter', [equals('productName', 'Azure OpenAI'), equals('armRegionName', region), equals('priceType', 'Consumption')].join(' and '));
+    const rows: Record<string, unknown>[] = [];
+    const visited = new Set<string>();
+    let next: URL | null = first;
+    while (next) {
+      if (next.origin !== retailOrigin || next.pathname !== retailPath || next.username || next.password || visited.has(next.href) || visited.size >= 12) {
+        throw new Error(`Unexpected Azure OpenAI token discovery pagination for ${region}.`);
+      }
+      visited.add(next.href);
+      const page = await readPage(next);
+      rows.push(...page.Items);
+      next = page.NextPageLink ? new URL(page.NextPageLink) : null;
+    }
+    return requested.flatMap(offer => offer.kind === 'model-deployment' && offer.region === region
+      ? exactModelRecords(offer, rows, first.href, checkedAt) : []);
+  }))).flat();
+}
+
+export function exactModelRecords(offer: Extract<Offering, { kind: 'model-deployment' }>,
+  rows: Record<string, unknown>[], source: string, checkedAt: string): RetailRecord[] {
+  const mode = { GlobalStandard: 'Global Standard', DataZoneStandard: 'Data Zone Standard', Standard: 'Regional Standard' }[offer.model.sku];
+  if (!mode || offer.model.mode !== 'payg') return [];
+  const key = `${offer.model.id} ${offer.model.version} ${mode}`.toLowerCase();
+  const labels = { input: 'input tokens', output: 'output tokens', cached: 'cached input tokens', capacity: '', credits: '', seats: '', usage: '' };
+  return offer.components.flatMap(component => {
+    const meter = offeringMeter(offer, component.id);
+    if (!meter || !labels[component.id]) return [];
+    const selected = rows.filter(row => row.productName === 'Azure OpenAI' && row.serviceName === 'Cognitive Services' &&
+      row.armRegionName === offer.region && row.type === 'Consumption' &&
+      typeof row.skuName === 'string' && row.skuName.toLowerCase() === key &&
+      typeof row.meterName === 'string' && row.meterName.toLowerCase() === `${key} ${labels[component.id]}`);
+    const eligible = [];
+    for (const raw of selected) {
+      const row = azureTariff.safeParse(raw);
+      if (!row.success || raw.currencyCode !== offer.currency || raw.unitOfMeasure !== component.unit ||
+          row.data.tierMinimumUnits !== 0) return [];
+      if (Date.parse(row.data.effectiveStartDate) <= Date.parse(checkedAt)) eligible.push({ ...row.data, raw });
+    }
+    eligible.sort((a, b) => Date.parse(b.effectiveStartDate) - Date.parse(a.effectiveStartDate));
+    const rate = eligible[0];
+    if (!rate || !rate.retailPrice || new Set(eligible.map(row => row.meterId)).size !== 1 ||
+        eligible.some(row => Date.parse(row.effectiveStartDate) === Date.parse(rate.effectiveStartDate) && row.retailPrice !== rate.retailPrice)) return [];
+    return [{ ...meter, currency: offer.currency, source, price: new Decimal(rate.retailPrice).toFixed(),
+      product: 'Azure OpenAI', effectiveAt: rate.effectiveStartDate, verification: 'azure-retail-api' as const,
+      offeringId: offer.id, component: component.id, sourceMeterId: rate.meterId,
+      meterName: String(rate.raw.meterName), publishedSku: String(rate.raw.skuName), publishedUnit: component.unit }];
+  });
 }

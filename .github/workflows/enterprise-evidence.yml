@@ -3,7 +3,12 @@ on:
   workflow_dispatch:
   push:
     branches: [work]
-    paths: ['scripts/survey-enterprise.ts', 'scripts/survey-catalogue.ts', '.github/workflows/enterprise-evidence.yml']
+    paths:
+      - 'scripts/survey-enterprise.ts'
+      - 'scripts/survey-catalogue.ts'
+      - 'scripts/*maintenance*.ts'
+      - 'scripts/microsoft-*.ts'
+      - '.github/workflows/enterprise-evidence.yml'
 permissions:
   contents: read
 jobs:
@@ -69,9 +74,9 @@ jobs:
         env:
           STUDIO_TEST_URL: https://ai-econmics-studio.ethan0wens.workers.dev
           STUDIO_CHECK_PUBLISHED_CATALOGUE: '1'
-  maintenance-source-probe:
+  reconcile-preview:
     runs-on: ubuntu-latest
-    timeout-minutes: 8
+    timeout-minutes: 12
     steps:
       - uses: actions/checkout@v6
         with:
@@ -81,4 +86,18 @@ jobs:
           node-version: '24'
           cache: npm
       - run: npm ci
-      - run: npx tsx scripts/probe-maintenance.ts
+      - run: npm run maintenance:review
+      - run: npm run pricing:refresh
+      - run: npm run typecheck && npm run lint && npm test && npm run build
+      - uses: ./.github/actions/setup-browser
+      - run: npm run test:e2e
+        env:
+          STUDIO_CHECK_PUBLISHED_CATALOGUE: '1'
+      - uses: actions/upload-artifact@v7
+        if: always()
+        with:
+          name: catalogue-maintenance-preview
+          path: |
+            catalogue/maintenance.json
+            public/pricing/manifest.json
+          retention-days: 7

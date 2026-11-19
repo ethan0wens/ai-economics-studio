@@ -21,7 +21,7 @@ function pricesIn(text: string, type: 'seats' | 'pack', term?: UKOffer['term']) 
     if (promotional.test(tail) || promotional.test(before) || /\b(?:USD|EUR|US\$)\b/.test(tail)) return [];
     const commitment = annual.test(tail) && !monthly.test(tail) ? 'annual' :
       monthly.test(tail) && !annual.test(tail) ? 'monthly' : undefined;
-    const actual = type === 'pack' && /\b25,?000\s+(?:copilot )?credits\b/i.test(text) && /\b(?:pack\/month|per pack per month|per month|monthly)\b/i.test(tail)
+    const actual: UKOffer['term'] | undefined = type === 'pack' && /\b25,?000\s+(?:copilot )?credits\b/i.test(text) && /\b(?:pack\/month|per pack per month|per month|monthly)\b/i.test(tail)
       ? 'monthly-pack' : type === 'seats' && seats.test(tail) ? commitment : undefined;
     if (!actual || (term && actual !== term)) return [];
     const value = Number(found[1].replaceAll(',', ''));

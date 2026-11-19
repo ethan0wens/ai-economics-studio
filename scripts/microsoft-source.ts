@@ -13,7 +13,7 @@ export function officialUrl(value: string) {
 }
 
 export function normalize(value: string) {
-  return value.normalize('NFKC').replace(/[\u200b\ufe0e\ufe0f]/g, '').replace(/[‘’]/g, "'").replace(/\s+/g, ' ').trim();
+  return value.normalize('NFKC').replace(/\u200b|\ufe0e|\ufe0f/g, '').replace(/[‘’]/g, "'").replace(/\s+/g, ' ').trim();
 }
 
 export function attr(node: Element, name: string) {

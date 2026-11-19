@@ -124,8 +124,11 @@ describe('evidence boundaries', () => {
     const a = scenarios[0].env;
     expect(technical(a, referenceAt).map(item => item.status)).toContain('compatible');
     expect(technical(a, referenceAt).map(item => item.status)).toContain('conditional');
-    expect(technical(a, '2027-02-01T00:00:00Z').every(item => item.status === 'unverified')).toBe(true);
-    expect(licensing(scenarios[3].env, enterpriseInventory, '2027-02-01T00:00:00Z').findings)
+    const latest = [...entitlementRules, ...compatibilityEvidence.regions, ...compatibilityEvidence.integrations,
+      ...compatibilityEvidence.lifecycle, ...compatibilityEvidence.capabilities].map(rule => rule.reviewBy).sort().at(-1)!;
+    const afterEvidence = new Date(Date.parse(latest) + 86_400_000).toISOString();
+    expect(technical(a, afterEvidence).every(item => item.status === 'unverified')).toBe(true);
+    expect(licensing(scenarios[3].env, enterpriseInventory, afterEvidence).findings)
       .toContainEqual(expect.objectContaining({ rule: 'copilot-enterprise-base', status: 'Unverified' }));
     const model = a.objects.find(item => item.kind === 'model-deployment')!;
     expect(technical({ ...a, objects: [{ ...model, sku: 'Standard', deploymentRegion: 'westeurope' }] }, referenceAt))

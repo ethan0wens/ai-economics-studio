@@ -5,7 +5,7 @@ import { deploymentFindings } from '../src/compatibility';
 import { licensing } from '../src/entitlements';
 import { ledger } from '../src/ledger';
 import { logicalGraph } from '../src/graph';
-import { capacityRequirement, type Deployment } from '../src/provisioned';
+import { capacityEvidence, capacityRequirement, type Deployment } from '../src/provisioned';
 
 const shared = scenarios[2];
 const named = shared.env.objects.find((object): object is Deployment => object.kind === 'model-deployment')!;
@@ -33,7 +33,8 @@ it('uses exact version, SKU and geography separately from billing and rejects in
   expect(evaluate({ capacity: 20 }).summary.current).toMatchObject({ known: '3400.00', incomplete: 0 });
   expect(deploymentFindings({ ...named, deployedVersion: 'unreviewed' }, referenceAt))
     .toContainEqual(expect.objectContaining({ title: 'Provisioned capacity', status: 'unverified' }));
-  expect(deploymentFindings(named, '2027-02-01T00:00:00Z'))
+  const afterEvidence = new Date(Date.parse(capacityEvidence.map(row => row.reviewBy).sort().at(-1)!) + 86_400_000).toISOString();
+  expect(deploymentFindings(named, afterEvidence))
     .toContainEqual(expect.objectContaining({ title: 'Provisioned capacity', status: 'unverified' }));
   expect(capacityRequirement({ ...named, deploymentRegion: undefined }, referenceAt)).toBeUndefined();
 });

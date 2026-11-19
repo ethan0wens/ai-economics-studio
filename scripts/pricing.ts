@@ -8,7 +8,7 @@ import { catalogueFilename, catalogueSchema, manifestSchema, type Manifest, type
 import { catalogueCoverage } from '../src/coverage';
 import { meterKey, version } from '../src/domain';
 import { curatedPrices } from './commercial-pricing';
-import { discoverPrices, inventoryPlan, retailOrigin as origin, retailPath as pathname } from './discovery';
+import { discoverExactModelPrices, discoverPrices, inventoryPlan, retailOrigin as origin, retailPath as pathname } from './discovery';
 import { mappings, type Mapping } from './retail-mappings';
 
 const directory = fileURLToPath(new URL('../public/pricing/', import.meta.url));
@@ -33,7 +33,7 @@ function target(mapping: Mapping) {
   return url;
 }
 
-async function retailPage(url: URL, request: Fetcher) {
+export async function retailPage(url: URL, request: Fetcher) {
   const maxAttempts = 3;
   for (let attempt = 0; attempt < maxAttempts; attempt++) {
     let response: Response | undefined;
@@ -122,7 +122,11 @@ export async function refresh(root: string, selectors: readonly Mapping[], reque
   const prior = await validate(root);
   const records: RetailRecord[] = [...commercial];
   for (const mapping of selectors) records.push(await ingest(mapping, request, checkedAt));
-  if (discovery) records.push(...await discoverPrices(discovery.targets, url => retailPage(url, request), checkedAt));
+  if (discovery) {
+    const page = (url: URL) => retailPage(url, request);
+    records.push(...await discoverPrices(discovery.targets, page, checkedAt));
+    records.push(...await discoverExactModelPrices(discovery.inventory, page, checkedAt));
+  }
   records.sort((a, b) => meterKey(a).localeCompare(meterKey(b)) || a.currency.localeCompare(b.currency));
   const payload = catalogueSchema.parse({ schemaVersion: version, records, inventory: discovery?.inventory });
   const byIdentity = new Map(records.map(record => [JSON.stringify([meterKey(record), record.currency]), record]));

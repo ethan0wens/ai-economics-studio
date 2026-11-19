@@ -23,7 +23,7 @@ const matrix = z.strictObject({
   regions: z.array(record.extend({ models: z.array(z.string()).min(1), version: z.string(), sku: z.string(), regions: z.array(z.string()).min(1) })),
   integrations: z.array(record),
   lifecycle: z.array(record.extend({ models: z.array(z.string()).min(1), version: z.string(),
-    date: z.iso.date(), timing: z.enum(['retirement', 'no-earlier-than']), sku: z.string().optional(),
+    date: z.iso.date(), timing: z.enum(['retirement', 'no-earlier-than']), sku: z.string().optional(), replacement: z.string().optional(),
   })).default([]),
 });
 export const compatibilityEvidence = matrix.parse(reviewed);
@@ -58,7 +58,8 @@ export function deploymentFindings(model: Model, at: string, sizing = true) {
     (!rule.sku || normalized(rule.sku) === normalized(model.sku)));
   if (lifecycle) {
     checks.push(finding(model.id, 'Model lifecycle', at, {
-      ...lifecycle, status: lifecycle.timing === 'retirement' && at.slice(0, 10) >= lifecycle.date ? 'incompatible' : 'conditional',
+      ...lifecycle, condition: lifecycle.replacement ? `${lifecycle.condition} Microsoft lists ${lifecycle.replacement} as a replacement. Check deployment compatibility separately.` : lifecycle.condition,
+      status: lifecycle.timing === 'retirement' && at.slice(0, 10) >= lifecycle.date ? 'incompatible' : 'conditional',
     }));
   }
   const sku = normalized(model.sku);

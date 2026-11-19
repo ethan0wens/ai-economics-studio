@@ -6,7 +6,7 @@ import reviewed from '../catalogue/entitlements.json' with { type: 'json' };
 
 export const evidenceWindow = {
   source: z.url().refine(url => URL.canParse(url) && ['learn.microsoft.com', 'www.microsoft.com', 'azure.microsoft.com'].includes(new URL(url).hostname)),
-  verifiedOn: z.iso.date(), reviewBy: z.iso.date(), condition: z.string().min(1),
+  verifiedOn: z.iso.date(), observedSince: z.iso.date().optional(), reviewBy: z.iso.date(), condition: z.string().min(1),
 };
 const ruleSchema = z.strictObject({
   id: z.string(), products: z.array(z.string()).min(1), market: z.literal('GB'),
@@ -15,9 +15,9 @@ const ruleSchema = z.strictObject({
   qualifyingBundles: z.array(z.array(z.string()).min(2)).optional(), ...evidenceWindow,
 });
 export const entitlementRules = z.array(ruleSchema).parse(reviewed);
-export function currentEvidence(rule: { verifiedOn: string; reviewBy: string }, at: string) {
+export function currentEvidence(rule: { verifiedOn: string; observedSince?: string; reviewBy: string }, at: string) {
   const date = at.slice(0, 10);
-  return rule.verifiedOn <= date && date <= rule.reviewBy;
+  return (rule.observedSince ?? rule.verifiedOn) <= date && date <= rule.reviewBy;
 }
 type Licence = Extract<StudioObject, { kind: 'licence-entitlement' }>;
 export type LicensingFinding = {

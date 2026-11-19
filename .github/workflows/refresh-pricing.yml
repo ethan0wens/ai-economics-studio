@@ -6,6 +6,8 @@ on:
       - '.github/workflows/refresh-pricing.yml'
       - 'scripts/pricing.ts'
       - 'scripts/discovery.ts'
+      - 'scripts/*maintenance*.ts'
+      - 'scripts/microsoft-*.ts'
       - 'catalogue/**'
       - 'src/coverage.ts'
       - 'scripts/retail-mappings.ts'
@@ -14,11 +16,14 @@ on:
       - 'src/catalogue.ts'
       - 'tests/e2e/**'
   schedule:
-    - cron: '17 6 * * *'
+    - cron: '17 6 * * 0,2-6'
+    - cron: '17 6 * * 1'
   workflow_dispatch:
 
 permissions:
+  actions: read
   contents: write
+  issues: write
 
 concurrency:
   group: production-static-assets
@@ -28,7 +33,7 @@ jobs:
   refresh:
     if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 25
     environment: production
     steps:
       - uses: actions/checkout@v6
@@ -39,37 +44,44 @@ jobs:
           node-version: '24'
           cache: npm
       - run: npm ci
-      - run: npm run pricing:refresh
-      - name: Report verified catalogue coverage
-        run: npx tsx scripts/pricing.ts coverage >> "$GITHUB_STEP_SUMMARY"
-      - run: npm run typecheck && npm run lint && npm test && npm run build
+      - name: Reconcile official Microsoft evidence
+        id: review
+        run: |
+          if [[ "$STUDIO_SCHEDULE" == '17 6 * * 0,2-6' ]]; then
+            npm run maintenance:review -- --daily
+          else
+            npm run maintenance:review
+          fi
+        env:
+          STUDIO_SCHEDULE: ${{ github.event.schedule }}
+      - name: Refresh and validate the Azure retail snapshot
+        id: refresh
+        run: |
+          npm run pricing:refresh
+          npx tsx scripts/pricing.ts coverage >> "$GITHUB_STEP_SUMMARY"
       - uses: ./.github/actions/setup-browser
-      - run: npm run test:e2e
+      - name: Validate the catalogue and reconcile financial and browser scenarios
+        id: regression
+        run: |
+          npm run typecheck
+          npm run lint
+          npm test
+          npm run build
+          npm run test:e2e
         env:
           STUDIO_CHECK_PUBLISHED_CATALOGUE: '1'
-      - name: Persist the validated catalogue
-        run: |
-          git config user.name 'github-actions[bot]'
-          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add public/pricing
-          if ! git diff --cached --quiet; then
-            git commit -m 'Refresh validated Azure retail catalogue'
-            git push origin HEAD:main
-          fi
-      - name: Deploy the validated catalogue in this run
-        run: npm run deploy
+      - name: Deploy, verify and publish the staged catalogue
+        id: deploy
+        run: npm run deploy -- --publish-catalogue
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-      - name: Verify pricing, evidence and enterprise reports on the live Worker
-        run: |
-          export STUDIO_EXPECTED_CATALOGUE_ID="$(jq -r .catalogueId public/pricing/manifest.json)"
-          if ! npm run test:e2e -- --retries=1 tests/e2e/field-help.spec.ts tests/e2e/retail-first.spec.ts tests/e2e/enterprise.spec.ts > "$RUNNER_TEMP/production-browser.log" 2>&1; then
-            cat "$RUNNER_TEMP/production-browser.log"
-            tail -c 5800 "$RUNNER_TEMP/production-browser.log" | jq -Rsr 'gsub("%"; "%25") | gsub("\r"; "%0D") | gsub("\n"; "%0A")' | sed 's/^/::error title=Production browser verification::/'
-            exit 1
-          fi
-          cat "$RUNNER_TEMP/production-browser.log"
+      - name: Reconcile exception issues
+        if: always()
+        run: npx tsx scripts/maintenance-notify.ts
         env:
-          STUDIO_CHECK_PUBLISHED_CATALOGUE: '1'
-          STUDIO_TEST_URL: https://ai-econmics-studio.ethan0wens.workers.dev
+          GITHUB_TOKEN: ${{ github.token }}
+          STUDIO_REVIEW_OUTCOME: ${{ steps.review.outcome }}
+          STUDIO_REFRESH_OUTCOME: ${{ steps.refresh.outcome }}
+          STUDIO_REGRESSION_OUTCOME: ${{ steps.regression.outcome }}
+          STUDIO_DEPLOY_OUTCOME: ${{ steps.deploy.outcome }}

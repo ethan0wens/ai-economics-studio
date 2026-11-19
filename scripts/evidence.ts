@@ -1,3 +1,5 @@
+import { maintenanceHealthSchema } from '../src/catalogue-health';
+import health from '../catalogue/maintenance.json' with { type: 'json' };
 import { inventoryPlan } from './discovery';
 import { curatedPrices } from './commercial-pricing';
 import { compatibilityEvidence } from '../src/compatibility';
@@ -6,6 +8,7 @@ import { capacityEvidence } from '../src/provisioned';
 import { catalogueSchema } from '../src/catalogue';
 import { version } from '../src/domain';
 
+maintenanceHealthSchema.parse(health);
 const { inventory } = inventoryPlan();
 catalogueSchema.parse({ schemaVersion: version, records: curatedPrices, inventory });
 const offers = new Set(inventory.filter(item => item.kind === 'licence-entitlement').map(item => item.id));
@@ -13,7 +16,7 @@ const allRules = [...entitlementRules, ...compatibilityEvidence.regions, ...comp
   ...compatibilityEvidence.capabilities, ...compatibilityEvidence.lifecycle, ...capacityEvidence];
 if (new Set(allRules.map(rule => rule.id)).size !== allRules.length) throw new Error('Evidence rule IDs must be unique.');
 for (const rule of allRules) {
-  if (rule.verifiedOn >= rule.reviewBy) throw new Error(`Invalid review window for ${rule.id}.`);
+  if (rule.verifiedOn >= rule.reviewBy || (rule.observedSince && rule.observedSince > rule.verifiedOn)) throw new Error(`Invalid review window for ${rule.id}.`);
 }
 for (const rule of entitlementRules) {
   const linked = [...rule.products, ...(rule.eligible ?? []), ...(rule.possible ?? []), ...(rule.qualifyingBundles ?? []).flat()];

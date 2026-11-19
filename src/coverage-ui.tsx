@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { CatalogueHealth } from './catalogue-health-ui';
 import { catalogueCoverage, environmentCompleteness } from './coverage';
 import { isCurrentRate, type Catalogue } from './catalogue';
 import { Select, Text } from './fields';
@@ -34,6 +35,7 @@ export function Coverage({ catalogue, result, select }: { catalogue: Catalogue; 
       {(stale || expired > 0 || catalogue.fallback) && <p className="notice">{catalogue.fallback ? 'Using a previous validated catalogue. ' : ''}{stale ? 'The Azure check is older than seven days or unavailable. ' : ''}{expired > 0 ? `${expired} curated record(s) are outside their review period and unavailable for calculation.` : ''}</p>}
       <p className="muted">The catalogue contains {catalogue.records.filter(record => isCurrentRate(record, at)).length} current verified records of {catalogue.records.length} published. A failed refresh preserves the last successful catalogue. <a href="https://github.com/ethan0wens/ai-economics-studio/actions/workflows/refresh-pricing.yml" target="_blank" rel="noreferrer">Check the latest refresh outcome</a>.</p>
     </section>
+    <CatalogueHealth manifest={catalogue.manifest} />
     <section className="panel padded">
       <h2>Coverage by product family</h2>
       <p className="muted">{discovered - total} configurations are unsupported as separate estimates. Azure rates describe a billing region. Model deployment, agent compatibility, licence eligibility and included use require separate evidence.</p>

@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 108" role="img" aria-label="AI Economics Studio">
+<rect width="480" height="108" rx="14" fill="#17243B"/>
+<g transform="translate(8 8) scale(.96)"><path d="M 9 76 L 27 76 L 42 52 L 25 52 Z" fill="#BFDFFF"/>
+<path d="M 31 76 L 49 76 L 72 30 L 55 30 Z" fill="#60A5FA"/>
+<path d="M 56 76 L 74 76 L 89 15 L 72 15 Z" fill="#3B82F6"/></g>
+<text x="112" y="48" fill="#FFFFFF" font-family="Inter,Arial,sans-serif" font-size="30" font-weight="750" letter-spacing="-1.1">AI Economics</text>
+<text x="112" y="80" fill="#FFFFFF" font-family="Inter,Arial,sans-serif" font-size="30" font-weight="750" letter-spacing="-1.1">Studio</text>
+</svg>

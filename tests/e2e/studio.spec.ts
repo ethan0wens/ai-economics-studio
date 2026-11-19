@@ -1,6 +1,7 @@
 import { readFile } from 'node:fs/promises';
 import AxeBuilder from '@axe-core/playwright';
 import { expect, test, type Page } from '@playwright/test';
+import { browserIcons } from '../../scripts/security-http';
 import { reportText } from './report-text';
 
 async function add(page: Page, kind: string, name: string) {
@@ -100,7 +101,8 @@ test('draft creation, shared costing, keyboard graph, reconciled report and JSON
     const target = new URL(url);
     return target.origin === origin && !target.search && method === 'GET' && body === null &&
       (target.pathname === '/' || target.pathname === '/pricing/manifest.json' ||
-        /^\/pricing\/catalogue-[a-f0-9]{64}\.json$/.test(target.pathname) || target.pathname.startsWith('/assets/'));
+        /^\/pricing\/catalogue-[a-f0-9]{64}\.json$/.test(target.pathname) || target.pathname.startsWith('/assets/') ||
+        browserIcons.has(target.pathname));
   })).toBe(true);
 });
 

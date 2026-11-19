@@ -50,6 +50,24 @@ Fixture F has five lines. All displayed prices use the fixture's exact billed un
 
 Current annualised spend equals £5,508.00. The same assertions also cover the two basis differences on export and the PDF. [Fixture F](../../fixtures/enterprise-scenarios.ts) and [browser financial reconciliation](../../tests/e2e/enterprise.spec.ts).
 
+## AI Adoption and Business Case
+
+The [editable example](#/examples/ai-adoption-business-case) uses the applied Microsoft catalogue. This independent regression instead pins [fictional rates](../../fixtures/adoption-business-case.ts) for GPT-4.1 mini Global Standard in UK South at £0.20 per 1,000 input tokens and £0.50 per 1,000 output tokens. These amounts are solely test data.
+
+The accepted workload is 1,000 executions per month × one request. Each request produces 1,500 input and 300 output tokens. The input line is 1,500,000 ÷ 1,000 × £0.20 = £300.00. The output line is 300,000 ÷ 1,000 × £0.50 = £150.00. The accepted AI estimate is £450.00 monthly, or £5,400.00 annualised, with zero unresolved charges under the fixture. If the output rate is absent, the accepted known subtotal is £300.00 with one unresolved charge.
+
+Independently, 200 × 50% gives 100 active users. Gross capacity is 100 × 20 tasks × 12 minutes ÷ 60 = 400 hours monthly. Realised capacity is 400 × 60% = 240 hours. At £25 per realised hour the assumed economic equivalent is £6,000 monthly or £72,000 annualised. Cashable savings, one-off implementation and additional operating costs are unknown. No ROI or net benefit is calculated.
+
+Adoption on its own leaves projected AI expenditure unknown. The illustrative link of ten monthly interactions per active user yields the workloads below. Apply the same token rates and units per case. The accepted ledger remains £450.00 monthly throughout the comparison.
+
+| Adoption | Active users | Monthly runs | Input / output tokens | Gross / realised monthly hours | Projected AI spend monthly / annualised | Economic equivalent monthly / annualised |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: |
+| 25% | 50 | 500 | 750,000 / 150,000 | 200 / 120 | £225 / £2,700 | £3,000 / £36,000 |
+| 50% accepted | 100 | 1,000 | 1,500,000 / 300,000 | 400 / 240 | £450 / £5,400 | £6,000 / £72,000 |
+| 75% | 150 | 1,500 | 2,250,000 / 450,000 | 600 / 360 | £675 / £8,100 | £9,000 / £108,000 |
+
+Both PDFs show the accepted AI estimate of £450.00 monthly and £5,400.00 annualised, with the accepted economic equivalent and cashable savings status shown separately. Full Report identifies the rate and accepted assumption sources. Its explicit illustration opt-in adds monthly hypothetical rows without altering these totals. JSON retains the accepted 50% adoption, 1,000 monthly executions, fictional provenance and snapshot, and excludes the comparison and inclusion choice. The [walkthrough](#/documentation/example-ai-adoption-business-case) follows the same steps in the workspace.
+
 ## Reproduce these results
 
 ```sh

@@ -22,7 +22,7 @@ Auditable quantities, price precedence, rounding, licence expenditure and worked
 
 - [Ledger quantities and cost methodology](03-ledger-methodology.md). Calculate tokens, credits, resource usage and capacity, then reconcile monthly and annual costs.
 - [Contracts, forecasts and licence expenditure](03-agreements-and-licences.md). Trace override precedence, existing spend, distinct seats and dated licence replacement.
-- [Worked financial reconciliations](03-worked-reconciliations.md). Follow six independently calculated scenarios and compare them with executable tests.
+- [Worked financial reconciliations](03-worked-reconciliations.md). Follow seven independently calculated scenarios and compare them with executable tests.
 
 ## 4. Microsoft AI Services & Licensing
 

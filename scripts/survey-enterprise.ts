@@ -2,6 +2,8 @@ export {};
 
 const sources: Record<string, [string, string, RegExp][]> = {
   matrix: [
+    ['Dedicated region matrix', 'https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability', /Global Standard|gpt-4.1|region/i],
+    ['Availability region matrix', 'https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/model-availability', /Global Standard|gpt-4.1|region/i],
     ['GLOBAL region matrix', 'https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure?tabs=global-standard%2Cstandard-chat-completions', /Global Standard|gpt-4.1|region/i],
     ['REGIONAL region matrix', 'https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure?tabs=standard%2Cstandard-chat-completions', /Standard|gpt-4.1|region/i],
     ['Foundry GA overview', 'https://learn.microsoft.com/en-us/azure/foundry/agents/overview', /gpt-4.1|model deployment|connect|tool/i],
@@ -15,7 +17,7 @@ const sources: Record<string, [string, string, RegExp][]> = {
     ['OpenAI standard', 'https://learn.microsoft.com/en-us/azure/ai-foundry/openai/concepts/models', /gpt-4\.1|gpt-4o-mini|global standard|data zone standard/i],
     ['OpenAI regional matrices', 'https://learn.microsoft.com/en-us/azure/ai-foundry/openai/concepts/models?tabs=global-standard%2Cstandard-chat-completions', /uksouth|westeurope|eastus2|gpt-4\.1/i],
     ['Foundry GA models', 'https://learn.microsoft.com/en-us/azure/foundry/agents/concepts/model-region-support', /gpt-4\.1|region|network|support/i],
-    ['Foundry GA Search', 'https://learn.microsoft.com/en-us/azure/foundry/agents/how-to/tools/azure-ai-search', /tenant|managed identity|RBAC|private|classic|network/i],
+    ['Foundry GA Search', 'https://learn.microsoft.com/en-us/azure/foundry/agents/how-to/tools/ai-search', /tenant|managed identity|RBAC|private|classic|network/i],
     ['Foundry agents', 'https://learn.microsoft.com/en-us/azure/ai-foundry/agents/concepts/model-region-support', /uksouth|westeurope|eastus2|gpt-4\.1|network|regional/i],
     ['Provisioned', 'https://learn.microsoft.com/en-us/azure/ai-foundry/openai/concepts/provisioned-throughput', /minimum|capacity|quota|PTU/i],
     ['Search index', 'https://learn.microsoft.com/en-us/azure/ai-foundry/agents/how-to/tools/azure-ai-search', /same|region|managed identity|role|private|tool/i],
@@ -58,12 +60,12 @@ await Promise.all((sources[process.argv[2]] ?? []).map(async ([title, source, te
       const heading = [...before.matchAll(/<h[2-5]\b[^>]*>([\s\S]*?)<\/h[2-5]>/gi)].at(-1);
       return regions.length ? [plain(heading?.[1] ?? ''), result[0], ...regions] : [];
     }) : [];
-    const links = title === 'Search classic linked sources' ? [...body.matchAll(/<a\b[^>]*href="([^"]+)"[^>]*>([\s\S]*?)<\/a>/gi)]
-      .filter(link => /new Foundry IQ|new agents/i.test(plain(link[2]))).map(link => new URL(link[1], response.url).href) : [];
+    const links = ['Search classic linked sources', 'GLOBAL region matrix'].includes(title) ? [...body.matchAll(/<a\b[^>]*href="([^"]+)"[^>]*>([\s\S]*?)<\/a>/gi)]
+      .filter(link => /new Foundry IQ|new agents|Region availability for Foundry Models|Model availability/i.test(plain(link[2]))).map(link => new URL(link[1], response.url).href) : [];
     const pageText = plain(body);
     const near = ['M365 enterprise', 'UK enterprise exact', 'Business', 'Office 365', 'Entra', 'Copilot commercial'].includes(title)
       ? [...pageText.matchAll(/£[0-9]+\.[0-9]+/g)].slice(0, 32).map(match => pageText.slice(Math.max(0, match.index - 90), match.index + 150)) : [];
-    const output = [`HTTP ${response.status} ${response.url}`, ...[...new Set([...tables, ...links, ...near, ...pricing, ...rows])].slice(0, 44)];
+    const output = [`HTTP ${response.status} ${response.url}`, ...[...new Set([...tables, ...links, ...near, ...pricing, ...rows])].slice(0, 34)];
     console.log(`::notice title=${title}::${output.join('\n').replaceAll('%', '%25').replaceAll('\r', '%0D').replaceAll('\n', '%0A')}`);
     await import('node:fs/promises').then(fs => fs.writeFile(`enterprise-${title.toLowerCase().replaceAll(' ', '-')}.txt`, output.join('\n')));
   } catch (error) {

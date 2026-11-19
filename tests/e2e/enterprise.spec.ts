@@ -5,7 +5,7 @@ import { reportText } from './report-text';
 import { enterpriseInventory, referenceAt, scenarios } from '../../fixtures/enterprise-scenarios';
 
 const money = (value: string) => new Intl.NumberFormat('en-GB', { style: 'currency', currency: 'GBP' }).format(Number(value));
-async function navigate(page: Page, name: 'Cost Analysis' | 'Reports & Export') {
+async function navigate(page: Page, name: 'Cost & Value Analysis' | 'Reports & Export') {
   await page.getByRole('navigation', { name: 'Studio navigation' }).getByRole('link', { name, exact: true }).click();
   await expect(page.getByRole('heading', { name, level: 1, exact: true })).toBeVisible();
 }
@@ -28,7 +28,7 @@ for (const item of scenarios) {
       name: 'fictional-enterprise-reference.json', mimeType: 'application/json', buffer: Buffer.from(JSON.stringify(item.env)),
     });
     await expect(page.locator('.metric').first()).toContainText(money(item.expected.monthly));
-    await navigate(page, 'Cost Analysis');
+    await navigate(page, 'Cost & Value Analysis');
     await expect(page.getByRole('heading', { name: 'Improve your estimate' })).toBeVisible();
     await expect(page.locator('.metric').first()).toContainText(money(item.expected.monthly));
     await navigate(page, 'Reports & Export');
@@ -126,7 +126,7 @@ test('provisioned reservation and PAYG comparison reconcile in the builder, arch
   await inspector.getByLabel('Billable hours covered by reservation', { exact: true }).fill('400');
   await inspector.getByLabel('Reservation evidence reference', { exact: true }).fill('Fictional quote fixture');
   await expect(page.locator('.metric').first()).toContainText('£5,600.00');
-  await navigate(page, 'Cost Analysis');
+  await navigate(page, 'Cost & Value Analysis');
   await page.getByText('Compare pricing assumptions', { exact: true }).click();
   await expect(page.getByRole('heading', { name: 'Provisioned and PAYG costs' })).toBeVisible();
   await expect(page.getByText('£5,400.00 provisioned · £3.77 PAYG retail')).toBeVisible();

@@ -45,14 +45,15 @@ test('Foundry previews and confirms values, with temporary sensitivity and recon
   await executions.fill('2500');
   await expect(monthly(page)).toContainText('£2,250.00');
 
-  await nav(page, 'Cost Analysis').click();
+  await nav(page, 'Cost & Value Analysis').click();
   await page.getByText('Largest monthly charges', { exact: true }).click();
   const driver = page.getByRole('listitem').filter({ hasText: 'Fictional Foundry assistant · Input tokens' });
   await expect(driver).toContainText('£1,500.00 per month · Microsoft retail');
   await expect(driver).toContainText('applied rate GBP 0.2 per 1,000 tokens');
   await driver.getByRole('button', { name: 'Open cost line' }).click();
   await expect(page.locator('details.ledger-row[open]')).toContainText('Input tokens');
-  await page.getByText('Preview a change in usage', { exact: true }).click();
+  await page.getByRole('button', { name: 'Explore changes', exact: true }).click();
+  await page.getByLabel('What would you like to change?').selectOption('usage');
   const sensitivity = page.getByRole('form', { name: 'Usage sensitivity' });
   await sensitivity.getByLabel('Workload').selectOption({ label: 'Fictional Foundry assistant' });
   await sensitivity.getByLabel('Usage input').selectOption('executions');
@@ -60,6 +61,8 @@ test('Foundry previews and confirms values, with temporary sensitivity and recon
   await sensitivity.getByRole('button', { name: 'Compare monthly costs' }).click();
   await expect(sensitivity).toContainText('£4,500.00');
   await expect(sensitivity).toContainText('+£2,250.00');
+  await expect(sensitivity).toContainText('+£27,000.00');
+  await page.getByRole('button', { name: 'Costs', exact: true }).click();
   await expect(monthly(page)).toContainText('£2,250.00');
 
   await nav(page, 'Reports & Export').click();
@@ -110,7 +113,7 @@ test('Copilot leaves activity conversion unresolved and confirms only documented
   await assistant.getByRole('button', { name: 'Apply monthly credits' }).click();
   await expect(credits).toHaveValue('15000');
   await expect(monthly(page)).toContainText('£300.00');
-  await nav(page, 'Cost Analysis').click();
+  await nav(page, 'Cost & Value Analysis').click();
   const itemised = page.locator('details.ledger-row');
   await expect(itemised).toHaveCount(1);
   await expect(itemised).toContainText('Copilot');
@@ -124,11 +127,12 @@ test('unknown charges stay visible in both usage comparisons', async ({ page }) 
   await page.getByLabel('Model calls per execution', { exact: true }).fill('2');
   await page.getByLabel('Input tokens per call', { exact: true }).fill('1500');
   await page.getByLabel('Output tokens per call', { exact: true }).fill('300');
-  await nav(page, 'Cost Analysis').click();
+  await nav(page, 'Cost & Value Analysis').click();
   await expect(page.getByText('Costs still to confirm')).toBeVisible();
   await expect(page.getByText('The known-cost subtotal excludes 1 unresolved charge.')).toBeVisible();
   await expect(page.getByRole('link', { name: 'Resolve missing quantities or rates' })).toHaveAttribute('href', /#\/documentation\/missing-rate-or-volume/);
-  await page.getByText('Preview a change in usage', { exact: true }).click();
+  await page.getByRole('button', { name: 'Explore changes', exact: true }).click();
+  await page.getByLabel('What would you like to change?').selectOption('usage');
   const sensitivity = page.getByRole('form', { name: 'Usage sensitivity' });
   await sensitivity.getByLabel('Workload').selectOption({ label: 'Fictional Foundry assistant' });
   await sensitivity.getByLabel('Usage input').selectOption('input');
@@ -158,4 +162,31 @@ test('assistance is usable by keyboard and reflows at 320 pixels', async ({ page
   await expect(page.getByRole('heading', { name: 'Build and preview a monthly workload' })).toBeFocused();
   await page.getByRole('button', { name: 'Back to workspace' }).press('Enter');
   await expect(page.getByLabel('Monthly executions', { exact: true })).toBeVisible();
+});
+
+test('a hypothetical price change is separate from the saved agreement and export', async ({ page }) => {
+  await prices(page);
+  await start(page);
+  await addFoundry(page);
+  for (const [label, value] of [['Monthly executions', '2000'], ['Model calls per execution', '2'],
+    ['Input tokens per call', '1500'], ['Output tokens per call', '300']]) {
+    await page.getByLabel(label, { exact: true }).fill(value);
+  }
+  await nav(page, 'Cost & Value Analysis').click();
+  await expect(page.getByRole('button', { name: 'Costs', exact: true })).toHaveAttribute('aria-pressed', 'true');
+  await expect(page.getByLabel('Hypothetical price change (%)')).toHaveCount(0);
+  const explore = page.getByRole('button', { name: 'Explore changes', exact: true });
+  await explore.focus();
+  await explore.press('Enter');
+  await page.getByLabel('What would you like to change?').selectOption('price');
+  await page.getByLabel('Hypothetical price change (%)').fill('-20');
+  await page.getByRole('button', { name: 'Compare monthly costs' }).click();
+  await expect(page.getByText('£1,440.00', { exact: true })).toBeVisible();
+  await expect(page.getByText('-£360.00', { exact: true })).toBeVisible();
+  await page.getByRole('button', { name: 'Clear comparison' }).click();
+  await expect(page.getByText('Monthly difference', { exact: true })).toHaveCount(0);
+  await nav(page, 'Reports & Export').click();
+  const json = JSON.parse((await getFile(page, 'Export JSON')).toString());
+  expect(json.forecast).toEqual({ percent: 0, applyToFixed: false, exceptions: [] });
+  expect(json.sourceSnapshot).toMatchObject({ current: '1800.00', forecastKnown: '1800.00' });
 });

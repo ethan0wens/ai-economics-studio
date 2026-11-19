@@ -432,3 +432,6 @@ dialog::backdrop{background:#17243b70}dialog p{margin:8px 0 12px}dialog ul{list-
 .report-formats label:has(input:checked) { background: #eef4ff; border-color: #4d7fdf; }
 .report-formats input { width: auto; min-height: 0; margin-top: 4px; accent-color: #2563eb; }
 .report-formats small { display: block; color: var(--muted); margin-top: 3px; font-size: .86rem; }
+
+.view-choice { justify-self: start; max-width: 100%; flex-wrap: wrap; }
+.scenario-choice { margin-block: 14px; max-width: 24rem; }

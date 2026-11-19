@@ -32,7 +32,7 @@ test('Guided Foundry usage opens the internal guide and returns to the same fiel
   await expect(page.getByRole('button', { name: 'Settings for Help navigation example' })).toBeVisible();
 });
 
-test('Advanced Copilot help and Cost Analysis agreement help preserve workspace context', async ({ page }) => {
+test('Advanced Copilot help and Cost & Value Analysis agreement help preserve workspace context', async ({ page }) => {
   await openEnvironment(page, [{ id: 'a', name: 'Copilot sample', kind: 'agent', platform: 'copilot-studio', modelSource: 'platform-managed', credits: 125 }]);
   await page.getByRole('group', { name: 'Builder mode' }).getByRole('button', { name: 'Advanced' }).click();
   await page.getByRole('button', { name: /^Copilot sample / }).click();
@@ -42,7 +42,7 @@ test('Advanced Copilot help and Cost Analysis agreement help preserve workspace 
   await expect(page).toHaveURL(/documentation\/copilot-credits\?section=monthly-credits$/);
   await page.getByRole('button', { name: 'Back to workspace' }).click();
   await expect(page.getByLabel('Monthly Copilot Credits', { exact: true })).toHaveValue('125');
-  await page.getByRole('navigation', { name: 'Studio navigation' }).getByRole('link', { name: 'Cost Analysis' }).click();
+  await page.getByRole('navigation', { name: 'Studio navigation' }).getByRole('link', { name: 'Cost & Value Analysis' }).click();
   await page.getByText('Copilot Studio credits', { exact: true }).click();
   const agreementHelp = await fieldHelp(page, 'Price agreement');
   await agreementHelp.getByRole('link', { name: 'Learn more in Documentation' }).click();

@@ -40,7 +40,7 @@ test('selected model applies both catalogue meters, restores retail and opens ex
   await expect(inspector.getByRole('link', { name: 'GBP 0.20 per 1,000 tokens' })).toBeVisible();
   // 3,000,000 input × 0.20/1,000 + 1,000,000 output × 0.50/1,000 = 1,100.
   await expect(page.locator('.metric').first()).toContainText('£1,100.00');
-  await page.getByRole('link', { name: 'Cost Analysis' }).click();
+  await page.getByRole('link', { name: 'Cost & Value Analysis' }).click();
   await page.getByText('Input tokens', { exact: true }).click();
   await page.getByRole('combobox', { name: 'Price agreement', exact: true }).selectOption('fixed');
   await page.getByRole('textbox', { name: /^Rate per billed unit/ }).fill('0.10');

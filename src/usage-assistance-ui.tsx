@@ -14,10 +14,10 @@ type Props =
 type Preview = NonNullable<ReturnType<typeof estimateFoundry> | ReturnType<typeof estimateCopilot>>;
 type FormValues = Record<string, number | undefined>;
 
-export function DraftQuantity({ label, value, onChange, step = 'any' }: {
-  label: string; value?: number; onChange: (value: number | undefined) => void; step?: 'any' | 1;
+export function DraftQuantity({ label, value, onChange, step = 'any', min = 0, max = 1e15 }: {
+  label: string; value?: number; onChange: (value: number | undefined) => void; step?: 'any' | 1; min?: number; max?: number;
 }) {
-  return <label className="plain-label">{label}<input type="number" min={0} max={1e15} step={step} value={value ?? ''}
+  return <label className="plain-label">{label}<input type="number" min={min} max={max} step={step} value={value ?? ''}
     onChange={event => onChange(event.target.value === '' ? undefined : event.target.valueAsNumber)} /></label>;
 }
 

@@ -14,7 +14,7 @@ const s = (id: string, title: string, text: string | string[], steps?: string[])
   ({ id, title, paragraphs: Array.isArray(text) ? text : [text], steps });
 const catalogue: ToolLink = { page: 'catalogue', label: 'Open the Pricing Catalogue' };
 const builder: ToolLink = { page: 'builder', label: 'Open Environment Builder' };
-const costs: ToolLink = { page: 'costs', label: 'Open Cost Analysis' };
+const costs: ToolLink = { page: 'costs', label: 'Open Cost & Value Analysis' };
 const reports: ToolLink = { page: 'reports', label: 'Open Reports & Export' };
 const home: ToolLink = { page: 'home', label: 'Open Home' };
 const retailSource: [string, string] = ['Microsoft Azure Retail Prices API', 'https://learn.microsoft.com/en-us/rest/api/cost-management/retail-prices/azure-retail-prices'];
@@ -107,8 +107,8 @@ export const articles: Article[] = [
   { id: 'read-your-estimate', topic: 'Understanding costs', title: 'How do I read my cost estimate?', intro: 'Start with the estimated monthly cost, annualised estimate and costs still to confirm. Open a charge for the details behind it.',
     tool: costs, related: ['estimate-readiness', 'billing-units', 'existing-and-new-spend'], sections: [
       s('summary', 'Read the summary', 'The estimated monthly cost adds the charges the studio can calculate. The annualised estimate applies that monthly rate for twelve months at the same usage and pricing. Where your money goes summarises categories. Open Largest monthly charges to see the largest known contributions and their price basis. Check Costs still to confirm for unresolved charges and Existing licence spend for retained expenditure.'),
-      s('usage-sensitivity', 'Preview a workload change', 'In Cost Analysis, open Preview a change in usage. Select a Foundry pay-as-you-go workload with its own profile or a Copilot agent using a monthly credit total. Change one assumption and compare monthly costs with the same rates and agreements. Resolve all charges before reading the whole-environment difference. This preview is temporary. Compare pricing assumptions separately for a rate forecast.'),
-      s('ledger', 'Reconcile one line', 'In Cost Analysis, find a component and open it. Confirm monthly quantity, published billed unit, rate, source and any agreement. A flat charge is quantity divided by base units per billed unit, multiplied by the rate. Graduated tariffs apply the rate for each band.'),
+      s('usage-sensitivity', 'Preview a workload change', 'In Cost & Value Analysis, open Explore changes and choose Workload usage. Select a Foundry pay-as-you-go workload with its own profile or a Copilot agent using a monthly credit total. Change one assumption and compare monthly costs with the same rates and agreements. Resolve all charges before reading the whole-environment difference. This preview is temporary. Compare pricing assumptions separately for a rate forecast.'),
+      s('ledger', 'Reconcile one line', 'In Cost & Value Analysis, find a component and open it. Confirm monthly quantity, published billed unit, rate, source and any agreement. A flat charge is quantity divided by base units per billed unit, multiplied by the rate. Graduated tariffs apply the rate for each band.'),
     ] },
   { id: 'estimate-readiness', topic: 'Understanding costs', title: 'Resolve gaps before sharing', intro: 'Check which charges you can share and what you still need to confirm.',
     aliases: ['incomplete', 'unknown costs', 'estimate completeness'], tool: costs, related: ['missing-rate-or-volume', 'model-evidence', 'limits-of-an-estimate'], sections: [
@@ -117,7 +117,7 @@ export const articles: Article[] = [
     ] },
   { id: 'existing-and-new-spend', topic: 'Understanding costs', title: 'How do I account for licences I already own?', intro: 'Distinguish the environment’s new charges from the licence spend you will retain.',
     aliases: ['existing licence', 'incremental', 'already owned'], tool: costs, related: ['licences-and-groups', 'licence-evidence', 'example-existing-licensing'], sections: [
-      s('scopes', 'Compare spending scopes', 'In Cost Analysis, Existing licence spend uses customer-entered amounts. New licence spend prices new seats after counting each user once. Proposed licence spend combines new and retained licence spend. The proposed environment adds the other known environment charges.'),
+      s('scopes', 'Compare spending scopes', 'In Cost & Value Analysis, Existing licence spend uses customer-entered amounts. New licence spend prices new seats after counting each user once. Proposed licence spend combines new and retained licence spend. The proposed environment adds the other known environment charges.'),
       s('replacement', 'Record a confirmed replacement', 'Model a replacement edge with the affected seats and the effective date when the contract changes. Check the existing spend first. A bundle overlap or unknown end date does not establish a saving.'),
     ] },
   { id: 'agreements-and-manual-rates', topic: 'Understanding costs', title: 'Use a contract or manual price', intro: 'Use verified retail automatically or record a price that applies to your own estimate.',
@@ -134,19 +134,19 @@ export const articles: Article[] = [
     intro: 'Reconcile the simplest linked Foundry agent from its workload to two token charges.',
     tool: { page: 'examples', item: 'foundry-assistant', label: 'Preview Basic Foundry Assistant' }, related: ['foundry-usage', 'billing-units'], sections: [
       s('open', 'Open and inspect the example', 'The example uses a fictional 1,000 runs/month, one request/run, and 1,500 input and 300 output tokens/request. It links one agent, one usage profile and one GPT-4.1 mini deployment.'),
-      s('reconcile', 'Change usage and compare amounts', 'Open an editable copy and choose Estimate usage. Enter 2,000 executions directly or preview a fictional 200 users × 10 interactions at one request per run in Help me estimate usage. In Cost Analysis check both monthly token quantities doubled, from 1.5 to 3 million input and from 300,000 to 600,000 output. Multiply each verified rate by its exact unit conversion and round at the line boundary.'),
+      s('reconcile', 'Change usage and compare amounts', 'Open an editable copy and choose Estimate usage. Enter 2,000 executions directly or preview a fictional 200 users × 10 interactions at one request per run in Help me estimate usage. In Cost & Value Analysis check both monthly token quantities doubled, from 1.5 to 3 million input and from 300,000 to 600,000 output. Multiply each verified rate by its exact unit conversion and round at the line boundary.'),
     ] },
   { id: 'example-copilot-agent', topic: 'Worked examples', title: 'Walk through the Copilot Studio Business Agent',
     intro: 'Estimate a platform-managed Copilot agent from declared monthly credits.',
     tool: { page: 'examples', item: 'copilot-agent', label: 'Preview Copilot Studio Business Agent' }, related: ['copilot-credits', 'licence-evidence'], sections: [
-      s('open', 'Inspect the credit basis', 'Open an editable copy. The fictional starting value is 12,000 credits/month. Cost Analysis uses the verified matching PAYG rate where present. The example has one platform-managed agent.'),
+      s('open', 'Inspect the credit basis', 'Open an editable copy. The fictional starting value is 12,000 credits/month. Cost & Value Analysis uses the verified matching PAYG rate where present. The example has one platform-managed agent.'),
       s('reconcile', 'Try a different workload', 'Change monthly credits to 15,000 under Estimate usage. You can enter the total or preview and apply a hypothetical breakdown of 10,000 credits for answers and 5,000 for actions. The known charge is 15,000 times the applicable per-credit rate when available. Review a separate allowance only if it applies to your customer plan.'),
     ] },
   { id: 'example-existing-licensing', topic: 'Worked examples', title: 'Walk through the Enterprise AI Environment',
     intro: 'Compare two groups’ licence assignments, new spend and a supporting Azure service.',
     tool: { page: 'examples', item: 'enterprise-ai', label: 'Preview Enterprise AI Environment' }, related: ['existing-and-new-spend', 'agreements-and-manual-rates'], sections: [
       s('open', 'Inspect fictional purchases and existing spend', 'The fictional example uses 200 existing E3 seats for two groups, 40 new Copilot add-on seats, 18,000 monthly credits and 240 search-unit-hours. It declares £4,000 of existing monthly spend and a hypothetical 10% Search discount.'),
-      s('reconcile', 'Compare the two scopes', 'Open Cost Analysis and compare the new seat amount, credit amount and Search agreement amount with the proposed environment including retained E3 spend. Open the Search line to see its retail amount multiplied by 0.90 before line rounding. Review the prerequisite and then change an assignment in Advanced.'),
+      s('reconcile', 'Compare the two scopes', 'Open Cost & Value Analysis and compare the new seat amount, credit amount and Search agreement amount with the proposed environment including retained E3 spend. Open the Search line to see its retail amount multiplied by 0.90 before line rounding. Review the prerequisite and then change an assignment in Advanced.'),
     ] },
   { id: 'example-shared-deployment', topic: 'Worked examples', title: 'Walk through the Shared Model Deployment',
     intro: 'Verify shared fixed capacity and its reporting allocation.',
@@ -201,7 +201,7 @@ export const articles: Article[] = [
     ] },
   { id: 'missing-rate-or-volume', topic: 'Troubleshooting', title: 'Why are some costs missing?', intro: 'Find out whether usage, pricing or configuration needs attention.',
     aliases: ['unknown rate', 'missing prices', 'unsupported'], tool: costs, related: ['estimate-readiness', 'agreements-and-manual-rates', 'model-evidence'], sections: [
-      s('volume', 'Find the missing input', 'Open Improve your estimate in Cost Analysis. If the line has no quantity, enter the agent workload or monthly service units. Use Help me estimate usage for a business-based Foundry preview or to sum documented Copilot Credits. Keep unsupported activity conversions unresolved. Check the billing region, currency, deployment mode and exact SKU when a combination is unresolved.'),
+      s('volume', 'Find the missing input', 'Open Improve your estimate in Cost & Value Analysis. If the line has no quantity, enter the agent workload or monthly service units. Use Help me estimate usage for a business-based Foundry preview or to sum documented Copilot Credits. Keep unsupported activity conversions unresolved. Check the billing region, currency, deployment mode and exact SKU when a combination is unresolved.'),
       s('rate', 'Find the missing rate', 'Open the cost line and check its billing unit. If the charge has billing details but no verified retail price, you can enter a documented fixed rate. Leave it unresolved if you cannot confirm a price.'),
     ] },
   { id: 'import-or-export-problems', topic: 'Troubleshooting', title: 'Problems with files and downloads', intro: 'Recover from an unreadable file or a browser download failure.',
@@ -235,7 +235,7 @@ export const articles: Article[] = [
   { id: 'faq', topic: 'Glossary and FAQs', title: 'Frequently asked questions', intro: 'Short answers to common planning questions.',
     related: ['save-and-reopen', 'missing-rate-or-volume', 'share-and-connect'], sections: [
       s('keep-work', 'How do I keep my work?', 'Export JSON from Reports & Export and import that file when you return. Use a PDF for review and sharing.'),
-      s('unknown', 'Why is an amount unknown?', 'A quantity, rate or applicable configuration may be missing. Use Improve your estimate in Cost Analysis to see what to check next. Prices can also expire or change when a catalogue is adopted.'),
+      s('unknown', 'Why is an amount unknown?', 'A quantity, rate or applicable configuration may be missing. Use Improve your estimate in Cost & Value Analysis to see what to check next. Prices can also expire or change when a catalogue is adopted.'),
       s('shared', 'Is shared capacity charged for every agent?', 'Fixed capacity is charged once per model deployment. Each agent can still have its own workload. Allocation redistributes the original charge for reporting.'),
     ] },
 ];

@@ -119,7 +119,7 @@ for (const [id, expected, quantity, edited] of [
     const exportReview = await page.getByRole('heading', { name: 'Your AI environment, in numbers' }).isVisible();
     expect(exportReview).toBe(true);
     if (id === 'enterprise-ai' || id === 'shared-deployment') {
-      await nav(page, 'Cost Analysis').click();
+      await nav(page, 'Cost & Value Analysis').click();
       if (id === 'enterprise-ai') {
         const table = page.getByRole('table').first();
         await expect(table.getByRole('row', { name: /Existing licence spend/ })).toContainText('£4,000.00');
@@ -225,7 +225,7 @@ if (process.env.STUDIO_CHECK_RELEASE_HEALTH === '1') {
     await show(page, 'Estimate usage').click();
     await page.getByLabel('Monthly Copilot Credits', { exact: true }).fill('1000');
     await expect(monthly(page)).toContainText('£');
-    await nav(page, 'Cost Analysis').click();
+    await nav(page, 'Cost & Value Analysis').click();
     await expect(page.getByText('Annualised estimate', { exact: true })).toBeVisible();
     await expect(page.getByRole('heading', { name: 'Where your money goes' })).toBeVisible();
     await nav(page, 'Environment Builder').click();

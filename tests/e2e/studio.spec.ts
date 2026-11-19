@@ -46,13 +46,14 @@ test('draft creation, shared costing, keyboard graph, reconciled report and JSON
     await page.getByRole('button', { name: new RegExp(name) }).click();
     await page.getByRole('combobox', { name: 'Model deployment', exact: true }).selectOption({ label: 'Fictional capacity / TEST ONLY / UK South / provisioned' });
   }
-  await page.getByRole('link', { name: 'Cost Analysis' }).click();
+  await page.getByRole('link', { name: 'Cost & Value Analysis' }).click();
   await page.getByText('Shared provisioned capacity', { exact: true }).click();
   await page.getByRole('combobox', { name: 'Price agreement', exact: true }).selectOption('fixed');
   await page.getByRole('textbox', { name: /^Rate per billed unit/ }).fill('70');
   await page.getByLabel('Agreement reason', { exact: true }).fill('Fictional test contract');
   await page.getByRole('button', { name: 'Save price assumptions' }).click();
   await expect(page.locator('.metric').first()).toContainText('£700.00');
+  await page.getByText('Compare pricing assumptions', { exact: true }).click();
   await page.getByLabel('Global price change (%)', { exact: true }).fill('20');
   await expect(page.locator('.compare-grid > div').last()).toContainText('£700.00');
   await page.getByLabel('Apply forecast to fixed contracts', { exact: true }).check();
@@ -119,13 +120,13 @@ test('mobile reflow, keyboard drafts and accessible overview', async ({ page }) 
   await expect(page.getByRole('heading', { name: 'New user group' })).toBeVisible();
   await expect.poll(overflow).toBe(0);
   await page.getByRole('button', { name: 'Toggle navigation' }).click();
-  await page.getByRole('link', { name: 'Cost Analysis' }).click();
-  await expect(page.getByRole('heading', { name: 'Cost Analysis' })).toBeVisible();
+  await page.getByRole('link', { name: 'Cost & Value Analysis' }).click();
+  await expect(page.getByRole('heading', { name: 'Cost & Value Analysis' })).toBeVisible();
   await expect.poll(overflow).toBe(0);
   await page.setViewportSize({ width: 640, height: 950 });
   await page.evaluate(() => { document.documentElement.style.zoom = '2'; });
   await expect.poll(overflow).toBe(0);
-  await expect(page.getByRole('heading', { name: 'Cost Analysis' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Cost & Value Analysis' })).toBeVisible();
 });
 
 test('an unexported workspace is discarded on accepted reload and invalid JSON is reported', async ({ page }) => {
@@ -164,7 +165,7 @@ test('catalogue changes require explicit adoption and preserve a fixed agreement
   await page.getByLabel('Verified Azure retail meter', { exact: true }).selectOption({ label: 'Fictional test-only meter / fictional / 1 Hour' });
   await page.getByLabel('Monthly usage quantity', { exact: true }).fill('2');
   await expect(page.locator('.metric').first()).toContainText('£20.00');
-  await page.getByRole('link', { name: 'Cost Analysis' }).click();
+  await page.getByRole('link', { name: 'Cost & Value Analysis' }).click();
   await page.getByText('Supporting usage', { exact: true }).click();
   await page.getByRole('combobox', { name: 'Price agreement', exact: true }).selectOption('fixed');
   await page.getByRole('textbox', { name: /^Rate per billed unit/ }).fill('7');

@@ -92,7 +92,7 @@ test('every registered field is reachable with an accessible help trigger', asyn
   await page.getByRole('button', { name: 'Settings for Untitled environment' }).click();
   await inspect();
   await page.keyboard.press('Escape');
-  await navigate('Cost Analysis');
+  await navigate('Cost & Value Analysis');
   await page.getByText('Shared provisioned capacity', { exact: true }).click();
   await page.getByRole('combobox', { name: 'Price agreement', exact: true }).selectOption('fixed');
   await page.locator('.ledger-row[open] .price-more summary').click();

@@ -16,7 +16,7 @@ import { Home, Modal, StudioNavigation } from './workspace-ui';
 import { GuidedBuilder } from './guided-ui';
 import type { Intent } from './guided-state';
 import { CostDrivers, EstimateReadiness, EstimateSummary, type EditTarget } from './estimate-ui';
-import { UsageSensitivity } from './usage-sensitivity-ui';
+import { ExploreChanges } from './scenario-ui';
 import { openExample } from './examples';
 import { LearnMore } from './learn-more';
 
@@ -109,6 +109,7 @@ export default function App() {
   const [estimateChanged, setEstimateChanged] = useState(false);
   const [route, setRoute] = useState(currentRoute);
   const [step, setStep] = useState(0);
+  const [costView, setCostView] = useState<'costs' | 'explore'>('costs');
   const [mode, setMode] = useState<View>('guided');
   const [intent, setIntent] = useState<Intent>();
   const [selected, setSelected] = useState<string>();
@@ -210,7 +211,7 @@ export default function App() {
       cancelPdf();
       setCatalogue(value);
       setCatalogueNote(value.fallback ? 'Using the last validated catalogue. The latest check time is unavailable.' : '');
-    }).catch(() => { if (alive) setCatalogueNote('The pricing catalogue is unavailable. You can continue editing and review any unresolved charges in Cost Analysis.'); });
+    }).catch(() => { if (alive) setCatalogueNote('The pricing catalogue is unavailable. You can continue editing and review any unresolved charges in Cost & Value Analysis.'); });
     return () => { alive = false; };
   }, [cancelPdf]);
   useEffect(() => {
@@ -251,7 +252,7 @@ export default function App() {
   function edit(target: EditTarget) {
     setReturnView({ page: route.page, step, mode });
     setTarget({ ...target });
-    if (target.line) navigate('costs');
+    if (target.line) { setCostView('costs'); navigate('costs'); }
     else { setSelected(target.id); setMode('advanced'); navigate('builder'); }
   }
   function returnToReview() {
@@ -274,7 +275,7 @@ export default function App() {
     setToast('');
     setWorkspace(value.env); setDirty(value.kind === 'copy' || value.kind === 'example');
     setExported(value.kind === 'import'); setEstimateChanged(false); setSelected(undefined); setTarget(undefined); setReturnView(undefined);
-    setIntent(undefined); setGenerated(new Set()); setMode('guided'); setStep(value.kind === 'new' ? 0 : 4); setOpening(undefined); setError('');
+    setIntent(undefined); setGenerated(new Set()); setMode('guided'); setCostView('costs'); setStep(value.kind === 'new' ? 0 : 4); setOpening(undefined); setError('');
     if (value.kind === 'import') setToast('Environment imported. Costs have been recalculated with the applied catalogue.');
     navigate('builder');
   }
@@ -345,7 +346,6 @@ export default function App() {
     }}>Apply catalogue</button>}
     {snapshotNote}
   </section>;
-  const activeComparison = env.pricingOverrides.length > 0 || env.forecast.percent !== 0 || env.forecast.exceptions.length > 0;
   const workspaceHeading = route.page !== 'home' && !publicViews.has(route.page);
   const editActions = <div className="builder-tools">
     <div className="mode-control" role="group" aria-label="Builder mode">
@@ -382,28 +382,34 @@ export default function App() {
           {mode === 'guided' ? <GuidedBuilder {...{ env, catalogue, result, update, step, setStep, intent, setIntent, selected }}
             select={setSelected} advanced={selectObject} generated={generated} remember={id => setGenerated(current => new Set([...current, id]))} review={<div className="page-stack">
               {snapshotNote}<EstimateReadiness env={env} result={result} edit={edit} /><div className="actions">
-                <a className="button primary" href={routeHref('costs')}>Open Cost Analysis <ArrowRight size={17} aria-hidden="true" /></a>
+                <a className="button primary" href={routeHref('costs')}>Open Cost & Value Analysis <ArrowRight size={17} aria-hidden="true" /></a>
                 <button className="button" disabled={exporting || !env.objects.length} onClick={exportPdf}>{exporting ? 'Generating PDF…' : 'Generate PDF'}</button>
                 <a className="button" href={routeHref('reports')}>Reports & Export</a></div>
             </div>} /> : <Inventory {...{ env, catalogue, result, update, selected, target }} select={id => selectObject(id)}
               clear={() => { setSelected(undefined); setTarget(undefined); }} add={() => setModal('add')} remove={() => setModal('delete')} />}
         </>}
         {workspace && route.page === 'costs' && <div className="page-stack">
+          <div className="mode-control view-choice" role="group" aria-label="Analysis view">
+            <button className="button" aria-pressed={costView === 'costs'} aria-controls="analysis-content" onClick={() => setCostView('costs')}>Costs</button>
+            <button className="button" aria-pressed={costView === 'explore'} aria-controls="analysis-content" onClick={() => setCostView('explore')}>Explore changes</button>
+          </div>
+          <div id="analysis-content" className="page-stack">
+          {costView === 'explore' ? <ExploreChanges {...{ env, result, catalogue }} /> : <>
           <EstimateSummary {...{ env, result, catalogue }} />
           <EstimateReadiness env={env} result={result} edit={edit} />
           <CostDrivers env={env} result={result} edit={edit} />
-          <UsageSensitivity {...{ env, result, catalogue }} />
           <LicenceEstate result={result} currency={env.currency} />
           <CostAnalysis key={target?.line ?? 'ledger'} env={env} result={result} update={update}
             checkedAt={catalogue.manifest.lastCheckedAt} focusLine={target?.line} />
-          <details className="panel padded assumption-details" open={activeComparison || undefined}><summary>Compare pricing assumptions</summary>
+          <details className="panel padded assumption-details"><summary>Compare pricing assumptions</summary>
             <p className="muted">Compare verified Microsoft retail prices, your current estimate and a separate forecast based on your assumptions.</p>
             <Comparison env={env} result={result} /><Scenario env={env} update={update} />
             <CapacityComparisons rows={result.capacityComparisons} currency={env.currency} />
             <LearnMore guide="agreement">Contractual pricing</LearnMore>
             {' · '}<LearnMore guide="forecast">Forecast assumptions and exceptions</LearnMore>
           </details>
-          {sourcePanel}
+          {sourcePanel}</>}
+          </div>
         </div>}
         {workspace && route.page === 'architecture' && <Suspense fallback={<p role="status">Preparing diagram…</p>}>
           <Architecture env={env} result={result} select={id => selectObject(id)} /></Suspense>}

@@ -1,40 +1,40 @@
 {
   "schemaVersion": 1,
-  "reviewedAt": "2026-11-19T13:19:56.956Z",
+  "reviewedAt": "2026-11-19T13:49:50.916Z",
   "reviews": {
     "commercial": {
-      "attemptedAt": "2026-11-19T13:19:56.956Z",
-      "successfulAt": "2026-11-19T13:19:56.956Z",
+      "attemptedAt": "2026-11-19T13:49:50.916Z",
+      "successfulAt": "2026-11-19T13:49:50.916Z",
       "checked": 37,
       "state": "partial"
     },
     "licensing": {
-      "attemptedAt": "2026-11-19T13:19:56.956Z",
-      "successfulAt": "2026-11-19T13:19:56.956Z",
+      "attemptedAt": "2026-11-19T13:49:50.916Z",
+      "successfulAt": "2026-11-19T13:49:50.916Z",
       "checked": 7,
       "state": "partial"
     },
     "compatibility": {
-      "attemptedAt": "2026-11-19T13:19:56.956Z",
-      "successfulAt": "2026-11-19T13:19:56.956Z",
+      "attemptedAt": "2026-11-19T13:49:50.916Z",
+      "successfulAt": "2026-11-19T13:49:50.916Z",
       "checked": 746,
       "state": "partial"
     },
     "ptu": {
-      "attemptedAt": "2026-11-19T13:19:56.956Z",
-      "successfulAt": "2026-11-19T13:19:56.956Z",
+      "attemptedAt": "2026-11-19T13:49:50.916Z",
+      "successfulAt": "2026-11-19T13:49:50.916Z",
       "checked": 56,
       "state": "checked"
     },
     "lifecycle": {
-      "attemptedAt": "2026-11-19T13:19:56.956Z",
-      "successfulAt": "2026-11-19T13:19:56.956Z",
+      "attemptedAt": "2026-11-19T13:49:50.916Z",
+      "successfulAt": "2026-11-19T13:49:50.916Z",
       "checked": 109,
       "state": "checked"
     },
     "reservations": {
-      "attemptedAt": "2026-11-19T13:19:56.956Z",
-      "successfulAt": "2026-11-19T13:19:56.956Z",
+      "attemptedAt": "2026-11-19T13:49:50.916Z",
+      "successfulAt": "2026-11-19T13:49:50.916Z",
       "checked": 2,
       "state": "checked"
     }
@@ -44,763 +44,282 @@
       "url": "https://www.microsoft.com/en-gb/copilot/pricing/business",
       "group": "commercial",
       "state": "retrieved",
-      "checkedAt": "2026-11-19T13:19:56.956Z",
-      "digest": "a22e9540ac25f52acedcbb3becc6d52aceb2a074d913d2a9cce72c4550d95abc"
+      "checkedAt": "2026-11-19T13:49:50.916Z",
+      "digest": "d0005deac20d1be7fd21c3b0d839d6fb068eb4837a6808da330dbab13b5def0b"
     },
     {
       "url": "https://www.microsoft.com/en-gb/microsoft-365-copilot/microsoft-copilot-studio",
       "group": "commercial",
       "state": "retrieved",
-      "checkedAt": "2026-11-19T13:19:56.956Z",
-      "digest": "b9fb007b61eb8d804efc8c4539780483cf20e071da6f4ae604db87e12de1d159"
+      "checkedAt": "2026-11-19T13:49:50.916Z",
+      "digest": "a07b468d39224175b97214545da5112de745af70d52eac243bc4d80484c76091"
     },
     {
       "url": "https://www.microsoft.com/en-gb/microsoft-365/business/microsoft-365-business-premium",
       "group": "commercial",
       "state": "retrieved",
-      "checkedAt": "2026-11-19T13:19:56.956Z",
-      "digest": "4585826126f5e5c2e86e00b9744113976b2eb174e3e432dc69ef9501d5939460"
+      "checkedAt": "2026-11-19T13:49:50.916Z",
+      "digest": "f195ada28dd6f04d3404db32da8f077c9a9c7e47eab71edbce17a3a7c9914ced"
     },
     {
       "url": "https://www.microsoft.com/en-gb/microsoft-365/business/microsoft-365-business-standard",
       "group": "commercial",
       "state": "retrieved",
-      "checkedAt": "2026-11-19T13:19:56.956Z",
-      "digest": "aa4dfb746a5f1b300ac238cbdac6fe791820c4b7b392e1b2204791d5484bca54"
+      "checkedAt": "2026-11-19T13:49:50.916Z",
+      "digest": "146715b83b500830dd587286db0b683532369a3992a1b30afb1d15406f6e5085"
     },
     {
       "url": "https://www.microsoft.com/en-gb/microsoft-365/business/microsoft-365-plans-and-pricing",
       "group": "commercial",
       "state": "retrieved",
-      "checkedAt": "2026-11-19T13:19:56.956Z",
-      "digest": "2ae8c9a714944ab00eaf4454d576187e30746b748469ab47c2c800498cc45771"
+      "checkedAt": "2026-11-19T13:49:50.916Z",
+      "digest": "0034c0d95d7f997dc58066cf129b28c434f7c726c135511d57436d01c9f746e5"
     },
     {
       "url": "https://www.microsoft.com/en-gb/microsoft-365/enterprise/frontline-plans-and-pricing",
       "group": "commercial",
       "state": "retrieved",
-      "checkedAt": "2026-11-19T13:19:56.956Z",
-      "digest": "1701dd50996583112f32547f989541ba49622b8dbd5eaa934488f85bdf55d700"
+      "checkedAt": "2026-11-19T13:49:50.916Z",
+      "digest": "453181794b7264e92e15fe44f3ed58bb6d4fbcb3c9208d2b17b123deb609e807"
     },
     {
       "url": "https://www.microsoft.com/en-gb/microsoft-365/enterprise/microsoft-365-plans-and-pricing",
       "group": "commercial",
       "state": "retrieved",
-      "checkedAt": "2026-11-19T13:19:56.956Z",
-      "digest": "cd36ae4ed2608c3d3ab664b13783104dd98b3d4c8c17e6352ce10b2fce687159"
+      "checkedAt": "2026-11-19T13:49:50.916Z",
+      "digest": "d32da348e485bbc4f7375f08b5676eecfe66c7ed4df51b1ea1f9dc444d624e8f"
     },
     {
       "url": "https://www.microsoft.com/en-gb/microsoft-365/enterprise/office-365-plans-and-pricing",
       "group": "commercial",
       "state": "retrieved",
-      "checkedAt": "2026-11-19T13:19:56.956Z",
-      "digest": "34d5f5b9dbe633970af520d1cf3f87c83206a46e7df26ceb8950cb24c10998c5"
+      "checkedAt": "2026-11-19T13:49:50.916Z",
+      "digest": "d5a613f0838f71493e1d02fb50f4727cf358ec39ef56f58b9d7b57698b8ad1b7"
     },
     {
       "url": "https://www.microsoft.com/en-gb/microsoft-agent-365",
       "group": "commercial",
       "state": "retrieved",
-      "checkedAt": "2026-11-19T13:19:56.956Z",
-      "digest": "2719e47f9bc46d6f559814521f8e8d6dcd5a6db0ec3ddacc6495cf5d2159c581"
+      "checkedAt": "2026-11-19T13:49:50.916Z",
+      "digest": "81d9f1b1558dd8a6f4b1356ce480ff7888ee0104ab7f6342d0a0e01ae67b3537"
     },
     {
       "url": "https://www.microsoft.com/en-gb/microsoft-teams/compare-microsoft-teams-business-options",
       "group": "commercial",
       "state": "retrieved",
-      "checkedAt": "2026-11-19T13:19:56.956Z",
-      "digest": "d698d994b909ea21050bc2ef65f3e0451649676358edaa3380c3d59869e7e1f7"
+      "checkedAt": "2026-11-19T13:49:50.916Z",
+      "digest": "16a58a133f698be627b2c713745dd841f8eebcb2e5505e8708a5d43ae0284d67"
     },
     {
       "url": "https://www.microsoft.com/en-gb/security/business/endpoint-security/microsoft-defender-endpoint",
       "group": "commercial",
       "state": "retrieved",
-      "checkedAt": "2026-11-19T13:19:56.956Z",
-      "digest": "31198da4ffbf33d23118c87cb6cbd40305ab6d257566f0d5827bc1715693c642"
+      "checkedAt": "2026-11-19T13:49:50.916Z",
+      "digest": "3ca879d00ed9ab055da1dfd5806d7c3479917fc6be0d4abdc9fb7ba65d99a167"
     },
     {
       "url": "https://www.microsoft.com/en-gb/security/business/identity-access/microsoft-defender-identity",
       "group": "commercial",
       "state": "unavailable",
-      "checkedAt": "2026-11-19T13:19:56.956Z"
+      "checkedAt": "2026-11-19T13:49:50.916Z"
     },
     {
       "url": "https://www.microsoft.com/en-gb/security/business/microsoft-purview",
       "group": "commercial",
       "state": "retrieved",
-      "checkedAt": "2026-11-19T13:19:56.956Z",
-      "digest": "86010da9af7ed0eb55f835fc3eb36933cf082466d40a0ae232092647e45add25"
+      "checkedAt": "2026-11-19T13:49:50.916Z",
+      "digest": "862a456cb72d2ae703ef23b489b136c1553f21363a2ea4d24a2f8b8c82d6f3de"
     },
     {
       "url": "https://www.microsoft.com/en-gb/security/business/siem-and-xdr/microsoft-defender-cloud-apps",
       "group": "commercial",
       "state": "retrieved",
-      "checkedAt": "2026-11-19T13:19:56.956Z",
-      "digest": "99d29d62318d1fe5e0f321757725ccf6333207010e92f28d9eb8f5730184bb24"
+      "checkedAt": "2026-11-19T13:49:50.916Z",
+      "digest": "daa3bf6e136f4dd029036ba73222798107fa0328022b2d7b2f742a0ff0840aa7"
     },
     {
       "url": "https://www.microsoft.com/en-gb/security/business/siem-and-xdr/microsoft-defender-office-365",
       "group": "commercial",
       "state": "retrieved",
-      "checkedAt": "2026-11-19T13:19:56.956Z",
-      "digest": "4c5166319bbd63d8d1f82511545a5f946f5a62c2ebdf0ef016cf97bd36ac64e9"
+      "checkedAt": "2026-11-19T13:49:50.916Z",
+      "digest": "a59dc639e287e7984dbf39bb6eb70cd5de0c9e7f9e501289e1e0f5428ced0c9b"
     },
     {
       "url": "https://www.microsoft.com/en-gb/security/microsoft-entra-pricing",
       "group": "commercial",
       "state": "retrieved",
-      "checkedAt": "2026-11-19T13:19:56.956Z",
-      "digest": "4a39f2daba0224c3b7e7aeb4b5e81d7ce6c68d86857467f5092889192b2df610"
+      "checkedAt": "2026-11-19T13:49:50.916Z",
+      "digest": "628298e117638877403758fbbac41614a63b6f4151e62c2500dde9124c91cd1a"
     },
     {
       "url": "https://learn.microsoft.com/en-us/azure/foundry-classic/agents/concepts/model-region-support",
       "group": "compatibility",
       "state": "retrieved",
-      "checkedAt": "2026-11-19T13:19:56.956Z",
-      "digest": "4e01056e133f50ccc087f94615250065d6854b5a1ea7e417d2aafb75c0a1ea87"
+      "checkedAt": "2026-11-19T13:49:50.916Z",
+      "digest": "11c4d6d32948fef732bc2645e398d2eb4980f4c748107928ef2d5773679c0a5b"
     },
     {
       "url": "https://learn.microsoft.com/en-us/azure/foundry-classic/agents/how-to/tools-classic/azure-ai-search",
       "group": "compatibility",
       "state": "retrieved",
-      "checkedAt": "2026-11-19T13:19:56.956Z",
-      "digest": "87e5c6a6a04c25b6d7df463c5e5ce4755889524d6973c919430857213bdb540e"
+      "checkedAt": "2026-11-19T13:49:50.916Z",
+      "digest": "78fc553ec8b3b85bcadd94b6fbf7013de7f0ae8a388ad89dd956c3f60c194859"
     },
     {
       "url": "https://learn.microsoft.com/en-us/azure/foundry/agents/how-to/connected-models",
       "group": "compatibility",
       "state": "retrieved",
-      "checkedAt": "2026-11-19T13:19:56.956Z",
-      "digest": "1c08b2b68e7c7502a37cc41d49344d5ca7c25485afb305ea0049200aaf84a901"
+      "checkedAt": "2026-11-19T13:49:50.916Z",
+      "digest": "2a1292cd515626442a4f08138590e278117e721063e49ee3b4eddf24abfc601f"
     },
     {
       "url": "https://learn.microsoft.com/en-us/azure/foundry/agents/how-to/tools/ai-search",
       "group": "compatibility",
       "state": "retrieved",
-      "checkedAt": "2026-11-19T13:19:56.956Z",
-      "digest": "062c3223982ed73b9821b1462d5182e2d2717351af763873bc82f466307e9dec"
+      "checkedAt": "2026-11-19T13:49:50.916Z",
+      "digest": "eb4f91d01fe9948232d25a3021db0ed770faac247ac02ccafafb6585c2953f80"
     },
     {
       "url": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "group": "compatibility",
       "state": "retrieved",
-      "checkedAt": "2026-11-19T13:19:56.956Z",
-      "digest": "c50f8b2d38f19809fcf102b754b9112fe3522a3ab1ae59e6539eee9b25f7a7c6"
+      "checkedAt": "2026-11-19T13:49:50.916Z",
+      "digest": "435b5719a25514e1b771cfa22be97704ae9ac16648827a3b8876c211897a1a8b"
     },
     {
       "url": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability",
       "group": "compatibility",
       "state": "retrieved",
-      "checkedAt": "2026-11-19T13:19:56.956Z",
-      "digest": "69c4b772651106b5096061242e6d09b67388bbf86a6360cd07ba313f91a1c419"
+      "checkedAt": "2026-11-19T13:49:50.916Z",
+      "digest": "6fe5a05f31ff9fb8f274144776eb3ac8fb24f9bc703b63761541db197c001e73"
     },
     {
       "url": "https://learn.microsoft.com/en-us/azure/foundry/openai/concepts/provisioned-throughput",
       "group": "compatibility",
       "state": "retrieved",
-      "checkedAt": "2026-11-19T13:19:56.956Z",
-      "digest": "c37b00a6afe7e44dde9ce976051e90896547090731a5d255a8f749dbb584bf22"
+      "checkedAt": "2026-11-19T13:49:50.916Z",
+      "digest": "a1d1f968056dbcaea94b3982b2444920b5d36677480c40b6bb6d6011e658a3fc"
     },
     {
       "url": "https://learn.microsoft.com/en-us/microsoft-copilot-studio/bring-your-own-model-prompts",
       "group": "compatibility",
       "state": "retrieved",
-      "checkedAt": "2026-11-19T13:19:56.956Z",
-      "digest": "6e941551b7ad96fca7d4fc0008801dbecb4257603d8b2581b6b38fdf33d72d99"
+      "checkedAt": "2026-11-19T13:49:50.916Z",
+      "digest": "5bd48de9768dbe124ba8e76d695e7de373c1b81d78b70f8471bb41bcb010f31e"
     },
     {
       "url": "https://learn.microsoft.com/en-us/microsoft-copilot-studio/requirements-messages-management",
       "group": "compatibility",
       "state": "retrieved",
-      "checkedAt": "2026-11-19T13:19:56.956Z",
-      "digest": "55f1b74f86bc21b753f25a03bb2da9af9245f19ba9d09ca366f6e9042fd40fc7"
+      "checkedAt": "2026-11-19T13:49:50.916Z",
+      "digest": "00442be0a6164c50036144db17a0432476113c64f426bdf5227713e1f541eade"
     },
     {
       "url": "https://learn.microsoft.com/en-us/copilot/plan/copilot-license-options",
       "group": "licensing",
       "state": "retrieved",
-      "checkedAt": "2026-11-19T13:19:56.956Z",
-      "digest": "28110b0d264f08dde15e23771b7da8ef529b7ba63c994d4a3b7c78dcc3adfdf0"
+      "checkedAt": "2026-11-19T13:49:50.916Z",
+      "digest": "3ab87b3414ceeb9af4da7e9a79198939cff83a43a929fff235183982a872fab3"
     },
     {
       "url": "https://learn.microsoft.com/en-us/defender-xdr/prerequisites",
       "group": "licensing",
       "state": "retrieved",
-      "checkedAt": "2026-11-19T13:19:56.956Z",
-      "digest": "79e003116a92aa31904497d0f07a1c424ccb4d94b0726242ec81a518306c6a76"
+      "checkedAt": "2026-11-19T13:49:50.916Z",
+      "digest": "a7cf1954c2b40f97ab33b0fea0dd68dd1471ab31231e7ddf2d62d7c5fe394cfc"
     },
     {
       "url": "https://learn.microsoft.com/en-us/microsoft-copilot-studio/requirements-messages-management",
       "group": "licensing",
       "state": "retrieved",
-      "checkedAt": "2026-11-19T13:19:56.956Z",
-      "digest": "55f1b74f86bc21b753f25a03bb2da9af9245f19ba9d09ca366f6e9042fd40fc7"
+      "checkedAt": "2026-11-19T13:49:50.916Z",
+      "digest": "00442be0a6164c50036144db17a0432476113c64f426bdf5227713e1f541eade"
     },
     {
       "url": "https://learn.microsoft.com/en-us/purview/ediscovery-assign-permissions",
       "group": "licensing",
       "state": "retrieved",
-      "checkedAt": "2026-11-19T13:19:56.956Z",
-      "digest": "76778cc48543d64f314f36adda778b0f1af48df8c228ba476fe7af86f01ba8ee"
+      "checkedAt": "2026-11-19T13:49:50.916Z",
+      "digest": "1a4d080b3e2fa130ec9415556e053e458cfd07d05fce4046b7b12921c57d8a15"
     },
     {
       "url": "https://www.microsoft.com/en-gb/microsoft-365/enterprise/microsoft-365-plans-and-pricing",
       "group": "licensing",
       "state": "retrieved",
-      "checkedAt": "2026-11-19T13:19:56.956Z",
-      "digest": "cd36ae4ed2608c3d3ab664b13783104dd98b3d4c8c17e6352ce10b2fce687159"
+      "checkedAt": "2026-11-19T13:49:50.916Z",
+      "digest": "d32da348e485bbc4f7375f08b5676eecfe66c7ed4df51b1ea1f9dc444d624e8f"
     },
     {
       "url": "https://www.microsoft.com/en-gb/microsoft-agent-365",
       "group": "licensing",
       "state": "retrieved",
-      "checkedAt": "2026-11-19T13:19:56.956Z",
-      "digest": "2719e47f9bc46d6f559814521f8e8d6dcd5a6db0ec3ddacc6495cf5d2159c581"
+      "checkedAt": "2026-11-19T13:49:50.916Z",
+      "digest": "81d9f1b1558dd8a6f4b1356ce480ff7888ee0104ab7f6342d0a0e01ae67b3537"
     },
     {
       "url": "https://www.microsoft.com/en-gb/security/business/siem-and-xdr/microsoft-defender-cloud-apps",
       "group": "licensing",
       "state": "retrieved",
-      "checkedAt": "2026-11-19T13:19:56.956Z",
-      "digest": "99d29d62318d1fe5e0f321757725ccf6333207010e92f28d9eb8f5730184bb24"
+      "checkedAt": "2026-11-19T13:49:50.916Z",
+      "digest": "daa3bf6e136f4dd029036ba73222798107fa0328022b2d7b2f742a0ff0840aa7"
     },
     {
       "url": "https://www.microsoft.com/en-gb/security/business/siem-and-xdr/microsoft-defender-office-365",
       "group": "licensing",
       "state": "retrieved",
-      "checkedAt": "2026-11-19T13:19:56.956Z",
-      "digest": "4c5166319bbd63d8d1f82511545a5f946f5a62c2ebdf0ef016cf97bd36ac64e9"
+      "checkedAt": "2026-11-19T13:49:50.916Z",
+      "digest": "a59dc639e287e7984dbf39bb6eb70cd5de0c9e7f9e501289e1e0f5428ced0c9b"
     },
     {
       "url": "https://www.microsoft.com/en-gb/security/microsoft-entra-pricing",
       "group": "licensing",
       "state": "retrieved",
-      "checkedAt": "2026-11-19T13:19:56.956Z",
-      "digest": "4a39f2daba0224c3b7e7aeb4b5e81d7ce6c68d86857467f5092889192b2df610"
+      "checkedAt": "2026-11-19T13:49:50.916Z",
+      "digest": "628298e117638877403758fbbac41614a63b6f4151e62c2500dde9124c91cd1a"
     },
     {
       "url": "https://www.microsoft.com/licensing/terms",
       "group": "licensing",
       "state": "retrieved",
-      "checkedAt": "2026-11-19T13:19:56.956Z",
+      "checkedAt": "2026-11-19T13:49:50.916Z",
       "digest": "b10bf21143c00f32934e047725c816681cb0fd39c2cd585bcb62eddd8b2a7c4a"
     },
     {
       "url": "https://www.microsoft.com/licensing/terms/productoffering/Microsoft365/MCA",
       "group": "licensing",
       "state": "retrieved",
-      "checkedAt": "2026-11-19T13:19:56.956Z",
+      "checkedAt": "2026-11-19T13:49:50.916Z",
       "digest": "f7c385df7a66a1a6694af00ccc45e22afdcb887908a06d21b7cd30d696e5385f"
     },
     {
       "url": "https://learn.microsoft.com/en-us/azure/foundry/openai/concepts/model-retirement-schedule",
       "group": "lifecycle",
       "state": "retrieved",
-      "checkedAt": "2026-11-19T13:19:56.956Z",
-      "digest": "bb05bd359237b20953d61aa754b1e32971cd9e1b7ceb1c85c77a66b63a75f7a6"
+      "checkedAt": "2026-11-19T13:49:50.916Z",
+      "digest": "6f8d00d0cf3cc8c7ddb0a135f69152af8c113804f6f0de8f175eff33cbefaced"
     },
     {
       "url": "https://learn.microsoft.com/en-us/azure/foundry/openai/how-to/provisioned-throughput-sizing",
       "group": "ptu",
       "state": "retrieved",
-      "checkedAt": "2026-11-19T13:19:56.956Z",
-      "digest": "8d6aa6004ec7fc218add44d8e0e0889321f11c58dae53b0f3ca7d63ee87e64b7"
+      "checkedAt": "2026-11-19T13:49:50.916Z",
+      "digest": "8a13e114646437ae3ce0056d4ed1a65b0d88445832caa53aad8536b2fd120800"
     },
     {
       "url": "https://learn.microsoft.com/en-us/azure/foundry/openai/concepts/provisioned-throughput-billing",
       "group": "reservations",
       "state": "retrieved",
-      "checkedAt": "2026-11-19T13:19:56.956Z",
-      "digest": "8c90482301c928b94b075e7fb96d1841f79205c8b89a69f78783bb327799eee9"
+      "checkedAt": "2026-11-19T13:49:50.916Z",
+      "digest": "705db8302ee49596f007c2dfe60512ad382f2f5038a2cc68fbc3ada1d8553768"
     },
     {
       "url": "https://prices.azure.com/api/retail/prices?api-version=2023-01-01-preview&currencyCode=%27GBP%27&%24filter=priceType+eq+%27Reservation%27+and+productName+eq+%27Azure+OpenAI%27",
       "group": "reservations",
       "state": "retrieved",
-      "checkedAt": "2026-11-19T13:19:56.956Z"
+      "checkedAt": "2026-11-19T13:49:50.916Z"
     }
   ],
-  "changes": [
-    {
-      "group": "compatibility",
-      "id": "maint-region-codex-mini-2025-05-16-globalstandard-uksouth",
-      "kind": "automatic",
-      "detail": "codex-mini|2025-05-16|globalstandard|uksouth added as incompatible in the official regional table."
-    },
-    {
-      "group": "compatibility",
-      "id": "maint-region-codex-mini-2025-05-16-globalstandard-westeurope",
-      "kind": "automatic",
-      "detail": "codex-mini|2025-05-16|globalstandard|westeurope added as incompatible in the official regional table."
-    },
-    {
-      "group": "compatibility",
-      "id": "maint-region-computer-use-preview-2025-03-11-globalstandard-uksouth",
-      "kind": "automatic",
-      "detail": "computer-use-preview|2025-03-11|globalstandard|uksouth added as incompatible in the official regional table."
-    },
-    {
-      "group": "compatibility",
-      "id": "maint-region-computer-use-preview-2025-03-11-globalstandard-westeurope",
-      "kind": "automatic",
-      "detail": "computer-use-preview|2025-03-11|globalstandard|westeurope added as incompatible in the official regional table."
-    },
-    {
-      "group": "compatibility",
-      "id": "maint-region-gpt-4o-transcribe-2025-03-20-datazonestandard-westeurope",
-      "kind": "automatic",
-      "detail": "gpt-4o-transcribe|2025-03-20|datazonestandard|westeurope added as incompatible in the official regional table."
-    },
-    {
-      "group": "compatibility",
-      "id": "maint-region-gpt-4o-transcribe-2025-03-20-globalstandard-uksouth",
-      "kind": "automatic",
-      "detail": "gpt-4o-transcribe|2025-03-20|globalstandard|uksouth added as incompatible in the official regional table."
-    },
-    {
-      "group": "compatibility",
-      "id": "maint-region-gpt-4o-transcribe-2025-03-20-globalstandard-westeurope",
-      "kind": "automatic",
-      "detail": "gpt-4o-transcribe|2025-03-20|globalstandard|westeurope added as incompatible in the official regional table."
-    },
-    {
-      "group": "compatibility",
-      "id": "maint-region-gpt-4o-transcribe-diarize-2025-10-15-globalstandard-uksouth",
-      "kind": "automatic",
-      "detail": "gpt-4o-transcribe-diarize|2025-10-15|globalstandard|uksouth added as incompatible in the official regional table."
-    },
-    {
-      "group": "compatibility",
-      "id": "maint-region-gpt-4o-transcribe-diarize-2025-10-15-globalstandard-westeurope",
-      "kind": "automatic",
-      "detail": "gpt-4o-transcribe-diarize|2025-10-15|globalstandard|westeurope added as incompatible in the official regional table."
-    },
-    {
-      "group": "compatibility",
-      "id": "maint-region-gpt-5-3-codex-2026-02-24-provisionedmanaged-westeurope",
-      "kind": "automatic",
-      "detail": "gpt-5.3-codex|2026-02-24|provisionedmanaged|westeurope added as incompatible in the official regional table."
-    },
-    {
-      "group": "compatibility",
-      "id": "maint-region-gpt-5-4-nano-2026-03-17-datazonestandard-westeurope",
-      "kind": "automatic",
-      "detail": "gpt-5.4-nano|2026-03-17|datazonestandard|westeurope added as incompatible in the official regional table."
-    },
-    {
-      "group": "compatibility",
-      "id": "maint-region-gpt-5-5-2026-04-24-provisionedmanaged-eastus2",
-      "kind": "automatic",
-      "detail": "gpt-5.5|2026-04-24|provisionedmanaged|eastus2 added as incompatible in the official regional table."
-    },
-    {
-      "group": "compatibility",
-      "id": "maint-region-gpt-5-6-luna-2026-07-09-provisionedmanaged-westeurope",
-      "kind": "automatic",
-      "detail": "gpt-5.6-luna|2026-07-09|provisionedmanaged|westeurope added as incompatible in the official regional table."
-    },
-    {
-      "group": "compatibility",
-      "id": "maint-region-gpt-5-6-terra-2026-07-09-provisionedmanaged-eastus2",
-      "kind": "automatic",
-      "detail": "gpt-5.6-terra|2026-07-09|provisionedmanaged|eastus2 added as incompatible in the official regional table."
-    },
-    {
-      "group": "compatibility",
-      "id": "maint-region-gpt-6-1-terra-2026-10-26-datazonestandard-eastus2",
-      "kind": "automatic",
-      "detail": "gpt-6.1-terra|2026-10-26|datazonestandard|eastus2 added as incompatible in the official regional table."
-    },
-    {
-      "group": "compatibility",
-      "id": "maint-region-gpt-6-1-terra-2026-10-26-globalstandard-eastus2",
-      "kind": "automatic",
-      "detail": "gpt-6.1-terra|2026-10-26|globalstandard|eastus2 added as incompatible in the official regional table."
-    },
-    {
-      "group": "compatibility",
-      "id": "maint-region-gpt-6-2-astra-2026-11-17-datazonestandard-eastus2",
-      "kind": "automatic",
-      "detail": "gpt-6.2-astra|2026-11-17|datazonestandard|eastus2 added as incompatible in the official regional table."
-    },
-    {
-      "group": "compatibility",
-      "id": "maint-region-gpt-6-2-astra-2026-11-17-globalstandard-eastus2",
-      "kind": "automatic",
-      "detail": "gpt-6.2-astra|2026-11-17|globalstandard|eastus2 added as incompatible in the official regional table."
-    },
-    {
-      "group": "compatibility",
-      "id": "maint-region-gpt-6-2-sol-2026-11-17-datazonestandard-eastus2",
-      "kind": "automatic",
-      "detail": "gpt-6.2-sol|2026-11-17|datazonestandard|eastus2 added as incompatible in the official regional table."
-    },
-    {
-      "group": "compatibility",
-      "id": "maint-region-gpt-6-2-sol-2026-11-17-globalstandard-eastus2",
-      "kind": "automatic",
-      "detail": "gpt-6.2-sol|2026-11-17|globalstandard|eastus2 added as incompatible in the official regional table."
-    },
-    {
-      "group": "compatibility",
-      "id": "maint-region-gpt-audio-1-5-2026-02-23-globalstandard-uksouth",
-      "kind": "automatic",
-      "detail": "gpt-audio-1.5|2026-02-23|globalstandard|uksouth added as incompatible in the official regional table."
-    },
-    {
-      "group": "compatibility",
-      "id": "maint-region-gpt-audio-1-5-2026-02-23-globalstandard-westeurope",
-      "kind": "automatic",
-      "detail": "gpt-audio-1.5|2026-02-23|globalstandard|westeurope added as incompatible in the official regional table."
-    },
-    {
-      "group": "compatibility",
-      "id": "maint-region-gpt-chat-latest-2026-05-28-globalstandard-uksouth",
-      "kind": "automatic",
-      "detail": "gpt-chat-latest|2026-05-28|globalstandard|uksouth added as incompatible in the official regional table."
-    },
-    {
-      "group": "compatibility",
-      "id": "maint-region-gpt-chat-latest-2026-05-28-globalstandard-westeurope",
-      "kind": "automatic",
-      "detail": "gpt-chat-latest|2026-05-28|globalstandard|westeurope added as incompatible in the official regional table."
-    },
-    {
-      "group": "compatibility",
-      "id": "maint-region-gpt-chat-latest-2026-06-24-globalstandard-uksouth",
-      "kind": "automatic",
-      "detail": "gpt-chat-latest|2026-06-24|globalstandard|uksouth added as incompatible in the official regional table."
-    },
-    {
-      "group": "compatibility",
-      "id": "maint-region-gpt-chat-latest-2026-06-24-globalstandard-westeurope",
-      "kind": "automatic",
-      "detail": "gpt-chat-latest|2026-06-24|globalstandard|westeurope added as incompatible in the official regional table."
-    },
-    {
-      "group": "compatibility",
-      "id": "maint-region-gpt-image-1-2025-04-15-globalstandard-uksouth",
-      "kind": "automatic",
-      "detail": "gpt-image-1|2025-04-15|globalstandard|uksouth added as incompatible in the official regional table."
-    },
-    {
-      "group": "compatibility",
-      "id": "maint-region-gpt-image-1-2025-04-15-globalstandard-westeurope",
-      "kind": "automatic",
-      "detail": "gpt-image-1|2025-04-15|globalstandard|westeurope added as incompatible in the official regional table."
-    },
-    {
-      "group": "compatibility",
-      "id": "maint-region-gpt-image-1-mini-2025-10-06-globalstandard-uksouth",
-      "kind": "automatic",
-      "detail": "gpt-image-1-mini|2025-10-06|globalstandard|uksouth added as incompatible in the official regional table."
-    },
-    {
-      "group": "compatibility",
-      "id": "maint-region-gpt-image-1-mini-2025-10-06-globalstandard-westeurope",
-      "kind": "automatic",
-      "detail": "gpt-image-1-mini|2025-10-06|globalstandard|westeurope added as incompatible in the official regional table."
-    },
-    {
-      "group": "compatibility",
-      "id": "maint-region-gpt-image-2-2026-04-21-globalstandard-uksouth",
-      "kind": "automatic",
-      "detail": "gpt-image-2|2026-04-21|globalstandard|uksouth added as incompatible in the official regional table."
-    },
-    {
-      "group": "compatibility",
-      "id": "maint-region-gpt-image-2-2026-04-21-globalstandard-westeurope",
-      "kind": "automatic",
-      "detail": "gpt-image-2|2026-04-21|globalstandard|westeurope added as incompatible in the official regional table."
-    },
-    {
-      "group": "compatibility",
-      "id": "maint-region-gpt-image-2-5-flare-2026-09-08-globalprovisionedmanaged-uksouth",
-      "kind": "automatic",
-      "detail": "gpt-image-2.5-flare|2026-09-08|globalprovisionedmanaged|uksouth added as incompatible in the official regional table."
-    },
-    {
-      "group": "compatibility",
-      "id": "maint-region-gpt-image-2-5-flare-2026-09-08-globalprovisionedmanaged-westeurope",
-      "kind": "automatic",
-      "detail": "gpt-image-2.5-flare|2026-09-08|globalprovisionedmanaged|westeurope added as incompatible in the official regional table."
-    },
-    {
-      "group": "compatibility",
-      "id": "maint-region-gpt-image-2-5-flare-2026-09-08-globalstandard-uksouth",
-      "kind": "automatic",
-      "detail": "gpt-image-2.5-flare|2026-09-08|globalstandard|uksouth added as incompatible in the official regional table."
-    },
-    {
-      "group": "compatibility",
-      "id": "maint-region-gpt-image-2-5-flare-2026-09-08-globalstandard-westeurope",
-      "kind": "automatic",
-      "detail": "gpt-image-2.5-flare|2026-09-08|globalstandard|westeurope added as incompatible in the official regional table."
-    },
-    {
-      "group": "compatibility",
-      "id": "maint-region-gpt-image-2-5-sunburst-2026-09-08-globalstandard-uksouth",
-      "kind": "automatic",
-      "detail": "gpt-image-2.5-sunburst|2026-09-08|globalstandard|uksouth added as incompatible in the official regional table."
-    },
-    {
-      "group": "compatibility",
-      "id": "maint-region-gpt-image-2-5-sunburst-2026-09-08-globalstandard-westeurope",
-      "kind": "automatic",
-      "detail": "gpt-image-2.5-sunburst|2026-09-08|globalstandard|westeurope added as incompatible in the official regional table."
-    },
-    {
-      "group": "compatibility",
-      "id": "maint-region-gpt-live-1-2026-09-10-globalstandard-uksouth",
-      "kind": "automatic",
-      "detail": "gpt-live-1|2026-09-10|globalstandard|uksouth added as incompatible in the official regional table."
-    },
-    {
-      "group": "compatibility",
-      "id": "maint-region-gpt-live-1-2026-09-10-globalstandard-westeurope",
-      "kind": "automatic",
-      "detail": "gpt-live-1|2026-09-10|globalstandard|westeurope added as incompatible in the official regional table."
-    },
-    {
-      "group": "compatibility",
-      "id": "maint-region-gpt-live-transcribe-2026-07-28-globalstandard-uksouth",
-      "kind": "automatic",
-      "detail": "gpt-live-transcribe|2026-07-28|globalstandard|uksouth added as incompatible in the official regional table."
-    },
-    {
-      "group": "compatibility",
-      "id": "maint-region-gpt-live-transcribe-2026-07-28-globalstandard-westeurope",
-      "kind": "automatic",
-      "detail": "gpt-live-transcribe|2026-07-28|globalstandard|westeurope added as incompatible in the official regional table."
-    },
-    {
-      "group": "compatibility",
-      "id": "maint-region-gpt-realtime-1-5-2026-02-23-datazonestandard-westeurope",
-      "kind": "automatic",
-      "detail": "gpt-realtime-1.5|2026-02-23|datazonestandard|westeurope added as incompatible in the official regional table."
-    },
-    {
-      "group": "compatibility",
-      "id": "maint-region-gpt-realtime-1-5-2026-02-23-globalstandard-uksouth",
-      "kind": "automatic",
-      "detail": "gpt-realtime-1.5|2026-02-23|globalstandard|uksouth added as incompatible in the official regional table."
-    },
-    {
-      "group": "compatibility",
-      "id": "maint-region-gpt-realtime-1-5-2026-02-23-globalstandard-westeurope",
-      "kind": "automatic",
-      "detail": "gpt-realtime-1.5|2026-02-23|globalstandard|westeurope added as incompatible in the official regional table."
-    },
-    {
-      "group": "compatibility",
-      "id": "maint-region-gpt-realtime-2-1-2026-07-07-datazonestandard-westeurope",
-      "kind": "automatic",
-      "detail": "gpt-realtime-2.1|2026-07-07|datazonestandard|westeurope added as incompatible in the official regional table."
-    },
-    {
-      "group": "compatibility",
-      "id": "maint-region-gpt-realtime-2-1-2026-07-07-globalstandard-uksouth",
-      "kind": "automatic",
-      "detail": "gpt-realtime-2.1|2026-07-07|globalstandard|uksouth added as incompatible in the official regional table."
-    },
-    {
-      "group": "compatibility",
-      "id": "maint-region-gpt-realtime-2-1-2026-07-07-globalstandard-westeurope",
-      "kind": "automatic",
-      "detail": "gpt-realtime-2.1|2026-07-07|globalstandard|westeurope added as incompatible in the official regional table."
-    },
-    {
-      "group": "compatibility",
-      "id": "maint-region-gpt-realtime-2-1-mini-2026-07-07-globalstandard-uksouth",
-      "kind": "automatic",
-      "detail": "gpt-realtime-2.1-mini|2026-07-07|globalstandard|uksouth added as incompatible in the official regional table."
-    },
-    {
-      "group": "compatibility",
-      "id": "maint-region-gpt-realtime-2-1-mini-2026-07-07-globalstandard-westeurope",
-      "kind": "automatic",
-      "detail": "gpt-realtime-2.1-mini|2026-07-07|globalstandard|westeurope added as incompatible in the official regional table."
-    },
-    {
-      "group": "compatibility",
-      "id": "maint-region-gpt-realtime-2-2026-05-06-globalstandard-uksouth",
-      "kind": "automatic",
-      "detail": "gpt-realtime-2|2026-05-06|globalstandard|uksouth added as incompatible in the official regional table."
-    },
-    {
-      "group": "compatibility",
-      "id": "maint-region-gpt-realtime-2-2026-05-06-globalstandard-westeurope",
-      "kind": "automatic",
-      "detail": "gpt-realtime-2|2026-05-06|globalstandard|westeurope added as incompatible in the official regional table."
-    },
-    {
-      "group": "compatibility",
-      "id": "maint-region-gpt-realtime-2025-08-28-globalstandard-uksouth",
-      "kind": "automatic",
-      "detail": "gpt-realtime|2025-08-28|globalstandard|uksouth added as incompatible in the official regional table."
-    },
-    {
-      "group": "compatibility",
-      "id": "maint-region-gpt-realtime-2025-08-28-globalstandard-westeurope",
-      "kind": "automatic",
-      "detail": "gpt-realtime|2025-08-28|globalstandard|westeurope added as incompatible in the official regional table."
-    },
-    {
-      "group": "compatibility",
-      "id": "maint-region-gpt-realtime-mini-2025-10-06-globalstandard-uksouth",
-      "kind": "automatic",
-      "detail": "gpt-realtime-mini|2025-10-06|globalstandard|uksouth added as incompatible in the official regional table."
-    },
-    {
-      "group": "compatibility",
-      "id": "maint-region-gpt-realtime-mini-2025-10-06-globalstandard-westeurope",
-      "kind": "automatic",
-      "detail": "gpt-realtime-mini|2025-10-06|globalstandard|westeurope added as incompatible in the official regional table."
-    },
-    {
-      "group": "compatibility",
-      "id": "maint-region-gpt-realtime-mini-2025-12-15-globalstandard-uksouth",
-      "kind": "automatic",
-      "detail": "gpt-realtime-mini|2025-12-15|globalstandard|uksouth added as incompatible in the official regional table."
-    },
-    {
-      "group": "compatibility",
-      "id": "maint-region-gpt-realtime-mini-2025-12-15-globalstandard-westeurope",
-      "kind": "automatic",
-      "detail": "gpt-realtime-mini|2025-12-15|globalstandard|westeurope added as incompatible in the official regional table."
-    },
-    {
-      "group": "compatibility",
-      "id": "maint-region-gpt-realtime-translate-2026-05-06-globalstandard-uksouth",
-      "kind": "automatic",
-      "detail": "gpt-realtime-translate|2026-05-06|globalstandard|uksouth added as incompatible in the official regional table."
-    },
-    {
-      "group": "compatibility",
-      "id": "maint-region-gpt-realtime-translate-2026-05-06-globalstandard-westeurope",
-      "kind": "automatic",
-      "detail": "gpt-realtime-translate|2026-05-06|globalstandard|westeurope added as incompatible in the official regional table."
-    },
-    {
-      "group": "compatibility",
-      "id": "maint-region-gpt-realtime-whisper-2026-05-06-globalstandard-uksouth",
-      "kind": "automatic",
-      "detail": "gpt-realtime-whisper|2026-05-06|globalstandard|uksouth added as incompatible in the official regional table."
-    },
-    {
-      "group": "compatibility",
-      "id": "maint-region-gpt-realtime-whisper-2026-05-06-globalstandard-westeurope",
-      "kind": "automatic",
-      "detail": "gpt-realtime-whisper|2026-05-06|globalstandard|westeurope added as incompatible in the official regional table."
-    },
-    {
-      "group": "compatibility",
-      "id": "maint-region-gpt-transcribe-2026-07-28-globalstandard-uksouth",
-      "kind": "automatic",
-      "detail": "gpt-transcribe|2026-07-28|globalstandard|uksouth added as incompatible in the official regional table."
-    },
-    {
-      "group": "compatibility",
-      "id": "maint-region-gpt-transcribe-2026-07-28-globalstandard-westeurope",
-      "kind": "automatic",
-      "detail": "gpt-transcribe|2026-07-28|globalstandard|westeurope added as incompatible in the official regional table."
-    },
-    {
-      "group": "compatibility",
-      "id": "maint-region-mai-image-2-5-2026-06-02-globalstandard-eastus2",
-      "kind": "automatic",
-      "detail": "mai-image-2.5|2026-06-02|globalstandard|eastus2 added as incompatible in the official regional table."
-    },
-    {
-      "group": "compatibility",
-      "id": "maint-region-mai-image-2-5-2026-06-02-globalstandard-uksouth",
-      "kind": "automatic",
-      "detail": "mai-image-2.5|2026-06-02|globalstandard|uksouth added as incompatible in the official regional table."
-    },
-    {
-      "group": "compatibility",
-      "id": "maint-region-mai-image-2-5-flash-2026-06-02-globalstandard-eastus2",
-      "kind": "automatic",
-      "detail": "mai-image-2.5-flash|2026-06-02|globalstandard|eastus2 added as incompatible in the official regional table."
-    },
-    {
-      "group": "compatibility",
-      "id": "maint-region-mai-image-2-5-flash-2026-06-02-globalstandard-uksouth",
-      "kind": "automatic",
-      "detail": "mai-image-2.5-flash|2026-06-02|globalstandard|uksouth added as incompatible in the official regional table."
-    },
-    {
-      "group": "compatibility",
-      "id": "maint-region-mai-image-2-5-pro-2026-06-19-globalstandard-eastus2",
-      "kind": "automatic",
-      "detail": "mai-image-2.5-pro|2026-06-19|globalstandard|eastus2 added as incompatible in the official regional table."
-    },
-    {
-      "group": "compatibility",
-      "id": "maint-region-mai-image-2-5-pro-2026-06-19-globalstandard-uksouth",
-      "kind": "automatic",
-      "detail": "mai-image-2.5-pro|2026-06-19|globalstandard|uksouth added as incompatible in the official regional table."
-    },
-    {
-      "group": "compatibility",
-      "id": "maint-region-mai-image-2-6-2026-07-31-globalstandard-eastus2",
-      "kind": "automatic",
-      "detail": "mai-image-2.6|2026-07-31|globalstandard|eastus2 added as incompatible in the official regional table."
-    },
-    {
-      "group": "compatibility",
-      "id": "maint-region-mai-image-2-6-2026-07-31-globalstandard-uksouth",
-      "kind": "automatic",
-      "detail": "mai-image-2.6|2026-07-31|globalstandard|uksouth added as incompatible in the official regional table."
-    },
-    {
-      "group": "compatibility",
-      "id": "maint-region-mai-image-2-6-flash-2026-07-31-globalstandard-eastus2",
-      "kind": "automatic",
-      "detail": "mai-image-2.6-flash|2026-07-31|globalstandard|eastus2 added as incompatible in the official regional table."
-    },
-    {
-      "group": "compatibility",
-      "id": "maint-region-mai-image-2-6-flash-2026-07-31-globalstandard-uksouth",
-      "kind": "automatic",
-      "detail": "mai-image-2.6-flash|2026-07-31|globalstandard|uksouth added as incompatible in the official regional table."
-    },
-    {
-      "group": "compatibility",
-      "id": "maint-region-microsoft-decision-1-1-1-globalstandard-uksouth",
-      "kind": "automatic",
-      "detail": "microsoft-decision-1.1|1|globalstandard|uksouth added as incompatible in the official regional table."
-    },
-    {
-      "group": "compatibility",
-      "id": "maint-region-o3-pro-2025-06-10-globalstandard-uksouth",
-      "kind": "automatic",
-      "detail": "o3-pro|2025-06-10|globalstandard|uksouth added as incompatible in the official regional table."
-    },
-    {
-      "group": "compatibility",
-      "id": "maint-region-o3-pro-2025-06-10-globalstandard-westeurope",
-      "kind": "automatic",
-      "detail": "o3-pro|2025-06-10|globalstandard|westeurope added as incompatible in the official regional table."
-    },
-    {
-      "group": "compatibility",
-      "id": "maint-region-sora-2-2025-12-08-globalstandard-uksouth",
-      "kind": "automatic",
-      "detail": "sora-2|2025-12-08|globalstandard|uksouth added as incompatible in the official regional table."
-    },
-    {
-      "group": "compatibility",
-      "id": "maint-region-sora-2-2025-12-08-globalstandard-westeurope",
-      "kind": "automatic",
-      "detail": "sora-2|2025-12-08|globalstandard|westeurope added as incompatible in the official regional table."
-    },
-    {
-      "group": "compatibility",
-      "id": "maint-region-whisper-001-standard-uksouth",
-      "kind": "automatic",
-      "detail": "whisper|001|standard|uksouth added as incompatible in the official regional table."
-    }
-  ],
+  "changes": [],
   "unresolved": [
     {
       "group": "commercial",

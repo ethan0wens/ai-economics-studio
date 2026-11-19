@@ -10,7 +10,7 @@ jobs:
   evidence:
     strategy:
       matrix:
-        scope: [licensing, technical, matrix]
+        scope: [licensing, technical, matrix, region]
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:

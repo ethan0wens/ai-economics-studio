@@ -1,6 +1,11 @@
 export {};
 
 const sources: Record<string, [string, string, RegExp][]> = {
+  region: [
+    ['GLOBAL region matrix reinforced', 'https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability?tabs=global-standard', /gpt-4.?1|eastus2|west europe|uk south|region/i],
+    ['Regional markdown', 'https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability.md', /gpt-4.?1|eastus2|west europe|uk south|region/i],
+    ['Model availability linked', 'https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/model-catalog-overview', /availability|supported|region/i],
+  ],
   matrix: [
     ['Dedicated region matrix', 'https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability', /Global Standard|gpt-4.1|region/i],
     ['Availability region matrix', 'https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/model-availability', /Global Standard|gpt-4.1|region/i],
@@ -62,10 +67,15 @@ await Promise.all((sources[process.argv[2]] ?? []).map(async ([title, source, te
     }) : [];
     const links = ['Search classic linked sources', 'GLOBAL region matrix'].includes(title) ? [...body.matchAll(/<a\b[^>]*href="([^"]+)"[^>]*>([\s\S]*?)<\/a>/gi)]
       .filter(link => /new Foundry IQ|new agents|Region availability for Foundry Models|Model availability/i.test(plain(link[2]))).map(link => new URL(link[1], response.url).href) : [];
+    const markup = ['GLOBAL region matrix reinforced', 'Regional markdown'].includes(title) ? [
+      `MIME ${response.headers.get('content-type')} · ${html.length} bytes · ${[...body.matchAll(/<table/g)].length} tables`,
+      ...[...html.matchAll(/gpt-4\.1-mini|eastus2|uksouth|westeurope|mslearn-model|model-availability|model-region-availability/gi)].slice(0, 19)
+        .map(hit => plain(html.slice(Math.max(0, hit.index - 42), hit.index + 115))),
+    ] : [];
     const pageText = plain(body);
     const near = ['M365 enterprise', 'UK enterprise exact', 'Business', 'Office 365', 'Entra', 'Copilot commercial'].includes(title)
       ? [...pageText.matchAll(/£[0-9]+\.[0-9]+/g)].slice(0, 32).map(match => pageText.slice(Math.max(0, match.index - 90), match.index + 150)) : [];
-    const output = [`HTTP ${response.status} ${response.url}`, ...[...new Set([...tables, ...links, ...near, ...pricing, ...rows])].slice(0, 34)];
+    const output = [`HTTP ${response.status} ${response.url}`, ...[...new Set([...tables, ...markup, ...links, ...near, ...pricing, ...rows])].slice(0, 34)];
     console.log(`::notice title=${title}::${output.join('\n').replaceAll('%', '%25').replaceAll('\r', '%0D').replaceAll('\n', '%0A')}`);
     await import('node:fs/promises').then(fs => fs.writeFile(`enterprise-${title.toLowerCase().replaceAll(' ', '-')}.txt`, output.join('\n')));
   } catch (error) {

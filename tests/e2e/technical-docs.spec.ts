@@ -71,7 +71,7 @@ test('deep links expose diagrams, formulas, source references and generated cont
 test('all chapters reflow at 320 pixels and code and tables are keyboard accessible', async ({ page }) => {
   await page.setViewportSize({ width: 320, height: 844 });
   await page.goto('/#/documentation/technical');
-  await expect(page.getByRole('heading', { name: 'Technical Documentation', level: 1 })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Technical Documentation', level: 1 })).toBeFocused();
   const menu = page.getByRole('button', { name: 'Toggle navigation' });
   await menu.focus();
   await page.keyboard.press('Enter');
@@ -84,12 +84,14 @@ test('all chapters reflow at 320 pixels and code and tables are keyboard accessi
     await expect.poll(() => page.evaluate(() => document.documentElement.scrollWidth - innerWidth)).toBe(0);
   }
   await page.goto('/#/documentation/technical/security-and-operations?section=verify-a-published-release');
+  await expect(page.getByRole('heading', { name: 'Verify a published release', exact: true })).toBeFocused();
   const code = page.getByRole('region', { name: 'Verify a published release code example' });
   await code.focus();
   await expect(code).toBeFocused();
   await page.keyboard.press('ArrowRight');
   await expect.poll(() => code.evaluate(element => element.scrollLeft)).toBeGreaterThan(0);
   await page.goto('/#/documentation/technical/environment-schema?section=top-level-contract');
+  await expect(page.getByRole('heading', { name: 'Top-level contract', exact: true })).toBeFocused();
   const table = page.getByRole('region', { name: 'Top-level contract table' });
   await table.focus();
   await expect(table).toBeFocused();

@@ -15,3 +15,5 @@
 - If a credential may have been disclosed, revoke or rotate it in the provider settings, restrict affected accounts and review workflow history. Verify production before resuming scheduled publication.
 - For each proposed security exception record the advisory, component, severity, reachability, compensating controls, owner, review date and follow-up. Review a new advisory against the installed and shipped files.
 - Coordinate disclosure after the fix. Keep customer data, credentials and private infrastructure details out of publicly shared artefacts.
+
+Cloudflare documents the **Always Use HTTPS** option under Edge Certificates for managed zones. The outstanding check concerns the existing Cloudflare-managed workers.dev host, where the available account controls need provider confirmation. See [Always Use HTTPS](https://developers.cloudflare.com/ssl/edge-certificates/additional-options/always-use-https/) and [workers.dev routing](https://developers.cloudflare.com/workers/configuration/routing/workers-dev/).

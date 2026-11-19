@@ -14,7 +14,7 @@ main.tsx → App
     ├─ EstimateSummary / CostAnalysis      totals, gaps and itemised charges
     ├─ Coverage / CatalogueHealth          published evidence and price scope
     ├─ Documentation / Examples          guides, reference and templates
-    └─ Reports / Architecture              shared Ledger and logical graph
+    └─ Environment Review / Reports        shared ledger, findings and logical graph
 ```
 
 [Navigation](../../src/navigation.ts) encodes destinations in the URL hash and reads the optional section target. Hash navigation works on static delivery and carries public documentation IDs. [Workspace controls](../../src/workspace-ui.tsx) supply Home and responsive navigation. App changes the active route, restores meaningful focus and warns about dirty work before a replacement or browser unload. Modal controls use native dialogs.

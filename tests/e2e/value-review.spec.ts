@@ -240,6 +240,11 @@ test.describe('narrow guided and optional views', () => {
 test('the built-in business case reconciles through the walkthrough, reports and JSON', async ({ page }) => {
   await prices(page);
   await page.goto('/');
+  await navigate(page, 'Environment Review');
+  await expect(page.getByRole('heading', { name: 'Open an environment' })).toBeVisible();
+  await expect(page.getByRole('navigation', { name: 'Environment review views' })).toHaveCount(0);
+  await page.getByRole('link', { name: 'Create environment', exact: true }).click();
+  await expect(page.getByRole('textbox', { name: 'Environment name' })).toBeEmpty();
   await page.getByRole('link', { name: 'Explore examples' }).click();
   const title = 'AI Adoption & Business Case';
   const preview = page.getByRole('link', { name: `Preview ${title}` });
@@ -296,7 +301,9 @@ test('the built-in business case reconciles through the walkthrough, reports and
   await expect(page.getByRole('heading', { name: 'Technical fit' })).toBeVisible();
   await views.getByRole('link', { name: 'Controls' }).click();
   await page.getByText('Identity and access', { exact: true }).click();
-  await expect(page.getByText('Fictional identity control', { exact: true }).first()).toBeVisible();
+  const declaration = page.getByRole('button', { name: 'Review Fictional identity control', exact: true });
+  await expect(declaration).toBeVisible();
+  await expect(declaration.locator('xpath=ancestor::li').getByText('Planned', { exact: true })).toBeVisible();
 
   await navigate(page, 'Reports & Export');
   const full = (await reportText(await download(page, 'Generate PDF'))).join(' ');

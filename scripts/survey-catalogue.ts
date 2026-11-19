@@ -30,6 +30,20 @@ const groups: Record<string, [string, string][]> = {
     ['Purview service terms', learn + 'office365/servicedescriptions/microsoft-365-service-descriptions/microsoft-365-tenantlevel-services-licensing-guidance/microsoft-purview-service-description'],
     ['Product Terms', 'https://www.microsoft.com/licensing/terms/productoffering/Microsoft365/MCA'],
   ],
+  securityoffers: [
+    ['Office Defender prices', gb + 'microsoft-365/exchange/advance-threat-protection'],
+    ['Defender for Office offer', gb + 'security/business/siem-and-xdr/microsoft-defender-office-365'],
+    ['Identity pricing', gb + 'security/business/identity-access/microsoft-defender-identity'],
+    ['Purview Suite exact', gb + 'security/business/microsoft-purview-suite'],
+    ['Office 365 F3 exact', gb + 'microsoft-365/enterprise/office-365-f3'],
+    ['Frontline service', learn + 'office365/servicedescriptions/office-365-platform-service-description/office-365-plan-options'],
+  ],
+  sizing: [
+    ['Exact minimums', foundry + 'openai/how-to/provisioned-throughput-sizing'],
+    ['Reservation price sources', openai + 'provisioned-throughput-billing'],
+    ['Model retirement schedule', openai + 'model-retirement-schedule'],
+    ['Reservation catalogue Azure', "https://prices.azure.com/api/retail/prices?api-version=2023-01-01-preview&currencyCode='GBP'&%24filter=priceType%20eq%20'Reservation'%20and%20productName%20eq%20'Azure%20OpenAI'%20and%20(armRegionName%20eq%20'uksouth'%20or%20armRegionName%20eq%20'eastus2'%20or%20armRegionName%20eq%20'westeurope')"],
+  ],
   throughput: [
     ['Azure OpenAI throughput', openai + 'provisioned-throughput'],
     ['Azure OpenAI onboarding', openai + 'provisioned-throughput-onboarding'],
@@ -78,7 +92,12 @@ await Promise.all((groups[group] ?? []).map(async ([title, url]) => {
     const page = plain(body);
     const output = [`HTTP ${response.status} ${response.url}`];
     if (title === 'Public baseline') output.push(html);
-    if (group === 'business' || group === 'security') {
+    if (title === 'Reservation catalogue Azure' && response.ok) {
+      const rows = JSON.parse(html) as { Items: Record<string, unknown>[]; NextPageLink?: string };
+      output.push(`Returned ${rows.Items.length} rows; has continuation ${!!rows.NextPageLink}`,
+        ...rows.Items.slice(0,12).map(row => JSON.stringify(row)));
+    }
+    if (['business', 'security', 'securityoffers'].includes(group)) {
       const prices = [...page.matchAll(/£\s*[\d,.]+/g)];
       output.push(...[...new Set(prices.map(hit => page.slice(Math.max(0, hit.index - 130), hit.index + 126)))].slice(0, 17));
       if (!prices.length) output.push('No GBP amount extracted from the accessible body.');

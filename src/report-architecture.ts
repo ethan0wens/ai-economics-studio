@@ -38,7 +38,7 @@ export function architecture(layout: ReportLayout, environment: Environment, res
       const y = top - (node.y - node.height / 2) * scale;
       const width = node.width * scale;
       const height = node.height * scale;
-      page.drawRectangle({ x, y: y - height, width, height, color: colour.canvas, borderColor: colour.border, borderWidth: .6 });
+      page.drawRectangle({ x, y: y - height, width, height, color: colour.cloud, borderColor: colour.border, borderWidth: .6 });
       page.drawRectangle({ x, y: y - height, width: 3, height, color: ink(node.color) });
       const title = { size: 11.4, bold: true };
       const name = layout.wrap(node.name, width - 20, title).length > 2 ? 'See full name in register' : node.name;

@@ -13,6 +13,7 @@ import { architecture } from './report-architecture';
 import { assumptions, basisLabels, capacityComparisons, chargeBasis, financialAppendix, ReportSources, reviewFindings, unresolvedLabel } from './report-appendices';
 import regularAsset from './report-fonts/Inter-Regular.ttf?inline';
 import boldAsset from './report-fonts/Inter-Semibold.ttf?inline';
+import { drawReportSignal } from './report-brand';
 import { colour, ink, margin, ReportLayout, safeText, type ReportFonts } from './report-layout';
 
 export type ReportFormat = 'executive' | 'full';
@@ -38,32 +39,36 @@ async function loadFonts(doc: PDFDocument, content: unknown): Promise<ReportFont
 
 function cover(layout: ReportLayout, env: Environment, generated: Date, format: ReportFormat) {
   layout.newPage('Cover', false, true);
-  layout.at('AI Economics Studio', margin, layout.y, layout.width, { size: 14, bold: true, color: colour.blue });
-  const heroTop = 729;
-  const heroHeight = 430;
-  layout.page.drawRectangle({ x: margin, y: heroTop - heroHeight, width: layout.width, height: heroHeight, color: colour.navy });
-  layout.page.drawRectangle({ x: margin, y: heroTop - 4, width: layout.width, height: 4, color: colour.blue });
-  const left = margin + 28;
-  const inside = layout.width - 56;
-  layout.at(formatLabels[format], left, heroTop - 35, inside, { size: 11, bold: true, color: colour.paleBlue });
-  layout.at('AI Environment\nCost Assessment', left, heroTop - 66, inside, { size: 32, bold: true, color: colour.white, leading: 39 });
-  layout.page.drawLine({ start: { x: left, y: heroTop - 162 }, end: { x: left + inside, y: heroTop - 162 }, color: ink('#435B7B'), thickness: .8 });
-  const environmentTop = heroTop - 187;
-  const nameWidth = inside - 5;
+  const heroTop = layout.page.getHeight() - margin;
+  const heroHeight = 510;
+  const bottom = heroTop - heroHeight;
+  const left = margin + 31;
+  const inside = layout.width - 62;
+  layout.page.drawRectangle({ x: margin, y: bottom, width: layout.width, height: heroHeight, color: colour.navy });
+  layout.page.drawRectangle({ x: margin, y: heroTop - 3, width: layout.width, height: 3, color: colour.blue });
+  drawReportSignal(layout.page, margin + layout.width - 204, bottom + 155, 192, 'on-dark', .23);
+  drawReportSignal(layout.page, left, heroTop - 22, 43, 'on-dark');
+  layout.at('AI Economics Studio', left + 54, heroTop - 33, inside - 54, { size: 15, bold: true, color: colour.white });
+  layout.at(formatLabels[format], left, heroTop - 101, inside, { size: 13, bold: true, color: colour.softBlue });
+  layout.at('AI Environment\nCost Assessment', left, heroTop - 130, inside, { size: 37, bold: true, color: colour.white, leading: 44 });
+  const divider = heroTop - 234;
+  layout.page.drawLine({ start: { x: left, y: divider }, end: { x: left + inside, y: divider }, color: ink('#546E91'), thickness: .7 });
+  layout.at('Modelled environment', left, heroTop - 252, inside, { size: 10, bold: true, color: colour.paleBlue });
   const name = safeText(env.name).replace(/\s+/gu, ' ').trim();
-  let nameSize = 25;
-  while (nameSize > 13 && layout.wrap(name, nameWidth, { size: nameSize, bold: true }).length * nameSize * 1.32 > 215) nameSize--;
-  layout.at(name, left, environmentTop, nameWidth, { size: nameSize, bold: true, color: colour.white });
+  let size = 26;
+  while (size > 10 && layout.wrap(name, inside, { size, bold: true }).length * size * 1.32 > 111) size--;
+  layout.at(name, left, heroTop - 274, inside, { size, bold: true, color: colour.white });
   const labels = [
     ['Report date', londonDate.format(generated)], ['Currency', env.currency], ['Primary deployment region', regionName(env.region)],
   ];
   const columnWidth = layout.width / labels.length;
+  layout.page.drawRectangle({ x: margin, y: 196, width: layout.width, height: 64, color: colour.cloud });
   labels.forEach(([key, value], index) => {
-    const x = margin + index * columnWidth;
-    layout.at(key, x, 257, columnWidth - 16, { size: 9.4, bold: true, color: colour.muted });
+    const x = margin + index * columnWidth + 11;
+    layout.at(key, x, 247, columnWidth - 20, { size: 9.4, bold: true, color: colour.muted });
     const style = { size: 13, bold: true };
-    const display = layout.wrap(value, columnWidth - 16, style).length > 4 ? 'See modelled environment' : value;
-    layout.at(display, x, 237, columnWidth - 16, style);
+    const display = layout.wrap(value, columnWidth - 20, style).length > 4 ? 'See modelled environment' : value;
+    layout.at(display, x, 226, columnWidth - 20, style);
   });
   layout.at('Independent planning report', margin, 145, layout.width, { size: 11, bold: true, color: colour.navy });
   layout.at('The studio is independent of Microsoft. Planning estimates do not establish quotes, licence eligibility or compliance.',

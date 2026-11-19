@@ -1,5 +1,6 @@
 import { PageSizes, rgb, type PDFDocument, type PDFFont, type PDFPage, type RGB } from 'pdf-lib';
 import tokens from '../design/tokens.json';
+import { drawReportSignal } from './report-brand';
 
 export function ink(hex: string) {
   return rgb(...[1, 3, 5].map(offset => parseInt(hex.slice(offset, offset + 2), 16) / 255) as [number, number, number]);
@@ -7,7 +8,8 @@ export function ink(hex: string) {
 
 export const colour = {
   navy: ink(tokens.colors.textPrimary), blue: ink(tokens.colors.primary), canvas: ink(tokens.colors.canvas),
-  paleBlue: ink(tokens.colors.primaryLight), border: ink(tokens.colors.border), white: ink(tokens.colors.surface),
+  paleBlue: ink(tokens.colors.primaryLight), softBlue: ink(tokens.colors.softBlue), cloud: ink(tokens.colors.cloudSurface),
+  border: ink(tokens.colors.border), white: ink(tokens.colors.surface),
   muted: ink(tokens.colors.textSecondary), amber: ink('#854D0E'), paleAmber: ink('#FFFBEB'), red: ink('#991B1B'),
 };
 export const margin = 46;
@@ -167,6 +169,7 @@ export class ReportLayout {
     const styles = [{ size: 9.5, bold: true, color: colour.muted }, { size: 22, bold: true }, { size: 8.5, color: colour.muted }];
     for (let start = 0; start < cards.length; start += columns) {
       const group = cards.slice(start, start + columns).map(card => ({
+        warning: card.warning,
         boxes: [card.label, card.value, card.note].map((text, index) => {
           const style = index === 1 && card.warning ? { ...styles[index], color: colour.amber } : styles[index];
           return { lines: this.wrap(text, width - 26, style), style };
@@ -174,9 +177,9 @@ export class ReportLayout {
       }));
       const height = Math.max(...group.map(({ boxes }) => boxes.reduce((sum, box) => sum + box.lines.length * step(box.style) + 2, 23)));
       this.reserve(height);
-      group.forEach(({ boxes }, index) => {
+      group.forEach(({ boxes, warning }, index) => {
         const x = margin + index * (width + gap);
-        this.page.drawRectangle({ x, y: this.y - height, width, height, color: colour.canvas, borderColor: colour.border, borderWidth: .6 });
+        this.page.drawRectangle({ x, y: this.y - height, width, height, color: warning ? colour.paleAmber : colour.cloud, borderColor: colour.border, borderWidth: .6 });
         let top = this.y - 12;
         for (const box of boxes) {
           this.drawLines(this.page, box.lines, x + 13, top, width - 26, box.style);
@@ -190,7 +193,7 @@ export class ReportLayout {
   table(columns: Column[], rows: Cell[][], options: { size?: number; caption?: string; heading?: string; intro?: string } = {}) {
     if (!rows.length) return;
     const cellPadding = 5.5;
-    const styles = { head: { size: 8.2, bold: true, color: colour.white }, body: { size: options.size ?? 9.15 } };
+    const styles = { head: { size: 8.2, bold: true, color: colour.navy }, body: { size: options.size ?? 9.15 } };
     const widths = columns.map(column => column.width * this.width);
     const build = (cells: Cell[], style: Style): Box[] => cells.map((cell, index) => {
       const data = typeof cell === 'string' ? { text: cell } : cell;
@@ -213,7 +216,8 @@ export class ReportLayout {
     };
     const head = (continued = false) => {
       if (continued && options.caption) this.paragraph(`${options.caption} · continued`, titleStyle, 6);
-      paint(headings, height(headings), colour.navy);
+      this.page.drawLine({ start: { x: margin, y: this.y }, end: { x: margin + this.width, y: this.y }, color: colour.blue, thickness: .9 });
+      paint(headings, height(headings), colour.cloud);
     };
     const headingStyle = { size: 13.5, bold: true };
     const introStyle = { size: 9.4, color: colour.muted };
@@ -285,9 +289,12 @@ export class ReportLayout {
       const top = page.getHeight() - 33;
       const small = { size: 8, color: colour.muted };
       if (!cover) {
-        this.draw(page, this.runs('AI Economics Studio', { ...small, bold: true }), margin, top, width, { ...small, bold: true });
+        drawReportSignal(page, margin, top + 7, 22);
+        const wordmark = { size: 9, bold: true, color: colour.navy };
+        this.draw(page, this.runs('AI Economics Studio', wordmark), margin + 28, top, width - 28, wordmark);
         this.draw(page, this.runs(label, small), margin, top, width, { ...small, align: 'right' });
         page.drawLine({ start: { x: margin, y: top - 17 }, end: { x: margin + width, y: top - 17 }, color: colour.border, thickness: .7 });
+        page.drawLine({ start: { x: margin, y: top - 17 }, end: { x: margin + 22, y: top - 17 }, color: colour.blue, thickness: 1.2 });
       }
       page.drawLine({ start: { x: margin, y: 43 }, end: { x: margin + width, y: 43 }, color: colour.border, thickness: .7 });
       this.draw(page, this.runs('Independent planning assessment', small), margin, 32, width, small);

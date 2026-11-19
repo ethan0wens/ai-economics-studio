@@ -121,3 +121,12 @@ test('switching workspaces clears an in-flight report from the earlier workspace
   expect((await download).suggestedFilename()).toBe('fictional-second-workspace.pdf');
   expect(earlierDownloads).toBe(1);
 });
+
+test('an insecure browser context cannot open a workspace', async ({ page }) => {
+  test.skip(!!process.env.STUDIO_TEST_URL, 'Secure-context fallback uses a local browser fixture.');
+  await page.addInitScript(() => Object.defineProperty(window, 'isSecureContext', { value: false }));
+  await page.goto('/');
+  await expect(page.getByRole('heading', {name: 'Open the studio over HTTPS'})).toBeVisible();
+  await expect(page.getByRole('link', {name: 'Open HTTPS version'})).toHaveAttribute('href', /^https:\/\//);
+  await expect(page.getByRole('button', {name: 'Create environment'})).toHaveCount(0);
+});

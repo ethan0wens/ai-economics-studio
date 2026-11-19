@@ -32,7 +32,10 @@ export function verifySecurityHeaders(headers: Headers, mode: 'document' | 'muta
     throw new Error('Public Content Security Policy differs from the approved policy.');
   }
   requireValue('referrer-policy', 'no-referrer');
-  if (requireFrameHeader) requireValue('x-frame-options', 'deny');
+  if (requireFrameHeader) {
+    requireValue('x-frame-options', 'deny');
+    requireValue('strict-transport-security', 'max-age=31536000');
+  }
   const permissions = headers.get('permissions-policy') ?? '';
   if (['camera', 'microphone', 'geolocation'].some(name => !permissions.includes(`${name}=()`))) throw new Error('Expected restricted browser permissions.');
 }
@@ -76,12 +79,16 @@ export async function verifyPublicSecurity(site: string, expected?: string | nul
   const upgrade = [301, 302, 307, 308].includes(redirect.status) &&
     URL.parse(redirect.headers.get('location') ?? '', site)?.href === new URL('/', site).href;
   const rejected = [400, 403, 404, 421, 426].includes(redirect.status) && redirect.headers.get('server') === 'cloudflare';
-  const transport = `HTTP ${redirect.status} · ${upgrade ? 'redirects to the same HTTPS origin' : rejected ? 'plaintext refused by Cloudflare' : 'secure upgrade or provider refusal unverified'}`;
   const secured = upgrade || rejected;
-  await redirect.body?.cancel();
+  const isHtml = redirect.ok && (redirect.headers.get('content-type') ?? '').toLowerCase().includes('text/html');
+  const plaintext = isHtml ? decodeUtf8(await readResponseBytes(redirect, 128_000, 'Plain HTTP response')) : undefined;
+  if (!isHtml) await redirect.body?.cancel();
   [html, fallback].forEach(response => verifySecurityHeaders(response.headers, 'document', expected !== undefined));
   verifySecurityHeaders(manifestResponse.headers, 'mutable');
   const rawHtml = decodeUtf8(await readResponseBytes(html, 128_000, 'Application shell'));
+  const transport = `HTTP ${redirect.status} · ${upgrade ? 'redirects to the same HTTPS origin' :
+    rejected ? 'plaintext refused by Cloudflare' : plaintext === rawHtml ? 'served the same application shell over plaintext' :
+      'secure upgrade or provider refusal unverified'}`;
   const fallbackText = decodeUtf8(await readResponseBytes(fallback, 128_000, 'SPA fallback'));
   const { script } = documentAssetPaths(rawHtml);
   if (rawHtml !== fallbackText) throw new Error('The direct SPA route did not serve the application shell.');

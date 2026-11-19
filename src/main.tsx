@@ -15,4 +15,13 @@ class ErrorBoundary extends Component<{ children: ReactNode }, { failed: boolean
   }
 }
 
-createRoot(document.getElementById('root')!).render(<StrictMode><ErrorBoundary><App /></ErrorBoundary></StrictMode>);
+const root = createRoot(document.getElementById('root')!);
+if (window.isSecureContext) {
+  root.render(<StrictMode><ErrorBoundary><App /></ErrorBoundary></StrictMode>);
+} else {
+  const secure = new URL(location.href);
+  secure.protocol = 'https:';
+  root.render(<main className="padded"><h1>Open the studio over HTTPS</h1>
+    <p>The studio needs a secure browser connection to create, open or export an environment.</p>
+    <a className="button primary" href={secure.href}>Open HTTPS version</a></main>);
+}

@@ -14,7 +14,7 @@ import { technicalLink } from '../src/technical-content';
 import { TechnicalMarkdown } from '../src/technical-markdown';
 import { readResponseBytes } from '../src/untrusted-data';
 import { retailPage } from '../scripts/pricing';
-import { verifySecurityHeaders } from '../scripts/security-http';
+import { verifyPublicSecurity, verifySecurityHeaders, workerUrl } from '../scripts/security-http';
 
 const at = '2026-11-19T14:00:00Z';
 const fixture = {
@@ -142,7 +142,7 @@ describe('catalogue boundaries', () => {
 
 it('rejects changed delivery headers with a weaker script policy', async () => {
   const raw = await readFile(new URL('../public/_headers', import.meta.url), 'utf8');
-  const entries = raw.split('\n').slice(1).filter(line => line.startsWith('  ') && !line.includes('!')).slice(0, 6);
+  const entries = raw.split('\n').slice(1).filter(line => line.startsWith('  ') && !line.includes('!')).slice(0, 7);
   const headers = new Headers(entries.map((line): [string, string] => {
     const index = line.indexOf(':');
     return [line.slice(0, index).trim(), line.slice(index + 1).trim()];
@@ -150,4 +150,28 @@ it('rejects changed delivery headers with a weaker script policy', async () => {
   expect(() => verifySecurityHeaders(headers, 'document')).not.toThrow();
   headers.set('content-security-policy', headers.get('content-security-policy')!.replace("script-src 'self'", "script-src 'self' 'unsafe-inline'"));
   expect(() => verifySecurityHeaders(headers, 'document')).toThrow('approved policy');
+});
+
+it('reports plaintext shell delivery and rejects promotion without a secure upgrade or provider refusal', async () => {
+  const html = '<!doctype html><html><head><script type="module" src="/assets/index-Abcd1234.js"></script></head></html>';
+  const headers = {
+    'content-type': 'text/html',
+    'content-security-policy': "default-src 'self'; script-src 'self'; style-src 'self'; font-src 'self'; img-src 'self' data:; connect-src 'self'; object-src 'none'; base-uri 'self'; frame-ancestors 'none'; form-action 'none'",
+    'x-content-type-options': 'nosniff', 'x-frame-options': 'deny', 'strict-transport-security': 'max-age=31536000',
+    'referrer-policy': 'no-referrer', 'permissions-policy': 'camera=(), microphone=(), geolocation=()', 'cache-control': 'no-cache',
+  };
+  const check = (secure: boolean): typeof fetch => async input => {
+    const url = new URL(String(input));
+    if (url.protocol === 'http:' && secure) return new Response(null, { status: 308, headers: { location: workerUrl + '/' } });
+    if (url.pathname === '/pricing/manifest.json') return Response.json(manifest, { headers });
+    const immutable = { 'x-content-type-options': 'nosniff', 'cache-control': 'public, max-age=31536000, immutable' };
+    if (url.pathname.startsWith('/pricing/catalogue-')) return new Response(snapshot, { headers: immutable });
+    if (url.pathname.startsWith('/assets/')) return new Response('', { headers: { ...immutable, 'content-type': 'text/javascript' } });
+    return new Response(html, { headers });
+  };
+  await expect(verifyPublicSecurity(workerUrl, undefined, check(false))).resolves.toMatchObject({
+    catalogueId: hash, secured: false, transport: expect.stringContaining('same application shell over plaintext'),
+  });
+  await expect(verifyPublicSecurity(workerUrl, hash, check(false))).rejects.toThrow('plaintext delivery check failed');
+  await expect(verifyPublicSecurity(workerUrl, hash, check(true))).resolves.toMatchObject({ catalogueId: hash, secured: true });
 });

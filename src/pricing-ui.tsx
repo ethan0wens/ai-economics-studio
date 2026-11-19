@@ -1,13 +1,14 @@
+import { costExplanation, regionName } from './presentation';
 import { useEffect, useRef, useState, type FormEvent } from 'react';
 import { forecastException, overrideSchema, scopeKey, type Environment, type Override } from './domain';
 import { bases, formatMoney, type Line, type Ledger } from './ledger';
 import { Field, NumberField, Select, Text } from './fields';
 
-export const basisNames = { retail: 'Retail baseline', current: 'Current estimate', forecast: 'Forecast' };
+export const basisNames = { retail: 'Retail baseline', current: 'Current estimate', forecast: 'Price forecast' };
 export function Scenario({ env, update }: { env: Environment; update: (env: Environment) => void }) {
   return <section className="panel padded">
     <h2>Forecast assumptions</h2>
-    <p className="muted">Project a hypothetical price change. A specific meter exception replaces the global change.</p>
+    <p className="muted">Explore a price change separately from your current estimate. An exception for a specific charge replaces the overall percentage.</p>
     <div className="form-grid">
       <NumberField field="forecast" value={env.forecast.percent} min={-100} max={10000}
         onChange={value => update({ ...env, forecast: { ...env.forecast, percent: value ?? 0 } })} />
@@ -32,7 +33,7 @@ function PriceEditor({ line, env, update }: { line: Line; env: Environment; upda
     const rule: Override = { mode: 'retail', meter, objectId: line.pricingOwner, currency: env.currency, reason: 'Selected Microsoft retail for this object.' };
     update({ ...env, pricingOverrides: [...env.pricingOverrides.filter(item => scopeKey(item) !== scopeKey(rule) || item.currency !== env.currency), rule] });
     setEditedMode('catalogue');
-    setNotice('Latest verified Microsoft retail restored for this pricing owner.');
+    setNotice('This item now uses the latest matching verified Microsoft retail price where available.');
   }
   function save(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -45,7 +46,7 @@ function PriceEditor({ line, env, update }: { line: Line; env: Environment; upda
       ...(mode === 'fixed' ? { value: raw } : mode === 'discount' ? { value: raw ? Number(raw) : undefined } : {}),
     });
     if (mode !== 'catalogue' && !parsed.success) {
-      setNotice('Enter a valid rate or percentage and a reason. Use intentional zero for an included item.');
+      setNotice('Enter a valid amount and explain the agreement. If another charge covers this item, choose Intentional zero and explain what covers it.');
       return;
     }
     const replacement = String(form.get('scenario') ?? '').trim();
@@ -59,14 +60,14 @@ function PriceEditor({ line, env, update }: { line: Line; env: Environment; upda
       forecast: { ...env.forecast, exceptions: [...env.forecast.exceptions.filter(rule => scopeKey(rule) !== key),
         ...(replacement && exception.success ? [exception.data] : [])] },
     });
-    setNotice('Price assumptions saved.');
+    setNotice('Pricing assumptions saved.');
   }
   return <div className="price-editor">
     <Select field="scope" value={scope} options={[[ 'object', `This meter for ${env.objects.find(item => item.id === line.pricingOwner)?.name ?? line.object}` ], [ 'environment', 'This meter across the environment' ]]}
       empty={false} onChange={value => { setScope(value); setNotice(''); setEditedMode(undefined); }} />
     <form className="price-form" key={key} onSubmit={save}>
       <Field field="agreement"><select name="mode" value={mode} onChange={event => { setEditedMode(event.target.value); setNotice(''); }}>
-        <option value="catalogue">Latest Verified Microsoft Retail Price</option><option value="discount">Discount (%)</option>
+        <option value="catalogue">Latest verified Microsoft retail price</option><option value="discount">Discount (%)</option>
         <option value="fixed">Fixed contractual rate</option><option value="intentional-zero">Intentional zero</option>
       </select></Field>
       {(mode === 'discount' || mode === 'fixed') && <Field key={mode} field={mode === 'discount' ? 'discount' : 'fixedRate'}
@@ -107,7 +108,7 @@ export function Lines({ lines, env, update, compact = false, checkedAt, focusLin
       (row.querySelector<HTMLElement>('[data-field="agreement"] select') ?? row.querySelector('summary'))?.focus();
     }
   }, [focusLine]);
-  if (!lines.length) return <p className="muted">No cost lines in this view.</p>;
+  if (!lines.length) return <p className="muted">No charges match this view. Adjust your filters or enter usage to see itemised costs.</p>;
   return <div ref={list} className={compact ? 'ledger-list compact' : 'ledger-list'}>
     {lines.map(line => <details key={line.id} data-line={line.id} className="ledger-row">
       <summary>
@@ -117,13 +118,13 @@ export function Lines({ lines, env, update, compact = false, checkedAt, focusLin
         <strong>{formatMoney(line.amounts.current, env.currency)}</strong>
       </summary>
       <div className="ledger-detail">
-        {line.reason && <p>{line.reason}</p>}
+        {line.reason && <p>{costExplanation(line)}</p>}
         {line.retailQuantity && <p>Retail comparison without reservation uses {line.retailQuantity} PTU-hours.</p>}
-        <p className="muted">{line.meter ? `${line.currency} · ${line.meter.region === 'gb' ? 'UK market' : line.meter.region} · ${line.meter.unit === '1K' ? 'per 1,000 tokens' : line.meter.unit} · ${line.meter.quantityPerUnit} base units per billed unit` : 'Billing identity unresolved'} · Monthly billable quantity {line.quantity ?? 'unknown'}</p>
+        <p className="muted">{line.meter ? `${line.currency} · ${regionName(line.meter.region)} · ${line.meter.unit === '1K' ? 'per 1,000 tokens' : line.meter.unit} · ${line.meter.quantityPerUnit} base units per billed unit` : 'More billing details needed'} · Billable quantity per month {line.quantity ?? 'unknown'}</p>
         {line.includedCredits && <p>{line.includedCredits} credits allocated from the linked monthly pack. The balance above is billable.</p>}
         {line.entitledCredits && <p>{line.entitledCredits} credits reconciled under the customer-declared allowance before pack allocation.</p>}
         <dl className="rate-grid">{bases.map(basis => <div key={basis}><dt>{basisNames[basis]}</dt><dd>{formatMoney(line.amounts[basis], env.currency)}</dd>
-          <small>{line.rates[basis] === null ? 'Rate unknown' : `${line.currency} ${line.rates[basis]} ${line.source?.tiers ? 'blended per billed unit' : 'per billed unit'}`}</small></div>)}</dl>
+          <small>{line.rates[basis] === null ? 'Rate unavailable' : `${line.currency} ${line.rates[basis]} ${line.source?.tiers ? 'blended per billed unit' : 'per billed unit'}`}</small></div>)}</dl>
         {line.source && <p><a href={line.source.source} target="_blank" rel="noreferrer">{line.source.verification === 'azure-retail-api' ? 'Azure Retail Prices API' : 'Microsoft published offer'}</a>
           {line.source.review ? ` · reviewed ${line.source.review.checkedAt.slice(0, 10)}. ${line.source.review.terms}` : ` · source effective ${line.source.effectiveAt.slice(0, 10)} · verified ${checkedAt?.slice(0, 10) ?? 'date unavailable'}`}</p>}
         {line.source && <details className="price-more">
@@ -132,7 +133,7 @@ export function Lines({ lines, env, update, compact = false, checkedAt, focusLin
           {line.source.tiers && <ul className="meter-tiers">{line.source.tiers.map(tier => <li key={tier.from}>From {tier.from} base units · {line.currency} {tier.price} per billed unit</li>)}</ul>}
         </details>}
         {line.agreement && line.agreement.mode !== 'retail' && <p>Agreement basis {line.agreement.mode} · {line.agreement.reason}{line.agreement.effectiveAt && ` · effective ${line.agreement.effectiveAt}`}</p>}
-        <p className="muted">Scenario change {line.scenario}% before fixed-rate rules. {line.source?.tiers ? 'Usage is priced separately in each graduated retail band. A fixed agreement replaces those retail bands.' : 'Amount = quantity ÷ billing unit × rate.'}</p>
+        <p className="muted">Price forecast adjustment {line.scenario}% before fixed-rate rules. {line.source?.tiers ? 'Usage is priced separately in each graduated retail band. A fixed agreement replaces those retail bands.' : 'Amount = quantity ÷ billing unit × rate.'}</p>
         {line.allocatesTo.length > 0 && <p>{line.allocation ? line.allocation.map(record => `${env.objects.find(object => object.id === record.agentId)?.name}: ${formatMoney(record.amount, env.currency)}`).join(' · ')
           : 'Allocation unassigned. Enable allocation by input tokens on the model and provide usage for every linked agent.'} Shared charges appear once.</p>}
         {line.meter && <PriceEditor line={line} env={env} update={update} />}
@@ -146,7 +147,7 @@ export function CostAnalysis({ env, result, update, checkedAt, focusLine }: { en
   const [source, setSource] = useState('');
   return <>
     <section className="panel padded">
-      <div className="section-heading"><div><h2>Monthly cost ledger</h2><p className="muted">Open a line to review rates, evidence and assumptions.</p></div></div>
+      <div className="section-heading"><div><h2>Itemised monthly costs</h2><p className="muted">Open a charge to see its quantity, rate, source and pricing assumptions.</p></div></div>
       <div className="form-grid">
         <Text field="ledgerFilter" value={filter} onChange={setFilter} />
         <Select field="priceStatus" value={source} empty="All statuses" onChange={setSource} options={[...new Set(result.lines.map(line => line.status))]} />

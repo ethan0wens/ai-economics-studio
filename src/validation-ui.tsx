@@ -1,3 +1,4 @@
+import { costExplanation } from './presentation';
 import { compatibilityLabels, type TechnicalFinding } from './compatibility';
 import { environmentCompleteness } from './coverage';
 import type { Environment } from './domain';
@@ -32,16 +33,16 @@ export function ValidationDashboard({ env, result, select }: { env: Environment;
   const name = (id: string) => env.objects.find(item => item.id === id)?.name ?? id;
   return <section className="panel padded">
     <h2>Environment validation</h2>
-    <p className="muted">Evidence and cost assumptions assessed on {result.assessedAt.slice(0, 10)}.</p>
+    <p className="muted">Last reviewed these cost assumptions and evidence on {result.assessedAt.slice(0, 10)}.</p>
     <div className="validation-metrics">
       <div><h3>Pricing completeness</h3><strong>{pricing.fully} of {pricing.groups.length}</strong><small>{pricing.partial} partial · {pricing.unresolved} unresolved · {pricing.excluded} drafts</small></div>
       <div><h3>Technical compatibility</h3><strong>{count(technical, 'compatible')} verified</strong><small>{count(technical, 'conditional')} conditional · {count(technical, 'incompatible')} incompatible · {count(technical, 'unverified')} unverified</small></div>
-      <div><h3>Licensing confidence</h3><strong>{count(licensing, 'Verified')} verified</strong><small>{count(licensing, 'Conditional')} conditional · {count(licensing, 'Action required')} action required · {count(licensing, 'Unverified')} unverified</small></div>
+      <div><h3>Licensing evidence</h3><strong>{count(licensing, 'Verified')} verified</strong><small>{count(licensing, 'Conditional')} conditional · {count(licensing, 'Action required')} action required · {count(licensing, 'Unverified')} unverified</small></div>
     </div>
-    {pricing.groups.some(group => group.status !== 'complete') && <details className="coverage-family"><summary><strong>Resolve missing usage and prices</strong></summary>
+    {pricing.groups.some(group => group.status !== 'complete') && <details className="coverage-family"><summary><strong>Check missing usage and prices</strong></summary>
       <ul>{pricing.groups.filter(group => group.status !== 'complete').map(group => <li key={group.id}>
         <button className="link-button" onClick={() => select(group.id)}>{group.name}</button>
-        <ul>{group.lines.filter(line => line.amounts.current === null).map(line => <li key={line.id}>{line.component} · {line.reason}</li>)}</ul>
+        <ul>{group.lines.filter(line => line.amounts.current === null).map(line => <li key={line.id}>{line.component} · {costExplanation(line)}</li>)}</ul>
       </li>)}</ul>
     </details>}
     <EvidenceFindings items={technical} label="Review technical evidence" name={name} select={select} />
@@ -54,15 +55,15 @@ export function LicenceEstate({ result, currency }: { result: Ledger; currency: 
   if (!estate.owned && !result.lines.some(line => line.component === 'Monthly seats')) return null;
   const values = [
     ['Existing licence spend', estate.existing], ['New licence spend', estate.incremental],
-    ['Proposed licence estate', estate.proposed], ['Proposed environment including retained licences', estate.proposedEnvironment],
+    ['Proposed licence spend', estate.proposed], ['Proposed environment including retained licences', estate.proposedEnvironment],
   ] as const;
   return <section className="panel padded">
-    <h2>Existing and proposed expenditure</h2>
+    <h2>Existing and proposed spend</h2>
     <div className="table-wrap"><table><thead><tr><th>Scope</th><th>Known monthly</th><th>Known annual</th><th>Unresolved</th></tr></thead>
       <tbody>{values.map(([label, value]) => {
         const missingExisting = label === 'Existing licence spend' && estate.owned > 0 && estate.owned === value.incomplete;
         return <tr key={label}><th scope="row">{label}</th><td>{formatMoney(missingExisting ? null : value.known, currency)}</td><td>{formatMoney(missingExisting ? null : value.annual, currency)}</td><td>{value.incomplete}</td></tr>;
       })}</tbody></table></div>
-    <p className="muted">The existing figure uses declared customer spend. The proposed estate adds new licences to retained spend after any documented replacement.</p>
+    <p className="muted">Existing spend uses the amounts you enter. Proposed licence spend adds new purchases to the costs you will keep after any documented replacement.</p>
   </section>;
 }

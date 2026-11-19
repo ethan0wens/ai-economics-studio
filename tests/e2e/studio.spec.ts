@@ -12,7 +12,7 @@ async function add(page: Page, kind: string, name: string) {
 
 async function createAdvanced(page: Page) {
   await page.getByLabel('Environment name', { exact: true }).fill('Fictional test environment');
-  await page.getByRole('button', { name: 'Create Environment', exact: true }).click();
+  await page.getByRole('button', { name: 'Create environment', exact: true }).click();
   await page.getByRole('group', { name: 'Builder mode' }).getByRole('button', { name: 'Advanced' }).click();
 }
 
@@ -26,12 +26,12 @@ test('draft creation, shared costing, keyboard graph, reconciled report and JSON
   const requests: { url: string; method: string; body: string | null }[] = [];
   page.on('request', request => requests.push({ url: request.url(), method: request.method(), body: request.postData() }));
   await page.goto('/');
-  await expect(page.getByRole('heading', { name: 'Plan and estimate a Microsoft AI environment' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Understand the cost of your AI ambitions.' })).toBeVisible();
   await createAdvanced(page);
   await add(page, 'Agent', 'Fictional Alpha');
   await page.getByRole('combobox', { name: 'Platform', exact: true }).selectOption('foundry-agent-service');
   await page.getByLabel('Model source', { exact: true }).selectOption('deployment-ref');
-  await expect(page.getByText('Link a model deployment.', { exact: true })).toBeVisible();
+  await expect(page.getByText('Choose the model deployment this agent uses so the studio can estimate its costs.', { exact: true })).toBeVisible();
   await add(page, 'Agent', 'Fictional Beta');
   await page.getByRole('combobox', { name: 'Platform', exact: true }).selectOption('foundry-agent-service');
   await page.getByLabel('Model source', { exact: true }).selectOption('deployment-ref');
@@ -44,7 +44,7 @@ test('draft creation, shared costing, keyboard graph, reconciled report and JSON
 
   for (const name of ['Fictional Alpha', 'Fictional Beta']) {
     await page.getByRole('button', { name: new RegExp(name) }).click();
-    await page.getByRole('combobox', { name: 'Model deployment', exact: true }).selectOption({ label: 'Fictional capacity / TEST ONLY / uksouth / provisioned' });
+    await page.getByRole('combobox', { name: 'Model deployment', exact: true }).selectOption({ label: 'Fictional capacity / TEST ONLY / UK South / provisioned' });
   }
   await page.getByRole('link', { name: 'Cost Analysis' }).click();
   await page.getByText('Shared provisioned capacity', { exact: true }).click();
@@ -80,8 +80,8 @@ test('draft creation, shared costing, keyboard graph, reconciled report and JSON
       (await (await pdfDocument.getPage(index + 1)).getTextContent()).items
         .map(item => 'str' in item ? item.str : '').join(' ')))).join(' ');
     for (const expected of ['Logical architecture', 'Shared provisioned capacity', '£700.00', '£840.00', 'Governance advisory findings',
-      'Assumptions and source appendix', 'Unknown', 'Fictional Alpha']) expect(text).toContain(expected);
-    const itemised = text.split('Itemised monthly cost ledger')[1]?.split('Governance advisory findings')[0];
+      'Assumptions and sources', 'Unknown', 'Fictional Alpha']) expect(text).toContain(expected);
+    const itemised = text.split('Itemised monthly costs')[1]?.split('Governance advisory findings')[0];
     expect(itemised?.match(/Shared provisioned capacity/g)?.length).toBe(1);
   } finally { await loading.destroy(); }
   const json = await fileFrom(page, 'Export JSON');
@@ -91,7 +91,7 @@ test('draft creation, shared costing, keyboard graph, reconciled report and JSON
   await expect(page.getByRole('heading', { name: 'Open an environment' })).toBeVisible();
   await page.locator('input[type=file]').setInputFiles({ name: 'env.json', mimeType: 'application/json', buffer: json });
   await expect(page.locator('.metric').first()).toContainText('£700.00');
-  await expect(page.getByText(/Current ledger recalculated/)).toBeVisible();
+  await expect(page.getByText(/Recalculated with the applied catalogue/)).toBeVisible();
   await page.getByRole('group', { name: 'Builder mode' }).getByRole('button', { name: 'Advanced' }).click();
   await page.getByLabel('Search inventory', { exact: true }).fill('Beta');
   await expect(page.getByRole('button', { name: /Fictional Beta/ })).toBeVisible();
@@ -137,12 +137,12 @@ test('an unexported workspace is discarded on accepted reload and invalid JSON i
   await page.goto('/');
   await createAdvanced(page);
   await add(page, 'Supporting resource', 'Fictional resource');
-  await expect(page.getByText('Not exported')).toBeVisible();
+  await expect(page.getByText('Unexported changes')).toBeVisible();
   page.on('dialog', dialog => dialog.accept());
   await page.reload();
   await expect(page.getByRole('heading', { name: 'Open an environment' })).toBeVisible();
   await page.locator('input[type=file]').setInputFiles({ name: 'bad.json', mimeType: 'application/json', buffer: Buffer.from('{') });
-  await expect(page.getByRole('alert')).toContainText('Import failed');
+  await expect(page.getByRole('alert')).toContainText('Could not import this environment');
 });
 
 test('catalogue changes require explicit adoption and preserve a fixed agreement', async ({ page }) => {

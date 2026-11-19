@@ -9,7 +9,7 @@ export type Article = {
   id: string; title: string; intro: string; topic: Topic; sections: Section[]; related: string[];
   aliases?: string[]; tool?: ToolLink; reference?: 'pricing' | 'models' | 'coverage' | 'units'; sources?: [string, string][];
 };
-export const documentationVersion = 'Stage 2 · 2026-11-19';
+export const documentationVersion = 'Reviewed 19 November 2026';
 const s = (id: string, title: string, text: string | string[], steps?: string[]): Section =>
   ({ id, title, paragraphs: Array.isArray(text) ? text : [text], steps });
 const catalogue: ToolLink = { page: 'catalogue', label: 'Open the Pricing Catalogue' };
@@ -24,46 +24,46 @@ const regionSource: [string, string] = ['Microsoft Foundry regional availability
 const licensingSource: [string, string] = ['Microsoft Copilot licensing options', 'https://learn.microsoft.com/en-us/copilot/plan/copilot-license-options'];
 
 export const articles: Article[] = [
-  { id: 'quickstart', topic: 'Getting started', title: 'Create your first estimate', intro: 'Plan a Microsoft AI workload and share what you know about its cost. This workflow is for IT, finance and solution teams.',
-    aliases: ['getting started', 'create environment'], tool: home, related: ['choose-platforms', 'read-your-estimate', 'save-and-reopen'], sections: [
+  { id: 'quickstart', topic: 'Getting started', title: 'How do I build my first AI cost estimate?', intro: 'Start with one Microsoft AI workload, estimate its costs and share what you know with your team.',
+    aliases: ['getting started', 'create environment', 'create your first estimate'], tool: home, related: ['choose-platforms', 'read-your-estimate', 'save-and-reopen'], sections: [
       s('start', 'Start with one workload', 'Use a name you will recognise in a report, such as Internal support assistant. Guided lets you price a small part of the solution before modelling the rest.', [
-        'On Home, enter a name and choose Create Environment.', 'Choose a platform and continue to Agents and models. Enter an agent name and choose Add agent.',
+        'On Home, enter a name and choose Create environment.', 'Choose a platform and continue to Build your AI solution. Enter an agent name and choose Add agent.',
         'For a linked Foundry agent, select a model configuration or reuse a deployment. For Copilot Studio, continue to Estimate usage.',
-        'Enter measured or planned usage. Use Apply illustrative usage only to explore a fictional workload.',
+        'Enter measured or planned usage. Use Try example usage to explore a workload before you have your own figures.',
       ]),
-      s('share', 'Review and share your work', 'Check the running estimate and open Estimate readiness to resolve missing inputs. The known subtotal excludes unresolved charges.', [
+      s('share', 'Review and share your work', 'Check the running estimate and use Improve your estimate to review missing inputs. The known-cost subtotal excludes unresolved charges.', [
         'Open Reports & Export. Generate PDF for a shareable estimate with sources and gaps.',
         'Export JSON if you want to reopen and edit this workspace later.',
       ]),
     ] },
-  { id: 'choose-platforms', topic: 'Getting started', title: 'Choosing Foundry, Copilot Studio or both', intro: 'Choose the platform that actually runs each workload. The platform determines which usage and billing inputs appear.',
+  { id: 'choose-platforms', topic: 'Getting started', title: 'How do I choose between Foundry and Copilot Studio?', intro: 'Choose the platform that actually runs each workload. The platform determines which usage and billing inputs appear.',
     tool: builder, related: ['agents-and-models', 'foundry-usage', 'copilot-credits'], sections: [
       s('choose-a-path', 'Choose a path', ['Use Microsoft Foundry when you are planning an agent with a linked model deployment. Select token-based or provisioned billing for the actual deployment.',
         'Use Copilot Studio for a platform-managed business agent. Enter planned monthly Copilot Credits. The standard path has one credit charge and does not add independent Foundry inference.']),
       s('combine', 'Plan both platforms together', 'Choose Both platforms, then select the platform for each new agent. Shared Azure services and licences can exist in the same environment. A Foundry model used by a separately evidenced Copilot prompt can be modelled in Advanced.'),
     ] },
-  { id: 'save-and-reopen', topic: 'Getting started', title: 'Save, import and reopen', intro: 'JSON is the editable environment. PDF is the shareable cost report.',
+  { id: 'save-and-reopen', topic: 'Getting started', title: 'How do I share or reopen an estimate?', intro: 'Export JSON to keep editing later. Generate a PDF to share the estimate and its assumptions.',
     tool: reports, related: ['privacy', 'environment-file', 'import-or-export-problems'], sections: [
-      s('save', 'Export before leaving', 'In Reports & Export, choose Export JSON. It includes objects, relationships, pricing assumptions and the last estimate snapshot. The app can hand a download to the browser, so verify the file is stored where you expect.'),
-      s('restore', 'Restore a saved environment', 'Choose Import Existing Environment on Home. Select a Studio JSON file. A valid import opens Review and recalculates using the applied catalogue. Compare the previous known subtotal and unresolved count to the current estimate.', [
+      s('save', 'Export before leaving', 'In Reports & Export, choose Export JSON. It includes objects, relationships, pricing assumptions and the last estimate snapshot. Check your browser’s downloads to find the file.'),
+      s('restore', 'Restore a saved environment', 'Choose Import existing on Home. Select a Studio JSON file. A valid import opens Review your estimate and uses the applied catalogue to recalculate costs. Compare the previous known subtotal and unresolved count to the current estimate.', [
         'If another environment has changes, choose Keep editing, Export JSON first or Replace environment.',
         'Use Advanced to inspect saved dependencies, agreements and specialised configuration.',
       ]),
     ] },
   { id: 'guided-and-advanced', topic: 'Building environments', title: 'Two ways to build an environment', intro: 'Use Guided for common decisions and Advanced for detailed configuration. Both edit the same estimate.',
     tool: builder, related: ['agents-and-models', 'share-and-connect'], sections: [
-      s('guided', 'Work through the relevant steps', 'Choose Platforms, Agents and models, Estimate usage, Licences and services or Review estimate. You can open any step and revisit it. Skip for now leaves the current inputs intact.'),
+      s('guided', 'Work through the relevant steps', 'Move between Choose your AI platform, Build your AI solution, Estimate usage, Additional costs and Review your estimate. You can open any step and revisit it. Skip for now leaves the current inputs intact.'),
       s('advanced', 'Edit details in inventory', 'Choose Advanced for arbitrary object order, detailed relationships and specialist fields. Select an object, then use its Configuration, Usage, Dependencies or Costs controls. Existing hidden values survive a mode switch.'),
     ] },
-  { id: 'agents-and-models', topic: 'Building environments', title: 'Add agents and model deployments', intro: 'Set up the agent’s model from its Guided task. Use the actual model version and planned geography when known.',
+  { id: 'agents-and-models', topic: 'Building environments', title: 'Add agents and model deployments', intro: 'Set up the agent’s model from its Guided task. Use the model version and the region where you plan to run it.',
     aliases: ['model selection', 'search models'], tool: builder, related: ['choose-platforms', 'model-evidence', 'share-and-connect'], sections: [
-      s('choose-a-model', 'Choose a model configuration', 'In Agents and models, add a Foundry agent. Guided creates linked model and usage drafts. Search Model configuration by name. Check the version, deployment type, billing region and any displayed prices. Enter the actual deployment region separately.', [
-        'Use Advanced deployment details for a custom configuration or specialist model features.',
-        'When the rate is missing or the planned combination is unverified, keep the draft and resolve it from Estimate readiness.',
+      s('choose-a-model', 'Choose a model configuration', 'In Build your AI solution, add a Foundry agent. Guided creates linked model and usage drafts. Search Model configuration by name. Check the version, deployment type, billing region and any displayed prices. Enter the actual deployment region separately.', [
+        'Use More deployment options for a custom configuration or specialist model features.',
+        'When the rate is missing or the planned combination is unverified, keep the draft and find the next action under Improve your estimate.',
       ]),
       s('reuse', 'Reuse an existing deployment', 'When adding a Foundry agent, choose Use an existing deployment if the same capacity serves both agents. Each agent gets its own usage profile. A shared deployment is counted once for fixed capacity. Change a shared deployment in Advanced after checking affected agents.'),
     ] },
-  { id: 'foundry-usage', topic: 'Building environments', title: 'Estimate Foundry requests and tokens', intro: 'Use the expected volume per month and the size of one model request.',
+  { id: 'foundry-usage', topic: 'Building environments', title: 'Estimate Foundry requests and tokens', intro: 'Start with how often the agent runs and the size of one request. If you have no usage history, try an illustrative preset in Estimate usage and replace its values as you gather evidence.',
     aliases: ['tokens', 'monthly executions', 'retries'], tool: builder, related: ['billing-units', 'example-foundry-assistant', 'share-and-connect'], sections: [
       s('per-request', 'Enter monthly runs and per-request usage', 'In Estimate usage, enter runs per month, average model requests per run, input tokens per request and output tokens per request. Count prompt text and context in input. Preserve separate totals for input and output even when their rates look similar.'),
       s('example', 'Check the quantities', 'Illustrative calculation: 1,000 runs × 1 request × 1,500 input tokens gives 1.5 million input tokens. At 300 output tokens per request, output is 300,000. The verified meter can bill per 1,000 or 1 million. Use More usage options for explicit cached input or retries, and count each request once.'),
@@ -75,7 +75,7 @@ export const articles: Article[] = [
     ] },
   { id: 'licences-and-groups', topic: 'Building environments', title: 'Add licences and assign seats', intro: 'Record what you already own, what you need to buy and which people the seats cover.',
     aliases: ['already owned', 'license', 'licence', 'deduplicated'], tool: builder, related: ['licence-evidence', 'existing-and-new-spend', 'example-existing-licensing'], sections: [
-      s('distinct-seats', 'Enter distinct seats', 'In Licences and services, choose Add licence. Select the exact product and choose Already owned, New purchase or Unsure. Enter unique seats and, where useful, the existing monthly amount from your agreement.'),
+      s('distinct-seats', 'Count each person once', 'In Additional costs, choose Add licence. Select the exact product and choose Already owned, New purchase or Unsure. Enter the number of users requiring a licence. Count each person once even when they belong to several groups. For an owned licence, enter the existing monthly amount from your agreement if available.'),
       s('groups', 'Review assignment and overlap', 'In Advanced, add user groups and link assignments to the applicable licence. Enter exact seats or document repeated assignments. A possible overlap is a review item. Record replacements and their effective dates only after confirming the original charge will stop.'),
     ] },
   { id: 'supporting-services', topic: 'Building environments', title: 'Estimate Azure supporting services', intro: 'Choose a service you expect to consume and enter quantities in its actual billing units.',
@@ -88,19 +88,19 @@ export const articles: Article[] = [
       s('share', 'Share a deployment or service', 'On the agent task choose Use an existing deployment, or open Dependencies in Advanced. Assign each agent a separate usage assumption. Fixed shared capacity is charged once and allocating it changes attribution only.'),
       s('unlink', 'Review before detaching', 'Check the affected objects before unlinking or deleting. The linked resources stay in the environment when a relationship is detached. If one agent invokes another, enter the downstream workload once in its own profile.'),
     ] },
-  { id: 'read-your-estimate', topic: 'Understanding costs', title: 'Read the cost summary and ledger', intro: 'Start with known monthly cost, annual run-rate and unresolved lines. Use the ledger to explain individual charges.',
+  { id: 'read-your-estimate', topic: 'Understanding costs', title: 'How do I read my cost estimate?', intro: 'Start with the estimated monthly cost, annualised estimate and costs still to confirm. Open a charge for the details behind it.',
     tool: costs, related: ['estimate-readiness', 'billing-units', 'existing-and-new-spend'], sections: [
-      s('summary', 'Read the summary', 'The monthly value adds the current known lines. Annual run-rate is that amount multiplied by twelve and assumes the same month continues. It does not represent a payment schedule. Open cost drivers to see where known costs fall by category.'),
+      s('summary', 'Read the summary', 'The estimated monthly cost adds the charges the studio can calculate. The annualised estimate applies that monthly rate for twelve months at the same usage and pricing. Open Where your money goes to see the breakdown by category. Check Costs still to confirm for charges excluded from the known-cost subtotal.'),
       s('ledger', 'Reconcile one line', 'In Cost Analysis, find a component and open it. Confirm monthly quantity, published billed unit, rate, source and any agreement. A flat charge is quantity divided by base units per billed unit, multiplied by the rate. Graduated tariffs apply the rate for each band.'),
     ] },
-  { id: 'estimate-readiness', topic: 'Understanding costs', title: 'Resolve gaps before sharing', intro: 'Keep known financial amounts and evidence questions visible together.',
+  { id: 'estimate-readiness', topic: 'Understanding costs', title: 'Resolve gaps before sharing', intro: 'Check which charges you can share and what you still need to confirm.',
     aliases: ['incomplete', 'unknown costs', 'estimate completeness'], tool: costs, related: ['missing-rate-or-volume', 'model-evidence', 'limits-of-an-estimate'], sections: [
-      s('partial-estimates', 'Share a partial estimate with its scope', 'If a line has no usable quantity, rate or eligible configuration, the known subtotal excludes it. The estimate shows how many cost lines remain unresolved. A partial PDF preserves the gaps for the reader.'),
-      s('resolve', 'Open the input that needs attention', 'Choose Review next to the item in Estimate readiness. Complete the relevant field, adjust the configuration or review its pricing. Use Back to estimate readiness to continue. Confirm licensing and compatibility separately when a priced path still depends on customer conditions.'),
+      s('partial-estimates', 'Share a partial estimate with its scope', 'If a line has no usable quantity, rate or eligible configuration, the known-cost subtotal excludes it. The estimate shows how many cost lines remain unresolved. A partial PDF preserves the gaps for the reader.'),
+      s('resolve', 'Open the input that needs attention', 'Choose Review next to the item under Improve your estimate. Complete the relevant field, adjust the configuration or review its pricing. Use Back to estimate checks to continue. Confirm licensing and compatibility separately when a priced path still depends on customer conditions.'),
     ] },
-  { id: 'existing-and-new-spend', topic: 'Understanding costs', title: 'Separate existing and new costs', intro: 'Distinguish the environment’s new charges from the licence spend you will retain.',
+  { id: 'existing-and-new-spend', topic: 'Understanding costs', title: 'How do I account for licences I already own?', intro: 'Distinguish the environment’s new charges from the licence spend you will retain.',
     aliases: ['existing licence', 'incremental', 'already owned'], tool: costs, related: ['licences-and-groups', 'licence-evidence', 'example-existing-licensing'], sections: [
-      s('scopes', 'Compare spending scopes', 'In Cost Analysis, Existing licence spend uses customer-entered amounts. New licence spend prices incremental deduplicated seats. Proposed licence estate combines new and retained licence spend. The proposed environment adds the other known environment charges.'),
+      s('scopes', 'Compare spending scopes', 'In Cost Analysis, Existing licence spend uses customer-entered amounts. New licence spend prices new seats after counting each user once. Proposed licence spend combines new and retained licence spend. The proposed environment adds the other known environment charges.'),
       s('replacement', 'Record a confirmed replacement', 'Model a replacement edge with the affected seats and the effective date when the contract changes. Check the existing spend first. A bundle overlap or unknown end date does not establish a saving.'),
     ] },
   { id: 'agreements-and-manual-rates', topic: 'Understanding costs', title: 'Use a contract or manual price', intro: 'Use verified retail automatically or record a price that applies to your own estimate.',
@@ -108,7 +108,7 @@ export const articles: Article[] = [
       s('precedence', 'Set the price and its scope', 'Open a cost line and choose a Price agreement. A fixed agreement needs a positive amount per exact billed unit and a reason. A percentage discount needs a current verified retail amount. Intentional zero needs a reason for coverage. A matching object rule takes precedence over the environment rule.'),
       s('restore', 'Check or restore retail', 'Verify the currency, unit, date and affected pricing owner before saving. Use Restore Microsoft retail for this object to follow the current catalogue. A discount follows future retail changes, while a fixed amount remains independent unless you explicitly apply the forecast.'),
     ] },
-  { id: 'forecast-scenarios', topic: 'Understanding costs', title: 'Compare a price forecast', intro: 'Use a separate hypothetical price change to assess sensitivity.',
+  { id: 'forecast-scenarios', topic: 'Understanding costs', title: 'Compare a price forecast', intro: 'See how a possible price change would affect costs alongside your current estimate.',
     tool: costs, related: ['agreements-and-manual-rates', 'read-your-estimate'], sections: [
       s('configure', 'Set the global scenario', 'Open Compare pricing assumptions. Enter a percentage such as 20 for a 20% increase. The current estimate stays the same. Use a negative value to explore a decrease.'),
       s('exceptions', 'Override an individual scenario', 'Open an applicable cost line and its advanced timing and forecast fields. A specific exception replaces the global percentage for that scope. Opt in explicitly before applying the forecast to fixed agreements.'),
@@ -142,14 +142,14 @@ export const articles: Article[] = [
       s('azure', 'Review an Azure rate', 'Open the cost line or the Pricing Catalogue. Match service, SKU, region, currency and billed unit. The API check date is separate from the provider effective date.'),
       s('commercial', 'Review a UK commercial rate', 'Check the precise UK offer, seat unit, commitment term, VAT treatment and reviewed date. Existing agreement rates and hypothetical discounts are labelled customer inputs.'),
     ] },
-  { id: 'coverage-and-freshness', topic: 'Pricing and evidence methodology', title: 'Coverage and catalogue health', intro: 'Catalogue coverage describes the public inventory. Estimate readiness describes the open environment.',
+  { id: 'coverage-and-freshness', topic: 'Pricing and evidence methodology', title: 'Coverage and catalogue health', intro: 'Check which offerings have verified prices in Pricing Catalogue. Use Improve your estimate to review the costs and evidence for your open environment.',
     aliases: ['maintenance', 'last checked', 'stale'], tool: catalogue, reference: 'coverage', related: ['pricing-sources', 'deployment-availability'], sections: [
       s('freshness', 'Check freshness', 'Open Pricing Catalogue and check the successful Azure refresh and the evidence review dates. If the current snapshot cannot be validated, the application can use a previous verified snapshot and reports the fallback.'),
       s('maintenance', 'How the catalogue is maintained', 'GitHub Actions refreshes Azure rates and reconciles exact Microsoft source evidence. Validation and browser checks gate publication on the existing static Worker. Unresolved changes appear in Catalogue Health. An environment keeps its applied snapshot until you adopt an update.'),
     ] },
   { id: 'licence-evidence', topic: 'Pricing and evidence methodology', title: 'Understand licensing evidence', intro: 'A verified UK rate, product eligibility and actual customer assignment are separate decisions.',
     aliases: ['license', 'entitlement', 'prerequisite'], tool: builder, related: ['licences-and-groups', 'existing-and-new-spend'], sources: [licensingSource], sections: [
-      s('prerequisites', 'Check the prerequisite', 'Open the affected line in Estimate readiness and review the exact finding. Confirm required base subscriptions and document that the same groups hold the necessary licences. Check agreement terms for the exact offer.'),
+      s('prerequisites', 'Check the prerequisite', 'Open the affected item under Improve your estimate and review the exact finding. Confirm required base subscriptions and document that the same groups hold the necessary licences. Check agreement terms for the exact offer.'),
       s('scope', 'Confirm included rights', 'An included feature establishes only the documented scope. Verify workloads, assignments and credit allowances separately. An expired or conditional rule remains evidence to check.'),
     ] },
   { id: 'model-evidence', topic: 'Pricing and evidence methodology', title: 'Understand model and deployment evidence', intro: 'Model capabilities, geographic availability and price have separate evidence.',
@@ -182,14 +182,14 @@ export const articles: Article[] = [
       s('format', 'What the JSON includes', 'Version 1.0.0 carries your workspace name, region, currency, objects, relationships, price overrides, forecast and optional historical snapshot. An environment holds up to 300 objects.'),
       s('compatibility', 'Keep identities intact', 'Use Studio to edit and export when possible. Import rejects unknown schema fields, broken links, oversized files and invalid pricing rules. A valid import recomputes against the applied catalogue and preserves supported saved settings.'),
     ] },
-  { id: 'missing-rate-or-volume', topic: 'Troubleshooting', title: 'An amount is missing', intro: 'Find out whether usage, pricing or configuration needs attention.',
+  { id: 'missing-rate-or-volume', topic: 'Troubleshooting', title: 'Why are some costs missing?', intro: 'Find out whether usage, pricing or configuration needs attention.',
     aliases: ['unknown rate', 'missing prices', 'unsupported'], tool: costs, related: ['estimate-readiness', 'agreements-and-manual-rates', 'model-evidence'], sections: [
-      s('volume', 'Find the missing input', 'Open Estimate readiness. If the line has no quantity, enter the agent workload or monthly service units. Check the billing region, currency, deployment mode and exact SKU when a combination is unresolved.'),
-      s('rate', 'Find the missing rate', 'Open the cost line and check its billing unit. If verified retail is unavailable, supply an evidenced fixed amount if you have one. Keep the amount unknown when you cannot confirm it.'),
+      s('volume', 'Find the missing input', 'Open Improve your estimate in Cost Analysis. If the line has no quantity, enter the agent workload or monthly service units. Check the billing region, currency, deployment mode and exact SKU when a combination is unresolved.'),
+      s('rate', 'Find the missing rate', 'Open the cost line and check its billing unit. If the charge has billing details but no verified retail price, you can enter a documented fixed rate. Leave it unresolved if you cannot confirm a price.'),
     ] },
   { id: 'import-or-export-problems', topic: 'Troubleshooting', title: 'Problems with files and downloads', intro: 'Recover from an unreadable file or a browser download failure.',
     tool: home, related: ['save-and-reopen', 'environment-file'], sections: [
-      s('import', 'Recover from invalid JSON', 'Choose a Studio JSON export smaller than 2 MB. A PDF cannot restore editable work. Look at the validation message for an unsupported version, missing references or invalid price settings. Choose the corrected file again. Your open workspace stays intact.'),
+      s('import', 'Recover from invalid JSON', 'Choose an AI Economics Studio JSON export of 2 MB or less. A PDF cannot restore editable work. Look at the validation message for an unsupported version, missing references or invalid price settings. Choose the corrected file again. Your open workspace stays intact.'),
       s('download', 'Find or retry a download', 'Check the download list and permissions in your browser. If PDF generation fails, keep the workspace open and retry from Reports & Export. Export JSON to preserve the editable environment.'),
     ] },
   { id: 'unexpected-total', topic: 'Troubleshooting', title: 'My estimate changed', intro: 'Compare the two snapshots and scopes before changing assumptions.',
@@ -197,9 +197,9 @@ export const articles: Article[] = [
       s('scope', 'Check scope and terms', 'Compare current and prior monthly known amounts and unresolved counts. Existing spend is separate from new purchases. Check effective dates for agreements and any changed catalogue timestamp.'),
       s('inventory', 'Check for repeated inputs', 'Follow the affected cost line to its workload or configuration. Review shared capacity, repeated seat assignments, prepaid credits and separately linked usage. If a new estimate is a forecast, compare it with the current basis for the same scope.'),
     ] },
-  { id: 'privacy', topic: 'Privacy and limitations', title: 'What stays in your browser', intro: 'The workspace is held in memory in your tab.',
+  { id: 'privacy', topic: 'Privacy and limitations', title: 'What stays in your browser', intro: 'No account required. Your environment stays in this browser tab until you leave or reload.',
     related: ['save-and-reopen', 'environment-file', 'limits-of-an-estimate'], sections: [
-      s('storage', 'Keep a local copy', 'Use Export JSON to save a file. Closing or reloading the tab discards the in-memory environment. There are no user accounts or saved workspaces on a server.'),
+      s('storage', 'Keep a local copy', 'Choose Export JSON to keep a copy on your device. To continue later, use Import existing on Home and select your file.'),
       s('sharing', 'Share files deliberately', 'Your browser loads public application, pricing and evidence assets. The environment calculation and PDF generation run locally. Downloaded JSON and PDF can include your names and assumptions. Remove confidential material before sharing them.'),
     ] },
   { id: 'limits-of-an-estimate', topic: 'Privacy and limitations', title: 'What the estimate covers', intro: 'AI Economics Studio is an independent planning tool. An estimate describes the entered scope and dated assumptions.',
@@ -213,12 +213,12 @@ export const articles: Article[] = [
       s('sku', 'SKU, meter and market', 'A SKU identifies an exact product configuration. A meter describes a billable dimension and unit. A commercial market, such as the UK, is distinct from an Azure deployment region.'),
       s('ptu', 'PTU and PTU-hour', 'A Provisioned Throughput Unit is a unit of reserved model capacity. A PTU-hour is one unit used for one billable hour. Verify the minimum per deployment type and model.'),
       s('credit', 'Copilot Credit and licence entitlement', 'A Copilot Credit is the consumption unit used by applicable Copilot Studio plans. A licence entitlement describes a right to use a scoped product or feature subject to terms and assignment.'),
-      s('run-rate', 'Annual run-rate and estimate readiness', 'The run-rate is twelve times the current known monthly subtotal. Readiness identifies unresolved quantities, rates and evidence that affect your decision.'),
+      s('run-rate', 'Annualised estimate and unresolved charges', 'The annualised estimate is twelve times the current known monthly amount. Use Improve your estimate to see quantities, prices and evidence that still need confirming.'),
     ] },
   { id: 'faq', topic: 'Glossary and FAQs', title: 'Frequently asked questions', intro: 'Short answers to common planning questions.',
     related: ['save-and-reopen', 'missing-rate-or-volume', 'share-and-connect'], sections: [
       s('keep-work', 'How do I keep my work?', 'Export JSON from Reports & Export and import that file when you return. Use a PDF for review and sharing.'),
-      s('unknown', 'Why is an amount unknown?', 'A quantity, rate or applicable configuration may be missing. Open Estimate readiness for the next action. Prices can also expire or change when a catalogue is adopted.'),
+      s('unknown', 'Why is an amount unknown?', 'A quantity, rate or applicable configuration may be missing. Use Improve your estimate in Cost Analysis to see what to check next. Prices can also expire or change when a catalogue is adopted.'),
       s('shared', 'Is shared capacity charged for every agent?', 'Fixed capacity is charged once per model deployment. Each agent can still have its own workload. Allocation redistributes the original charge for reporting.'),
     ] },
 ];

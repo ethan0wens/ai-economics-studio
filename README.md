@@ -28,6 +28,7 @@ npm run test:e2e
 See the [field guide](docs/13-field-guide.md) for configuration inputs, units and requirements. See [source coverage](SOURCES.md) for the pricing coverage matrix, exact Azure mappings, commercial review dates and remaining evidence gaps, and the [operations runbook](docs/12-operations.md) for publishing, incident response and checks.
 
 See the [Stage 2 delivery notes](docs/30-stage-2-ux-delivery.md) for navigation, example reconciliations and documentation maintenance.
+Use the [product language guide](docs/31-product-language.md) when editing the interface, help, documentation or reports.
 
 See the [licensing and technical evidence guide](docs/18-licensing-and-technical-evidence.md), [enterprise financial reconciliations](docs/19-enterprise-financial-validation.md), [UK licensing review](docs/21-uk-licensing-gap-review.md) and [provisioned sizing and Foundry review](docs/22-ptu-and-foundry-review.md) for current coverage and test results. See [catalogue maintenance](docs/23-maintenance-automation.md) for schedules, source rules and recovery.
 

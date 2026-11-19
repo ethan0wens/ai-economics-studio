@@ -1,3 +1,4 @@
+import { regionName, unavailablePrice } from './presentation';
 import { useEffect, useRef, useState } from 'react';
 import { ArrowUpRight, Link2, Trash2 } from 'lucide-react';
 import { creditCategories, edgeKinds, kindLabels, meterKey, objectSchema, type CreditCategory, type Edge, type EdgeType, type Environment, type StudioObject } from './domain';
@@ -81,7 +82,7 @@ export function Inspector({ item, env, catalogue, result, update, select, remove
           ...item, modelId: offer.model.id, modelVersion: offer.model.version, sku: offer.model.sku, mode: offer.model.mode,
           deployedVersion: offer.model.id === item.modelId ? item.deployedVersion : undefined,
         }, new Date().toISOString(), false).find(check => check.status === 'incompatible');
-        return [offer.id, `${offer.name} · ${offer.region === 'gb' ? 'UK market' : offer.region} · ${offer.currency}${unavailable ? ` · Unavailable — ${unavailable.title}` : ''}`, !!unavailable];
+        return [offer.id, `${offer.name} · ${regionName(offer.region)} · ${offer.currency}${unavailable ? ` · Unavailable — ${unavailable.title}` : ''}`, !!unavailable];
       })}
       hint={activeOffer
         ? activeOffer.currency !== env.currency ? `This offer is published in ${activeOffer.currency}. The environment uses ${env.currency}.` : activeOffer.note
@@ -105,7 +106,7 @@ export function Inspector({ item, env, catalogue, result, update, select, remove
           const rate = resolveOffering(catalogue.records, activeOffer, part.id, env.currency, new Date().toISOString());
           return <li key={part.id}>{part.label} · {rate
             ? <a href={rate.source} target="_blank" rel="noreferrer">{rate.tiers ? 'Graduated usage bands' : `${rate.currency} ${rate.price} per ${part.unit === '1K' ? '1,000 tokens' : part.unit === '1' ? 'credit' : part.unit}`}</a>
-            : 'No current verified rate'}</li>;
+            : unavailablePrice}</li>;
         })}</ul>
       </div>}
     </>;
@@ -116,7 +117,7 @@ export function Inspector({ item, env, catalogue, result, update, select, remove
     <NumberField field={field} value={value} max={max} step={step} hint={hint} missing={missing.includes(field)} onChange={value => change(key, value)} />;
   const option = (field: FieldId, key: string, value: string | undefined, choices: (string | [string, string])[]) =>
     <Select field={field} value={value} options={choices} missing={missing.includes(field)} onChange={value => change(key, value || undefined)} />;
-  const region = (value?: string) => <Text field="region" value={value} placeholder={env.region} hint={`Environment default: ${env.region}.`}
+  const region = (value?: string) => <Text field="region" value={value} placeholder={env.region} hint={`Leave blank to use the environment’s billing region, ${regionName(env.region)}.`}
     onChange={text => change('region', text || undefined)} />;
   const setEdge = (type: EdgeType, to: string, replace = false) => {
     const current = replace ? env.relationships.filter(edge => edge.from !== item.id || edge.type !== type) : env.relationships;
@@ -130,7 +131,7 @@ export function Inspector({ item, env, catalogue, result, update, select, remove
     return <Select field={field} missing={missing.includes(field)}
     value={related.find(edge => edge.from === item.id && edge.type === type)?.to}
     options={env.objects.filter(object => object.kind === edgeKinds[type][1]).map(object => [object.id,
-      object.kind === 'model-deployment' ? [object.name, object.modelId, object.region || env.region, object.mode].filter(Boolean).join(' / ') : object.name])}
+      object.kind === 'model-deployment' ? [object.name, object.modelId, regionName(object.region || env.region), object.mode].filter(Boolean).join(' / ') : object.name])}
     onChange={value => setEdge(type, value, true)} empty="Unlinked" />;
   };
   const deploymentId = related.find(edge => edge.from === item.id && edge.type === 'agent-uses-deployment')?.to;
@@ -184,7 +185,7 @@ export function Inspector({ item, env, catalogue, result, update, select, remove
       case 'licence-entitlement': return <>
         {retailSelector()}
         {string('product', 'product', item.product)}
-        {option('procurement', 'procurement', item.procurement, [['existing', 'Already owned'], ['incremental', 'Incremental'], ['unknown', 'Unknown']])}
+        {option('procurement', 'procurement', item.procurement, [['existing', 'Already owned'], ['incremental', 'New purchase'], ['unknown', 'Unsure']])}
         {(item.procurement === 'incremental' || (detailed && item.procurement === 'existing')) &&
           number('seats', 'seats', item.seats, undefined, 1, 'Enter distinct seats, or derive the count from linked assignments.')}
         {detailed && <>{string('seatScope', 'seatScope', item.seatScope)}
@@ -219,7 +220,7 @@ export function Inspector({ item, env, catalogue, result, update, select, remove
         {detailed && string('controlNotes', 'detail', item.detail)}
       </>;
       case 'usage-profile': return <>
-        <p className="field-hint">Count workflow runs first, then the average model requests per run. Enter input and output tokens for one request.</p>
+        <p className="field-hint">Enter the number of runs in a typical month, the average requests per run, and the input and output tokens for a single request.</p>
         {number('executions', 'executions', item.executions, undefined, 1)}
         {number('calls', 'calls', item.calls)}
         <div className="field-group"><h3>Tokens per request</h3>
@@ -250,7 +251,7 @@ export function Inspector({ item, env, catalogue, result, update, select, remove
   return <aside ref={panel} className="panel inspector" aria-labelledby="inspector-title">
     <header className="inspector-header"><span className="subtle-label">{kindLabels[item.kind]}</span><h2 id="inspector-title" tabIndex={-1}>{item.name}</h2>
       <div className="inspector-badges">
-        {missing.length > 0 && <span className="status warning">Draft · {missing.length} missing</span>}
+        {missing.length > 0 && <span className="status warning">Draft · {missing.length} {missing.length === 1 ? 'input' : 'inputs'} needed</span>}
         {unknownPrice && <span className="status price-unknown">Unknown price</span>}
       </div></header>
     <div className="tabs" role="group" aria-label="Inspector sections">
@@ -259,12 +260,12 @@ export function Inspector({ item, env, catalogue, result, update, select, remove
     <div className="inspector-content" key={tab}>
       {error && <p role="alert" className="notice">{error}</p>}
       {issues.map(issue => <p className="notice" key={issue.message}>{issue.message}</p>)}
-      {missing.length > 0 && <p className="draft-note">Keep editing or export JSON to save this draft. Marked fields are needed to complete it.</p>}
-      {unknownPrice && <p className="field-hint">Usage is entered for at least one line without a current rate. Review the Costs tab for its pricing options.</p>}
+      {missing.length > 0 && <p className="draft-note">Complete the marked fields when you have the information. Export JSON to keep a copy of this draft.</p>}
+      {unknownPrice && <p className="field-hint">At least one charge has usage but needs a price. Open Costs to check the billing unit and available pricing options.</p>}
       {visibleLevels.length > 0 && <div className="level-control" role="group" aria-label="Configuration detail">
         {visibleLevels.map(choice => <button type="button" key={choice} aria-pressed={visibleLevels.includes(selectedLevel) ? selectedLevel === choice : choice === 'Essential'} onClick={() => setLevel(choice)}>{choice}</button>)}
       </div>}
-      {tab === 'Configuration' && <>{missing.includes('linkedDeployment') && <p className="field-hint">Link a model deployment.</p>}<Text field="objectName" value={item.name} onChange={value => change('name', value)} />{renderConfiguration()}
+      {tab === 'Configuration' && <>{missing.includes('linkedDeployment') && <p className="field-hint">Choose the model deployment this agent uses so the studio can estimate its costs.</p>}<Text field="objectName" value={item.name} onChange={value => change('name', value)} />{renderConfiguration()}
         <EvidenceFindings label="Technical compatibility" items={result.technicalFindings.filter(finding => finding.id === item.id || finding.related === item.id)} />
         <EvidenceFindings label="Licensing evidence" items={result.licensingFindings.filter(finding => finding.id === item.id)} />
       </>}
@@ -300,7 +301,7 @@ export function Inspector({ item, env, catalogue, result, update, select, remove
             </div>}
           </>
           : canUseProfile ? edgeSelect('agent-uses-usage')
-          : <p className="field-hint">Choose a supported platform and model source in Configuration to see the applicable usage inputs.</p>}
+          : <p className="field-hint">In Configuration, choose the platform and how this agent uses a model. The studio will show the matching usage inputs.</p>}
         {detailed && canUseProfile && <p className="field-hint">Use a separate profile for each distinct workload. Connections do not multiply traffic. Provisioned deployments use profiles only for cost allocation.</p>}
       </> : item.kind === 'model-deployment' && (item.mode === 'provisioned' ? <>
         <p className="field-hint">Enter reserved units and billable hours for the same month. This shared charge is counted once per deployment.</p>
@@ -315,14 +316,14 @@ export function Inspector({ item, env, catalogue, result, update, select, remove
             const identity = deployedIdentity(item);
             return offer.kind === 'model-deployment' && offer.model.mode === 'payg' && offer.currency === env.currency &&
               offer.model.id.toLowerCase() === identity.model && offer.model.version === identity.version && offer.selectable !== false;
-          }).map(offer => [offer.id, `${offer.name} · ${offer.region}`])}
+          }).map(offer => [offer.id, `${offer.name} · ${regionName(offer.region)}`])}
           onChange={value => change('comparisonOfferingId', value || undefined)} />
           {number('peakInput', 'peakInputTpm', item.peakInputTpm, undefined, 1)}
           {number('peakOutput', 'peakOutputTpm', item.peakOutputTpm, undefined, 1)}
           <Field field="useReservation"><input type="checkbox" checked={!!item.reservation}
             onChange={event => change('reservation', event.target.checked ? { sku: item.sku, region: regionForOffer, currency: env.currency } : undefined)} /></Field>
           {item.reservation && <div className="field-group">
-            <p className="field-hint">Scope {item.reservation.sku ?? 'unassigned'} · {item.reservation.region ?? 'unassigned'} · {item.reservation.currency ?? 'unassigned'}. Reselect the reservation and reconfirm the quote if this scope changes.</p>
+            <p className="field-hint">Scope {item.reservation.sku ?? 'unassigned'} · {item.reservation.region ? regionName(item.reservation.region) : 'unassigned'} · {item.reservation.currency ?? 'unassigned'}. Reselect the reservation and reconfirm the quote if this scope changes.</p>
             <NumberField field="reservationPtus" value={item.reservation.ptus} min={1} step={1}
               onChange={ptus => change('reservation', { ...item.reservation, ptus })} />
             <Select field="reservationTerm" value={item.reservation.term} options={[[ '1', 'One month' ], [ '12', 'One year' ]]}

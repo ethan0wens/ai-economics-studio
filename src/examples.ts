@@ -19,7 +19,7 @@ export type Example = { id: string; version: number; article: string; name: stri
 export const examples: Example[] = [
   {
     id: 'foundry-assistant', version: 1, article: 'example-foundry-assistant', name: 'Basic Foundry Assistant', platform: 'Microsoft Foundry',
-    purpose: 'See how one workload turns into separate input and output token charges.',
+    purpose: 'Explore how a simple AI assistant generates costs from the requests it processes.',
     assumptions: ['One Foundry agent linked to GPT-4.1 mini, Global Standard, with UK South as the billing and planned deployment region.',
       '1,000 runs per month, one request per run, 1,500 input and 300 output tokens per request.'],
     explore: ['Double monthly executions to 2,000 and compare the billed input and output quantities.',
@@ -29,7 +29,7 @@ export const examples: Example[] = [
   },
   {
     id: 'copilot-agent', version: 1, article: 'example-copilot-agent', name: 'Copilot Studio Business Agent', platform: 'Copilot Studio',
-    purpose: 'Model monthly credits and understand the platform-managed model path.',
+    purpose: 'Understand how Copilot Studio usage translates into credit-based costs.',
     assumptions: ['One platform-managed business agent with 12,000 declared billable credits per month.',
       'Separate licences, prepaid packs and allowances need their own documented eligibility.'],
     explore: ['Change the monthly credits to 15,000 and compare the consumption line.',
@@ -38,7 +38,7 @@ export const examples: Example[] = [
   },
   {
     id: 'enterprise-ai', version: 1, article: 'example-existing-licensing', name: 'Enterprise AI Environment', platform: 'Copilot Studio · Licensing · Azure',
-    purpose: 'Separate new charges from existing licences and compare retail with an illustrative agreement.',
+    purpose: 'See how existing Microsoft licences, new purchases and supporting services affect your overall investment.',
     assumptions: ['Support and operations groups have 120 and 80 people with distinct assignments. 40 new Copilot seats are assigned within the fully licensed groups.',
       '200 existing Microsoft 365 E3 seats have £4,000 of declared monthly customer spend. The agent uses 18,000 credits per month.',
       'Azure AI Search uses 240 search-unit-hours with an illustrative 10% contract discount on its verified retail meter.'],
@@ -64,7 +64,7 @@ export const examples: Example[] = [
   },
   {
     id: 'shared-deployment', version: 1, article: 'example-shared-deployment', name: 'Shared Model Deployment', platform: 'Microsoft Foundry · Provisioned',
-    purpose: 'See how two agents share a single provisioned charge and allocate it by usage.',
+    purpose: 'Explore how multiple AI agents can share one deployment and account for its fixed-capacity cost once.',
     assumptions: ['One GPT-4.1 deployment, version 2025-04-14, Global Provisioned in UK South. 15 PTUs × 400 hours gives 6,000 PTU-hours.',
       'The two agents have 6,000 and 2,000 runs respectively. Both make one request per run with 1,600 input and 300 output tokens.'],
     explore: ['Find the single capacity line. The input workload split allocates it 75/25 without increasing the total.',

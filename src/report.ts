@@ -1,3 +1,4 @@
+import { costExplanation, regionName } from './presentation';
 import { PDFDocument, StandardFonts, rgb, type PDFFont, type PDFPage } from 'pdf-lib';
 import { disclaimer, kindLabels, type Environment } from './domain';
 import { environmentCompleteness } from './coverage';
@@ -11,7 +12,7 @@ const muted = rgb(.28, .35, .44);
 const blue = rgb(.14, .39, .92);
 const border = rgb(.88, .92, .96);
 const categoryColors = ['#2563eb', '#7c3aed', '#0d9488', '#d97706', '#475569'];
-const labels = { retail: 'Retail baseline', current: 'Current estimate', forecast: 'Forecast effective' };
+const labels = { retail: 'Retail baseline', current: 'Current estimate', forecast: 'Price forecast' };
 function swatch(hex: string) {
   return rgb(parseInt(hex.slice(1, 3), 16) / 255, parseInt(hex.slice(3, 5), 16) / 255, parseInt(hex.slice(5), 16) / 255);
 }
@@ -76,34 +77,34 @@ export async function report(env: Environment, result: Ledger, catalogue: Catalo
   const names = new Map([[env.id, env.name], ...env.objects.map(item => [item.id, item.name] as const)]);
   newPage();
   paragraph(env.name, { size: 27, font: bold });
-  paragraph(`Environment economics report | ${generated}`, { color: muted });
+  paragraph(`AI environment cost report | ${generated}`, { color: muted });
   paragraph(disclaimer, { color: muted });
   if (env.description) paragraph(env.description);
-  heading('Executive summary');
+  heading('Estimate summary');
   for (const basis of bases) {
     const total = result.summary[basis];
     const any = result.lines.length > total.incomplete;
-    paragraph(`${labels[basis]}: ${any ? money(total.known) : 'Unknown'} monthly known subtotal | ${any ? money(total.annual) : 'Unknown'} annual run-rate | ${total.incomplete} incomplete`, { font: bold });
+    paragraph(`${labels[basis]} | ${total.incomplete ? 'Monthly known-cost subtotal' : 'Estimated monthly cost'} ${any ? money(total.known) : 'Unknown'} | Annualised estimate ${any ? money(total.annual) : 'Unknown'} | ${total.incomplete} unresolved ${total.incomplete === 1 ? 'charge' : 'charges'}`, { font: bold });
   }
-  paragraph('Annual figures are steady-state monthly subtotals multiplied by 12. Unknown amounts are excluded from known subtotals. Taxes, contractual FX and usage growth are outside the estimate.', { color: muted });
+  paragraph('The annualised estimate applies the same monthly usage and prices for 12 months. Known-cost subtotals exclude unresolved charges. Tax, contractual currency conversion and usage growth are outside this estimate.', { color: muted });
   if (result.licenceEstate.owned || result.lines.some(line => line.component === 'Monthly seats')) {
-    heading('Existing and proposed expenditure');
+    heading('Existing and proposed spend');
     const estate = result.licenceEstate;
     for (const [label, total] of [
       ['Existing licence spend', estate.existing], ['New licence spend', estate.incremental],
-      ['Proposed licence estate', estate.proposed], ['Proposed environment including retained licences', estate.proposedEnvironment],
+      ['Proposed licence spend', estate.proposed], ['Proposed environment including retained licences', estate.proposedEnvironment],
     ] as const) paragraph(`${label}: ${money(total.known)} known monthly | ${money(total.annual)} known annual | ${total.incomplete} unresolved`);
   }
   heading('Environment and source coverage');
   const completeness = environmentCompleteness(result);
   paragraph(`${completeness.fully} fully priced | ${completeness.partial} partial | ${completeness.unresolved} unresolved | ${completeness.excluded} missing configuration | ${completeness.retail} using verified retail | ${completeness.manual} using customer rates`);
-  paragraph(`Currency ${env.currency} | Default region ${env.region} | ${env.objects.length} objects | ${env.relationships.length} declared links`);
+  paragraph(`Currency ${env.currency} | Default billing region ${regionName(env.region)} | ${env.objects.length} objects | ${env.relationships.length} declared links`);
   for (const [kind, label] of Object.entries(kindLabels)) {
     const count = env.objects.filter(item => item.kind === kind).length;
     if (count) paragraph(`${label}: ${count}`, { gap: 0 });
   }
   paragraph(`Catalogue ${catalogue.manifest.catalogueId ?? 'unpublished'} | ${catalogue.records.length} retail meters | Last successful check ${catalogue.manifest.lastCheckedAt ?? 'unavailable'}`);
-  heading('Financial overview by category');
+  heading('Estimated costs by category');
   categories.forEach((category, index) => {
     const categoryLines = result.lines.filter(line => line.category === category);
     const total = summarize(categoryLines, env.currency).current;
@@ -113,8 +114,8 @@ export async function report(env: Environment, result: Ledger, catalogue: Catalo
   });
   const drivers = result.lines.filter(line => line.amounts.current !== null)
     .sort((a, b) => Number(b.amounts.current) - Number(a.amounts.current)).slice(0, 3);
-  heading('Drivers and uncertainty');
-  if (!drivers.length) paragraph('No priced cost drivers yet.');
+  heading('Where your money goes');
+  if (!drivers.length) paragraph('There are no calculated charges to show yet.');
   for (const line of drivers) paragraph(`${line.object} / ${line.component}: ${money(line.amounts.current)} per month`);
   paragraph('Flat usage rates scale with declared quantity. Graduated tariffs charge only the units in each band. Shared provisioned capacity scales with capacity and hours. Review input, output, seat and credit assumptions before relying on a forecast.', { color: muted });
   if (result.capacityComparisons.length) {
@@ -128,9 +129,9 @@ export async function report(env: Environment, result: Ledger, catalogue: Catalo
   }
   newPage();
   heading('Logical architecture');
-  paragraph('Conceptual object relationships for planning. Topology, traffic and security boundaries are outside its scope.', { color: muted });
+  paragraph('This diagram shows the planned relationships between items in the environment. Confirm topology, traffic and security boundaries separately.', { color: muted });
   const graph = logicalGraph(env, result);
-  if (!graph.nodes.length) paragraph('No objects to diagram.');
+  if (!graph.nodes.length) paragraph('Add and link items in Environment Builder to create a diagram.');
   if (graph.nodes.length) {
     const scale = Math.min(1, (width - margin * 2) / graph.width, 410 / graph.height);
     reserve(graph.height * scale + 20);
@@ -168,19 +169,19 @@ export async function report(env: Environment, result: Ledger, catalogue: Catalo
     paragraph(item.detail, { gap: 1 });
     if (item.source) paragraph(item.verifiedOn ? `${item.source} | Reviewed ${item.verifiedOn}` : item.source, { size: 9, color: muted, gap: 1 });
   }
-  heading('Itemised monthly cost ledger');
-  if (!result.lines.length) paragraph('No ledger entries.');
+  heading('Itemised monthly costs');
+  if (!result.lines.length) paragraph('There are no itemised charges yet.');
   for (const line of result.lines) {
     reserve(94);
     paragraph(`${line.category} | ${line.object} / ${line.component}`, { font: bold, gap: 1 });
-    paragraph(`Quantity: ${line.quantity ?? 'unknown'} | ${line.meter ? `${line.meter.sku} / ${line.meter.region} / ${line.meter.unit} (${line.meter.quantityPerUnit} base units)` : 'Billing unit unresolved'} | ${line.status}`, { gap: 1 });
+    paragraph(`Quantity: ${line.quantity ?? 'unknown'} | ${line.meter ? `${line.meter.sku} / ${regionName(line.meter.region)} / ${line.meter.unit} (${line.meter.quantityPerUnit} base units)` : 'More billing details needed'} | ${line.status}`, { gap: 1 });
     paragraph(bases.map(basis => `${labels[basis]}: ${money(line.amounts[basis])} (rate ${line.rates[basis] ?? 'unknown'})`).join(' | '), { gap: 1 });
-    if (line.reason) paragraph(line.reason, { color: muted, gap: 1 });
+    if (line.reason) paragraph(costExplanation(line) ?? line.reason, { color: muted, gap: 1 });
     if (line.retailQuantity) paragraph(`Retail comparison quantity without reservation: ${line.retailQuantity} PTU-hours.`, { size: 9, color: muted });
     if (line.agreement) paragraph(`User agreement: ${line.agreement.mode} | ${line.agreement.reason} | ${line.agreement.effectiveAt ?? 'undated'}`, { gap: 1 });
     if (line.source) paragraph(`Retail source: ${line.source.source} | ${line.source.review ? 'Reviewed ' + line.source.review.checkedAt + ' | ' + line.source.review.terms : 'Effective ' + line.source.effectiveAt + ' | Validated ' + (catalogue.manifest.lastCheckedAt ?? 'unknown')}`, { size: 9, color: muted, gap: 1 });
     if (line.source?.tiers) paragraph(`Graduated bands (base units / rate): ${line.source.tiers.map(tier => `${tier.from} / ${tier.price}`).join(' | ')}. Displayed rates are blended at this usage.`, { size: 9, color: muted, gap: 1 });
-    if (line.includedCredits) paragraph(`${line.includedCredits} Copilot credits covered by linked packs. Quantity shown is residual billable usage.`, { size: 9, color: muted, gap: 1 });
+    if (line.includedCredits) paragraph(`${line.includedCredits} Copilot Credits covered by linked packs. The remaining credits are billable.`, { size: 9, color: muted, gap: 1 });
     if (line.entitledCredits) paragraph(`${line.entitledCredits} credits reconciled under a customer-declared allowance, before pack allocation.`, { size: 9, color: muted, gap: 1 });
     if (line.allocatesTo.length) paragraph(line.allocation ? `Shared allocation by input tokens: ${line.allocation.map(share => `${names.get(share.agentId)} ${money(share.amount)}`).join(' / ')}`
       : 'Shared charge counted once. Allocation unassigned.', { gap: 1 });
@@ -194,7 +195,7 @@ export async function report(env: Environment, result: Ledger, catalogue: Catalo
     paragraph(`${item.object} | ${item.title} | ${item.status}`, { font: bold, gap: 0 });
     paragraph(`${item.why} ${item.source}`, { size: 9, color: muted });
   }
-  heading('Assumptions and source appendix');
+  heading('Assumptions and sources');
   paragraph(`Global forecast ${env.forecast.percent}% | Fixed contracts ${env.forecast.applyToFixed ? 'included in' : 'excluded from'} global forecast | Meter exceptions ${env.forecast.exceptions.length}`);
   paragraph('Quantity divided by billing unit, multiplied by decimal unit rate for each flat rate or graduated band. Each ledger line rounds half up to the currency minor unit. Allocations reconcile to the rounded fixed charge.');
   paragraph(`Azure Retail Prices API: ${retailDocs}`);

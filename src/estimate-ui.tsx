@@ -8,6 +8,7 @@ import { missingInputs } from './inspector-status';
 import { categories, formatMoney, summarize, type Ledger } from './ledger';
 import { LearnMore } from './learn-more';
 import { linkedObject } from './guided-state';
+import { costExplanation, regionName } from './presentation';
 
 export type EditTarget = { id: string; field?: FieldId; section?: 'Configuration' | 'Usage' | 'Dependencies' | 'Costs'; line?: string };
 
@@ -23,8 +24,8 @@ const actions: Partial<Record<FieldId, string>> = {
 const usageFields: FieldId[] = ['usageLink', 'credits', 'creditCategory', 'allowanceCredits', 'allowanceBasis', 'allowanceExpiry', 'capacity', 'hours', 'reservationRef'];
 
 export function estimateBasis(env: Environment, result: Ledger) {
-  return result.lines.some(line => line.agreement && line.agreement.mode !== 'retail') ? 'Current estimate · includes pricing agreements' :
-    env.pricingOverrides.some(rule => rule.mode !== 'retail') ? 'Current estimate · active rates shown by line' : 'Current estimate · Microsoft retail where available';
+  return result.lines.some(line => line.agreement && line.agreement.mode !== 'retail') ? 'Includes customer pricing agreements' :
+    env.pricingOverrides.some(rule => rule.mode !== 'retail') ? 'See the active rate on each cost line' : 'Uses verified Microsoft retail prices where available';
 }
 
 export function EstimateSummary({ env, result, catalogue, compact = false }: {
@@ -34,16 +35,21 @@ export function EstimateSummary({ env, result, catalogue, compact = false }: {
   const hasKnown = result.lines.some(line => line.amounts.current !== null);
   return <section className={`estimate-summary${compact ? ' estimate-compact' : ''}`} aria-label="Running estimate">
     <div className="estimate-numbers">
-      <div className="metric"><span>Known monthly cost</span><strong>{hasKnown ? formatMoney(current.known, env.currency) : '—'}</strong></div>
-      <div className="metric"><span>Known annual run-rate</span><strong>{hasKnown ? formatMoney(current.annual, env.currency) : '—'}</strong></div>
+      <div className="metric"><span>Estimated monthly cost</span><strong>{hasKnown ? formatMoney(current.known, env.currency) : '—'}</strong>
+        {!compact && <small>Based on the charges we can currently calculate.</small>}</div>
+      <div className="metric"><span>Annualised estimate</span><strong>{hasKnown ? formatMoney(current.annual, env.currency) : '—'}</strong>
+        {!compact && <small>Twelve months at the current estimated monthly rate, assuming the same usage and pricing.</small>}</div>
     </div>
     <div className="estimate-basis"><span>{estimateBasis(env, result)}</span>{catalogue.manifest.lastCheckedAt &&
       <span>Catalogue checked {catalogue.manifest.lastCheckedAt.slice(0, 10)}</span>}</div>
-    {current.incomplete > 0 ? <p className="estimate-gap"><CircleHelp size={17} aria-hidden="true" />This estimate excludes {current.incomplete} unresolved cost {current.incomplete === 1 ? 'line' : 'lines'}.</p>
-      : !hasKnown ? <p className="muted">No priced costs yet. Add a workload or a billable service to start.</p>
-      : new Decimal(current.known).isZero() ? <p className="muted">The entered lines currently add to zero. Open the ledger to see their quantities or coverage.</p> : null}
+    {current.incomplete > 0 ? <div className="estimate-gap"><CircleHelp size={17} aria-hidden="true" /><div>
+      <strong>Costs still to confirm</strong>
+      <p>{hasKnown ? 'The known-cost subtotal excludes' : 'The studio cannot yet calculate'} {current.incomplete} unresolved {current.incomplete === 1 ? 'charge' : 'charges'}.</p>
+    </div></div>
+      : !hasKnown ? <p className="muted">Add a workload or a billable service to start estimating costs.</p>
+      : new Decimal(current.known).isZero() ? <p className="muted">The calculated charges add up to zero. Check the itemised costs for usage and coverage.</p> : null}
     {/\billustrative\b|\bfictional\b/i.test(env.description ?? '') && <p className="estimate-example">Includes illustrative planning assumptions.</p>}
-    {!compact && current.incomplete > 0 && <LearnMore guide="missingRate">Why an amount is missing</LearnMore>}
+    {!compact && current.incomplete > 0 && <LearnMore guide="missingRate">Why are some costs missing?</LearnMore>}
   </section>;
 }
 
@@ -79,11 +85,12 @@ export function readiness(env: Environment, result: Ledger) {
     const fields = missingInputs(item, env);
     for (const field of fields) missing.push({ key: `${item.id}:${field}`, name: item.name,
       title: actions[field] ?? `Enter ${fieldHelp[field].label.toLowerCase()}`,
+      detail: field === 'usageLink' || field === 'executions' ? 'Add an estimate of how often this agent will be used so the studio can calculate its running cost.' : undefined,
       target: { id: item.id, field, section: usageFields.includes(field) ? 'Usage' : 'Configuration' } });
   }
   const price: ReadinessItem[] = result.lines.filter(line => line.amounts.current === null && line.meter && line.quantity !== null)
     .map(line => ({ key: line.id, name: line.object, title: `Review price for ${line.component.toLowerCase()}`,
-      detail: `${line.currency} · ${line.meter!.unit} · ${line.meter!.region}. ${line.reason ?? ''}`,
+      detail: `${line.currency} · ${line.meter!.unit} · ${regionName(line.meter!.region)}. ${costExplanation(line) ?? ''}`,
       target: { id: line.objectId, line: line.id, field: 'agreement' } }));
   const blockers: ReadinessItem[] = [];
   const advice: ReadinessItem[] = [];
@@ -109,7 +116,7 @@ export function readiness(env: Environment, result: Ledger) {
   }
   const costReview = result.lines.filter(line => line.amounts.current === null && !price.some(item => item.key === line.id) &&
     !missing.some(item => item.target.id === line.objectId || item.target.id === line.pricingOwner) && !blockers.some(item => item.target.id === line.objectId))
-    .map(line => ({ key: line.id, name: line.object, title: `Review ${line.component.toLowerCase()}`, detail: line.reason,
+    .map(line => ({ key: line.id, name: line.object, title: `Review ${line.component.toLowerCase()}`, detail: costExplanation(line),
       target: { id: line.objectId, line: line.id } }));
   return { tasks: [...missing, ...price, ...blockers, ...costReview], advice };
 }
@@ -125,9 +132,10 @@ export function EstimateReadiness({ env, result, edit }: { env: Environment; res
     </div><button className="button" onClick={() => edit(item.target)} aria-label={`Resolve ${item.title.toLowerCase()} for ${item.name}`}>
       Review <ArrowRight size={15} aria-hidden="true" /></button></li>)}</ul>;
   return <section className="panel padded readiness" aria-labelledby="readiness-title">
-    <div className="section-heading"><h2 id="readiness-title" tabIndex={-1}>Estimate readiness</h2><LearnMore guide="completeness">Understand estimate completeness</LearnMore></div>
+    <div className="section-heading"><h2 id="readiness-title" tabIndex={-1}>Improve your estimate</h2><LearnMore guide="completeness">Check what your estimate covers</LearnMore></div>
+    <p className="muted">Review missing inputs and unresolved pricing before sharing.</p>
     {tasks.length ? render(expanded ? tasks : tasks.slice(0, 3))
-      : <p className="muted">{result.lines.length ? 'All entered billable costs are resolved. Review any remaining evidence conditions below.' : 'Add a workload or a billable service to review its costs.'}</p>}
+      : <p className="muted">{result.lines.length ? 'All entered billable costs are resolved. Check any evidence that still needs confirming below.' : 'Add a workload or a billable service to review its costs.'}</p>}
     {tasks.length > 3 && <button className="link-button" aria-expanded={expanded} onClick={() => setExpanded(!expanded)}>
       {expanded ? 'Show fewer actions' : `View all ${tasks.length} actions`}</button>}
     {!!advice.length && <details className="guided-disclosure"><summary>Evidence to confirm ({advice.length})</summary>
@@ -136,7 +144,7 @@ export function EstimateReadiness({ env, result, edit }: { env: Environment; res
 }
 
 const categoryNames = {
-  Inference: 'Model inference', Orchestration: 'Copilot Studio consumption', Licensing: 'New licensing',
+  Inference: 'Model inference', Orchestration: 'Copilot Studio usage', Licensing: 'New licences',
   Infrastructure: 'Supporting infrastructure', Governance: 'Modelled governance resources',
 };
 export function CostDrivers({ env, result }: { env: Environment; result: Ledger }) {
@@ -145,9 +153,7 @@ export function CostDrivers({ env, result }: { env: Environment; result: Ledger 
     return lines.length ? [{ category, ...summarize(lines, env.currency).current, resolved: lines.some(line => line.amounts.current !== null) }] : [];
   }).sort((a, b) => new Decimal(b.known).comparedTo(a.known));
   if (!rows.length) return null;
-  return <section className="panel padded"><h2>Cost drivers</h2><p className="muted">{rows.some(row => row.resolved)
-    ? `Amounts contributing to ${formatMoney(result.summary.current.known, env.currency)} known monthly cost.`
-    : 'These costs are still unresolved.'}</p>
+  return <section className="panel padded"><h2>Where your money goes</h2><p className="muted">A breakdown of estimated monthly costs by service and category.</p>
     <dl className="cost-drivers">{rows.map(row => <div key={row.category}><dt>{categoryNames[row.category]}{row.incomplete > 0 && <small>{row.incomplete} unresolved</small>}</dt>
       <dd>{formatMoney(row.resolved ? row.known : null, env.currency)}</dd></div>)}</dl>
   </section>;

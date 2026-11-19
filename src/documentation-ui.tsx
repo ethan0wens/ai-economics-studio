@@ -1,3 +1,4 @@
+import { regionName } from './presentation';
 import { useEffect, useMemo, useState } from 'react';
 import { BookOpen, ChevronLeft, Search } from 'lucide-react';
 import { articles, documentationVersion, topics, type Article } from './documentation-content';
@@ -31,19 +32,19 @@ function Reference({ kind, catalogue }: { kind: Article['reference']; catalogue:
   if (kind === 'units') return <section className="doc-reference"><h2>Units in the applied inventory</h2>{stamp}<ul>{data.units.map(unit => <li key={unit}>{unit}</li>)}</ul></section>;
   if (kind === 'models') {
     const needle = query.trim().toLowerCase();
-    const matches = data.models.filter(model => [model.label, model.model, model.version, model.mode, model.region].join(' ').toLowerCase().includes(needle));
-    const cells = needle ? data.regional.filter(cell => [cell.model, cell.version, cell.sku, cell.region].join(' ').toLowerCase().includes(needle)) : [];
+    const matches = data.models.filter(model => [model.label, model.model, model.version, model.mode, model.region, regionName(model.region)].join(' ').toLowerCase().includes(needle));
+    const cells = needle ? data.regional.filter(cell => [cell.model, cell.version, cell.sku, cell.region, regionName(cell.region)].join(' ').toLowerCase().includes(needle)) : [];
     return <section className="doc-reference">
       <h2>Where you can use a model</h2>{stamp}
       <p className="muted">{data.evidenceCounts.map(row => `${row.name} ${row.total}`).join(' · ')} · {data.activeSizing} current sizing rules.</p>
       <label className="plain-label">Find a model, version or region<input type="search" value={query} onChange={event => {
         setQuery(event.target.value); setPage(0);
       }} placeholder="e.g. GPT-4.1 or UK South" /></label>
-      <p role="status" className="muted">{matches.length} billing configurations{needle && ` and ${cells.length} reviewed regional entries`}. Search region codes such as uksouth.</p>
+      <p role="status" className="muted">{matches.length} billing configurations{needle && ` and ${cells.length} reviewed regional entries`}. Search by region name or Azure code.</p>
       <div className="table-wrap" tabIndex={0} role="region" aria-label="Model billing table">
         <table><caption>Model billing configurations</caption><thead><tr><th scope="col">Configuration</th><th scope="col">Version</th><th scope="col">Mode and billing region</th><th scope="col">Pricing</th></tr></thead>
           <tbody>{matches.slice(page * 20, page * 20 + 20).map(item => <tr key={item.id}><th scope="row">{item.label}</th>
-            <td>{item.version}</td><td>{item.mode} · {item.region}</td><td>{item.price}</td></tr>)}</tbody>
+            <td>{item.version}</td><td>{item.mode} · {regionName(item.region)}</td><td>{item.price}</td></tr>)}</tbody>
         </table>
       </div>
       {matches.length > 20 && <div className="actions"><button className="button" disabled={!page} onClick={() => setPage(page - 1)}>Previous</button>
@@ -52,7 +53,7 @@ function Reference({ kind, catalogue }: { kind: Article['reference']; catalogue:
       {cells.length > 0 && <div className="table-wrap" role="region" tabIndex={0} aria-label="Regional evidence table"><table><caption>Exact regional evidence · showing up to 20 matches</caption>
         <thead><tr><th scope="col">Model and version</th><th scope="col">Mode and actual region</th><th scope="col">Status</th></tr></thead>
         <tbody>{cells.slice(0, 20).map(row => <tr key={`${row.model}|${row.version}|${row.sku}|${row.region}`}>
-          <th scope="row">{row.model} · {row.version}</th><td>{row.sku} · {row.region}</td>
+          <th scope="row">{row.model} · {row.version}</th><td>{row.sku} · {regionName(row.region)}</td>
           <td><a href={row.source} target="_blank" rel="noreferrer">{compatibilityLabels[row.status]}</a><br /><small>Reviewed {row.reviewed}</small></td></tr>)}</tbody></table></div>}
     </section>;
   }
@@ -119,7 +120,7 @@ export function Documentation({ item, section, catalogue, hasWorkspace, back }: 
       <a className="button" href={routeHref('documentation', undefined, 'topics')}>Browse topics</a></div></div>;
 
   return <div className="doc-index">
-    <header><h1 id="doc-title" tabIndex={-1}>Documentation</h1><p>Build an environment, explain your costs and share a defensible estimate.</p></header>
+    <header><h1 id="doc-title" tabIndex={-1}>Documentation</h1><p>Learn how to build an environment, understand its costs and share your estimate.</p></header>
     <div className="doc-search panel padded">
       <label className="plain-label">Search documentation<span className="search"><Search size={16} aria-hidden="true" />
         <input onChange={event => setQuery(event.target.value)} type="search" value={query} placeholder="Try Copilot Credits, PTU or already owned" /></span></label>

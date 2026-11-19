@@ -124,11 +124,11 @@ export default function App() {
   const advice = useMemo(() => governance(env), [env]);
   const selectedItem = env.objects.find(item => item.id === selected);
   const fileName = env.name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') || 'environment';
-  const status = dirty ? 'Not exported' : estimateChanged ? 'Estimate changed since export' : exported ? 'JSON exported' : 'In memory';
+  const status = dirty ? 'Unexported changes' : estimateChanged ? 'Estimate changed since export' : exported ? 'JSON copy available' : 'Open in this tab';
   const sourceSnapshot = env.sourceSnapshot;
   const snapshotCurrent = result.lines.some(line => line.amounts.current !== null) ? result.summary.current.known : null;
-  const snapshotNote = sourceSnapshot && <p className="muted">Imported snapshot {sourceSnapshot.catalogueId?.slice(0, 12) ?? 'without catalogue'} · previous known subtotal {formatMoney(sourceSnapshot.current, env.currency)} · {sourceSnapshot.incomplete} incomplete.
-    Current ledger recalculated · {formatMoney(snapshotCurrent, env.currency)} known · {result.summary.current.incomplete} incomplete.</p>;
+  const snapshotNote = sourceSnapshot && <p className="muted">Imported estimate {sourceSnapshot.catalogueId?.slice(0, 12) ?? 'without catalogue'} · previous known-cost subtotal {formatMoney(sourceSnapshot.current, env.currency)} · {sourceSnapshot.incomplete} incomplete.
+    Recalculated with the applied catalogue · {formatMoney(snapshotCurrent, env.currency)} known · {result.summary.current.incomplete} incomplete.</p>;
 
   useEffect(() => {
     function routeChange() {
@@ -166,8 +166,8 @@ export default function App() {
     loadCatalogue().then(value => {
       if (!alive) return;
       setCatalogue(value);
-      setCatalogueNote(value.fallback ? 'Using a previous validated catalogue. Check time is unavailable.' : '');
-    }).catch(() => { if (alive) setCatalogueNote('The public catalogue is unavailable. Prices without evidence remain unknown.'); });
+      setCatalogueNote(value.fallback ? 'Using the last validated catalogue. The latest check time is unavailable.' : '');
+    }).catch(() => { if (alive) setCatalogueNote('The pricing catalogue is unavailable. You can continue editing and review any unresolved charges in Cost Analysis.'); });
     return () => { alive = false; };
   }, []);
   useEffect(() => {
@@ -219,7 +219,7 @@ export default function App() {
     setWorkspace(value.env); setDirty(value.kind === 'copy' || value.kind === 'example');
     setExported(value.kind === 'import'); setEstimateChanged(false); setSelected(undefined); setTarget(undefined); setReturnView(undefined);
     setIntent(undefined); setGenerated(new Set()); setMode('guided'); setStep(value.kind === 'new' ? 0 : 4); setOpening(undefined); setError('');
-    if (value.kind === 'import') setToast('Environment imported and recalculated using the applied catalogue.');
+    if (value.kind === 'import') setToast('Environment imported. Costs have been recalculated with the applied catalogue.');
     navigate('builder');
   }
   function requestOpen(value: Opening) {
@@ -229,9 +229,13 @@ export default function App() {
   async function importFile(file?: File) {
     if (!file) return;
     try {
-      if (file.size > maxBytes) throw new Error('Choose a Studio JSON file smaller than 2 MB.');
+      if (file.size > maxBytes) throw new Error('Choose an AI Economics Studio JSON export of 2 MB or less.');
       requestOpen({ env: importEnvironment(await file.text()), kind: 'import' });
-    } catch (reason) { setError(`Import failed. ${reason instanceof Error ? reason.message : 'Unreadable file.'}`); }
+    } catch (reason) {
+      const detail = reason instanceof SyntaxError ? 'The file is not valid JSON.' :
+        reason instanceof Error ? reason.message : 'The file could not be read.';
+      setError(`Could not import this environment. ${detail} Choose a valid JSON export from the studio.`);
+    }
   }
   function exportJson() {
     download(JSON.stringify({ ...env, sourceSnapshot: { catalogueId: catalogue.manifest.catalogueId,
@@ -239,7 +243,7 @@ export default function App() {
       currentKnown: result.summary.current.known, annualKnown: result.summary.current.annual, forecastKnown: result.summary.forecast.known,
       licenceEstate: { existing: result.licenceEstate.existing, proposed: result.licenceEstate.proposed },
     } }, null, 2), `${fileName}.json`, 'application/json');
-    setDirty(false); setExported(true); setEstimateChanged(false); setToast('Environment exported as JSON.');
+    setDirty(false); setExported(true); setEstimateChanged(false); setToast('JSON copy downloaded. Use it to reopen this environment later.');
   }
   async function exportPdf() {
     setExporting(true);
@@ -247,8 +251,8 @@ export default function App() {
       const { report } = await import('./report');
       const bytes = await report(env, result, catalogue, advice);
       download(new Uint8Array(bytes).buffer, `${fileName}.pdf`, 'application/pdf');
-      setToast('PDF report generated.');
-    } catch (reason) { setError(`PDF generation failed. ${reason instanceof Error ? reason.message : ''}`); }
+      setToast('Your PDF report is ready.');
+    } catch (reason) { setError(`Could not create the PDF. Try again or export JSON to keep your work. ${reason instanceof Error ? reason.message : ''}`); }
     finally { setExporting(false); }
   }
   async function refreshCatalogue() {
@@ -256,7 +260,7 @@ export default function App() {
       const next = await loadCatalogue();
       const changed = next.manifest.catalogueId !== catalogue.manifest.catalogueId || next.manifest.lastCheckedAt !== catalogue.manifest.lastCheckedAt;
       setCandidate(changed ? next : undefined);
-      setCatalogueNote(changed ? 'A different validated catalogue is available.' : next.records.length ? 'You have the latest published catalogue.' : 'The source has no published verified retail data yet.');
+      setCatalogueNote(changed ? 'An updated, verified catalogue is ready. Apply it to update the retail prices in your estimate.' : next.records.length ? 'You have the latest published catalogue.' : 'Verified retail prices are currently unavailable.');
     } catch (reason) { setCatalogueNote(reason instanceof Error ? reason.message : 'Unable to refresh catalogue.'); }
   }
 
@@ -267,7 +271,7 @@ export default function App() {
     <div className="actions"><a href={retailDocs} target="_blank" rel="noreferrer">Source documentation</a><button className="button" onClick={refreshCatalogue}>Check for updates</button></div>
     {catalogueNote && <p role="status">{catalogueNote}</p>}
     {candidate && <button className="button primary" onClick={() => {
-      setCatalogue(candidate); setCandidate(undefined); setEstimateChanged(exported); setCatalogueNote('Catalogue applied. Your price overrides were retained.');
+      setCatalogue(candidate); setCandidate(undefined); setEstimateChanged(exported); setCatalogueNote('Catalogue applied. Your customer pricing agreements and forecast assumptions still apply.');
     }}>Apply catalogue</button>}
     {snapshotNote}
   </section>;
@@ -290,18 +294,18 @@ export default function App() {
       </header>}
       <main id="main" ref={main} tabIndex={-1} className={route.page === 'home' ? 'home-main' : undefined}>
         {workspaceHeading && <header className="page-heading"><div><h1 tabIndex={-1}>{destinations[route.page]}</h1>
-          {route.page === 'costs' && <p>See what you can price, what is missing and how each charge is calculated.</p>}
-          {route.page === 'builder' && <p>Configure agents, usage and the services your estimate needs.</p>}</div>
+          {route.page === 'costs' && <p>See your estimated costs, review what needs confirming and check how each charge was calculated.</p>}
+          {route.page === 'builder' && <p>Build your AI solution and estimate the cost of agents, usage and supporting services.</p>}</div>
           {route.page === 'builder' && workspace && editActions}</header>}
         {route.page !== 'home' && error && <div role="alert" className="notice error">{error}
           <button className="button" onClick={() => setError('')}>Dismiss</button></div>}
-        {returnView && (route.page === 'costs' || route.page === 'builder') && <button className="link-button return-link" onClick={returnToReview}>Back to estimate readiness</button>}
+        {returnView && (route.page === 'costs' || route.page === 'builder') && <button className="link-button return-link" onClick={returnToReview}>Back to estimate checks</button>}
         {route.page === 'home' && <Home env={workspace} status={status} error={error} create={name => requestOpen({ kind: 'new', env: { ...blankEnvironment(), name } })}
           importFile={() => imported.current?.click()} resume={() => navigate(workspaceRoute.current)} />}
         {workspaceHeading && !workspace && <section className="panel padded empty workspace-empty"><h2>Open an environment</h2>
-          <p>Create an environment or import a JSON you previously exported.</p><div className="actions">
-            <a className="button primary" href={routeHref('home')}>Create an environment</a>
-            <button className="button" onClick={() => imported.current?.click()}>Import Existing Environment</button>
+          <p>Start a new environment or reopen one you previously exported as JSON.</p><div className="actions">
+            <a className="button primary" href={routeHref('home')}>Create environment</a>
+            <button className="button" onClick={() => imported.current?.click()}>Import existing</button>
           </div></section>}
         {workspace && route.page === 'builder' && <>
           <EstimateSummary {...{ env, result, catalogue }} compact />
@@ -322,7 +326,7 @@ export default function App() {
           <CostAnalysis key={target?.line ?? 'ledger'} env={env} result={result} update={update}
             checkedAt={catalogue.manifest.lastCheckedAt} focusLine={target?.line} />
           <details className="panel padded assumption-details" open={activeComparison || undefined}><summary>Compare pricing assumptions</summary>
-            <p className="muted">Compare the verified retail baseline, the current estimate and the separate forecast.</p>
+            <p className="muted">Compare verified Microsoft retail prices, your current estimate and a separate forecast based on your assumptions.</p>
             <Comparison env={env} result={result} /><Scenario env={env} update={update} />
             <CapacityComparisons rows={result.capacityComparisons} currency={env.currency} />
             <LearnMore guide="agreement">Contractual pricing</LearnMore>
@@ -333,7 +337,7 @@ export default function App() {
         {workspace && route.page === 'architecture' && <Suspense fallback={<p role="status">Preparing diagram…</p>}>
           <Architecture env={env} result={result} select={id => selectObject(id)} /></Suspense>}
         {workspace && route.page === 'governance' && <section className="panel padded"><h2>Advisory assessment</h2>
-          <p className="muted">Ruleset 1.0.0 · {advice.length} applicable checks · Based on declared controls.</p>
+          <p className="muted">{advice.length} advisory checks based on the controls you entered. Ruleset 1.0.0.</p>
           {!advice.length && <a href={routeHref('builder')}>Add an agent to assess controls</a>}
           {advice.map(item => <article className="finding" key={item.id + item.control}><div><button className="link-button" onClick={() => selectObject(item.id)}>{item.object}</button>
             <h3>{item.title}</h3><p>{item.why}</p><a href={item.source} target="_blank" rel="noreferrer">Microsoft guidance</a></div>
@@ -343,15 +347,15 @@ export default function App() {
           <EstimateSummary {...{ env, result, catalogue }} />
           {result.summary.current.incomplete > 0 && <a href={routeHref('costs')}>Review unresolved charges before sharing</a>}
           <div className="overview-grid">
-            <section className="panel padded report-options"><h2>PDF estimate</h2>
-              <p>Share an estimate with its assumptions, itemised costs, sources and logical diagram. A draft PDF includes unresolved charges.</p>
+            <section className="panel padded report-options"><h2>Shareable PDF report</h2>
+              <p>Share your estimate with its assumptions, itemised costs, sources and a logical diagram. The report also lists unresolved charges.</p>
               <div className="actions"><button className="button primary" disabled={exporting || !env.objects.length} onClick={exportPdf}>
                 <ArrowDownToLine size={17} aria-hidden="true" />{exporting ? 'Generating PDF…' : 'Generate PDF'}</button>
                 <a href={routeHref('architecture')}>Architecture</a></div>
               {!env.objects.length && <p className="muted">Add an agent or billable item to generate a report.</p>}
             </section>
-            <section className="panel padded report-options"><h2>Editable environment JSON</h2>
-              <p>Download a file you can reopen here. It includes objects, relationships and price assumptions.</p>
+            <section className="panel padded report-options"><h2>Editable environment file</h2>
+              <p>Export a JSON copy to keep editing later. It includes your configuration, links and pricing assumptions.</p>
               <div className="actions"><button className="button" onClick={exportJson}>Export JSON</button>
                 <button className="button" onClick={() => imported.current?.click()}>Import JSON</button>
                 <FieldHelp field="importFile" label="Import JSON" requirement="Optional" /></div>
@@ -359,7 +363,7 @@ export default function App() {
           </div>{snapshotNote}
         </div>}
         {route.page === 'catalogue' && <><header className="page-heading"><div><h1 tabIndex={-1}>Pricing Catalogue</h1>
-          <p>Browse public rates, billing configurations and evidence freshness.</p></div></header>
+          <p>Find published Microsoft prices and check which products, regions and billing options they cover.</p></div></header>
           <Coverage catalogue={catalogue} result={result} select={id => selectObject(id)} />{sourcePanel}</>}
         <Suspense fallback={<p role="status">Loading…</p>}>
           {route.page === 'examples' && <Examples item={route.item} catalogue={catalogue} open={example => requestOpen({ kind: 'example', env: openExample(example) })} />}
@@ -374,12 +378,12 @@ export default function App() {
     }} />
     {toast && <div role="status" className="toast">{toast}</div>}
     {opening && <Modal title="Replace the open environment?" close={() => setOpening(undefined)}>
-      <p><strong>{env.name}</strong> has changes. The open workspace will be replaced by <strong>{opening.env.name}</strong>.</p>
+      <p><strong>{env.name}</strong> has unexported changes. Export a JSON copy to keep them before opening <strong>{opening.env.name}</strong>.</p>
       <div className="actions"><button className="button" onClick={() => setOpening(undefined)}>Keep editing</button>
         <button className="button" onClick={exportJson}>Export JSON first</button>
         <button className="button danger" onClick={() => finishOpen(opening)}>Replace environment</button></div>
     </Modal>}
-    {modal === 'add' && <Modal title="Add an object" close={() => setModal(null)}><p className="muted">Choose any object to begin a draft.</p>
+    {modal === 'add' && <Modal title="Add an object" close={() => setModal(null)}><p className="muted">Choose what you want to add. You can fill in the details later.</p>
       <div className="add-grid">{kinds.map(kind => {
         const Icon = icons[kind];
         return <button key={kind} className="button" onClick={() => add(kind)}><Icon size={19} aria-hidden="true" />{kindLabels[kind]}<ChevronRight size={15} aria-hidden="true" /></button>;
@@ -404,7 +408,7 @@ export default function App() {
         <Field field="currency"><input name="currency" pattern="[A-Za-z]{3}" required defaultValue={env.currency} /></Field>
         <button className="button primary">Save settings</button></form>
       <div className="actions"><button className="button" onClick={() => { setModal(null); requestOpen({ env: cloneEnvironment(env), kind: 'copy' }); }}>Duplicate environment</button>
-        <a href={routeHref('home')} onClick={() => setModal(null)}>Start new from Home</a></div>
+        <a href={routeHref('home')} onClick={() => setModal(null)}>Create another environment</a></div>
     </Modal>}
   </div>;
 }

@@ -29,7 +29,7 @@ for (const item of scenarios) {
     });
     await expect(page.locator('.metric').first()).toContainText(money(item.expected.monthly));
     await navigate(page, 'Cost Analysis');
-    await expect(page.getByRole('heading', { name: 'Estimate readiness' })).toBeVisible();
+    await expect(page.getByRole('heading', { name: 'Improve your estimate' })).toBeVisible();
     await expect(page.locator('.metric').first()).toContainText(money(item.expected.monthly));
     await navigate(page, 'Reports & Export');
     await page.getByRole('link', { name: 'Architecture', exact: true }).click();
@@ -45,12 +45,12 @@ for (const item of scenarios) {
     try {
       const text = (await Promise.all(Array.from({ length: document.numPages }, async (_, index) =>
         (await (await document.getPage(index + 1)).getTextContent()).items.map(entry => 'str' in entry ? entry.str : '').join(' ')))).join(' ').replace(/\s+/g, ' ');
-      expect(text).toContain(`Current estimate: ${money(item.expected.monthly)} monthly known subtotal | ${money(item.expected.annual)} annual run-rate | ${item.expected.missing} incomplete`);
+      expect(text).toContain(`Current estimate | ${item.expected.missing ? 'Monthly known-cost subtotal' : 'Estimated monthly cost'} ${money(item.expected.monthly)} | Annualised estimate ${money(item.expected.annual)} | ${item.expected.missing} unresolved ${item.expected.missing === 1 ? 'charge' : 'charges'}`);
       expect(text).toContain('Technical compatibility and licensing evidence');
-      expect(text).toContain('Itemised monthly cost ledger');
-      if (item.expected.forecast) expect(text).toContain(`Forecast effective: ${money(item.expected.forecast)} monthly known subtotal`);
+      expect(text).toContain('Itemised monthly costs');
+      if (item.expected.forecast) expect(text).toContain(`Price forecast | Estimated monthly cost ${money(item.expected.forecast)}`);
       if (item.expected.existing) expect(text).toContain(`Existing licence spend: ${money(item.expected.existing)} known monthly`);
-      if (item.expected.proposed) expect(text).toContain(`Proposed licence estate: ${money(item.expected.proposed)} known monthly`);
+      if (item.expected.proposed) expect(text).toContain(`Proposed licence spend: ${money(item.expected.proposed)} known monthly`);
     } finally {
       await loading.destroy();
     }
@@ -149,7 +149,7 @@ test('provisioned reservation and PAYG comparison reconcile in the builder, arch
   try {
     const texts = (await Promise.all(Array.from({ length: doc.numPages }, async (_, i) =>
       (await (await doc.getPage(i + 1)).getTextContent()).items.map(item => 'str' in item ? item.str : '').join(' ')))).join(' ').replace(/\s+/g, ' ');
-    expect(texts).toContain('Current estimate: £5,600.00 monthly known subtotal | £67,200.00 annual run-rate');
+    expect(texts).toContain('Current estimate | Estimated monthly cost £5,600.00 | Annualised estimate £67,200.00');
     expect(texts).toContain('£5,400.00 provisioned | £3.77 PAYG retail | Provisioned minus PAYG £5,396.23');
     expect(texts).toContain('Retail comparison quantity without reservation: 18000 PTU-hours.');
   } finally {

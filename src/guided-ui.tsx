@@ -12,9 +12,10 @@ import { deploymentFindings } from './compatibility';
 import { offerings, type Offering } from './offerings';
 import { routeHref } from './navigation';
 import { missingInputs } from './inspector-status';
+import { regionName, unavailablePrice } from './presentation';
 import type { ReactNode } from 'react';
 
-const steps = ['Platforms', 'Agents and models', 'Estimate usage', 'Licences and services', 'Review estimate'];
+const steps = ['Choose your AI platform', 'Build your AI solution', 'Estimate usage', 'Additional costs', 'Review your estimate'];
 type Edit = (id: string, field?: FieldId) => void;
 type Props = {
   env: Environment; catalogue: Catalogue; result: Ledger; update: (env: Environment) => boolean;
@@ -23,10 +24,9 @@ type Props = {
   generated: ReadonlySet<string>; remember: (id: string) => void;
 };
 
-const regionNames: Record<string, string> = { uksouth: 'UK South', westeurope: 'West Europe', eastus2: 'East US 2', gb: 'United Kingdom' };
 const offerName = (offer: Offering) => offer.kind === 'model-deployment'
-  ? [offer.name, offer.model.version, offer.deployment?.replaceAll('-', ' '), regionNames[offer.region] ?? offer.region].filter(Boolean).join(' · ')
-  : `${offer.name} · ${regionNames[offer.region] ?? offer.region}`;
+  ? [offer.name, offer.model.version, offer.deployment?.replaceAll('-', ' '), regionName(offer.region)].filter(Boolean).join(' · ')
+  : `${offer.name} · ${regionName(offer.region)}`;
 const relevant = (offer: Offering, env: Environment) => offer.selectable !== false && offer.currency === env.currency &&
   (offer.region === env.region || offer.region === 'gb');
 
@@ -58,7 +58,7 @@ function ModelSetup({ env, agent, model, catalogue, update, advanced, generated,
   const current = inventory.find(offer => offer.id === model?.offeringId);
   const preview = current?.components.map(part => {
     const record = resolveOffering(catalogue.records, current, part.id, env.currency, new Date().toISOString());
-    return <li key={part.id}>{part.label} · {record ? <a href={record.source} target="_blank" rel="noreferrer">{record.currency} {record.price} / {part.unit}</a> : 'No current verified rate'}</li>;
+    return <li key={part.id}>{part.label} · {record ? <a href={record.source} target="_blank" rel="noreferrer">{record.currency} {record.price} / {part.unit}</a> : unavailablePrice}</li>;
   });
   const findings = model && deploymentFindings(model, new Date().toISOString());
   function createModel() {
@@ -75,26 +75,26 @@ function ModelSetup({ env, agent, model, catalogue, update, advanced, generated,
       <LearnMore guide="models">Model selection and reuse</LearnMore>
     </div>
     {choice === 'reuse' && <Select field="linkedDeployment" value={model?.id} empty="Choose a deployment"
-      options={models.map(item => [item.id, [item.name, item.modelId, item.deploymentRegion && (regionNames[item.deploymentRegion] ?? item.deploymentRegion)].filter(Boolean).join(' · ')])}
+      options={models.map(item => [item.id, [item.name, item.modelId, item.deploymentRegion && regionName(item.deploymentRegion)].filter(Boolean).join(' · ')])}
       onChange={id => { if (id) { update(reuseDeployment(env, agent, id, generated)); setChoice('current'); } }} />}
     {model && choice === 'current' && <>
       <h4>{model.name}{shared ? ' · Shared' : ''}</h4>
       {shared ? <p className="field-hint">Changes to this deployment affect every linked agent. Open it in Advanced to make a shared change.</p>
         : <>
           <button className="link-button" onClick={() => setSpecialist(!specialist)} aria-expanded={specialist}>
-            {specialist ? 'Hide provisioned and specialist models' : 'Show provisioned and specialist models'}
+            {specialist ? 'Show fewer model options' : 'Show more model options'}
           </button>
           <OfferPicker field="Model configuration" selected={model.offeringId}
             choices={inventory.filter(offer => offer.kind === 'model-deployment' && relevant(offer, env) &&
               (offer.model.mode === 'payg' || specialist || offer.id === model.offeringId))}
             choose={offer => { if (offer.kind === 'model-deployment') update(updateObject(env, bindModel(model, offer))); }} />
           <Text field="deploymentRegion" label="Actual deployment region" value={model.deploymentRegion} placeholder="e.g. uksouth"
-            hint="Where you plan to run the model. This is separate from the billing region."
+            hint="Enter the Azure region code where you plan to run the model. This can differ from the billing region."
             onChange={value => update(updateObject(env, { ...model, deploymentRegion: value.trim() || undefined }))} />
         </>}
       {preview && <ul className="guided-rates">{preview}</ul>}
       {findings?.some(item => item.status === 'incompatible') && <p className="notice">Microsoft evidence indicates a conflict with this deployment. Review the deployment details.</p>}
-      <button className="link-button" onClick={() => advanced(model.id)}>Advanced deployment details</button>
+      <button className="link-button" onClick={() => advanced(model.id)}>More deployment options</button>
       <LearnMore guide="deployments">Deployment types and availability</LearnMore>
     </>}
   </section>;
@@ -136,14 +136,14 @@ function UsageEditor({ env, agent, update, advanced }: Pick<Props, 'env' | 'upda
   </div>;
   return <section className="guided-block" aria-label={`Usage for ${agent.name}`}>
     <h3>{isCopilot ? 'Copilot Credits' : model?.mode === 'provisioned' ? 'Monthly provisioned capacity' : 'Monthly workload'}</h3>
-    {isCopilot && <p className="muted">Enter the credits you expect to consume in a month. Use measured consumption or Microsoft’s activity guidance.</p>}
+    {isCopilot && <p className="muted">Enter the credits you expect to consume in a month. Use measured consumption if you have it, or estimate it using Microsoft’s activity guidance.</p>}
     {isCopilot && agent.creditMethod === 'breakdown' ? <div>
       <p>This agent uses a credit breakdown by activity.</p>
       <button className="link-button" onClick={() => advanced(agent.id, 'creditCategory')}>Edit credit breakdown</button>
     </div> : isCopilot ? <NumberField key={revision} field="credits" label="Monthly Copilot Credits" value={agent.credits}
       onChange={credits => { setApplied(''); update(updateObject(env, { ...agent, credits })); }} /> : null}
     {isFoundry && model?.mode === 'provisioned' && <>
-      <p className="muted">Enter PTUs and billable hours once for the deployment. Linked agents use the same capacity.</p>
+      <p className="muted">Enter provisioned throughput units (PTUs) and billable hours once for the deployment. Linked agents use the same capacity.</p>
       <div className="form-grid">
         <NumberField field="capacity" value={model.capacity} step={1} onChange={capacity => update(updateObject(env, { ...model, capacity }))} />
         <NumberField field="hours" value={model.billableHours} max={744} onChange={billableHours => update(updateObject(env, { ...model, billableHours }))} />
@@ -153,8 +153,8 @@ function UsageEditor({ env, agent, update, advanced }: Pick<Props, 'env' | 'upda
     </>}
     {isFoundry && model?.mode !== 'provisioned' && <>
       {!usage || shared ? <div>
-        <p className="field-hint">{shared ? 'This usage profile is linked to more than one agent. Create a copy for this workload before editing.' : 'Add monthly usage for this agent.'}</p>
-        <button className="button" onClick={() => update(ownUsage(env, agent, usage))}>{shared ? 'Copy usage for this agent' : 'Add usage assumptions'}</button>
+        <p className="field-hint">{shared ? 'This usage profile is linked to more than one agent. Create a copy for this workload before editing.' : 'Estimate how often this agent will run so its token costs can be calculated.'}</p>
+        <button className="button" onClick={() => update(ownUsage(env, agent, usage))}>{shared ? 'Copy usage for this agent' : 'Estimate monthly usage'}</button>
       </div> : <>
         <p className="muted">Start with runs per month. Each run makes one or more model requests. Enter the average input and output tokens for one request.</p>
         <div className="form-grid" key={usage.id + ':' + revision}>
@@ -169,8 +169,8 @@ function UsageEditor({ env, agent, update, advanced }: Pick<Props, 'env' | 'upda
       </>}
     </>}
     {canPriceUsage && <details className="guided-disclosure">
-      <summary>Apply illustrative usage</summary>
-      <p className="muted">Choose example inputs to explore the estimate. These are fictional and remain editable.</p>
+      <summary>Try example usage</summary>
+      <p className="muted">Choose a preset to see how example usage affects the estimate. You can edit all the values afterwards.</p>
       <label className="plain-label">Illustrative preset<select value={pending} onChange={event => setPending(event.target.value)}>
         <option value="">Choose a preset</option>
         {presets.map(item => <option value={item.id} key={item.id}>{item.name}</option>)}
@@ -178,7 +178,7 @@ function UsageEditor({ env, agent, update, advanced }: Pick<Props, 'env' | 'upda
       {preset && <div className="preset-preview"><p>{inputDescription}.</p>{hasUsage && <p>Applying this preset replaces the values shown above for this workload.</p>}
         <button className="button" onClick={apply}>Apply {preset.name.toLowerCase()} preset</button></div>}
     </details>}
-    {marked && <p className="status warning">Illustrative usage inputs{applied ? ` · ${applied}` : ''}</p>}
+    {marked && <p className="status warning">Illustrative usage{applied ? ` · ${applied}` : ''}</p>}
     <LearnMore guide={isCopilot ? 'credits' : 'foundryUsage'}>
       {isCopilot ? 'How to estimate Copilot Credits' : 'How to estimate model usage'}
     </LearnMore>
@@ -198,7 +198,6 @@ function Services({ env, catalogue, result, update, advanced }: Pick<Props, 'env
   const offer = inventory.find(offer => offer.id === item?.offeringId);
   const unit = offer?.id.startsWith('search-') ? 'search-unit-hours' : offer?.components[0]?.unit;
   return <div className="guided-block">
-    <p className="muted">Include licence purchases and Azure services you expect to pay for. Skip this step if they are outside your estimate.</p>
     <div className="actions">
       <button className="button" onClick={() => add('licence-entitlement')}><Plus size={16} aria-hidden="true" />Add licence</button>
       <button className="button" onClick={() => add('supporting-resource')}><Plus size={16} aria-hidden="true" />Add supporting service</button>
@@ -213,18 +212,18 @@ function Services({ env, catalogue, result, update, advanced }: Pick<Props, 'env
         choices={inventory.filter(offer => offer.kind === item.kind && relevant(offer, env))}
         choose={offer => update(updateObject(env, { ...bindService(item, offer), name: item.name.startsWith('New ') ? offer.name : item.name }))} />
       {item.kind === 'licence-entitlement' ? <>
-        <Select field="procurement" label="Do you already pay for this licence?" value={item.procurement}
+        <Select field="procurement" label="Do you already own this licence?" value={item.procurement}
           options={[[ 'existing', 'Already owned' ], [ 'incremental', 'New purchase' ], [ 'unknown', 'Unsure' ]]}
           onChange={value => update(updateObject(env, { ...item, procurement: (value || undefined) as typeof item.procurement }))} />
-        {(item.procurement === 'existing' || item.procurement === 'incremental') && <NumberField field="seats" label="Distinct seats" value={item.seats} step={1}
+        {(item.procurement === 'existing' || item.procurement === 'incremental') && <NumberField field="seats" label="Number of users requiring a licence" value={item.seats} step={1}
           onChange={seats => update(updateObject(env, { ...item, seats }))} />}
         {item.procurement === 'existing' && <NumberField field="existingMonthly" value={item.existingMonthly}
           onChange={existingMonthly => update(updateObject(env, { ...item, existingMonthly }))} />}
         {result.licensingFindings.filter(finding => finding.id === item.id && finding.status !== 'Verified').map(finding => <p className="field-hint" key={finding.rule ?? finding.title}>{finding.title} · {finding.status}. {finding.detail}</p>)}
       </> : <NumberField field="resourceQuantity" label={`Monthly quantity${unit ? ' · ' + unit : ''}`} value={item.monthlyQuantity}
-        hint="Match the quantity to the selected billing meter." onChange={monthlyQuantity => update(updateObject(env, { ...item, monthlyQuantity }))} />}
+        hint="Use the billing unit shown for the selected service." onChange={monthlyQuantity => update(updateObject(env, { ...item, monthlyQuantity }))} />}
       {offer && !catalogue.records.some(rate => rate.offeringId === offer.id && isCurrentRate(rate, new Date().toISOString())) &&
-        <p className="status warning">No current verified rate</p>}
+        <p className="status warning">{unavailablePrice}</p>}
       <button className="link-button" onClick={() => advanced(item.id)}>Advanced configuration</button>
     </section>}
   </div>;
@@ -250,6 +249,13 @@ export function GuidedBuilder(props: Props) {
     const next = addSolution(env, agentName.trim(), platform, existingModels.find(item => item.id === reuse));
     if (update(next.env)) { if (next.draft) remember(next.draft.id); select(next.agent.id); setAgentName(''); setReuse(''); setFormError(''); }
   }
+  const stage = [
+    ['What are you looking to build?', 'Start by choosing the Microsoft platform your AI solution will use. You can combine platforms or add more agents later.'],
+    [agent ? 'Build your AI solution' : 'Add your first AI agent', "Give your agent a name and choose how it will be powered. We'll help you connect the services needed to estimate its costs."],
+    ['How much will your AI be used?', "Estimate how often your agents will run and how much they'll process. Not sure? Start with an illustrative example and adjust it later."],
+    ['What else will your environment need?', 'Include Microsoft licences and supporting Azure services where relevant. You can return to this later.'],
+    ['Your AI environment, in numbers', 'Explore your estimated costs, review any missing information and create a report you can share.'],
+  ][step];
   const move = (index: number) => {
     setStep(index);
     requestAnimationFrame(() => document.getElementById('guided-step')?.focus());
@@ -265,20 +271,19 @@ export function GuidedBuilder(props: Props) {
     </label>
     <div className="guided-main">
       <section className="panel padded guided-task">
-        <header className="guided-title"><p className="muted">Step {step + 1} of {steps.length}</p><h2 id="guided-step" tabIndex={-1}>{steps[step]}</h2></header>
+        <header className="guided-title"><p className="muted">Step {step + 1} of {steps.length}</p><h2 id="guided-step" tabIndex={-1}>{stage[0]}</h2><p>{stage[1]}</p></header>
         {step === 0 && <>
-          <p>Choose where your agents will run. You can add more than one kind of agent to the same environment.</p>
           <div className="platform-choices">
             {([
               ['foundry-agent-service', 'Microsoft Foundry', 'Choose a model and estimate token usage or dedicated capacity.', Cpu],
-              ['copilot-studio', 'Copilot Studio', 'Plan platform-managed agents with monthly Copilot Credits.', Layers3],
+              ['copilot-studio', 'Copilot Studio', 'Plan business agents and estimate their monthly Copilot Credits.', Layers3],
               ['both', 'Both platforms', 'Estimate Foundry and Copilot Studio workloads in one environment.', Plus],
             ] as const).map(([id, name, desc, Icon]) => <button className="platform-choice" key={id} aria-pressed={intent === id} onClick={() => setIntent(id)}>
               <Icon size={20} aria-hidden="true" /><span><strong>{name}</strong><small>{desc}</small></span>
             </button>)}
           </div>
           <div className="form-grid">
-            <Text field="defaultRegion" label="Default billing region" value={env.region} hint="Azure region code, such as uksouth."
+            <Text field="defaultRegion" label="Default billing region" value={env.region} hint={`Enter an Azure region code, such as uksouth for UK South. Current region is ${regionName(env.region)}.`}
               onChange={region => { if (/^[a-z0-9-]+$/.test(region)) update({ ...env, region }); }} />
             <Text field="currency" value={env.currency} hint="Verified prices require a matching currency."
               onChange={currency => { if (/^[a-zA-Z]{3}$/.test(currency)) update({ ...env, currency: currency.toUpperCase() }); }} />
@@ -291,7 +296,7 @@ export function GuidedBuilder(props: Props) {
         </label>}
         {step === 1 && <>
           {agent && <div className="guided-block">
-            <div className="section-heading"><h3>{agent.name}</h3><span className="status">{agent.platform ? platforms[agent.platform] : 'Platform needed'}</span></div>
+            <div className="section-heading"><h3>{agent.name}</h3><span className="status">{agent.platform ? platforms[agent.platform] : 'Choose a platform'}</span></div>
             {agent.platform === 'foundry-agent-service' && agent.modelSource === 'deployment-ref' ?
               <ModelSetup key={agent.id} {...{ env, agent, catalogue, update, advanced, generated, remember }} model={linkedObject(env, agent.id, 'agent-uses-deployment', 'model-deployment')} />
               : agent.platform === 'copilot-studio' && agent.modelSource === 'platform-managed'
@@ -300,7 +305,7 @@ export function GuidedBuilder(props: Props) {
             <button className="link-button" onClick={() => advanced(agent.id, 'platform')}>Edit agent configuration</button>
           </div>}
           <form className="guided-block" onSubmit={create}>
-            <h3>Add an agent</h3>
+            {agent && <h3>Add another agent</h3>}
             <label className="plain-label">Agent name<input value={agentName} maxLength={300} placeholder="e.g. Support assistant" onChange={event => setAgentName(event.target.value)} /></label>
             {(intent === 'both' || !intent) && <label className="plain-label">Agent platform
               <select value={recentIntent ?? ''} onChange={event => setRecentIntent(event.target.value as Platform || undefined)}>
@@ -313,8 +318,8 @@ export function GuidedBuilder(props: Props) {
           </form>
         </>}
         {step === 2 && (agent ? <UsageEditor key={agent.id} {...{ env, agent, update, advanced }} /> : <div>
-          <p className="muted">Add an agent to see the usage inputs for its platform.</p>
-          <button className="button" onClick={() => move(1)}>Add agents and models</button>
+          <p className="muted">Add an agent so the studio can show the usage inputs for its platform.</p>
+          <button className="button" onClick={() => move(1)}>Add an agent</button>
         </div>)}
         {step === 3 && <Services {...{ env, catalogue, result, update, advanced }} />}
         {step === 4 && review}
@@ -322,7 +327,7 @@ export function GuidedBuilder(props: Props) {
           {step > 0 && <button className="button" onClick={() => move(step - 1)}>Back</button>}
           {step === 3 && <button className="link-button" onClick={() => move(4)}>Skip for now</button>}
           {step < 4 && <button className="button primary" onClick={() => move(step + 1)}>Continue <ArrowRight size={16} aria-hidden="true" /></button>}
-          {step < 4 && <button className="link-button" onClick={() => move(4)}>Review estimate</button>}
+          {step < 4 && <button className="link-button" onClick={() => move(4)}>Review your estimate</button>}
         </div>
       </section>
     </div>

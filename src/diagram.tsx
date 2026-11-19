@@ -14,7 +14,7 @@ export default function Architecture({ env, result, select }: { env: Environment
       <button className="button" disabled={!graph.nodes.length} onClick={() => {
         if (svg.current) download(new XMLSerializer().serializeToString(svg.current), 'logical-architecture.svg', 'image/svg+xml');
       }}><ArrowDownToLine size={16} /> Export SVG</button></div>
-    {!graph.nodes.length ? <div className="empty"><span className="empty-icon"><GitFork size={24} /></span><h3>No objects to diagram</h3><p>Add objects and link them in the builder.</p></div> :
+    {!graph.nodes.length ? <div className="empty"><span className="empty-icon"><GitFork size={24} /></span><h3>No architecture to show yet</h3><p>Add and link items in Environment Builder to draw your planned architecture.</p></div> :
       <div className="diagram-frame">
         <svg ref={svg} width={graph.width} height={graph.height} viewBox={`0 0 ${graph.width} ${graph.height}`}
           xmlns="http://www.w3.org/2000/svg" aria-label="Logical architecture graph" fontFamily="system-ui" role="group">

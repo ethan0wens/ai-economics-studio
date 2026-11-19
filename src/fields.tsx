@@ -67,7 +67,7 @@ export function Field({ field, label = fieldHelp[field].label, requirement = fie
       <label htmlFor={id}>{label}</label>
       <FieldHelp field={field} label={label} requirement={requirement} />
       {requirement === 'Optional' && <span className="field-optional">Optional</span>}
-      {missing && <span className="field-missing" id={`${id}-missing`}>Required to complete</span>}
+      {missing && <span className="field-missing" id={`${id}-missing`}>Information needed</span>}
     </div>
     {cloneElement(children, {
       id,

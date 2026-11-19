@@ -1,3 +1,4 @@
+import { unavailablePrice } from './presentation';
 import { catalogueCoverage } from './coverage';
 import { compatibilityEvidence, compatibilityLabels } from './compatibility';
 import { capacityEvidence } from './provisioned';
@@ -12,7 +13,7 @@ export function documentationReference(catalogue: Catalogue, at = new Date().toI
   }))));
   const models = coverage.flatMap(group => group.configurations.flatMap(offer => offer.kind === 'model-deployment' ? [{
     id: offer.id, label: offer.name, model: offer.model.id, version: offer.model.version, mode: offer.model.sku, region: offer.region,
-    price: offer.status === 'verified' ? 'Fully priced' : offer.status === 'partial' ? 'Partially priced' : 'No current verified rate',
+    price: offer.status === 'verified' ? 'Fully priced' : offer.status === 'partial' ? 'Partially priced' : unavailablePrice,
   }] : []));
   const units = [...new Set(coverage.flatMap(group => group.configurations.flatMap(offer => offer.components.map(part =>
     `${part.unit} · ${part.quantityPerUnit.toLocaleString('en-GB')} base units`))))].sort();

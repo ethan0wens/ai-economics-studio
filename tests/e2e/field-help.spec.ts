@@ -77,7 +77,7 @@ test('every registered field is reachable with an accessible help trigger', asyn
         await toggle.uncheck();
       }
       if (object.id === 'copilot') {
-        await inspector.getByLabel('Copilot credit input method', { exact: true }).selectOption('breakdown');
+        await inspector.getByLabel('How to enter Copilot Credits', { exact: true }).selectOption('breakdown');
         await inspector.getByLabel('Apply declared included usage', { exact: true }).check();
         await inspect();
       }
@@ -165,10 +165,10 @@ test('conditional fields and configuration levels preserve saved assumptions and
   await expect(inspector.getByLabel('Model source', { exact: true }).locator('option[value=deployment-ref]')).toHaveCount(0);
   await expect(inspector.getByLabel('Model deployment', { exact: true })).toHaveCount(0);
   await inspector.getByRole('button', { name: 'Usage', exact: true }).click();
-  await expect(inspector.getByLabel('Monthly Copilot credits', { exact: true })).toHaveValue('');
-  await expect(inspector.getByText('Required to complete')).toBeVisible();
+  await expect(inspector.getByLabel('Monthly Copilot Credits', { exact: true })).toHaveValue('');
+  await expect(inspector.getByText('Information needed')).toBeVisible();
   await expect(inspector.getByLabel('Usage profile', { exact: true })).toHaveCount(0);
-  await inspector.getByLabel('Monthly Copilot credits', { exact: true }).fill('10');
+  await inspector.getByLabel('Monthly Copilot Credits', { exact: true }).fill('10');
   await expect(inspector.getByText('Unknown price', { exact: true })).toBeVisible();
 });
 

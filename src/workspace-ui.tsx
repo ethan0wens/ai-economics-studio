@@ -32,7 +32,7 @@ export function StudioNavigation({ page }: { page: Destination }) {
     <span>AI Economics<span className="brand-studio">Studio</span></span></a>;
   return <>
     <aside className="sidebar"><div>{brand()}</div>{nav()}
-      <div className="rail-footer"><ShieldCheck size={17} aria-hidden="true" /><div><strong>Private by design</strong><small>Work stays in this tab.</small></div></div>
+      <div className="rail-footer"><ShieldCheck size={17} aria-hidden="true" /><div><strong>Browser-only workspace</strong><small>Export JSON to keep your work.</small></div></div>
     </aside>
     <div className="mobile-studio">
       <button ref={trigger} className="icon-button" aria-label="Toggle navigation" aria-expanded={open} aria-controls="mobile-navigation"
@@ -70,8 +70,8 @@ export function Home({ env, status, create, resume, importFile, error }: {
   const entering = !env || showNew;
   return <div className="welcome">
     <div className="welcome-intro">
-      <h1 tabIndex={-1}>Plan and estimate a Microsoft AI environment</h1>
-      <p>Model agents, usage and supporting services. See what you can price and share an estimate with its assumptions.</p>
+      <h1 tabIndex={-1}>Understand the cost of your AI ambitions.</h1>
+      <p>Design your Microsoft AI environment, explore the costs behind it, and build a clearer picture of your investment—all in one place.</p>
     </div>
     <div className="welcome-entry">
       {entering ? <form onSubmit={event => {
@@ -80,29 +80,30 @@ export function Home({ env, status, create, resume, importFile, error }: {
         if (!value) { setNameError('Enter an environment name.'); name.current?.focus(); return; }
         setNameError(''); setShowNew(false); create(value);
       }}>
+        <h2>Start with a new environment</h2>
         <label htmlFor="new-environment-name">Environment name</label>
-        <input ref={name} id="new-environment-name" placeholder="e.g. Internal support assistant" maxLength={300}
+        <input ref={name} id="new-environment-name" placeholder="e.g. Internal AI Assistant" maxLength={300}
           aria-describedby={nameError ? 'name-error' : undefined} aria-invalid={!!nameError}
           onChange={() => { if (nameError) setNameError(''); }} />
         {nameError && <p id="name-error" role="alert" className="field-missing">{nameError}</p>}
-        <div className="actions"><button className="button primary">Create Environment <ArrowRight size={17} aria-hidden="true" /></button>
-          <button className="button" type="button" onClick={importFile}>Import Existing Environment</button>
+        <div className="actions"><button className="button primary">Create environment <ArrowRight size={17} aria-hidden="true" /></button>
+          <button className="button" type="button" onClick={importFile}>Import existing</button>
           {env && <button className="link-button" type="button" onClick={() => setShowNew(false)}>Cancel</button>}</div>
       </form> : <div>
         <h2>{env.name}</h2><p className="muted">{status}</p>
-        <div className="actions"><button className="button primary" onClick={resume}>Resume environment <ArrowRight size={17} aria-hidden="true" /></button>
-          <button className="button" onClick={() => { setShowNew(true); requestAnimationFrame(() => name.current?.focus()); }}>Start new</button>
-          <button className="button" onClick={importFile}>Import Existing Environment</button></div>
+        <div className="actions"><button className="button primary" onClick={resume}>Continue building <ArrowRight size={17} aria-hidden="true" /></button>
+          <button className="button" onClick={() => { setShowNew(true); requestAnimationFrame(() => name.current?.focus()); }}>Create another environment</button>
+          <button className="button" onClick={importFile}>Import existing</button></div>
       </div>}
       {error && <p className="notice error" role="alert">{error}</p>}
     </div>
     <ul className="welcome-capabilities">
-      <li><GitFork size={20} aria-hidden="true" /><div><strong>Model your setup</strong><p>Plan with Foundry, Copilot Studio or both.</p></div></li>
-      <li><ChartNoAxesCombined size={20} aria-hidden="true" /><div><strong>Understand the costs</strong><p>See known spend and what needs evidence.</p></div></li>
-      <li><ArrowDownToLine size={20} aria-hidden="true" /><div><strong>Share your estimate</strong><p>Download a PDF or save editable JSON.</p></div></li>
+      <li><GitFork size={20} aria-hidden="true" /><div><strong>Design</strong><p>Build your AI environment with guided configuration.</p></div></li>
+      <li><ChartNoAxesCombined size={20} aria-hidden="true" /><div><strong>Understand</strong><p>Explore costs, assumptions and potential spend.</p></div></li>
+      <li><ArrowDownToLine size={20} aria-hidden="true" /><div><strong>Share</strong><p>Turn your analysis into a clear, shareable report.</p></div></li>
     </ul>
-    <div className="welcome-examples"><div><h2>Example environments</h2><p>Explore a working estimate with illustrative inputs.</p></div>
-      <a className="button" href={routeHref('examples')}>Browse examples <ArrowRight size={16} aria-hidden="true" /></a></div>
-    <p className="privacy-copy">Your work stays in this browser tab. Download JSON to reopen it later. <a href={routeHref('documentation', 'privacy')}>Privacy and storage</a></p>
+    <div className="welcome-examples"><div><h2>Explore an example</h2><p>See how it works with a ready-made AI environment.</p></div>
+      <a className="button" href={routeHref('examples')}>Explore examples <ArrowRight size={16} aria-hidden="true" /></a></div>
+    <p className="privacy-copy">No account required. Your environment stays in this browser tab until you leave or reload. Export it to keep a copy. <a href={routeHref('documentation', 'privacy')}>Privacy and storage</a></p>
   </div>;
 }

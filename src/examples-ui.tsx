@@ -16,7 +16,7 @@ export function Examples({ item, catalogue, open }: { item?: string; catalogue: 
   if (example && data) return <div className="example-preview">
     <a className="learn-more" href={routeHref('examples')}><ChevronLeft size={16} aria-hidden="true" /> All examples</a>
     <header><h1 tabIndex={-1}>{example.name}</h1><p>{example.purpose}</p></header>
-    <p className="status warning">Fictional planning inputs</p>
+    <p className="status warning">Illustrative example. Usage is for demonstration.</p>
     <div className="actions"><button className="button primary" onClick={() => open(example)}>Open editable copy <ArrowRight size={16} aria-hidden="true" /></button>
       <a href={routeHref('documentation', example.article)}>Read the walkthrough</a></div>
     <EstimateSummary {...data} catalogue={catalogue} />
@@ -25,11 +25,11 @@ export function Examples({ item, catalogue, open }: { item?: string; catalogue: 
   </div>;
   return <div>
     <header className="page-heading"><div><h1 tabIndex={-1}>Example environments</h1>
-      <p>Preview a working estimate, then open a copy to explore or adapt it.</p></div></header>
-    {item && <p className="notice" role="status">That example is unavailable. Choose one of the examples below.</p>}
+      <p>See how costs are calculated. Open a copy to try your own assumptions.</p></div></header>
+    {item && <p className="notice" role="status">This example is unavailable. Choose another example below.</p>}
     <div className="example-grid">{examples.map(example => <article className="panel padded example-card" key={example.id}>
       <p className="muted">{example.platform}</p><h2>{example.name}</h2><p>{example.purpose}</p>
-      <span className="example-assumption"><Check size={15} aria-hidden="true" />Fictional assumptions</span>
+      <span className="example-assumption"><Check size={15} aria-hidden="true" />Illustrative assumptions</span>
       <a className="button" href={routeHref('examples', example.id)}>Preview <span className="sr-only">{example.name}</span><ArrowRight size={15} aria-hidden="true" /></a>
     </article>)}</div>
   </div>;

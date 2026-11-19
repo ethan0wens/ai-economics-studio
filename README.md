@@ -24,13 +24,13 @@ npm run test:e2e
 
 See the [field guide](docs/13-field-guide.md) for configuration inputs, units and requirements. See [source coverage](SOURCES.md) for the pricing coverage matrix, exact Azure mappings, commercial review dates and remaining evidence gaps, and the [operations runbook](docs/12-operations.md) for publishing, incident response and checks.
 
-See the [licensing and technical evidence guide](docs/18-licensing-and-technical-evidence.md), [enterprise financial reconciliations](docs/19-enterprise-financial-validation.md), [UK licensing review](docs/21-uk-licensing-gap-review.md) and [provisioned sizing and Foundry review](docs/22-ptu-and-foundry-review.md) for current coverage and test results.
+See the [licensing and technical evidence guide](docs/18-licensing-and-technical-evidence.md), [enterprise financial reconciliations](docs/19-enterprise-financial-validation.md), [UK licensing review](docs/21-uk-licensing-gap-review.md) and [provisioned sizing and Foundry review](docs/22-ptu-and-foundry-review.md) for current coverage and test results. See [catalogue maintenance](docs/23-maintenance-automation.md) for schedules, source rules and recovery.
 
 ## Locked architecture
 
 - **UI**: React + TypeScript + Vite, light-first Cloud Professional design system.
 - **Delivery**: Cloudflare **Workers Static Assets** (no runtime Worker script), deployed by GitHub Actions on changes merged to `main`.
-- **Pricing**: public, versioned catalogue; scheduled GitHub Actions discover published rates within reviewed Microsoft product and SKU families. The static inventory includes manual-rate and unsupported configurations. UK commercial price reviews are maintained separately. Failed refreshes must not replace a good catalogue.
+- **Pricing**: public, versioned catalogue; scheduled GitHub Actions discover published rates within reviewed Microsoft product and SKU families. The static inventory includes manual-rate and unsupported configurations. Scheduled Microsoft source reconciliation verifies UK commercial offers and technical evidence independently. The Pricing Catalogue shows the latest published health report. Failed updates preserve the last verified release.
 - **Compute and privacy**: all app state, TCO, validation, diagrams and PDF generation in the user's browser. No login, telemetry, persistent environment storage, data collection, application server or database.
 - **Saving**: users explicitly export/import versioned JSON; no `localStorage`, `sessionStorage`, IndexedDB or automatic cloud saves for environment data.
 - **Financial accuracy**: latest verified published rates by default; user-fixed contract prices, retail percentage discounts and forecast adjustments; never use zero when price is unknown. An unverified cost is visibly **incomplete**.

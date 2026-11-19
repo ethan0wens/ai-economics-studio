@@ -4,7 +4,7 @@
 
 **A. Azure retail meter catalogue (automated daily)**: a GitHub Action accesses the public [Azure Retail Prices API](https://learn.microsoft.com/en-us/rest/api/cost-management/retail-prices/azure-retail-prices). It may request prices by `currencyCode=GBP` (when supported), service, `armRegionName`, SKU and `priceType`. Handle `NextPageLink` until completion, retries/backoff, throttling, source schema changes, dates and units. API is unauthenticated. Versioned canonical JSON is **generated and checked in CI**, then deployed as public static assets. Do not call this API from visitors' browsers.
 
-**B. Microsoft 365/Copilot/Agent/licensing and billing rules (curated)**: tracked structured rules with `sourceUri`, `sourceReviewedAt`, `effectiveFrom`, `verificationState`, and supported billing context. Do not pretend Azure Retail Prices API covers all licences/entitlements or infer licensing from product marketing. Allow custom-entered contractual prices, priced only when explicitly entered and clearly flagged.
+**B. Microsoft 365/Copilot/Agent/licensing and billing rules (reviewed selectors)**: tracked structured rules with `sourceUri`, `sourceReviewedAt`, `effectiveFrom`, `verificationState`, and supported billing context. Do not pretend Azure Retail Prices API covers all licences/entitlements or infer licensing from product marketing. Allow custom-entered contractual prices, priced only when explicitly entered and clearly flagged.
 
 ## Extremely important: model-to-meter mapping
 
@@ -38,7 +38,7 @@ Default is GBP and UK South. Azure Retail API supports currency query, but do no
 2. Provider-confirmed change announcements, only with source and version.
 3. User-entered contract figures for that environment, **never** represented as Microsoft-verified rates.
 
-Never scrape customer portals or use login-only prices. If automated HTML scraping becomes necessary for licence pricing, defer it: rate changes to structured public docs can instead produce a **manual review issue**, not automatic unsupported price changes.
+Never scrape customer portals or use login-only prices. Automated reconciliation uses public, exact UK offer cards and scoped claims. If the source cannot establish the exact terms or relationship, retain the previous dated evidence and record the unresolved item. See [catalogue maintenance](23-maintenance-automation.md).
 
 ## In-app explainability
 

@@ -79,7 +79,3 @@ export function inspectUkOffer(html: string, names: readonly string[], type: 'se
   const offer = [...candidates.values()][0];
   return { offer: { ...offer, identity: [...references][0] }, cards: cards.length };
 }
-
-export function priceHeadings(html: string) {
-  return [...new Set(elements(main(html), titles).map(words).filter(name => name.length > 3 && name.length < 125))];
-}

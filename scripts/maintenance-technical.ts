@@ -102,6 +102,8 @@ export function reconcileTechnical(input: Inputs) {
     const modelKey = exactKey(cell.model, cell.version);
     const options = capabilities.get(modelKey) ?? matrix.capabilities.find(row =>
       row.version === cell.version && row.models.includes(cell.model.toLowerCase()) && row.reviewBy >= dates.verifiedOn);
+    const lifecycle = lifecycles.get(modelKey);
+    if (lifecycle?.timing === 'retirement' && lifecycle.date <= dates.verifiedOn) continue;
     const provisioned = cell.deployment.endsWith('provisioned');
     if (!provisioned && !(options?.input.includes('text') && options.output.includes('text'))) {
       issue('compatibility', key, 'unmapped', capabilitySource, 'Availability is discoverable. The billing dimensions for this exact model version require separate evidence.');
@@ -180,6 +182,15 @@ export function reconcileTechnical(input: Inputs) {
   const processed = new Set<string>();
   matrix.lifecycle = matrix.lifecycle.flatMap(row => {
     if (row.sku) return [row];
+    if (!row.models.some(model => lifecycles.get(exactKey(model, row.version)))) {
+      for (const model of row.models) {
+        const key = exactKey(model, row.version);
+        processed.add(key);
+        issue('lifecycle', key, lifecycles.get(key) === null ? 'ambiguous' : 'unmapped',
+          row.source, 'Current official tables did not establish a single retirement schedule for this model version.');
+      }
+      return [row];
+    }
     return row.models.map((model, index) => {
       const key = exactKey(model, row.version);
       const evidence = lifecycles.get(key);

@@ -11,6 +11,7 @@ const aliases: Record<string, string[]> = {
   'm365-premium-copilot-gb': ['Microsoft 365 Business Premium and Microsoft 365 Copilot', 'Microsoft 365 Business Premium and Microsoft 365 Copilot Business'],
   'defender-o365-p1-gb': ['Microsoft Defender for Office 365 (Plan 1)'],
   'defender-o365-p2-gb': ['Microsoft Defender for Office 365 (Plan 2)'],
+  'agent-365-gb': ['Agent 365'],
   'copilot-credit-pack-gb': ['Copilot Studio', 'Copilot Studio prepaid capacity', 'Copilot Credits'],
 };
 const additional: Record<string, string> = {
@@ -24,14 +25,23 @@ const additional: Record<string, string> = {
 const termDescription = { annual: 'Annual commitment', monthly: 'Monthly commitment', 'monthly-pack': 'Monthly pack of 25,000 Copilot Credits' } as const;
 const later = (at: string, days: number) => new Date(Date.parse(at) + days * 86_400_000).toISOString();
 
-export function offerSource(offer: Offering, previous?: RetailRecord) {
-  return previous?.source ?? additional[offer.id] ?? offer.evidence;
+const corroboration: Record<string, string[]> = {
+  'agent-365-gb': ['https://www.microsoft.com/en-gb/microsoft-365/enterprise/office-365-plans-and-pricing',
+    'https://www.microsoft.com/en-gb/microsoft-agent-365'],
+  'defender-suite-gb': ['https://www.microsoft.com/en-gb/security/business/siem-and-xdr/microsoft-defender-office-365',
+    'https://www.microsoft.com/en-gb/security/business/endpoint-security/microsoft-defender-endpoint'],
+  'entra-p1-gb': ['https://www.microsoft.com/en-gb/security/microsoft-entra-pricing'],
+  'entra-suite-gb': ['https://www.microsoft.com/en-gb/security/microsoft-entra-pricing'],
+};
+export function offerSources(offer: Offering, previous?: RetailRecord) {
+  const selected = previous?.source ?? additional[offer.id] ?? offer.evidence;
+  return [...new Set([...(selected ? [selected] : []), ...(corroboration[offer.id] ?? [])])];
 }
 export function offerNames(offer: Offering, previous?: RetailRecord) {
   return [offer.name, ...(previous ? [previous.product] : []), ...(aliases[offer.id] ?? [])];
 }
 
-export function reconcileOffer(offer: Offering, page: Source, at: string, previous?: RetailRecord) {
+export function reconcileOffer(offer: Offering, page: Source, at: string, previous?: RetailRecord, corroboration: string[] = []) {
   if (new URL(page.url).hostname !== 'www.microsoft.com' || !new URL(page.url).pathname.startsWith('/en-gb/')) {
     return { issue: 'Source did not return the public UK offer page.' };
   }
@@ -52,7 +62,7 @@ export function reconcileOffer(offer: Offering, page: Source, at: string, previo
     return { issue: 'The commitment changed without a stable Microsoft purchase SKU.' };
   }
   const movement = previous ? new Decimal(observed.price).div(previous.price) : undefined;
-  if (movement && (movement.greaterThan(1.5) || movement.lessThan(0.5))) {
+  if (!corroboration.length && movement && (movement.greaterThan(1.5) || movement.lessThan(0.5))) {
     return { issue: 'A public commercial rate moved by more than 50%. An independent exact offer source is required.' };
   }
   const changedPrice = previous?.price !== observed.price;
@@ -63,9 +73,9 @@ export function reconcileOffer(offer: Offering, page: Source, at: string, previo
     : baseTerms;
   const record: RetailRecord = {
     ...meter, currency: 'GBP', price: observed.price, effectiveAt: changedPrice || changedTerm ? at : previous?.effectiveAt ?? at,
-    verification: 'microsoft-commercial', product: previous?.product ?? offer.name, source: previous?.source ?? page.url,
+    verification: 'microsoft-commercial', product: previous?.product ?? offer.name, source: page.url,
     offeringId: offer.id, component: component.id, review: {
-      checkedAt: at, expiresAt: later(at, 45), terms: reviewTerms, term: observed.term, identity: observed.identity,
+      checkedAt: at, expiresAt: later(at, 45), terms: reviewTerms, term: observed.term, identity: observed.identity, corroboration: corroboration.length ? corroboration : undefined,
     },
   };
   return { record, change: changedTerm ? 'Verified commitment changed for the same purchase SKU.' :

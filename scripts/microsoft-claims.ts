@@ -3,7 +3,7 @@ import { elements, main, normalize, words } from './microsoft-source';
 const fragments = new Set(['p', 'li', 'td', 'dd']);
 const canonical = (value: string) => normalize(value).toLowerCase();
 export function claimsOnPage(html: string) {
-  const lines = elements(main(html), fragments).map(words).map(canonical);
+  const lines = elements(main(html), fragments).map(node => words(node)).map(canonical);
   return new Set(lines.filter(line => line.length > 12 && line.length < 1600));
 }
 
@@ -16,8 +16,8 @@ const selectors: Record<string, string[][]> = {
   'copilot-included-use': [['microsoft 365 copilot', 'authenticated'], ['computer-using agents', 'credits']],
   'agent365-e7': [['microsoft 365 e7', 'includes', 'agent 365']],
   'agent365-user': [['agent 365', 'users', 'sponsor']],
-  'entra-e3': [['entra id p1', 'microsoft 365 e3']],
-  'entra-e5': [['entra id p2', 'microsoft 365 e5']],
+  'entra-e3': [['entra id p1', 'microsoft 365 e3', 'microsoft 365 business premium'], ['entra id p1', 'no teams']],
+  'entra-e5': [['entra id p2', 'microsoft 365 e5'], ['entra id p2', 'no teams']],
   'entra-suite-base': [['entra suite', 'requires', 'entra id p1']],
   'entra-p2-base': [['entra id p2', 'includes', 'entra id p1']],
   'entra-suite-e7': [['entra suite', 'included', 'microsoft 365 e7']],
@@ -29,7 +29,10 @@ const selectors: Record<string, string[][]> = {
   'purview-ediscovery': [['ediscovery', 'premium', 'license'], ['ediscovery manager', 'role']],
   'search-classic-private-basic': [['basic agent deployments does not support private foundry iq resources']],
   'search-classic-private-standard': [['deploy the standard agent with virtual network injection']],
-  'search-classic': [['foundry iq tool in agent service connects an agent to a new or existing search index']],
+  'search-classic': [['foundry iq tool in agent service connects an agent to a new or existing search index'],
+    ['same tenant'], ['role-based access control'], ['agents (classic) are now deprecated']],
+  'provisioned-constraints': [['minimum', 'ptu'], ['quota', 'capacity'], ['reservation']],
+  'copilot-managed': [['all language models that copilot studio provides', 'bills through the pay-as-you-go meter', 'copilot credit packs']],
 };
 
 export function claimMatches(id: string, lines: ReadonlySet<string>) {
@@ -39,6 +42,15 @@ export function claimMatches(id: string, lines: ReadonlySet<string>) {
   })) ?? false;
 }
 
-export function defenderSuiteQualifier(lines: ReadonlySet<string>) {
-  return [...lines].some(line => /^requires:\s*microsoft 365 e3;\s*or office 365 e3 and enterprise mobility \+ security e3\.?$/i.test(line));
+export function defenderSuiteBase(lines: ReadonlySet<string>) {
+  const solutions = [...lines].filter(line => /^requires: (?:microsoft 365 e3|office 365 e3 and enterprise mobility \+ security e3)(?:; or office 365 e3 and enterprise mobility \+ security e3)?\.?$/.test(line));
+  const values = new Set(solutions.map(line => line.replace(/\.$/, '')));
+  if (values.size !== 1) return;
+  const text = [...values][0];
+  const standard = text.includes('microsoft 365 e3');
+  const bundle = text.includes('office 365 e3 and enterprise mobility + security e3');
+  return { eligible: standard ? ['m365-e3-gb'] : [], qualifyingBundles: bundle ? [['o365-e3-gb', 'ems-e3-gb']] : [],
+    condition: standard && bundle ? 'The published UK offer requires Microsoft 365 E3, or Office 365 E3 together with Enterprise Mobility + Security E3.'
+      : standard ? 'The published UK offer requires Microsoft 365 E3.'
+      : 'The published UK offer requires Office 365 E3 together with Enterprise Mobility + Security E3.' };
 }

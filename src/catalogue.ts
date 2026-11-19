@@ -13,7 +13,7 @@ export const sourceRecord = z.strictObject({
   offeringId: z.string().min(1).optional(), component: componentId.optional(),
   meterName: z.string().optional(), publishedSku: z.string().optional(),
   sourceMeterId: z.uuid().optional(), publishedUnit: z.string().optional(),
-  review: z.strictObject({ checkedAt: z.iso.datetime({ offset: true }), expiresAt: z.iso.datetime({ offset: true }), terms: z.string().min(1), term: z.enum(['annual', 'monthly', 'monthly-pack']).optional(), identity: z.string().regex(/^[A-Z0-9]+:[A-Z0-9]+$/i).optional() }).optional(),
+  review: z.strictObject({ checkedAt: z.iso.datetime({ offset: true }), expiresAt: z.iso.datetime({ offset: true }), terms: z.string().min(1), term: z.enum(['annual', 'monthly', 'monthly-pack']).optional(), identity: z.string().regex(/^[A-Z0-9]+:[A-Z0-9]+$/i).optional(), corroboration: z.array(z.url().refine(url => /^https:\/\/www\.microsoft\.com\/en-gb\//.test(url))).optional() }).optional(),
 }).superRefine((record, ctx) => {
   const invalid = () => ctx.addIssue({ code: 'custom', message: 'Invalid price source or commercial review metadata' });
   const origin = URL.canParse(record.source) ? new URL(record.source).origin : '';

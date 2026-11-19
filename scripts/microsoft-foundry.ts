@@ -29,7 +29,7 @@ type Cell = { model: string; version: string; sku: Mode[0]; deployment: Mode[1];
   status: 'compatible' | 'conditional' | 'incompatible'; source: string };
 export function regionalCells(html: string) {
   const observed: Observations<Cell> = new Map();
-  for (const table of tables(main(html))) {
+  for (const table of tables(main(html), true)) {
     const section = table.headings.findLast(label => Object.hasOwn(modes, label)) as keyof typeof modes | undefined;
     if (!section || table.header[0]?.toLowerCase() !== 'model' || table.header[1]?.toLowerCase() !== 'version') continue;
     const [sku, deployment] = modes[section];
@@ -38,7 +38,7 @@ export function regionalCells(html: string) {
       for (const [index, cell] of locations.entries()) {
         const region = table.header[index + 2].toLowerCase();
         if (!scopedRegions.includes(region)) continue;
-        const yes = /^✅(?:\s*\d+)?$/.test(cell);
+        const yes = /^✅(?:\s*(?:\d+|\*+))?$/.test(cell);
         if (!yes && !/^(?:❌|—|–|-)$/u.test(cell)) continue;
         const status = yes ? deployment.endsWith('provisioned') || cell !== '✅' ? 'conditional' : 'compatible' : 'incompatible';
         observe(observed, exactKey(model, version, sku, region), {

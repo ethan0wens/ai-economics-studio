@@ -10,8 +10,8 @@ import { capacityEvidence } from '../src/provisioned';
 import { validate, retailPage } from './pricing';
 import { curatedPrices } from './commercial-pricing';
 import { inventoryPlan, retailOrigin, retailPath } from './discovery';
-import { claimMatches, claimsOnPage, defenderSuiteQualifier } from './microsoft-claims';
-import { offerSource, reconcileOffer } from './maintenance-commercial';
+import { claimMatches, claimsOnPage, defenderSuiteBase } from './microsoft-claims';
+import { offerSources, reconcileOffer } from './maintenance-commercial';
 import { reconcileTechnical, renew, type RecordChange, type RecordIssue } from './maintenance-technical';
 import { capabilitySource, lifecycleSource, productTerms, regionSource, reservationSource, sizingSource, sourceReader } from './microsoft-source';
 
@@ -74,19 +74,35 @@ export async function maintenance(weekly: boolean, at: string, request = fetch) 
   for (let offset = 0; offset < offers.length; offset += 5) {
     await Promise.all(offers.slice(offset, offset + 5).map(async offer => {
       const old = records.get(offer.id);
-      const url = offerSource(offer, old);
-      if (!url) return;
-      const page = await source('commercial', url);
-      if (page.html) {
-        const next = reconcileOffer(offer, page, at, old);
+      const urls = offerSources(offer, old);
+      if (!urls.length) return;
+      const pages = await Promise.all(urls.map(url => source('commercial', url)));
+      const observations = pages.flatMap(page => {
+        if (!page.html) return [];
+        const candidate = reconcileOffer(offer, page, at, old);
+        const exact = candidate.record ?? reconcileOffer(offer, page, at, old, [page.url]).record;
+        return [{ candidate, page, exact }];
+      });
+      const active = observations.flatMap(value => value.exact ? [value.exact] : []);
+      const signatures = new Set(active.map(value => [value.price, value.review?.term].join('|')));
+      const primary = observations.find(row => row.exact);
+      const url = urls[0];
+      if (signatures.size > 1 || observations.some(item => item.candidate.issue?.includes('Contradictory public'))) {
+        issue('commercial', offer.id, 'ambiguous', url, 'Exact UK source records disagree about the standard price or commitment.');
+      } else if (primary) {
+        const confirmation = [...new Set(active.map(value => value.source))].filter(value => value !== primary.page.url);
+        const next = reconcileOffer(offer, primary.page, at, old, confirmation);
         if (next.record) {
           check('commercial');
           if (weekly) records.set(offer.id, next.record);
-          if (next.change) change('commercial', offer.id, next.conditional ? 'conditional' : 'automatic',
+          if (next.change) change('commercial', offer.id, next.conditional || (confirmation.length > 0 && !primary.candidate.record) ? 'conditional' : 'automatic',
             weekly ? next.change : `${next.change} Queued for the weekly review.`);
           return;
         }
-        issue('commercial', offer.id, old ? (/contradictory|sku changed|more than 50%/i.test(next.issue ?? '') ? 'ambiguous' : 'unmapped') : 'unpriced', url, next.issue ?? 'Exact UK offer unresolved.');
+        issue('commercial', offer.id, 'ambiguous', url, next.issue ?? 'Exact UK offer unresolved.');
+      } else if (observations.length) {
+        const details = observations[0].candidate.issue;
+        issue('commercial', offer.id, old ? (details?.includes('SKU changed') ? 'ambiguous' : 'unmapped') : 'unpriced', url, details ?? 'Exact UK offer unresolved.');
       }
       if (old?.review && Date.parse(old.review.expiresAt) < Date.parse(at)) {
         issue('commercial', offer.id, 'expired', url, 'The last observed rate has expired and remains historical.');
@@ -117,9 +133,14 @@ export async function maintenance(weekly: boolean, at: string, request = fetch) 
         const page = await source(group, row.source);
         const lines = fragments.get(row.source) ?? (page.html ? claimsOnPage(page.html) : new Set<string>());
         fragments.set(row.source, lines);
-        const match = row.id === 'defender-suite-base' ? defenderSuiteQualifier(lines) : claimMatches(row.id, lines);
+        const qualifier = row.id === 'defender-suite-base' && 'kind' in row && row.kind === 'requirement' ? defenderSuiteBase(lines) : undefined;
+        const match = row.id === 'defender-suite-base' ? Boolean(qualifier) : claimMatches(row.id, lines);
         if (match && (!('kind' in row) || row.kind !== 'unverified')) {
-          Object.assign(row, renew(row, at));
+          if (qualifier && 'kind' in row && JSON.stringify([row.eligible ?? [], row.qualifyingBundles ?? []]) !==
+              JSON.stringify([qualifier.eligible, qualifier.qualifyingBundles])) {
+            change(group, row.id, 'conditional', 'Microsoft changed the exact, structured Defender Suite prerequisites.');
+            Object.assign(row, qualifier, { ...renew(row, at), observedSince: at.slice(0, 10) });
+          } else Object.assign(row, renew(row, at));
           check(group);
         } else issue(group, row.id, 'unmapped', row.source, 'The exact rule was not re-established by the approved scoped source check.');
         if (row.reviewBy < at.slice(0, 10) && (!('kind' in row) || row.kind !== 'unverified')) {
@@ -131,7 +152,11 @@ export async function maintenance(weekly: boolean, at: string, request = fetch) 
       const key = productTerms;
       const old = prior.sources.find(record => record.url === key && record.group === 'licensing');
       const next = report.sources.find(record => record.url === key && record.group === 'licensing');
-      if (old?.digest && old.digest !== next?.digest) {
+      const lines = [...claimsOnPage(terms.html)].filter(line => /microsoft 365|office 365|agent 365|copilot|defender|purview|entra/.test(line)
+        && /eligib|licen[cs]e|subscription|prerequisite|included/.test(line));
+      if (next && lines.length) next.digest = createHash('sha256').update(lines.sort().join('\n')).digest('hex');
+      if (!lines.length) issue('licensing', 'product-terms-scope', 'unmapped', key, 'The current Product Terms response did not establish extractable scoped eligibility clauses.');
+      if (lines.length && old?.digest && old.digest !== next?.digest) {
         issue('licensing', 'product-terms-digest', 'unmapped', key, 'Product Terms document changed. Only separately matched claims were renewed.');
       }
     }

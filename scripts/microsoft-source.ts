@@ -29,11 +29,12 @@ export function elements(root: Parent, tags?: ReadonlySet<string>): Element[] {
   });
 }
 
-export function words(node: Parent): string {
+export function words(node: Parent, keepFootnotes = false): string {
   return normalize(node.childNodes.map(child => {
     if (child.nodeName === '#text' && 'value' in child) return child.value;
-    if (!('tagName' in child) || skip.has(child.tagName)) return '';
-    const body = words(child);
+    if (!('tagName' in child) || (skip.has(child.tagName) && !(keepFootnotes && child.tagName === 'sup'))) return '';
+    const body = words(child, keepFootnotes);
+    if (child.tagName === 'sup') return ` ${body} `;
     return ['p', 'div', 'li', 'br', 'td', 'th'].includes(child.tagName) ? ` ${body} ` : body;
   }).join(''));
 }
@@ -43,7 +44,7 @@ export function main(html: string) {
   return elements(tree, new Set(['main']))[0] ?? tree;
 }
 
-export function tables(root: Parent) {
+export function tables(root: Parent, keepFootnotes = false) {
   const entries = elements(root, new Set(['h2', 'h3', 'h4', 'h5', 'table']));
   const headings: Element[] = [];
   return entries.flatMap(node => {
@@ -53,8 +54,8 @@ export function tables(root: Parent) {
       return [];
     }
     const rows = elements(node, new Set(['tr'])).map(row =>
-      row.childNodes.filter((cell): cell is Element => 'tagName' in cell && ['th', 'td'].includes(cell.tagName)).map(words));
-    return rows.length ? [{ headings: headings.map(words), header: rows[0], rows: rows.slice(1) }] : [];
+      row.childNodes.filter((cell): cell is Element => 'tagName' in cell && ['th', 'td'].includes(cell.tagName)).map(cell => words(cell, keepFootnotes)));
+    return rows.length ? [{ headings: headings.map(node => words(node)), header: rows[0], rows: rows.slice(1) }] : [];
   });
 }
 

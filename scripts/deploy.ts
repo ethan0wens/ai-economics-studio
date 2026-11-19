@@ -79,7 +79,12 @@ async function currentAssets() {
   const parsed = (() => { try { return releaseHealthSchema.safeParse(JSON.parse(health).release); } catch { return undefined; } })();
   const application = parsed?.success ? parsed.data.application : null;
   const assets = new Map([['/', html], [manifestPath, manifest]]);
-  if (catalogueId) assets.set(`/pricing/${catalogueFilename(catalogueId)}`, await get(`/pricing/${catalogueFilename(catalogueId)}`));
+  if (catalogueId) {
+    const path = `/pricing/${catalogueFilename(catalogueId)}`;
+    const raw = await get(path);
+    if (createHash('sha256').update(raw).digest('hex') !== catalogueId) throw new Error('Production rollback target catalogue hash could not be validated.');
+    assets.set(path, raw);
+  }
   if (parsed?.success) assets.set(healthPath, health);
   return { application, catalogueId, assets };
 }
@@ -168,6 +173,7 @@ if (process.argv[1] && pathToFileURL(process.argv[1]).href === import.meta.url) 
     const worker = workerReleases(account!, token!, name);
     const previous = await worker.current();
     const previousAssets = await currentAssets();
+    if ((await worker.current()).deployment !== previous.deployment) throw new Error('The active Worker changed while capturing the rollback target.');
     const { assets, manifest } = await builtAssets(previous, previousAssets, application);
     report('notice', `Verified existing Worker ${site} with rollback target ${previous.version}`);
     await promoteWorker({

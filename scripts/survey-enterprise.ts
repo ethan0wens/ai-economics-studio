@@ -58,25 +58,23 @@ await Promise.all((sources[process.argv[2]] ?? []).map(async ([title, source, te
     const rows = [...body.matchAll(/<(tr|p|li|h[1-5]|div)\b[^>]*>((?:(?!<\1\b)[\s\S])*?)<\/\1>/gi)]
       .map(match => plain(match[2])).filter(value => value.length > 4 && value.length < 650 && terms.test(value));
     const pricing = rows.filter(row => row.includes('£'));
-    const tables = title.includes('region matrix') ? [...body.matchAll(/<table\b[^>]*>([\s\S]*?)<\/table>/gi)].flatMap(table => {
+    const tables = title.includes('region matrix') ? [...body.matchAll(/<table\b[^>]*>([\s\S]*?)<\/table>/gi)].flatMap((table, ordinal) => {
       const result = [...table[1].matchAll(/<tr\b[^>]*>([\s\S]*?)<\/tr>/gi)].map(row => plain(row[1]));
-      const regions = result.filter(row => /^(uksouth|westeurope|eastus2|UK South|West Europe|East US 2)( |\|)/i.test(row));
-      const before = body.slice(0, table.index);
-      const heading = [...before.matchAll(/<h[2-5]\b[^>]*>([\s\S]*?)<\/h[2-5]>/gi)].at(-1);
       const header = result.find(row => /model.*\|.*version/i.test(row));
       const columns = header?.split('|').map(cell => cell.trim()) ?? [];
-      const targetColumns = columns.flatMap((cell, index) => /^(eastus2|uksouth|westeurope)$/i.test(cell) ? [index] : []);
+      const targetColumns = columns.flatMap((cell, index) => /eastus2|uksouth|westeurope/i.test(cell) ? [index] : []);
       const models = result.filter(row => /^(gpt-4(?:o(?:-mini)?|\.1(?:-mini|-nano)?)|deepseek-v3\.2|grok-4\.1|llama-4-maverick) \|/i.test(row));
-      const tabs = [...before.matchAll(/<(?:section|div)\b[^>]*(?:id|data-tab)="([^"]*(?:standard|provisioned)[^"]*)"/gi)].at(-1)?.[1];
-      return [
-        ...(regions.length ? [plain(heading?.[1] ?? ''), result[0], ...regions] : []),
-        ...(models.length && targetColumns.length ? [`${plain(heading?.[1] ?? '')} · ${tabs ?? ''}`,
-          ['Model', 'Version', ...targetColumns.map(index => columns[index])].join(' | '),
-          ...models.map(row => {
-            const cells = row.split('|').map(cell => cell.trim());
-            return [cells[0], cells[1], ...targetColumns.map(index => cells[index])].join(' | ');
-          })] : []),
-      ];
+      const preceding = body.slice(0, table.index);
+      const section = [...preceding.matchAll(/<(?:section|div)[^>]*(?:tabpanel|data-tab)[^>]*>/gi)].at(-1)?.[0];
+      const links = [...preceding.matchAll(/<a[^>]*(?:data-tab|href="#tab)[^>]*>([\s\S]*?)<\/a>/gi)].slice(-12).map(link => plain(link[1]));
+      return models.length && targetColumns.length ? [
+        `Table ${ordinal} | ${section?.replaceAll('<', '[').replaceAll('>', ']') ?? ''} | ${links.join(' / ')}`,
+        ['Model', 'Version', ...targetColumns.map(index => columns[index])].join(' | '),
+        ...models.map(row => {
+          const cells = row.split('|').map(cell => cell.trim());
+          return [cells[0], cells[1], ...targetColumns.map(index => cells[index])].join(' | ');
+        }),
+      ] : [];
     }) : [];
     const links = ['Search classic linked sources', 'GLOBAL region matrix'].includes(title) ? [...body.matchAll(/<a\b[^>]*href="([^"]+)"[^>]*>([\s\S]*?)<\/a>/gi)]
       .filter(link => /new Foundry IQ|new agents|Region availability for Foundry Models|Model availability/i.test(plain(link[2]))).map(link => new URL(link[1], response.url).href) : [];

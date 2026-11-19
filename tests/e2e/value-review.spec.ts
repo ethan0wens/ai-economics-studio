@@ -123,7 +123,12 @@ test('Environment Review groups evidence and declarations and opens the existing
   await expect(page.getByRole('heading', { name: 'Environment Review' })).toBeVisible();
   await expect(page.getByText('1 policy declaration')).toBeVisible();
   const primary = page.getByRole('navigation', { name: 'Studio navigation' });
-  await expect(primary.getByRole('link', { name: 'Environment Review' })).toHaveCount(0);
+  const reviewLink = primary.getByRole('link', { name: 'Environment Review', exact: true });
+  await expect(primary.getByRole('link')).toHaveText([
+    'Home', 'Environment Builder', 'Cost & Value Analysis', 'Environment Review', 'Reports & Export', 'Documentation', 'Pricing Catalogue',
+  ]);
+  await expect(reviewLink).toHaveAttribute('aria-current', 'page');
+  await expect(reviewLink).toHaveAttribute('href', '#/review');
   const views = page.getByRole('navigation', { name: 'Environment review views' });
   await views.getByRole('link', { name: 'Technical fit' }).press('Enter');
   await page.locator('summary').filter({ hasText: 'Incompatible audio output' }).click();
@@ -144,11 +149,15 @@ test('Environment Review groups evidence and declarations and opens the existing
   await expect(page.getByText('Unknown', { exact: true }).first()).toBeVisible();
 
   await page.evaluate(() => { location.hash = '#/architecture'; });
+  await expect(reviewLink).toHaveAttribute('aria-current', 'page');
   await expect(page.getByRole('table', { name: 'Architecture objects and outgoing links' })).toBeVisible();
   const svg = await download(page, 'Export SVG');
   expect(svg.toString()).toContain('AI Economics Studio logical architecture');
   await page.evaluate(() => { location.hash = '#/governance'; });
   await expect(views.getByRole('link', { name: 'Controls' })).toHaveAttribute('aria-current', 'page');
+  await expect(reviewLink).toHaveAttribute('aria-current', 'page');
+  await page.goBack();
+  await expect(views.getByRole('link', { name: 'Architecture' })).toHaveAttribute('aria-current', 'page');
 });
 
 test('both PDFs reconcile accepted value and only the Full Report includes an opted-in illustration', async ({ page }) => {
@@ -196,7 +205,7 @@ test.describe('narrow guided and optional views', () => {
     await page.getByRole('button', { name: 'Toggle navigation' }).press('Enter');
     const primary = page.getByRole('navigation', { name: 'Studio navigation' });
     await expect(primary.getByRole('link')).toHaveText([
-      'Home', 'Environment Builder', 'Cost & Value Analysis', 'Reports & Export', 'Documentation', 'Pricing Catalogue',
+      'Home', 'Environment Builder', 'Cost & Value Analysis', 'Environment Review', 'Reports & Export', 'Documentation', 'Pricing Catalogue',
     ]);
     await primary.getByRole('link', { name: 'Cost & Value Analysis' }).press('Enter');
     await expect(page.getByRole('heading', { name: 'Cost & Value Analysis' })).toBeFocused();
@@ -206,8 +215,15 @@ test.describe('narrow guided and optional views', () => {
     expect(await overflow()).toBe(0);
     expect((await new AxeBuilder({ page }).include('#main').analyze()).violations).toEqual([]);
 
-    await page.evaluate(() => { window.location.hash = '#/review'; });
+    const toggle = page.getByRole('button', { name: 'Toggle navigation' });
+    await toggle.press('Enter');
+    await primary.getByRole('link', { name: 'Environment Review' }).press('Enter');
     await expect(page.getByRole('heading', { name: 'Environment Review' })).toBeFocused();
+    await toggle.press('Enter');
+    const current = primary.getByRole('link', { name: 'Environment Review' });
+    await expect(current).toHaveAttribute('aria-current', 'page');
+    await current.press('Enter');
+    await expect(toggle).toBeFocused();
     const views = page.getByRole('navigation', { name: 'Environment review views' });
     await views.getByRole('link', { name: 'Architecture' }).press('Enter');
     await expect(page.getByRole('region', { name: 'Scrollable logical diagram' })).toBeVisible();

@@ -1,11 +1,12 @@
 import { LearnMore } from './learn-more';
 import { useEffect, useRef, useState, type ReactNode } from 'react';
-import { ArrowDownToLine, ArrowRight, BookOpen, Boxes, ChartNoAxesCombined, Cloud, FileText, GitFork, House, Menu, ShieldCheck, Workflow, X } from 'lucide-react';
+import { ArrowDownToLine, ArrowRight, BookOpen, Boxes, ChartNoAxesCombined, ClipboardCheck, Cloud, FileText, GitFork, House, Menu, ShieldCheck, Workflow, X } from 'lucide-react';
 import type { Environment } from './domain';
-import { destinations, routeHref, type Destination } from './navigation';
+import { destinations, reviewPages, routeHref, type Destination } from './navigation';
 
 const links = [
-  ['home', House], ['builder', Boxes], ['costs', ChartNoAxesCombined], ['reports', FileText], ['documentation', BookOpen],
+  ['home', House], ['builder', Boxes], ['costs', ChartNoAxesCombined], ['review', ClipboardCheck],
+  ['reports', FileText], ['documentation', BookOpen],
 ] as const;
 
 export function StudioNavigation({ page }: { page: Destination }) {
@@ -23,8 +24,10 @@ export function StudioNavigation({ page }: { page: Destination }) {
     setOpenFor(undefined);
     if (restore) trigger.current?.focus();
   }
+  const activePage = reviewPages.has(page) ? 'review' : page;
   const nav = () => <nav aria-label="Studio navigation">
-    {links.map(([id, Icon]) => <a key={id} href={routeHref(id)} aria-current={page === id ? 'page' : undefined} onClick={() => close(false)}>
+    {links.map(([id, Icon]) => <a key={id} href={routeHref(id)} aria-current={activePage === id ? 'page' : undefined}
+      onClick={() => close(open && window.location.hash === routeHref(id))}>
       <Icon size={19} aria-hidden="true" />{destinations[id]}</a>)}
     <a className="reference-nav" href={routeHref('catalogue')} aria-current={page === 'catalogue' ? 'page' : undefined} onClick={() => close(false)}>
       <Cloud size={19} aria-hidden="true" />Pricing Catalogue</a>

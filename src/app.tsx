@@ -11,7 +11,7 @@ import { hasUnknownPrice, missingInputs } from './inspector-status';
 import { download, exportName } from './download';
 import { CapacityComparisons } from './capacity-ui';
 import { LicenceEstate } from './validation-ui';
-import { currentRoute, destinations, routeHref, type Destination, type Route } from './navigation';
+import { currentRoute, destinations, reviewPages, routeHref, type Destination, type Route } from './navigation';
 import { Home, Modal, StudioNavigation } from './workspace-ui';
 import { GuidedBuilder } from './guided-ui';
 import type { Intent } from './guided-state';
@@ -35,7 +35,6 @@ const kinds = Object.keys(kindLabels) as Kind[];
 const publicViews = new Set<Destination>(['home', 'documentation', 'examples', 'catalogue']);
 type Opening = { env: Environment; kind: 'new' | 'import' | 'example' | 'copy' };
 type View = 'guided' | 'advanced';
-const reviewPages = new Set<Destination>(['review', 'architecture', 'governance']);
 
 function Comparison({ env, result }: { env: Environment; result: Ledger }) {
   return <div className="compare-grid">{Object.entries(result.summary).map(([key, summary]) => <div key={key}>

@@ -6,6 +6,8 @@ export const destinations = {
 export type Destination = keyof typeof destinations;
 export type Route = { page: Destination; item?: string; technicalArticle?: string; section?: string };
 
+export const reviewPages = new Set<Destination>(['review', 'architecture', 'governance']);
+
 export function routeHref(page: Destination, item?: string, section?: string) {
   return `#/${page === 'home' ? '' : page}${item ? '/' + encodeURIComponent(item) : ''}${section ? '?section=' + encodeURIComponent(section) : ''}`;
 }

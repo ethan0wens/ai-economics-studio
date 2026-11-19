@@ -47,23 +47,30 @@ export async function verifyWorker(configText: string, accountId?: string, token
 }
 
 type AssetContents = string | Uint8Array;
+const manifestPath = '/pricing/manifest.json';
+const healthPath = '/pricing/health.json';
 
 export async function verifyPublishedAssets(expected: ReadonlyMap<string, AssetContents>, request = fetch) {
-  await Promise.all([...expected].map(async ([path, contents]) => {
+  const checks = await Promise.allSettled([...expected].map(async ([path, contents]) => {
     const response = await request(new URL(path, site), {
-      headers: { 'Cache-Control': 'no-cache' },
+      cache: 'no-store',
+      credentials: 'omit',
+      headers: { 'Cache-Control': 'no-cache', 'Accept-Encoding': 'identity' },
       redirect: 'error',
       signal: AbortSignal.timeout(10_000),
     });
     const bytes = typeof contents === 'string' ? Buffer.from(contents, 'utf8') : Buffer.from(contents);
-    const matches = response.ok && await readResponseBytes(response, bytes.length, `Published ${path}`)
-      .then(actual => bytes.equals(actual), () => false);
-    if (!matches) throw new Error(`Live ${path} does not match the build (HTTP ${response.status}).`);
+    const observed = response.ok && await readResponseBytes(response, path === healthPath ? 1_000_000 : bytes.length, `Published ${path}`)
+      .catch(() => false as const);
+    if (observed && bytes.equals(observed)) return;
+    const digest = (value: Uint8Array) => createHash('sha256').update(value).digest('hex').slice(0, 12);
+    const detail = observed ? `; expected SHA-256 ${digest(bytes)}, received ${digest(observed)}` : '';
+    throw new Error(`Live ${path} does not match the build (HTTP ${response.status}${detail}).`);
   }));
+  const failed = checks.filter(result => result.status === 'rejected');
+  if (failed.length) throw new Error(failed.map(({ reason }) => reason instanceof Error ? reason.message : String(reason)).join(' '));
 }
 
-const manifestPath = '/pricing/manifest.json';
-const healthPath = '/pricing/health.json';
 const cleanEnv = { ...process.env, CLOUDFLARE_ACCOUNT_ID: undefined, CLOUDFLARE_API_TOKEN: undefined,
   GITHUB_TOKEN: undefined, STUDIO_PUBLISH_TOKEN: undefined };
 
@@ -174,7 +181,7 @@ async function waitForPublishedAssets(assets: ReadonlyMap<string, AssetContents>
       report('notice', `Preview application and pricing assets match this build at ${site}`);
       return;
     } catch (error) {
-      if (attempt === 6) {
+      if (attempt === 13) {
         throw new Error(`Post-deploy verification failed for ${site}: ${error instanceof Error ? error.message : String(error)}`, { cause: error });
       }
       await delay(5_000);

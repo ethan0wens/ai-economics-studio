@@ -33,6 +33,8 @@ Check authorised target and main SHA ── deploy checked assets ─┘
 
 The deploy script uses `verifyWorker` and `verifyPublishedAssets`, then calls the guarded `promoteWorker` transaction. A failed verification or push restores the previous version only when the candidate is still identifiable as the active version. It then verifies previous bytes and version. An external rollout, split traffic or uncertain upload requires operator review. This prevents a failed job from rolling back someone else's deployment. See [Cloudflare promotion code](../../scripts/worker-release.ts), [deploy guard](../../scripts/deploy.ts) and [provider guidance](https://developers.cloudflare.com/workers/configuration/versions-and-deployments/).
 
+The asset guard polls the canonical public URLs for up to 13 checks, with five seconds between attempts. It requests a fresh uncompressed response and requires byte equality before continuing. A persistent mismatch reports the affected path and, when a bounded response was readable, the expected and observed digest prefixes.
+
 ### Incident response
 
 1. Identify the failed command, commit, current manifest, evidence status and active Cloudflare version. Check whether the log confirms a verified restore. Pause further operator-initiated promotions if the active rollout is uncertain.

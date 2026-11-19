@@ -49,6 +49,8 @@ describe('public deployment verification', () => {
     const [url, options] = request.mock.calls[0];
     expect(String(url)).toBe('https://ai-econmics-studio.ethan0wens.workers.dev/pricing/manifest.json');
     expect(new Headers(options?.headers).has('Authorization')).toBe(false);
+    expect(options).toMatchObject({ cache: 'no-store', credentials: 'omit', redirect: 'error' });
+    expect(new Headers(options?.headers).get('Accept-Encoding')).toBe('identity');
   });
 
   it('fails when the previous build is still being served', async () => {
@@ -64,5 +66,14 @@ describe('public deployment verification', () => {
     await expect(verifyPublishedAssets(expected, request)).resolves.toBeUndefined();
     request.mockResolvedValueOnce(new Response(new Uint8Array([0x88, 0x50, 0x4e, 0x47, 0x00])));
     await expect(verifyPublishedAssets(expected, request)).rejects.toThrow('does not match the build');
+  });
+
+  it('requires the canonical receipt bytes and diagnoses a stale response without logging content', async () => {
+    const stale = '{"release":"previous"}';
+    const request = vi.fn<typeof fetch>().mockResolvedValue(new Response(stale));
+    const path = '/pricing/health.json';
+    const result = verifyPublishedAssets(new Map([[path, '{"release":"current"}']]), request);
+    await expect(result).rejects.toThrow(/^Live .*expected SHA-256 [a-f0-9]{12}, received [a-f0-9]{12}/);
+    expect(String(request.mock.calls[0]?.[0])).toBe('https://ai-econmics-studio.ethan0wens.workers.dev' + path);
   });
 });

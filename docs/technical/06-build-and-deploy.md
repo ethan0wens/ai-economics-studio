@@ -37,6 +37,8 @@ npm run test:e2e
 | [Static application deploy](../../.github/workflows/deploy.yml) | Push to `main` or manual dispatch on `main`. Read-only contents. Runs checks and builds before the production deployment step. |
 | [Refresh and deploy](../../.github/workflows/refresh-pricing.yml) | Daily schedule, relevant `main` pushes or manual dispatch on `main`. Read-only Actions access, contents write for checked-in snapshots, issues write for deduplicated exceptions. |
 
+Changes limited to browser tests, documentation or app presentation follow the application deployment path and reuse the published catalogue. The automatic pricing push trigger covers mapped pricing implementation and evidence inputs. Schedule and manual dispatch can refresh and publish independently.
+
 Both production jobs use the `production` environment and share the production concurrency group. Enable repository-approved access for the refresh bot to publish verified data. The secret names are `CLOUDFLARE_ACCOUNT_ID` and `CLOUDFLARE_API_TOKEN`, set as environment secrets. The token must allow the existing Worker lookup and deployment operations for the intended account. Keep values out of repository content and logs. GitHub token pushes do not provide a separate deployment trigger. The refresh performs its own deployment and verification.
 
 ## Production verification

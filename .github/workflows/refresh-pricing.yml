@@ -3,7 +3,6 @@ on:
   push:
     branches: [main]
     paths:
-      - '.github/workflows/refresh-pricing.yml'
       - 'scripts/pricing.ts'
       - 'scripts/discovery.ts'
       - 'scripts/*maintenance*.ts'
@@ -14,7 +13,6 @@ on:
       - 'scripts/commercial-pricing.ts'
       - 'src/offerings.ts'
       - 'src/catalogue.ts'
-      - 'tests/e2e/**'
   schedule:
     - cron: '17 6 * * 0,2-6'
     - cron: '17 6 * * 1'

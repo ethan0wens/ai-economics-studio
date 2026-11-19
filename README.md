@@ -11,7 +11,7 @@ npm ci
 npm run dev
 ```
 
-Name an environment on **Home** or preview a fictional example. **Environment Builder** opens in Guided mode, where you can choose platforms, add agents, enter usage and see the estimate update. Advanced opens the same inventory and its settings. **Cost & Value Analysis** shows the estimate first and offers optional workload, price and adoption comparisons. Accept a value plan to model productivity and separate cashable savings. **Review your design** opens the contextual architecture, technical fit and controls review. Use **Reports & Export** for an Executive Summary or Full Report PDF, or to save editable JSON. **Documentation** offers searchable instructions and **Pricing Catalogue** shows the scope and evidence behind the rates. Cloud accounts and credentials are needed for production deployment.
+Name an environment on **Home** or preview a fictional example. **Environment Builder** opens in Guided mode, where you can choose platforms, add agents, enter usage and see the estimate update. Advanced opens the same inventory and its settings. **Cost & Value Analysis** shows the estimate first and offers optional workload, price and adoption comparisons. Accept a value plan to model productivity and separate cashable savings. **Environment Review** opens from the sidebar or from **Review your design**. It contains Overview, Architecture, Technical fit and Controls. Use **Reports & Export** for an Executive Summary or Full Report PDF, or to save editable JSON. **Documentation** offers searchable instructions and **Pricing Catalogue** shows the scope and evidence behind the rates. Cloud accounts and credentials are needed for production deployment.
 
 ```sh
 npm run typecheck
@@ -26,6 +26,8 @@ npm run test:e2e
 ```
 
 See the [field guide](docs/13-field-guide.md) for configuration inputs, units and requirements. See [source coverage](SOURCES.md) for the pricing coverage matrix, exact Azure mappings, commercial review dates and remaining evidence gaps, and the [operations runbook](docs/12-operations.md) for publishing, incident response and checks.
+
+The five curated examples are [Basic Foundry Assistant](https://ai-econmics-studio.ethan0wens.workers.dev/#/examples/foundry-assistant), [Copilot Studio Business Agent](https://ai-econmics-studio.ethan0wens.workers.dev/#/examples/copilot-agent), [Enterprise AI Environment](https://ai-econmics-studio.ethan0wens.workers.dev/#/examples/enterprise-ai), [Shared Model Deployment](https://ai-econmics-studio.ethan0wens.workers.dev/#/examples/shared-deployment) and [AI Adoption & Business Case](https://ai-econmics-studio.ethan0wens.workers.dev/#/documentation/example-ai-adoption-business-case). Each opens as an editable copy with fictional inputs and uses the applied catalogue for retail prices. See the [business-case reconciliation](docs/technical/03-worked-reconciliations.md#ai-adoption-and-business-case) for a reproducible test with fictional rates and the [source traceability matrix](docs/technical/traceability.md) for implementation and regression links.
 
 See the [Stage 2 delivery notes](docs/30-stage-2-ux-delivery.md) for navigation, example reconciliations and documentation maintenance.
 Use the [product language guide](docs/31-product-language.md) when editing the interface, help, documentation or reports.

@@ -20,6 +20,8 @@ Start from Home in a fresh browser profile. Let the participant choose desktop o
 
 For tasks D and E, use fictional planning numbers such as 200 target users, 50% adoption, 20 tasks per active user each month, 12 minutes saved per task, 60% realisation and £25 per realised hour. The expected 100 users give 400 gross hours, 240 realised hours and £6,000 monthly economic equivalent. Leave cashable savings blank first. For the explicit linkage, use a dedicated Foundry PAYG usage profile with calls and tokens present and 10 interactions per active user each month. Read cost results from the pinned fixture and compare actual numerators and unresolved counts.
 
+For D and E, the optional **AI Adoption & Business Case** editable copy starts with these assumptions accepted. Ask the participant to reach it through Examples and find the walkthrough themselves. Use the separate fixture for a known incompatibility or unresolved charge. The business-case copy contains a fictional planned identity declaration.
+
 ## Observation and decision sheet
 
 Record anonymous participant code, role category, device, test revision, elapsed time to first useful estimate, unnecessary choices, help requests, backtracks and task outcome. Ask the participant where they would find each next action, which costs remain unresolved, whether a declared control is verified, and whether released time means cash savings. Record their own explanation before offering guidance.

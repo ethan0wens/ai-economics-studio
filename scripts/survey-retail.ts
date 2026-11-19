@@ -1,6 +1,14 @@
 export {};
 
 const groups: Record<string, [string, string, string?][]> = {
+  focused: [
+    ['New OpenAI', "serviceName eq 'Foundry Models' and productName eq 'Azure OpenAI' and (contains(meterName,'gpt 5 mini') or contains(meterName,'gpt-5-mini') or contains(meterName,'o3 mini') or contains(meterName,'o3-mini'))"],
+    ['Embeddings and speech', "serviceName eq 'Foundry Models' and productName eq 'Azure OpenAI' and (contains(meterName,'embedding') or contains(meterName,'transcribe') or contains(meterName,'whisper'))"],
+    ['Grok', "serviceName eq 'Foundry Models' and productName eq 'Azure Grok Models'"],
+    ['Llama', "serviceName eq 'Foundry Models' and productName eq 'Azure Llama Models'"],
+    ['Azure Private Link', "contains(meterName,'Private Endpoint') and contains(productName,'Private Link')"],
+    ['Azure NAT', "contains(meterName,'NAT Gateway') and serviceName eq 'Virtual Network'"],
+  ],
   models: [
     ['OpenAI', "serviceName eq 'Foundry Models' and productName eq 'Azure OpenAI'", "gpt.?4\.1 |gpt.?4o |o3.mini|gpt.?5.mini|embedding|speech|Whisper|Provisioned Managed"],
     ['Partners', "serviceName eq 'Foundry Models' and productName ne 'Azure OpenAI'", "DeepSeek|Llama|Grok|Mistral|Cohere|Claude"],

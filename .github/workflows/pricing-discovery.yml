@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        source: [models, compute, data, operations]
+        source: [focused]
     timeout-minutes: 8
     steps:
       - uses: actions/checkout@v6

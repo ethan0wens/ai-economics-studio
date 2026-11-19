@@ -38,6 +38,10 @@ const groups: Record<string, [string, string][]> = {
     ['Office 365 F3 exact', gb + 'microsoft-365/enterprise/office-365-f3'],
     ['Frontline service', learn + 'office365/servicedescriptions/office-365-platform-service-description/office-365-plan-options'],
   ],
+  meters: [
+    ['GPT-family Azure meter identities', "https://prices.azure.com/api/retail/prices?api-version=2023-01-01-preview&currencyCode='GBP'&%24filter=armRegionName%20eq%20'uksouth'%20and%20priceType%20eq%20'Consumption'%20and%20productName%20eq%20'Azure%20OpenAI'%20and%20(contains(skuName,'gpt%205')%20or%20contains(skuName,'gpt-5')%20or%20contains(skuName,'GPT-5'))"],
+    ['Public reservation tariff check by product', "https://prices.azure.com/api/retail/prices?api-version=2023-01-01-preview&currencyCode='GBP'&%24filter=priceType%20eq%20'Reservation'%20and%20contains(productName,'OpenAI')"],
+  ],
   grid: [
     ['Regional cells compact', azureModels + 'models-sold-directly-by-azure-region-availability'],
   ],
@@ -101,6 +105,13 @@ await Promise.all((groups[group] ?? []).map(async ([title, url]) => {
     const page = plain(body);
     const output = [`HTTP ${response.status} ${response.url}`];
     if (title === 'Public baseline') output.push(html);
+    if (group === 'meters' && response.ok) {
+      const parsed = JSON.parse(html) as { Items: Record<string, unknown>[]; NextPageLink?: string };
+      const keys = ['serviceName','productName','skuName','meterName','unitOfMeasure','tierMinimumUnits','type','reservationTerm'];
+      const observed = [...new Set(parsed.Items.map(row => keys.map(key => row[key] ?? '').join(' | ')))];
+      output.push(`Returned ${parsed.Items.length} rows; has continuation ${!!parsed.NextPageLink}`,
+        ...observed.filter(row => !title.startsWith('GPT-') || /(?:gpt[- ]5(?:[ -]mini|[ -]nano|[ .-]2|[ .-]4)?)(?![0-9.a-z])/i.test(row)).slice(0,120));
+    }
     if (title.includes('reservation tariff') && response.ok) {
       const rows = JSON.parse(html) as { Items: Record<string, unknown>[]; NextPageLink?: string };
       output.push(`Returned ${rows.Items.length} rows; has continuation ${!!rows.NextPageLink}`,

@@ -4,6 +4,8 @@ const sources: Record<string, [string, string, RegExp][]> = {
   technical: [
     ['OpenAI standard', 'https://learn.microsoft.com/en-us/azure/ai-foundry/openai/concepts/models', /gpt-4\.1|gpt-4o-mini|global standard|data zone standard/i],
     ['OpenAI regional matrices', 'https://learn.microsoft.com/en-us/azure/ai-foundry/openai/concepts/models?tabs=global-standard%2Cstandard-chat-completions', /uksouth|westeurope|eastus2|gpt-4\.1/i],
+    ['Foundry GA models', 'https://learn.microsoft.com/en-us/azure/foundry/agents/concepts/model-region-support', /gpt-4\.1|region|network|support/i],
+    ['Foundry GA Search', 'https://learn.microsoft.com/en-us/azure/foundry/agents/how-to/tools/azure-ai-search', /tenant|managed identity|RBAC|private|classic|network/i],
     ['Foundry agents', 'https://learn.microsoft.com/en-us/azure/ai-foundry/agents/concepts/model-region-support', /uksouth|westeurope|eastus2|gpt-4\.1|network|regional/i],
     ['Provisioned', 'https://learn.microsoft.com/en-us/azure/ai-foundry/openai/concepts/provisioned-throughput', /minimum|capacity|quota|PTU/i],
     ['Search index', 'https://learn.microsoft.com/en-us/azure/ai-foundry/agents/how-to/tools/azure-ai-search', /same|region|managed identity|role|private|tool/i],
@@ -18,7 +20,9 @@ const sources: Record<string, [string, string, RegExp][]> = {
     ['Business', 'https://www.microsoft.com/en-gb/microsoft-365/business/compare-all-microsoft-365-business-products', /£|without Teams|paid yearly|VAT/i],
     ['Office 365', 'https://www.microsoft.com/en-gb/microsoft-365/enterprise/office365-plans-and-pricing', /£|without Teams|paid yearly|VAT/i],
     ['Defender', 'https://learn.microsoft.com/en-us/defender-xdr/prerequisites', /licens|Microsoft 365 E5|Office 365|Defender for Cloud Apps|Purview/i],
-    ['Purview', 'https://www.microsoft.com/en-gb/security/business/microsoft-purview-pricing', /£|includes|prerequisite|requires|E3|E5/i],
+    ['Purview', 'https://learn.microsoft.com/en-us/purview/purview-licensing', /prerequisite|requires|E3|E5|licens/i],
+    ['Copilot commercial', 'https://www.microsoft.com/en-gb/microsoft-365-copilot/pricing', /£|annual|commitment|VAT/i],
+    ['Copilot credits', 'https://learn.microsoft.com/en-us/microsoft-copilot-studio/requirements-messages-management', /included|interactive|licen|meter|25,000/i],
   ],
 };
 
@@ -37,7 +41,14 @@ await Promise.all((sources[process.argv[2]] ?? []).map(async ([title, source, te
     const rows = [...body.matchAll(/<(tr|p|li|h[1-5]|div)\b[^>]*>((?:(?!<\1\b)[\s\S])*?)<\/\1>/gi)]
       .map(match => plain(match[2])).filter(value => value.length > 4 && value.length < 650 && terms.test(value));
     const pricing = rows.filter(row => row.includes('£'));
-    const output = [`HTTP ${response.status} ${response.url}`, ...[...new Set([...pricing, ...rows])].slice(0, 44)];
+    const tables = title === 'OpenAI regional matrices' ? [...body.matchAll(/<table\b[^>]*>([\s\S]*?)<\/table>/gi)].flatMap(table => {
+      const cells = [...table[1].matchAll(/<tr\b[^>]*>([\s\S]*?)<\/tr>/gi)].map(row => plain(row[1]));
+      return cells[0]?.includes('gpt-4.1') ? [cells[0], ...cells.filter(row => /^(uksouth|westeurope|eastus2|UK South|West Europe|East US 2) \|/i.test(row))] : [];
+    }) : [];
+    const pageText = plain(body);
+    const near = ['M365 enterprise', 'Business', 'Office 365', 'Entra', 'Copilot commercial'].includes(title)
+      ? [...pageText.matchAll(/£[0-9]+\.[0-9]+/g)].slice(0, 32).map(match => pageText.slice(Math.max(0, match.index - 90), match.index + 150)) : [];
+    const output = [`HTTP ${response.status} ${response.url}`, ...[...new Set([...tables, ...near, ...pricing, ...rows])].slice(0, 44)];
     console.log(`::notice title=${title}::${output.join('\n').replaceAll('%', '%25').replaceAll('\r', '%0D').replaceAll('\n', '%0A')}`);
     await import('node:fs/promises').then(fs => fs.writeFile(`enterprise-${title.toLowerCase().replaceAll(' ', '-')}.txt`, output.join('\n')));
   } catch (error) {

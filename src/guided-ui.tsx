@@ -14,6 +14,7 @@ import { routeHref } from './navigation';
 import { missingInputs } from './inspector-status';
 import { regionName, unavailablePrice } from './presentation';
 import type { ReactNode } from 'react';
+import { UsageAssistance } from './usage-assistance-ui';
 
 const steps = ['Choose your AI platform', 'Build your AI solution', 'Estimate usage', 'Additional costs', 'Review your estimate'];
 type Edit = (id: string, field?: FieldId) => void;
@@ -118,6 +119,13 @@ function UsageEditor({ env, agent, update, advanced }: Pick<Props, 'env' | 'upda
   const marked = !!applied || (env.description?.includes('Illustrative usage preset applied.') && !!recordedPreset);
   const hasUsage = isCopilot ? agent.credits !== undefined : !!usage &&
     [usage.executions, usage.calls, usage.input, usage.output].some(value => value !== undefined);
+  function applyAssisted(assumptions: Agent | NonNullable<typeof usage>) {
+    if (!update(updateObject(env, assumptions))) return false;
+    setApplied('');
+    setPending('');
+    setRevision(revision + 1);
+    return true;
+  }
   function apply() {
     if (!preset) return;
     const note = 'Illustrative usage preset applied.';
@@ -168,6 +176,9 @@ function UsageEditor({ env, agent, update, advanced }: Pick<Props, 'env' | 'upda
         <button className="link-button" onClick={() => advanced(usage.id, 'cachedInput')}>More usage options</button>
       </>}
     </>}
+    {isCopilot && <UsageAssistance key={agent.id} agent={agent} apply={applyAssisted} />}
+    {isFoundry && model?.mode !== 'provisioned' && usage && !shared &&
+      <UsageAssistance key={usage.id} profile={usage} apply={applyAssisted} />}
     {canPriceUsage && <details className="guided-disclosure">
       <summary>Try example usage</summary>
       <p className="muted">Choose a preset to see how example usage affects the estimate. You can edit all the values afterwards.</p>

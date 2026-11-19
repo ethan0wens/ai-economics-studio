@@ -29,7 +29,7 @@ export const articles: Article[] = [
       s('start', 'Start with one workload', 'Use a name you will recognise in a report, such as Internal support assistant. Guided lets you price a small part of the solution before modelling the rest.', [
         'On Home, enter a name and choose Create environment.', 'Choose a platform and continue to Build your AI solution. Enter an agent name and choose Add agent.',
         'For a linked Foundry agent, select a model configuration or reuse a deployment. For Copilot Studio, continue to Estimate usage.',
-        'Enter measured or planned usage. Use Try example usage to explore a workload before you have your own figures.',
+        'Enter known usage directly, or choose Help me estimate usage to preview quantities before applying them. Use Try example usage only to explore an illustrative workload.',
       ]),
       s('share', 'Review and share your work', 'Check the running estimate and use Improve your estimate to review missing inputs. The known-cost subtotal excludes unresolved charges.', [
         'Open Reports & Export. Generate PDF for a shareable estimate with sources and gaps.',
@@ -42,9 +42,9 @@ export const articles: Article[] = [
         'Use Copilot Studio for a platform-managed business agent. Enter planned monthly Copilot Credits. The standard path has one credit charge and does not add independent Foundry inference.']),
       s('combine', 'Plan both platforms together', 'Choose Both platforms, then select the platform for each new agent. Shared Azure services and licences can exist in the same environment. A Foundry model used by a separately evidenced Copilot prompt can be modelled in Advanced.'),
     ] },
-  { id: 'save-and-reopen', topic: 'Getting started', title: 'How do I share or reopen an estimate?', intro: 'Export JSON to keep editing later. Generate a PDF to share the estimate and its assumptions.',
+  { id: 'save-and-reopen', topic: 'Getting started', title: 'How do I share or reopen an estimate?', intro: 'Export JSON to keep editing later. Generate a PDF to share the estimate and its recorded assumptions.',
     tool: reports, related: ['privacy', 'environment-file', 'import-or-export-problems'], sections: [
-      s('save', 'Export before leaving', 'In Reports & Export, choose Export JSON. It includes objects, relationships, pricing assumptions and the last estimate snapshot. Check your browser’s downloads to find the file.'),
+      s('save', 'Export before leaving', 'In Reports & Export, choose Export JSON. It includes objects, relationships, pricing assumptions and the last estimate snapshot. The export includes applied usage quantities and any notes in the environment description. Temporary usage previews and comparisons are outside both formats. Check your browser’s downloads to find the file.'),
       s('restore', 'Restore a saved environment', 'Choose Import existing on Home. Select a Studio JSON file. A valid import opens Review your estimate and uses the applied catalogue to recalculate costs. Compare the previous known subtotal and unresolved count to the current estimate.', [
         'If another environment has changes, choose Keep editing, Export JSON first or Replace environment.',
         'Use Advanced to inspect saved dependencies, agreements and specialised configuration.',
@@ -63,14 +63,25 @@ export const articles: Article[] = [
       ]),
       s('reuse', 'Reuse an existing deployment', 'When adding a Foundry agent, choose Use an existing deployment if the same capacity serves both agents. Each agent gets its own usage profile. A shared deployment is counted once for fixed capacity. Change a shared deployment in Advanced after checking affected agents.'),
     ] },
-  { id: 'foundry-usage', topic: 'Building environments', title: 'Estimate Foundry requests and tokens', intro: 'Start with how often the agent runs and the size of one request. If you have no usage history, try an illustrative preset in Estimate usage and replace its values as you gather evidence.',
+  { id: 'foundry-usage', topic: 'Building environments', title: 'Estimate Foundry requests and tokens', intro: 'Start with how often the agent runs and the size of a model request. Use observed quantities or build a customer forecast from business assumptions.',
     aliases: ['tokens', 'monthly executions', 'retries'], tool: builder, related: ['billing-units', 'example-foundry-assistant', 'share-and-connect'], sections: [
       s('per-request', 'Enter monthly runs and per-request usage', 'In Estimate usage, enter runs per month, average model requests per run, input tokens per request and output tokens per request. Count prompt text and context in input. Preserve separate totals for input and output even when their rates look similar.'),
+      s('assist-usage', 'Build and preview a monthly workload', [
+        'In Estimate usage, open Help me estimate usage. Enter monthly active users, average interactions per active user, average requests per interaction and uncached input and output tokens per request. Choose measured usage, customer forecast or illustrative assumption.',
+        'A fictional example of 200 users × 10 interactions yields 2,000 runs. At 2 calls per run, there are 4,000 calls. At 1,500 input and 300 output tokens per call this gives 6 million input and 1.2 million output tokens before retries.',
+        'Estimate input from instructions, conversation history and retrieved context. Output is what the model generates. Tool use can trigger more requests. Retries multiply expected calls, and cached input is counted separately from uncached input.',
+        'Preview the mapped fields and apply only after reviewing the changes, or cancel to keep your current inputs. Intermediate assumptions and their source label are temporary. Use the environment description to record them for export. PTU sizing uses separate capacity inputs.',
+      ]),
       s('example', 'Check the quantities', 'Illustrative calculation: 1,000 runs × 1 request × 1,500 input tokens gives 1.5 million input tokens. At 300 output tokens per request, output is 300,000. The verified meter can bill per 1,000 or 1 million. Use More usage options for explicit cached input or retries, and count each request once.'),
     ] },
   { id: 'copilot-credits', topic: 'Building environments', title: 'Estimate Copilot Studio credits', intro: 'Enter monthly credits you have measured or planned using Microsoft’s applicable activity rules.',
     aliases: ['credits', 'credit pack', 'Copilot Credits'], tool: builder, related: ['choose-platforms', 'example-copilot-agent', 'licence-evidence'], sources: [creditSource], sections: [
       s('monthly-credits', 'Enter your monthly credits', 'Add a Copilot Studio agent and open Estimate usage. Enter the monthly total before applying a declared allowance or any linked pack in Studio. A fictional preset is available to explore the workflow.'),
+      s('documented-credit-totals', 'Preview credits by activity', [
+        'Open Help me estimate usage if you know the monthly credits for individual activities. Enter the applicable amounts, select their source and preview the gross total. Check the preview before replacing the current total or activity breakdown.',
+        'If you have only activity counts, use Microsoft’s official source to establish the exact conversion for your activity and circumstances. The studio leaves this conversion unresolved. You can enter the resulting monthly credits directly.',
+        'Gross usage is saved when you apply it. Keep supporting figures and the assumption source in the environment description if reviewers need them.',
+      ]),
       s('allowances', 'Reconcile allowances and packs', 'In Advanced, choose a monthly total or an activity breakdown of already calculated credits. Apply an included allowance only after confirming the customer’s eligibility, amount, basis and expiry. Link an eligible prepaid pack once and inspect the residual pay-as-you-go credits in the ledger.'),
     ] },
   { id: 'licences-and-groups', topic: 'Building environments', title: 'Add licences and assign seats', intro: 'Record what you already own, what you need to buy and which people the seats cover.',
@@ -90,13 +101,14 @@ export const articles: Article[] = [
     ] },
   { id: 'read-your-estimate', topic: 'Understanding costs', title: 'How do I read my cost estimate?', intro: 'Start with the estimated monthly cost, annualised estimate and costs still to confirm. Open a charge for the details behind it.',
     tool: costs, related: ['estimate-readiness', 'billing-units', 'existing-and-new-spend'], sections: [
-      s('summary', 'Read the summary', 'The estimated monthly cost adds the charges the studio can calculate. The annualised estimate applies that monthly rate for twelve months at the same usage and pricing. Open Where your money goes to see the breakdown by category. Check Costs still to confirm for charges excluded from the known-cost subtotal.'),
+      s('summary', 'Read the summary', 'The estimated monthly cost adds the charges the studio can calculate. The annualised estimate applies that monthly rate for twelve months at the same usage and pricing. Where your money goes summarises categories. Open Largest monthly charges to see the largest known contributions and their price basis. Check Costs still to confirm for unresolved charges and Existing licence spend for retained expenditure.'),
+      s('usage-sensitivity', 'Preview a workload change', 'In Cost Analysis, open Preview a change in usage. Select a Foundry pay-as-you-go workload with its own profile or a Copilot agent using a monthly credit total. Change one assumption and compare monthly costs with the same rates and agreements. Resolve all charges before reading the whole-environment difference. This preview is temporary. Compare pricing assumptions separately for a rate forecast.'),
       s('ledger', 'Reconcile one line', 'In Cost Analysis, find a component and open it. Confirm monthly quantity, published billed unit, rate, source and any agreement. A flat charge is quantity divided by base units per billed unit, multiplied by the rate. Graduated tariffs apply the rate for each band.'),
     ] },
   { id: 'estimate-readiness', topic: 'Understanding costs', title: 'Resolve gaps before sharing', intro: 'Check which charges you can share and what you still need to confirm.',
     aliases: ['incomplete', 'unknown costs', 'estimate completeness'], tool: costs, related: ['missing-rate-or-volume', 'model-evidence', 'limits-of-an-estimate'], sections: [
       s('partial-estimates', 'Share a partial estimate with its scope', 'If a line has no usable quantity, rate or eligible configuration, the known-cost subtotal excludes it. The estimate shows how many cost lines remain unresolved. A partial PDF preserves the gaps for the reader.'),
-      s('resolve', 'Open the input that needs attention', 'Choose Review next to the item under Improve your estimate. Complete the relevant field, adjust the configuration or review its pricing. Use Back to estimate checks to continue. Confirm licensing and compatibility separately when a priced path still depends on customer conditions.'),
+      s('resolve', 'Open the input that needs attention', 'Choose Review next to the item under Improve your estimate. Complete the relevant field, adjust the configuration or review its pricing. Use Back to estimate checks to continue. Financial actions identify unresolved charges. Confirm technical and commercial conditions separately, including those that affect a priced path.'),
     ] },
   { id: 'existing-and-new-spend', topic: 'Understanding costs', title: 'How do I account for licences I already own?', intro: 'Distinguish the environment’s new charges from the licence spend you will retain.',
     aliases: ['existing licence', 'incremental', 'already owned'], tool: costs, related: ['licences-and-groups', 'licence-evidence', 'example-existing-licensing'], sections: [
@@ -117,13 +129,13 @@ export const articles: Article[] = [
     intro: 'Reconcile the simplest linked Foundry agent from its workload to two token charges.',
     tool: { page: 'examples', item: 'foundry-assistant', label: 'Preview Basic Foundry Assistant' }, related: ['foundry-usage', 'billing-units'], sections: [
       s('open', 'Open and inspect the example', 'The example uses a fictional 1,000 runs/month, one request/run, and 1,500 input and 300 output tokens/request. It links one agent, one usage profile and one GPT-4.1 mini deployment.'),
-      s('reconcile', 'Change usage and compare amounts', 'Open an editable copy and choose Estimate usage. Double executions to 2,000. In Cost Analysis check both monthly token quantities doubled, from 1.5 to 3 million input and from 300,000 to 600,000 output. Multiply each verified rate by its exact unit conversion and round at the line boundary.'),
+      s('reconcile', 'Change usage and compare amounts', 'Open an editable copy and choose Estimate usage. Enter 2,000 executions directly or preview a fictional 200 users × 10 interactions at one request per run in Help me estimate usage. In Cost Analysis check both monthly token quantities doubled, from 1.5 to 3 million input and from 300,000 to 600,000 output. Multiply each verified rate by its exact unit conversion and round at the line boundary.'),
     ] },
   { id: 'example-copilot-agent', topic: 'Worked examples', title: 'Walk through the Copilot Studio Business Agent',
     intro: 'Estimate a platform-managed Copilot agent from declared monthly credits.',
     tool: { page: 'examples', item: 'copilot-agent', label: 'Preview Copilot Studio Business Agent' }, related: ['copilot-credits', 'licence-evidence'], sections: [
       s('open', 'Inspect the credit basis', 'Open an editable copy. The fictional starting value is 12,000 credits/month. Cost Analysis uses the verified matching PAYG rate where present. The example has one platform-managed agent.'),
-      s('reconcile', 'Try a different workload', 'Change monthly credits to 15,000 under Estimate usage. The known charge is 15,000 times the applicable per-credit rate when available. Review a separate allowance only if it applies to your customer plan.'),
+      s('reconcile', 'Try a different workload', 'Change monthly credits to 15,000 under Estimate usage. You can enter the total or preview and apply a hypothetical breakdown of 10,000 credits for answers and 5,000 for actions. The known charge is 15,000 times the applicable per-credit rate when available. Review a separate allowance only if it applies to your customer plan.'),
     ] },
   { id: 'example-existing-licensing', topic: 'Worked examples', title: 'Walk through the Enterprise AI Environment',
     intro: 'Compare two groups’ licence assignments, new spend and a supporting Azure service.',
@@ -184,7 +196,7 @@ export const articles: Article[] = [
     ] },
   { id: 'missing-rate-or-volume', topic: 'Troubleshooting', title: 'Why are some costs missing?', intro: 'Find out whether usage, pricing or configuration needs attention.',
     aliases: ['unknown rate', 'missing prices', 'unsupported'], tool: costs, related: ['estimate-readiness', 'agreements-and-manual-rates', 'model-evidence'], sections: [
-      s('volume', 'Find the missing input', 'Open Improve your estimate in Cost Analysis. If the line has no quantity, enter the agent workload or monthly service units. Check the billing region, currency, deployment mode and exact SKU when a combination is unresolved.'),
+      s('volume', 'Find the missing input', 'Open Improve your estimate in Cost Analysis. If the line has no quantity, enter the agent workload or monthly service units. Use Help me estimate usage for a business-based Foundry preview or to sum documented Copilot Credits. Keep unsupported activity conversions unresolved. Check the billing region, currency, deployment mode and exact SKU when a combination is unresolved.'),
       s('rate', 'Find the missing rate', 'Open the cost line and check its billing unit. If the charge has billing details but no verified retail price, you can enter a documented fixed rate. Leave it unresolved if you cannot confirm a price.'),
     ] },
   { id: 'import-or-export-problems', topic: 'Troubleshooting', title: 'Problems with files and downloads', intro: 'Recover from an unreadable file or a browser download failure.',

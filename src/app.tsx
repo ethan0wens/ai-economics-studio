@@ -16,6 +16,7 @@ import { Home, Modal, StudioNavigation } from './workspace-ui';
 import { GuidedBuilder } from './guided-ui';
 import type { Intent } from './guided-state';
 import { CostDrivers, EstimateReadiness, EstimateSummary, type EditTarget } from './estimate-ui';
+import { UsageSensitivity } from './usage-sensitivity-ui';
 import { openExample } from './examples';
 import { LearnMore } from './learn-more';
 
@@ -357,7 +358,8 @@ export default function App() {
         {workspace && route.page === 'costs' && <div className="page-stack">
           <EstimateSummary {...{ env, result, catalogue }} />
           <EstimateReadiness env={env} result={result} edit={edit} />
-          <CostDrivers env={env} result={result} />
+          <CostDrivers env={env} result={result} edit={edit} />
+          <UsageSensitivity {...{ env, result, catalogue }} />
           <LicenceEstate result={result} currency={env.currency} />
           <CostAnalysis key={target?.line ?? 'ledger'} env={env} result={result} update={update}
             checkedAt={catalogue.manifest.lastCheckedAt} focusLine={target?.line} />

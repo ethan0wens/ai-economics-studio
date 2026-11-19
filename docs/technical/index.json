@@ -68,6 +68,24 @@
   ],
   "supporting": [
     {
+      "id": "usability-study",
+      "file": "usability-study.md",
+      "title": "Moderated estimation usability study",
+      "summary": "Run task-based sessions with unfamiliar business, architecture and financial reviewers.",
+      "aliases": [
+        "human usability",
+        "study protocol"
+      ],
+      "related": [
+        "verification-and-tests",
+        "workspace-flow"
+      ],
+      "guides": [
+        "quickstart",
+        "read-your-estimate"
+      ]
+    },
+    {
       "id": "documentation-audit",
       "file": "audit.md",
       "title": "Technical documentation audit",

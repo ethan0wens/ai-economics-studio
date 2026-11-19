@@ -419,3 +419,9 @@ dialog::backdrop{background:#17243b70}dialog p{margin:8px 0 12px}dialog ul{list-
   .technical-related { grid-template-columns: 1fr; gap: 0; }
   .technical-scroll pre { padding: 9px; }
 }
+
+.usage-assistance-form { display: grid; gap: 10px; }
+.usage-values { display: grid; gap: 6px; }
+.usage-values > div { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(9rem, 100%), 1fr)); gap: 4px 14px; border-top: 1px solid var(--border); padding-block: 6px; }
+.usage-values dd { margin: 0; font-weight: 640; overflow-wrap: anywhere; }
+.usage-helper .inset-editor button { justify-self: start; }

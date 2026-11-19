@@ -53,3 +53,11 @@ With 50 significant decimal digits and half-up rounding, each line rounds once t
 A missing rate, required quantity or compatible configuration can leave a line null. Null rows are excluded from the known-cost subtotal and increase the unresolved count for their basis. Several drafts or descriptive records can produce advice without a billable row. A subtotal alone is therefore not proof of completeness. Recognised zeros include already-owned licence increments, fully covered eligible credits or reservation hours, an applicable zero band, and an intentional zero with a reason. A known zero and an unresolved cost need different disclosures. A missing or expired evidence row changes technical or licensing confidence. Verify the actual blocker and rate identity before treating it as a financial zero.
 
 See the [six worked calculations](03-worked-reconciliations.md) for published-fixture arithmetic and [the limitations register](07-limitations.md) for the scope of the method.
+
+## Assisted usage and sensitivity
+
+Monthly active users × average monthly interactions per user maps to whole monthly `executions`. Average calls per interaction maps to `calls`; input and output tokens per call map to `input` and `output`. These are the same values used for direct entry. The preview applies the profile's existing retry multiplier and counts cached input separately. The ledger calculates the financial amounts when the user applies the quantities.
+
+For an illustrative independent check, 200 × 10 × 2 gives 4,000 calls. Multiplying by 1,500 input and 300 output tokens yields 6,000,000 input and 1,200,000 output tokens. With an explicit 10% retry factor, the figures are 4,400 calls, 6,600,000 input and 1,320,000 output tokens. An existing 100 cached tokens per call adds 440,000 cached tokens. These numbers describe fictional inputs.
+
+**Preview a change in usage** creates a temporary copy of the environment with one validated usage field changed. It invokes the same ledger with the same catalogue and assessment time. Both calculations use the current-price basis including applicable agreements. The interface shows unresolved line counts and exposes a whole-environment difference only when both estimates are complete. A [price forecast](03-agreements-and-licences.md) changes rates separately.

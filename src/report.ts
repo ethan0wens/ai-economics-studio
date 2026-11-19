@@ -95,6 +95,7 @@ export async function report(env: Environment, result: Ledger, catalogue: Catalo
       ['Proposed licence spend', estate.proposed], ['Proposed environment including retained licences', estate.proposedEnvironment],
     ] as const) paragraph(`${label}: ${money(total.known)} known monthly | ${money(total.annual)} known annual | ${total.incomplete} unresolved`);
   }
+  paragraph('The report uses applied usage quantities. Temporary previews are outside its scope. The environment description can record usage sources and working assumptions.', { color: muted });
   heading('Environment and source coverage');
   const completeness = environmentCompleteness(result);
   paragraph(`${completeness.fully} fully priced | ${completeness.partial} partial | ${completeness.unresolved} unresolved | ${completeness.excluded} missing configuration | ${completeness.retail} using verified retail | ${completeness.manual} using customer rates`);

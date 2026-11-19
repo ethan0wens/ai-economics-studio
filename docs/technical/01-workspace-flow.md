@@ -54,3 +54,7 @@ The ledger derives a technical assessment and licence plan first. It evaluates c
 - JSON export serialises the editable environment and a lightweight source snapshot created from current results. PDF is a reading artefact. Unsupported characters in the standard PDF fonts may be replaced even when a browser or JSON can represent them. The browser downloads each file at the user's request.
 
 For data interfaces and round-trip behaviour, see [relationships, drafts and versioned files](02-relationships-and-files.md). The [browser workflow tests](../../tests/e2e/studio.spec.ts) reconcile editor totals, shared charges, graph interaction and file exports.
+
+## Guided usage preview
+
+**Estimate usage** still edits the existing usage profile or Copilot agent. Open **Help me estimate usage** to preview an optional Foundry workload or a sum of declared Copilot Credits. Preview and cancel change only component state. Apply calls the same validated environment update as direct entry. The usage profile needs to belong to one agent. Copy a shared profile first. Provisioned pricing continues to use deployment capacity and billable hours. See [quantity derivation](03-ledger-methodology.md#assisted-usage-and-sensitivity).

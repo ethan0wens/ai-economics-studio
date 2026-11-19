@@ -55,6 +55,7 @@ Executable verification, core interfaces, troubleshooting and the limitations re
 
 ## Maintaining this reference
 
+- [Moderated estimation usability study](usability-study.md). Run task-based sessions with unfamiliar business, architecture and financial reviewers.
 - [Technical documentation audit](audit.md). Read the baseline coverage matrix, authority decisions and open evidence gaps.
 - [Source traceability](traceability.md). Follow the implementation files, evidence and tests behind each reference section.
 - [Maintaining the technical documentation](maintenance.md). Maintain links, references, examples and contributor checks.

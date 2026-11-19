@@ -1,4 +1,10 @@
+import Decimal from 'decimal.js';
 import type { Line } from './ledger';
+
+export function formatQuantity(value: string | number) {
+  const [whole, decimal] = new Decimal(value).toFixed().split('.');
+  return [whole.replace(/\B(?=(\d{3})+(?!\d))/g, ','), decimal].filter(Boolean).join('.');
+}
 
 export const unavailablePrice = 'Pricing not currently available';
 

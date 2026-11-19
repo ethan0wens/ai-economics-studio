@@ -1,0 +1,11 @@
+# Stage 5 usage estimation plan
+
+| Current surface | Difficulty | Implementation |
+| --- | --- | --- |
+| Guided Builder and `guided-state.ts` | Manual inputs assume users already know executions, requests and tokens. Presets are illustrative. Usage can be shared. | Keep direct entry and presets. Offer a workload preview on an agent's own non-provisioned Foundry profile. Keep the existing copy action for shared profiles. |
+| Advanced usage | Cached input, retries and allocation have separate meanings. PTU costs use declared capacity and hours. | Explain the distinction and use existing cached input and retry settings in the preview. Leave Advanced values and PTU sizing alone. |
+| Copilot Studio | Users may have activity counts, credit totals or a breakdown. Allowances and packs affect billable overage. | Add already-estimated monthly credits by activity or show unresolved activity counts. Apply the total or breakdown according to the existing method. Let the ledger apply allowances and packs. |
+| Financial ledger | Unknown rates and incomplete inputs can prevent a whole-environment total. | Convert only usage quantities, validate through the existing schema, and exercise the same ledger for before-and-after sensitivity. Keep that comparison local and temporary. |
+| Usage and finance documentation | Guides explain individual fields but lack a worked journey with its assumptions and caveats. | Add a linked worked example and document which values survive export. Declaring provenance is optional outside the helper and can be recorded in the environment description. |
+
+The Foundry helper uses active users × interactions for executions, then executions × calls per execution for requests. It uses the entered averages and existing retries to preview uncached input, cached input and output separately. It rounds no execution count and supplies no default usage values. User groups can inform a forecast without automatically setting usage. Copilot credit conversion requires precise reviewed evidence for the activity and unit, so a sum of declared credits is the only conversion implemented. Previewing or cancelling leaves the environment untouched. Apply confirms the fields being replaced. The existing description is the place to keep the provenance and underlying business assumptions with the estimate.

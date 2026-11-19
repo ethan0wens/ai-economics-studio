@@ -49,3 +49,7 @@ Export writes the current input model and a new source snapshot. The visible old
 - [Copilot Studio draft JSON](examples/copilot-draft.json) has one platform-managed agent with illustrative declared Copilot Credits.
 
 Save the file with a `.json` extension and select **Import existing** on Home. The examples contain demonstration data and carry no price claims. `npm run docs:validate` parses both with `importEnvironment`.
+
+## Usage assistance in exported files
+
+Applying a Foundry preview updates the existing profile linked by `agent-uses-usage`. It replaces `executions`, `calls`, `input` and `output`. The identifiers, relationships and specialist quantities remain intact. A Copilot preview updates `credits` or `creditBreakdown` for the agent's active method. JSON and PDF represent applied inputs. The temporary business inputs and measured, customer forecast or illustrative label can be recorded in the existing environment description when needed. See [saving and reopening](#/documentation/save-and-reopen?section=save).

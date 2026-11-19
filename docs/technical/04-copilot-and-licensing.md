@@ -29,3 +29,7 @@ The studio matches by exact offering ID and product identity. An eligible base m
 ## Understanding the results
 
 A verified price answers a billing question for the specified configuration. A verified licence finding describes the declarations and exact covered rule. A technical finding describes that rule's compatibility scope. Other inputs can remain unresolved. Treat conditional and unverified findings as questions to confirm. Existing and proposed licence totals reflect recorded spend and effective replacement assumptions, explained in [the finance method](03-agreements-and-licences.md#dated-replacement-and-proposed-scopes).
+
+## Assisted Copilot Credits
+
+The Guided assistant sums the monthly credits the user already calculated or measured for applicable categories. It previews gross credits before any eligible declared allowance or prepaid capacity. Apply replaces the monthly total or the active category breakdown. The helper leaves activity counts unresolved because it lacks an implemented reviewed conversion for the exact activity and billing circumstances. The existing ledger resolves qualifying allowances, packs and PAYG overage. See the [credit guidance](#/documentation/copilot-credits?section=documented-credit-totals).

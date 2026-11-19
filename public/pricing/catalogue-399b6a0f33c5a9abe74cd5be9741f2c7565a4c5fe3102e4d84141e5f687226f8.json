@@ -791,8 +791,8 @@
       "offeringId": "agent-365-gb",
       "component": "seats",
       "review": {
-        "checkedAt": "2026-11-19T13:19:56.956Z",
-        "expiresAt": "2027-01-03T13:19:56.956Z",
+        "checkedAt": "2026-11-19T14:31:28.336Z",
+        "expiresAt": "2027-01-03T14:31:28.336Z",
         "terms": "UK per user per month, annual commitment, excluding VAT. Do not infer prerequisite eligibility or consumption allowances.",
         "term": "annual"
       }
@@ -2560,8 +2560,8 @@
       "offeringId": "defender-business-gb",
       "component": "seats",
       "review": {
-        "checkedAt": "2026-11-19T13:19:56.956Z",
-        "expiresAt": "2027-01-03T13:19:56.956Z",
+        "checkedAt": "2026-11-19T14:31:28.336Z",
+        "expiresAt": "2027-01-03T14:31:28.336Z",
         "terms": "UK public offer per user/month, paid yearly. Annual subscription auto-renews. Price excludes VAT.",
         "term": "annual"
       }
@@ -2582,8 +2582,8 @@
       "offeringId": "defender-o365-p1-gb",
       "component": "seats",
       "review": {
-        "checkedAt": "2026-11-19T13:19:56.956Z",
-        "expiresAt": "2027-01-03T13:19:56.956Z",
+        "checkedAt": "2026-11-19T14:31:28.336Z",
+        "expiresAt": "2027-01-03T14:31:28.336Z",
         "terms": "UK public offer per user/month. Annual subscription, paid yearly, auto-renews. Excludes VAT. Plan 1. Confirm email and workload prerequisites.",
         "term": "annual"
       }
@@ -2604,8 +2604,8 @@
       "offeringId": "defender-o365-p2-gb",
       "component": "seats",
       "review": {
-        "checkedAt": "2026-11-19T13:19:56.956Z",
-        "expiresAt": "2027-01-03T13:19:56.956Z",
+        "checkedAt": "2026-11-19T14:31:28.336Z",
+        "expiresAt": "2027-01-03T14:31:28.336Z",
         "terms": "UK public offer per user/month. Annual subscription, paid yearly, auto-renews. Excludes VAT. Plan 2. Confirm email and workload prerequisites.",
         "term": "annual"
       }
@@ -2626,8 +2626,8 @@
       "offeringId": "defender-suite-gb",
       "component": "seats",
       "review": {
-        "checkedAt": "2026-11-19T13:19:56.956Z",
-        "expiresAt": "2027-01-03T13:19:56.956Z",
+        "checkedAt": "2026-11-19T14:31:28.336Z",
+        "expiresAt": "2027-01-03T14:31:28.336Z",
         "terms": "UK public offer per user/month. Annual subscription, paid yearly, auto-renews. Excludes VAT. Requires Microsoft 365 E3, or Office 365 E3 and Enterprise Mobility + Security E3.",
         "term": "annual",
         "corroboration": [
@@ -3012,8 +3012,8 @@
       "offeringId": "ems-e3-gb",
       "component": "seats",
       "review": {
-        "checkedAt": "2026-11-19T13:19:56.956Z",
-        "expiresAt": "2027-01-03T13:19:56.956Z",
+        "checkedAt": "2026-11-19T14:31:28.336Z",
+        "expiresAt": "2027-01-03T14:31:28.336Z",
         "terms": "UK public offer per user/month. Annual subscription, paid yearly, auto-renews. Excludes VAT. The separately purchased offer can be part of the Defender Suite prerequisite.",
         "term": "annual"
       }
@@ -3034,8 +3034,8 @@
       "offeringId": "entra-governance-gb",
       "component": "seats",
       "review": {
-        "checkedAt": "2026-11-19T13:19:56.956Z",
-        "expiresAt": "2027-01-03T13:19:56.956Z",
+        "checkedAt": "2026-11-19T14:31:28.336Z",
+        "expiresAt": "2027-01-03T14:31:28.336Z",
         "terms": "UK public offer per user/month, paid yearly. Annual subscription auto-renews. Price excludes VAT. Customer prerequisite and plan eligibility require separate review.",
         "term": "annual"
       }
@@ -3056,8 +3056,8 @@
       "offeringId": "entra-p1-gb",
       "component": "seats",
       "review": {
-        "checkedAt": "2026-11-19T13:19:56.956Z",
-        "expiresAt": "2027-01-03T13:19:56.956Z",
+        "checkedAt": "2026-11-19T14:31:28.336Z",
+        "expiresAt": "2027-01-03T14:31:28.336Z",
         "terms": "UK per user per month paid yearly, excluding VAT. Verify whether P1 is already included in a declared licence.",
         "term": "annual"
       }
@@ -3078,8 +3078,8 @@
       "offeringId": "entra-p2-gb",
       "component": "seats",
       "review": {
-        "checkedAt": "2026-11-19T13:19:56.956Z",
-        "expiresAt": "2027-01-03T13:19:56.956Z",
+        "checkedAt": "2026-11-19T14:31:28.336Z",
+        "expiresAt": "2027-01-03T14:31:28.336Z",
         "terms": "UK public offer per user/month, paid yearly. Annual subscription auto-renews. Price excludes VAT.",
         "term": "annual"
       }
@@ -3100,8 +3100,8 @@
       "offeringId": "entra-suite-gb",
       "component": "seats",
       "review": {
-        "checkedAt": "2026-11-19T13:19:56.956Z",
-        "expiresAt": "2027-01-03T13:19:56.956Z",
+        "checkedAt": "2026-11-19T14:31:28.336Z",
+        "expiresAt": "2027-01-03T14:31:28.336Z",
         "terms": "UK per user per month paid yearly, excluding VAT. Prerequisite eligibility and overlapping licences are separate.",
         "term": "annual"
       }
@@ -5022,8 +5022,8 @@
       "offeringId": "m365-apps-business-gb",
       "component": "seats",
       "review": {
-        "checkedAt": "2026-11-19T13:19:56.956Z",
-        "expiresAt": "2027-01-03T13:19:56.956Z",
+        "checkedAt": "2026-11-19T14:31:28.336Z",
+        "expiresAt": "2027-01-03T14:31:28.336Z",
         "terms": "UK public offer per user/month, paid yearly. Annual subscription auto-renews. Price excludes VAT.",
         "term": "annual"
       }
@@ -5044,8 +5044,8 @@
       "offeringId": "m365-apps-enterprise-gb",
       "component": "seats",
       "review": {
-        "checkedAt": "2026-11-19T13:19:56.956Z",
-        "expiresAt": "2027-01-03T13:19:56.956Z",
+        "checkedAt": "2026-11-19T14:31:28.336Z",
+        "expiresAt": "2027-01-03T14:31:28.336Z",
         "terms": "UK public offer per user/month, paid yearly. Annual subscription auto-renews. Price excludes VAT.",
         "term": "annual"
       }
@@ -5066,8 +5066,8 @@
       "offeringId": "m365-business-basic-gb",
       "component": "seats",
       "review": {
-        "checkedAt": "2026-11-19T13:19:56.956Z",
-        "expiresAt": "2027-01-03T13:19:56.956Z",
+        "checkedAt": "2026-11-19T14:31:28.336Z",
+        "expiresAt": "2027-01-03T14:31:28.336Z",
         "terms": "UK public offer per user/month, paid yearly. Annual subscription auto-renews. Price excludes VAT.",
         "term": "annual"
       }
@@ -5088,8 +5088,8 @@
       "offeringId": "m365-business-basic-no-teams-gb",
       "component": "seats",
       "review": {
-        "checkedAt": "2026-11-19T13:19:56.956Z",
-        "expiresAt": "2027-01-03T13:19:56.956Z",
+        "checkedAt": "2026-11-19T14:31:28.336Z",
+        "expiresAt": "2027-01-03T14:31:28.336Z",
         "terms": "UK public offer per user/month, paid yearly. Annual subscription auto-renews. Price excludes VAT.",
         "term": "annual"
       }
@@ -5110,8 +5110,8 @@
       "offeringId": "m365-business-copilot-gb",
       "component": "seats",
       "review": {
-        "checkedAt": "2026-11-19T13:19:56.956Z",
-        "expiresAt": "2027-01-03T13:19:56.956Z",
+        "checkedAt": "2026-11-19T14:31:28.336Z",
+        "expiresAt": "2027-01-03T14:31:28.336Z",
         "terms": "UK public offer per user/month. Monthly subscription, auto-renews. Excludes VAT. Exact non-promotional monthly offer for the standalone Business add-on with an eligible Microsoft subscription. Advanced usage can be billed separately.",
         "term": "monthly"
       }
@@ -5132,8 +5132,8 @@
       "offeringId": "m365-business-premium-gb",
       "component": "seats",
       "review": {
-        "checkedAt": "2026-11-19T13:19:56.956Z",
-        "expiresAt": "2027-01-03T13:19:56.956Z",
+        "checkedAt": "2026-11-19T14:31:28.336Z",
+        "expiresAt": "2027-01-03T14:31:28.336Z",
         "terms": "UK public offer per user/month. Annual subscription, paid yearly, auto-renews. Excludes VAT. Standalone Business Premium with Teams.",
         "term": "annual",
         "identity": "CFQ7TTC0LCHC:0002"
@@ -5155,8 +5155,8 @@
       "offeringId": "m365-business-premium-no-teams-gb",
       "component": "seats",
       "review": {
-        "checkedAt": "2026-11-19T13:19:56.956Z",
-        "expiresAt": "2027-01-03T13:19:56.956Z",
+        "checkedAt": "2026-11-19T14:31:28.336Z",
+        "expiresAt": "2027-01-03T14:31:28.336Z",
         "terms": "UK public offer per user/month. Annual subscription, paid yearly, auto-renews. Excludes VAT. No Teams edition.",
         "term": "annual",
         "identity": "CFQ7TTC0LCHC:000N"
@@ -5178,8 +5178,8 @@
       "offeringId": "m365-business-standard-gb",
       "component": "seats",
       "review": {
-        "checkedAt": "2026-11-19T13:19:56.956Z",
-        "expiresAt": "2027-01-03T13:19:56.956Z",
+        "checkedAt": "2026-11-19T14:31:28.336Z",
+        "expiresAt": "2027-01-03T14:31:28.336Z",
         "terms": "UK public offer per user/month. Annual subscription, paid yearly, auto-renews. Excludes VAT. Standalone Business Standard with Teams.",
         "term": "annual",
         "identity": "CFQ7TTC0LDPB:0001"
@@ -5201,8 +5201,8 @@
       "offeringId": "m365-business-standard-no-teams-gb",
       "component": "seats",
       "review": {
-        "checkedAt": "2026-11-19T13:19:56.956Z",
-        "expiresAt": "2027-01-03T13:19:56.956Z",
+        "checkedAt": "2026-11-19T14:31:28.336Z",
+        "expiresAt": "2027-01-03T14:31:28.336Z",
         "terms": "UK public offer per user/month. Annual subscription, paid yearly, auto-renews. Excludes VAT. No Teams edition.",
         "term": "annual",
         "identity": "CFQ7TTC0LDPB:0011"
@@ -5224,8 +5224,8 @@
       "offeringId": "m365-copilot-enterprise-gb",
       "component": "seats",
       "review": {
-        "checkedAt": "2026-11-19T13:19:56.956Z",
-        "expiresAt": "2027-01-03T13:19:56.956Z",
+        "checkedAt": "2026-11-19T14:31:28.336Z",
+        "expiresAt": "2027-01-03T14:31:28.336Z",
         "terms": "UK public offer per user/month, paid yearly. Annual subscription auto-renews. Price excludes VAT. Eligible Microsoft 365 or Office 365 licence required under Microsoft terms.",
         "term": "annual"
       }
@@ -5246,8 +5246,8 @@
       "offeringId": "m365-e3-gb",
       "component": "seats",
       "review": {
-        "checkedAt": "2026-11-19T13:19:56.956Z",
-        "expiresAt": "2027-01-03T13:19:56.956Z",
+        "checkedAt": "2026-11-19T14:31:28.336Z",
+        "expiresAt": "2027-01-03T14:31:28.336Z",
         "terms": "UK public offer per user/month, paid yearly. Annual commitment. Price excludes VAT.",
         "term": "annual"
       }
@@ -5268,8 +5268,8 @@
       "offeringId": "m365-e3-no-teams-gb",
       "component": "seats",
       "review": {
-        "checkedAt": "2026-11-19T13:19:56.956Z",
-        "expiresAt": "2027-01-03T13:19:56.956Z",
+        "checkedAt": "2026-11-19T14:31:28.336Z",
+        "expiresAt": "2027-01-03T14:31:28.336Z",
         "terms": "UK public offer per user/month, paid yearly. Annual commitment. Price excludes VAT.",
         "term": "annual"
       }
@@ -5290,8 +5290,8 @@
       "offeringId": "m365-e5-gb",
       "component": "seats",
       "review": {
-        "checkedAt": "2026-11-19T13:19:56.956Z",
-        "expiresAt": "2027-01-03T13:19:56.956Z",
+        "checkedAt": "2026-11-19T14:31:28.336Z",
+        "expiresAt": "2027-01-03T14:31:28.336Z",
         "terms": "UK public offer per user/month, paid yearly. Annual commitment. Price excludes VAT.",
         "term": "annual"
       }
@@ -5312,8 +5312,8 @@
       "offeringId": "m365-e5-no-teams-gb",
       "component": "seats",
       "review": {
-        "checkedAt": "2026-11-19T13:19:56.956Z",
-        "expiresAt": "2027-01-03T13:19:56.956Z",
+        "checkedAt": "2026-11-19T14:31:28.336Z",
+        "expiresAt": "2027-01-03T14:31:28.336Z",
         "terms": "UK public offer per user/month, paid yearly. Annual commitment. Price excludes VAT.",
         "term": "annual"
       }
@@ -5334,8 +5334,8 @@
       "offeringId": "m365-e7-gb",
       "component": "seats",
       "review": {
-        "checkedAt": "2026-11-19T13:19:56.956Z",
-        "expiresAt": "2027-01-03T13:19:56.956Z",
+        "checkedAt": "2026-11-19T14:31:28.336Z",
+        "expiresAt": "2027-01-03T14:31:28.336Z",
         "terms": "UK public offer per user/month, paid yearly. Annual commitment. Price excludes VAT.",
         "term": "annual"
       }
@@ -5356,8 +5356,8 @@
       "offeringId": "m365-e7-no-teams-gb",
       "component": "seats",
       "review": {
-        "checkedAt": "2026-11-19T13:19:56.956Z",
-        "expiresAt": "2027-01-03T13:19:56.956Z",
+        "checkedAt": "2026-11-19T14:31:28.336Z",
+        "expiresAt": "2027-01-03T14:31:28.336Z",
         "terms": "UK public offer per user/month, paid yearly. Annual commitment. Price excludes VAT.",
         "term": "annual"
       }
@@ -5378,8 +5378,8 @@
       "offeringId": "m365-f3-gb",
       "component": "seats",
       "review": {
-        "checkedAt": "2026-11-19T13:19:56.956Z",
-        "expiresAt": "2027-01-03T13:19:56.956Z",
+        "checkedAt": "2026-11-19T14:31:28.336Z",
+        "expiresAt": "2027-01-03T14:31:28.336Z",
         "terms": "UK public offer per user/month. Annual commitment, paid yearly. Excludes VAT. With Teams edition. Confirm frontline eligibility.",
         "term": "annual"
       }
@@ -5400,8 +5400,8 @@
       "offeringId": "m365-f3-no-teams-gb",
       "component": "seats",
       "review": {
-        "checkedAt": "2026-11-19T13:19:56.956Z",
-        "expiresAt": "2027-01-03T13:19:56.956Z",
+        "checkedAt": "2026-11-19T14:31:28.336Z",
+        "expiresAt": "2027-01-03T14:31:28.336Z",
         "terms": "UK public offer per user/month. Annual commitment, paid yearly. Excludes VAT. Frontline eligibility and the no-Teams edition apply.",
         "term": "annual"
       }
@@ -5422,8 +5422,8 @@
       "offeringId": "m365-premium-copilot-gb",
       "component": "seats",
       "review": {
-        "checkedAt": "2026-11-19T13:19:56.956Z",
-        "expiresAt": "2027-01-03T13:19:56.956Z",
+        "checkedAt": "2026-11-19T14:31:28.336Z",
+        "expiresAt": "2027-01-03T14:31:28.336Z",
         "terms": "UK public bundle. Per user/month, paid yearly, annual subscription with auto-renewal, excluding VAT. Usage-based billing for select advanced AI features is separate.",
         "term": "annual"
       }
@@ -5444,8 +5444,8 @@
       "offeringId": "m365-standard-copilot-gb",
       "component": "seats",
       "review": {
-        "checkedAt": "2026-11-19T13:19:56.956Z",
-        "expiresAt": "2027-01-03T13:19:56.956Z",
+        "checkedAt": "2026-11-19T14:31:28.336Z",
+        "expiresAt": "2027-01-03T14:31:28.336Z",
         "terms": "Microsoft 365 Business Standard with Copilot. UK per user per month paid yearly, excluding VAT. Bundle, not the standalone Copilot add-on.",
         "term": "annual"
       }
@@ -5466,8 +5466,8 @@
       "offeringId": "o365-e1-gb",
       "component": "seats",
       "review": {
-        "checkedAt": "2026-11-19T13:19:56.956Z",
-        "expiresAt": "2027-01-03T13:19:56.956Z",
+        "checkedAt": "2026-11-19T14:31:28.336Z",
+        "expiresAt": "2027-01-03T14:31:28.336Z",
         "terms": "UK public offer per user/month, paid yearly. Annual subscription auto-renews. Price excludes VAT.",
         "term": "annual"
       }
@@ -5488,8 +5488,8 @@
       "offeringId": "o365-e1-no-teams-gb",
       "component": "seats",
       "review": {
-        "checkedAt": "2026-11-19T13:19:56.956Z",
-        "expiresAt": "2027-01-03T13:19:56.956Z",
+        "checkedAt": "2026-11-19T14:31:28.336Z",
+        "expiresAt": "2027-01-03T14:31:28.336Z",
         "terms": "UK public offer per user/month, paid yearly. Annual subscription auto-renews. Price excludes VAT.",
         "term": "annual"
       }
@@ -5510,8 +5510,8 @@
       "offeringId": "o365-e3-gb",
       "component": "seats",
       "review": {
-        "checkedAt": "2026-11-19T13:19:56.956Z",
-        "expiresAt": "2027-01-03T13:19:56.956Z",
+        "checkedAt": "2026-11-19T14:31:28.336Z",
+        "expiresAt": "2027-01-03T14:31:28.336Z",
         "terms": "UK public offer per user/month, paid yearly. Annual subscription auto-renews. Price excludes VAT.",
         "term": "annual"
       }
@@ -5532,8 +5532,8 @@
       "offeringId": "o365-e3-no-teams-gb",
       "component": "seats",
       "review": {
-        "checkedAt": "2026-11-19T13:19:56.956Z",
-        "expiresAt": "2027-01-03T13:19:56.956Z",
+        "checkedAt": "2026-11-19T14:31:28.336Z",
+        "expiresAt": "2027-01-03T14:31:28.336Z",
         "terms": "UK public offer per user/month, paid yearly. Annual subscription auto-renews. Price excludes VAT.",
         "term": "annual"
       }
@@ -5554,8 +5554,8 @@
       "offeringId": "o365-e5-gb",
       "component": "seats",
       "review": {
-        "checkedAt": "2026-11-19T13:19:56.956Z",
-        "expiresAt": "2027-01-03T13:19:56.956Z",
+        "checkedAt": "2026-11-19T14:31:28.336Z",
+        "expiresAt": "2027-01-03T14:31:28.336Z",
         "terms": "UK public offer per user/month, paid yearly. Annual subscription auto-renews. Price excludes VAT.",
         "term": "annual"
       }
@@ -5576,8 +5576,8 @@
       "offeringId": "o365-e5-no-teams-gb",
       "component": "seats",
       "review": {
-        "checkedAt": "2026-11-19T13:19:56.956Z",
-        "expiresAt": "2027-01-03T13:19:56.956Z",
+        "checkedAt": "2026-11-19T14:31:28.336Z",
+        "expiresAt": "2027-01-03T14:31:28.336Z",
         "terms": "UK public offer per user/month, paid yearly. Annual subscription auto-renews. Price excludes VAT.",
         "term": "annual"
       }
@@ -6978,8 +6978,8 @@
       "offeringId": "teams-essentials-gb",
       "component": "seats",
       "review": {
-        "checkedAt": "2026-11-19T13:19:56.956Z",
-        "expiresAt": "2027-01-03T13:19:56.956Z",
+        "checkedAt": "2026-11-19T14:31:28.336Z",
+        "expiresAt": "2027-01-03T14:31:28.336Z",
         "terms": "UK public offer per user/month. Annual subscription, paid yearly, auto-renews. Excludes VAT. Exact Teams Essentials subscription.",
         "term": "annual"
       }

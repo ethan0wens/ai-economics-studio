@@ -23,6 +23,7 @@ import { openExample } from './examples';
 import { LearnMore } from './learn-more';
 
 import type { ReportFormat } from './report';
+import type { AdoptionComparison } from './adoption';
 
 const Examples = lazy(() => import('./examples-ui').then(module => ({ default: module.Examples })));
 const Documentation = lazy(() => import('./documentation-ui').then(module => ({ default: module.Documentation })));
@@ -127,6 +128,8 @@ export default function App() {
   const [toast, setToast] = useState('');
   const [exporting, setExporting] = useState(false);
   const [reportFormat, setReportFormat] = useState<ReportFormat>('full');
+  const [printComparison, setPrintComparison] = useState<{ env: Environment; catalogue: Catalogue; comparison: AdoptionComparison }>();
+  const reportIllustration = printComparison?.env === env && printComparison.catalogue === catalogue ? printComparison.comparison : undefined;
   const cancelPdf = useCallback(() => {
     pdfJob.current = undefined;
     setExporting(false);
@@ -276,6 +279,7 @@ export default function App() {
     openSequence.current++;
     cancelPdf();
     setToast('');
+    setPrintComparison(undefined);
     setWorkspace(value.env); setDirty(value.kind === 'copy' || value.kind === 'example');
     setExported(value.kind === 'import'); setEstimateChanged(false); setSelected(undefined); setTarget(undefined); setReturnView(undefined);
     setIntent(undefined); setGenerated(new Set()); setMode('guided'); setCostView('costs'); setStep(value.kind === 'new' ? 0 : 4); setOpening(undefined); setError('');
@@ -317,7 +321,7 @@ export default function App() {
     setExporting(true);
     try {
       const { report } = await import('./report');
-      const bytes = await report(env, result, catalogue, advice, reportFormat);
+      const bytes = await report(env, result, catalogue, advice, reportFormat, undefined, reportIllustration);
       if (pdfJob.current !== job) return;
       const suffix = reportFormat === 'executive' ? '-executive-summary' : '';
       download(new Uint8Array(bytes).buffer, `${fileName}${suffix}.pdf`, 'application/pdf');
@@ -401,7 +405,9 @@ export default function App() {
             <button className="button" aria-pressed={costView === 'value'} aria-controls="analysis-content" onClick={() => setCostView('value')}>Potential value</button>
           </div>
           <div id="analysis-content" className="page-stack">
-          {costView === 'explore' ? <ExploreChanges {...{ env, result, catalogue }} showValue={() => setCostView('value')} /> : costView === 'value' ?
+          {costView === 'explore' ? <ExploreChanges {...{ env, result, catalogue }} showValue={() => setCostView('value')} include={comparison => {
+            setPrintComparison({ env, catalogue, comparison }); setToast('Illustrative comparison added to the Full Report.');
+          }} /> : costView === 'value' ?
             <PotentialValue {...{ env, result, update }} /> : <>
           <EstimateSummary {...{ env, result, catalogue }} />
           <EstimateReadiness env={env} result={result} edit={edit} />
@@ -438,6 +444,9 @@ export default function App() {
                   <span><strong>Full Report</strong><small>For detailed review. Includes the logical architecture, ledger, findings and pricing evidence.</small></span>
                 </label>
               </fieldset>
+              {env.valuePlan && <p className="field-hint">Accepted value assumptions appear in both formats.</p>}
+              {reportIllustration && reportFormat === 'full' && <div className="actions"><span>Includes the selected illustrative adoption comparison.</span>
+                <button type="button" className="link-button" onClick={() => { cancelPdf(); setPrintComparison(undefined); }}>Remove illustration</button></div>}
               <div className="actions"><button className="button primary" disabled={exporting || !env.objects.length} onClick={exportPdf}>
                 <ArrowDownToLine size={17} aria-hidden="true" />{exporting ? 'Generating PDF…' : 'Generate PDF'}</button>
                 <a href={routeHref('review')}>Review your design</a></div>

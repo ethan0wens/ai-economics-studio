@@ -3,6 +3,8 @@ import Decimal from 'decimal.js';
 import { PDFDocument, type PDFFont } from 'pdf-lib';
 import tokens from '../design/tokens.json';
 import type { Catalogue } from './catalogue';
+import type { AdoptionComparison } from './adoption';
+import { valueSummary } from './report-value';
 import { environmentCompleteness } from './coverage';
 import { disclaimer, kindLabels, type Environment } from './domain';
 import { bases, categories, formatMoney, summarize, type governance, type Ledger } from './ledger';
@@ -23,13 +25,13 @@ const proportion = (known: string, total: Decimal) => total.gt(0) ? new Decimal(
 const shareLabel = (part: Decimal | null) => part === null ? '—' : `${part.times(100).toFixed(1)}%`;
 const londonDate = new Intl.DateTimeFormat('en-GB', { timeZone: 'Europe/London', dateStyle: 'long' });
 
-async function loadFonts(doc: PDFDocument, environment: Environment): Promise<ReportFonts> {
+async function loadFonts(doc: PDFDocument, content: unknown): Promise<ReportFonts> {
   doc.registerFontkit(fontkit);
   const options = { features: { liga: false, clig: false, kern: false, tnum: true } };
   const wrap = (pdf: PDFFont) => ({ pdf, supported: new Set(pdf.getCharacterSet()) });
   const regular = wrap(await doc.embedFont(regularAsset, { ...options, customName: 'Inter-Regular' }));
   const bold = wrap(await doc.embedFont(boldAsset, { ...options, customName: 'Inter-Semibold' }));
-  if (!/[\p{Script=Han}\p{Script=Hiragana}\p{Script=Katakana}]/u.test(JSON.stringify(environment))) return { regular, bold };
+  if (!/[\p{Script=Han}\p{Script=Hiragana}\p{Script=Katakana}]/u.test(JSON.stringify(content))) return { regular, bold };
   const { default: fallback } = await import('./report-fonts/NotoSansSC-report.ttf?inline');
   return { regular, bold, extra: wrap(await doc.embedFont(fallback, { ...options, customName: 'NotoSansSC-Report' })) };
 }
@@ -197,7 +199,7 @@ function overview(layout: ReportLayout, env: Environment, result: Ledger, catalo
 }
 
 export async function report(env: Environment, result: Ledger, catalogue: Catalogue, assessment: ReturnType<typeof governance>,
-  format: ReportFormat = 'full', generated = new Date()) {
+  format: ReportFormat = 'full', generated = new Date(), illustration?: AdoptionComparison) {
   const doc = await PDFDocument.create();
   doc.setTitle(`AI Economics Studio | ${safeText(env.name).replaceAll('\n', ' ')}`);
   doc.setSubject(`AI Environment Cost Assessment · ${formatLabels[format]}`);
@@ -205,19 +207,20 @@ export async function report(env: Environment, result: Ledger, catalogue: Catalo
   doc.setLanguage('en-GB');
   doc.setCreationDate(generated);
   doc.setModificationDate(generated);
-  const layout = new ReportLayout(doc, await loadFonts(doc, env));
+  const layout = new ReportLayout(doc, await loadFonts(doc, { env, illustration: format === 'full' ? illustration : undefined }));
   const ranked = result.lines.filter(line => line.amounts.current !== null)
     .sort((a, b) => new Decimal(b.amounts.current!).cmp(a.amounts.current!)).slice(0, 5);
   cover(layout, env, generated, format);
   executive(layout, env, result, catalogue, ranked[0]);
   overview(layout, env, result, catalogue, format, ranked);
+  if (env.valuePlan) valueSummary(layout, env.valuePlan, result, env.currency);
   if (format === 'full') {
     layout.reserveContents();
     const sources = new ReportSources();
     reviewFindings(layout, env, result, assessment, sources);
     architecture(layout, env, result);
     financialAppendix(layout, env, result, sources);
-    assumptions(layout, env, result, catalogue, generated, sources, disclaimer);
+    assumptions(layout, env, result, catalogue, generated, sources, disclaimer, illustration);
   }
   layout.finish();
   return doc.save();

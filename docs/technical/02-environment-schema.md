@@ -72,3 +72,7 @@ Examples include a linked model with `mode: "payg"` and a shared model with `mod
 ## Meter and pricing rule fields
 
 A `Meter` contains `meterId`, `sku`, `region`, `unit`, positive `quantityPerUnit` and `priceType: "Consumption"`. Exact identity includes all six fields. An override adds `currency`, `reason`, optional `objectId` and optional `effectiveAt`. Its `mode` is `retail`, `fixed`, `discount` or `intentional-zero`. Fixed `value` is a positive decimal string with up to 16 whole and 15 fractional digits. Discount `value` is a number from 0 to 100. A forecast exception targets the same meter scope with `percent` from −100 to 10,000 and optional `applyToFixed`. See the [pricing precedence](03-agreements-and-licences.md#price-precedence) for selection and application.
+
+## Optional value plan
+
+Version 1.0.0 files can omit `valuePlan`. The optional object contains its currency and a strict set of assumptions. Each assumption holds a bounded nonnegative number, its source and an optional note of up to 300 characters. Audience is a whole count. Adoption and realisation are percentages up to 100. Unknown inputs are absent keys. Import recognises prior entered assumptions as imported and preserves fictional labels. An earlier application version can read the original file shape. It may reject a newer file containing the optional field.

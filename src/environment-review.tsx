@@ -4,6 +4,7 @@ import { licensingTarget, technicalTarget, type EditTarget } from './estimate-ui
 import { routeHref } from './navigation';
 import type { governance, Ledger } from './ledger';
 import { findingStatus } from './validation-ui';
+import { LearnMore } from './learn-more';
 
 const Architecture = lazy(() => import('./diagram'));
 const tabs = { overview: 'Overview', architecture: 'Architecture', technical: 'Technical fit', controls: 'Controls' } as const;
@@ -72,7 +73,7 @@ function Controls({ env, advice, edit, openAdvanced }: Pick<Props, 'env' | 'advi
       <ul className="readiness-list">{agents.map(agent => {
         const item = applicable.get(JSON.stringify([agent.id, control]));
         return <li key={agent.id}><div><strong>{agent.name}</strong>
-          <p className="muted">{item ? declaredStatus[item.status] : 'Not assessed'}</p>
+          <p className="muted">{item ? declaredStatus[item.status] ?? item.status : 'Not assessed'}</p>
           <p>{item?.why ?? 'This check is outside the declared scope of the agent.'}</p>
           {item && <a href={item.source} target="_blank" rel="noreferrer">Microsoft guidance</a>}
         </div>{!!item?.declarationIds.length && <div className="actions">{item.declarationIds.map(id =>
@@ -88,6 +89,7 @@ function Controls({ env, advice, edit, openAdvanced }: Pick<Props, 'env' | 'advi
 
 export function EnvironmentReview({ env, result, advice, view, edit, select, openAdvanced }: Props) {
   const count = (kind: Environment['objects'][number]['kind']) => env.objects.filter(item => item.kind === kind).length;
+  const policyCount = count('security-policy');
   const assessed = result.technicalFindings.length + result.licensingFindings.length;
   const fit = result.technicalFindings.filter(item => item.status !== 'compatible').length
     + result.licensingFindings.filter(item => item.status !== 'Verified').length;
@@ -102,8 +104,9 @@ export function EnvironmentReview({ env, result, advice, view, edit, select, ope
       <dl className="usage-values">
         <div><dt>Modelled design</dt><dd>{count('agent')} agents · {count('model-deployment')} deployments · {env.relationships.length} declared relationships</dd></div>
         <div><dt>Technical and licence checks</dt><dd>{fit ? `${fit} items to check` : assessed ? 'No outstanding findings in the assessed scope' : 'No applicable checks yet'}</dd></div>
-        <div><dt>Declared controls</dt><dd>{count('security-policy') ? `${count('security-policy')} policy declarations` : 'No policy declarations entered'}</dd></div>
+        <div><dt>Declared controls</dt><dd>{policyCount ? `${policyCount} policy ${policyCount === 1 ? 'declaration' : 'declarations'}` : 'No policy declarations entered'}</dd></div>
       </dl>
+      <LearnMore guide="environmentReview">How to read review findings</LearnMore>
     </section>}
     {view === 'architecture' && <Suspense fallback={<p role="status">Preparing diagram…</p>}><Architecture {...{ env, result, select }} /></Suspense>}
     {view === 'technical' && <TechnicalFit {...{ env, result, edit }} />}

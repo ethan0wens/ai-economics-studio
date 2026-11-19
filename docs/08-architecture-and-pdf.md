@@ -25,3 +25,9 @@ The diagram represents a declared plan. Validate actual deployment topology, net
 Cloud Professional colours, embedded fonts, A4 portrait and landscape templates, repeated table headings and numbered pages give both formats consistent print layouts. Text is selectable and searchable. Full Report provides a printed contents page. This format has limited screen-reader table semantics and carries neither tagged PDF structure nor PDF/UA certification. Some unsupported scripts and emoji appear as a replacement glyph. The editable JSON retains the original characters.
 
 The [technical reference](technical/01-workspace-flow.md#diagrams-and-report-flow) explains implementation and the [report audit](34-pdf-report-redesign.md) gives visual review commands.
+
+## Accepted value and illustrative comparisons
+
+Accepted value assumptions appear as a distinct potential-outcomes section in both formats. Known AI expenditure and unresolved charges come from the existing ledger. Productivity capacity, economic equivalent and declared cashable savings have separate rows. Full Report includes the customer assumptions and their provenance, the method and separately declared costs.
+
+In Explore changes, use Include comparison in Full Report to add one illustrative adoption comparison. This explicit choice is temporary. It applies to the current environment and price catalogue, stays outside JSON and is available to remove before downloading. The report labels the monthly results and any customer-assumed usage link.

@@ -4,6 +4,7 @@ import { expect, test, type Page } from '@playwright/test';
 import { enterpriseInventory, referenceAt, scenarios } from '../../fixtures/enterprise-scenarios';
 import type { Environment } from '../../src/domain';
 import type { ValuePlan } from '../../src/value';
+import { reportText } from './report-text';
 
 async function openSample(page: Page, index = 0, valuePlan?: ValuePlan, withEnvironment: (env: Environment) => Environment = env => env) {
   const sample = scenarios[index];
@@ -119,7 +120,7 @@ test('Environment Review groups evidence and declarations and opens the existing
   }));
   await page.getByRole('link', { name: 'Review your design', exact: true }).click();
   await expect(page.getByRole('heading', { name: 'Environment Review' })).toBeVisible();
-  await expect(page.getByText('1 policy declarations')).toBeVisible();
+  await expect(page.getByText('1 policy declaration')).toBeVisible();
   const primary = page.getByRole('navigation', { name: 'Studio navigation' });
   await expect(primary.getByRole('link', { name: 'Environment Review' })).toHaveCount(0);
   const views = page.getByRole('navigation', { name: 'Environment review views' });
@@ -147,4 +148,42 @@ test('Environment Review groups evidence and declarations and opens the existing
   expect(svg.toString()).toContain('AI Economics Studio logical architecture');
   await page.evaluate(() => { location.hash = '#/governance'; });
   await expect(views.getByRole('link', { name: 'Controls' })).toHaveAttribute('aria-current', 'page');
+});
+
+test('both PDFs reconcile accepted value and only the Full Report includes an opted-in illustration', async ({ page }) => {
+  await openSample(page, 0, accepted);
+  async function compareAdoption() {
+    await navigate(page, 'Cost & Value Analysis');
+    await page.getByRole('button', { name: 'Explore changes', exact: true }).click();
+    await page.getByLabel('What would you like to change?').selectOption('adoption');
+    await page.getByLabel('Lower adoption (%)', { exact: true }).fill('25');
+    await page.getByText('Link adoption to workload usage', { exact: true }).click();
+    await page.getByLabel('Workload affected by adoption').selectOption({ label: 'Support assistant' });
+    await page.getByLabel('Monthly interactions per active user', { exact: true }).fill('10');
+    await page.getByRole('button', { name: 'Compare adoption assumptions' }).click();
+  }
+
+  await compareAdoption();
+  await navigate(page, 'Reports & Export');
+  const before = (await reportText(await download(page, 'Generate PDF'))).join(' ');
+  expect(before).toContain('Accepted value assumptions');
+  expect(before).not.toContain('Illustrative adoption comparison');
+  await compareAdoption();
+  await page.getByRole('button', { name: 'Include comparison in Full Report' }).click();
+  await navigate(page, 'Reports & Export');
+  await expect(page.getByText('Includes the selected illustrative adoption comparison.')).toBeVisible();
+  const full = await reportText(await download(page, 'Generate PDF'));
+  await page.getByRole('radio', { name: /Executive Summary/ }).check();
+  const executive = await reportText(await download(page, 'Generate PDF'));
+  for (const pages of [full, executive]) {
+    expect(pages[1]).toContain('Current estimate £1,893.80 £22,725.60 0');
+    expect(pages.join(' ')).toContain('Assumed economic equivalent £6,000.00 £72,000.00');
+    expect(pages.join(' ')).toContain('Declared cashable savings £200.00 £2,400.00');
+  }
+  expect(full.join(' ')).toContain('Illustrative adoption comparison');
+  expect(full.join(' ')).toContain('£1,617.10');
+  expect(executive.join(' ')).not.toContain('Illustrative adoption comparison');
+  const json = (await download(page, 'Export JSON')).toString();
+  expect(json).not.toContain('Illustrative adoption comparison');
+  expect(JSON.parse(json).valuePlan).toEqual(accepted);
 });

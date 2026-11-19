@@ -46,6 +46,11 @@ const cases = [
   { key: '10-unknown', env: { ...base, name: 'Fictional unresolved draft',
     objects: [{ id: 'draft', name: 'Fictional service draft', kind: 'supporting-resource' as const }], relationships: [] }, records: [] },
   { key: '11-existing-and-incremental', env: scenarios[3].env, records: scenarios[3].records, expected: scenarios[3].expected },
+  { key: '12-accepted-value', env: { ...scenarios[4].env, valuePlan: { currency: 'GBP', assumptions: {
+    audience: { value: 200, source: 'fictional' as const }, adoption: { value: 50, source: 'fictional' as const },
+    tasks: { value: 20, source: 'fictional' as const }, minutes: { value: 12, source: 'fictional' as const, note: 'Fictional pilot timing' },
+    realisation: { value: 60, source: 'fictional' as const }, hourlyValue: { value: 25, source: 'fictional' as const },
+  } } }, records: scenarios[4].records, expected: scenarios[4].expected },
 ];
 
 async function inspect(bytes: Uint8Array, format: ReportFormat) {
@@ -151,6 +156,17 @@ for (const { key, env, records, expected } of cases) {
     if (key === '11-existing-and-incremental') {
       expect(fullPages[1]).toContain('Existing licence spend £12,000.00');
       expect(fullPages[1]).toContain('Proposed licence spend £15,470.00');
+    }
+    if (key === '12-accepted-value') {
+      for (const pages of [fullPages, summaries]) {
+        const all = pages.join(' ');
+        expect(all).toContain('Potential Business Value');
+        expect(all).toContain('Assumed economic equivalent £6,000.00 £72,000.00');
+        expect(all).toContain('with 1 unresolved charge');
+        expect(all).not.toContain('Illustrative adoption comparison');
+      }
+      expect(text).toContain('Fictional pilot timing');
+      expect(text).toContain('Accepted value assumptions');
     }
     const doc = await PDFDocument.load(full);
     expect(doc.getTitle()).toContain('AI Economics Studio |');

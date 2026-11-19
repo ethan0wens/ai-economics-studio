@@ -2,6 +2,7 @@ import { useRef, useState } from 'react';
 import type { Environment } from './domain';
 import { formatMoney, type Ledger } from './ledger';
 import { formatQuantity } from './presentation';
+import { LearnMore } from './learn-more';
 import { DraftQuantity } from './usage-assistance-ui';
 import { assumptionSources, estimateValue, valueFields, valueKeys, valuePlanSchema, type ValueInputs, type ValuePlan } from './value';
 
@@ -30,6 +31,7 @@ function Results({ plan, result, currency }: { plan: ValuePlan; result: Ledger; 
       <div><dt>Assumed economic equivalent</dt><dd>{money(value.economicEquivalent)}</dd></div>
       <div><dt>Declared cashable savings</dt><dd>{money(value.cashableSavings)}</dd></div>
     </dl>
+    <LearnMore guide="valueAssumptions">How capacity and financial value differ</LearnMore>
     <h3>Investment context</h3>
     <dl className="usage-values">
       <div><dt>Modelled AI expenditure</dt><dd>{formatMoney(costKnown ? result.summary.current.known : null, currency)} monthly

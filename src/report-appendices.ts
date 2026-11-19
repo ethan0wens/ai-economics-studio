@@ -1,4 +1,6 @@
 import Decimal from 'decimal.js';
+import type { AdoptionComparison } from './adoption';
+import { valueAssumptions } from './report-value';
 import { retailDocs, type Catalogue, type RetailRecord } from './catalogue';
 import { compatibilityLabels } from './compatibility';
 import { creditCategories, type Environment } from './domain';
@@ -171,7 +173,7 @@ export function financialAppendix(layout: ReportLayout, env: Environment, result
   capacityComparisons(layout, result, env.currency, sources);
 }
 
-export function assumptions(layout: ReportLayout, env: Environment, result: Ledger, catalogue: Catalogue, generated: Date, sources: ReportSources, disclaimer: string) {
+export function assumptions(layout: ReportLayout, env: Environment, result: Ledger, catalogue: Catalogue, generated: Date, sources: ReportSources, disclaimer: string, illustration?: AdoptionComparison) {
   layout.section('Assumptions and sources', 'The assessment uses the applied workspace and its pricing evidence at the assessment time.');
   layout.table([{ title: 'Basis', width: .27 }, { title: 'Recorded value or method', width: .73 }], [
     ['Generated', generated.toISOString()], ['Ledger assessed', result.assessedAt], ['Currency and default region', `${env.currency} · ${regionName(env.region)}`],
@@ -218,6 +220,7 @@ export function assumptions(layout: ReportLayout, env: Environment, result: Ledg
     layout.table([{ title: 'Object', width: .31 }, { title: 'Scope', width: .18 }, { title: 'Applied declarations', width: .51 }], usage,
       { caption: 'Declared assumptions', heading: 'Declared usage and licence assumptions' });
   }
+  if (env.valuePlan) valueAssumptions(layout, env.valuePlan, illustration);
   sources.ref(retailDocs);
   layout.subhead('Numbered source register');
   layout.paragraph('References identify the published evidence used in this document. The catalogue check and evidence review dates may differ from report generation time.', { size: 9, color: colour.muted });

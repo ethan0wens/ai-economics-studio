@@ -72,7 +72,7 @@ export function Home({ env, status, create, resume, importFile, error }: {
   return <div className="welcome">
     <div className="welcome-intro">
       <h1 tabIndex={-1}>Understand the cost of your AI ambitions.</h1>
-      <p>Design your Microsoft AI environment, explore the costs behind it, and build a clearer picture of your investment—all in one place.</p>
+      <p>Plan your Microsoft AI environment, estimate its costs and explore its potential value.</p>
     </div>
     <div className="welcome-entry">
       {entering ? <form onSubmit={event => {

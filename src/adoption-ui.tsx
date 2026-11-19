@@ -3,12 +3,15 @@ import type { Catalogue } from './catalogue';
 import type { Environment } from './domain';
 import { formatMoney, type Ledger } from './ledger';
 import { formatQuantity } from './presentation';
+import { LearnMore } from './learn-more';
 import { DraftQuantity } from './usage-assistance-ui';
 import { sensitivityTargets } from './usage-estimation';
 import { compareAdoption, type AdoptionComparison, type AdoptionRates } from './adoption';
 import type { ValuePlan } from './value';
 
-export function AdoptionPreview({ env, result, catalogue, plan }: { env: Environment; result: Ledger; catalogue: Catalogue; plan: ValuePlan }) {
+export function AdoptionPreview({ env, result, catalogue, plan, include }: {
+  env: Environment; result: Ledger; catalogue: Catalogue; plan: ValuePlan; include: (comparison: AdoptionComparison) => void;
+}) {
   const original = plan.assumptions.adoption?.value;
   const [rates, setRates] = useState<AdoptionRates>({ expected: original });
   const [agentId, setAgentId] = useState('');
@@ -47,6 +50,7 @@ export function AdoptionPreview({ env, result, catalogue, plan }: { env: Environ
             <input type="text" value={note} maxLength={300} onChange={event => { setNote(event.target.value); setComparison(undefined); }} /></label>
         </div>
       </>}
+      <LearnMore guide="adoptionLink">How adoption can change workload usage</LearnMore>
     </details>
     <div className="actions">
       <button className="button" type="submit">Compare adoption assumptions</button>
@@ -74,6 +78,7 @@ export function AdoptionPreview({ env, result, catalogue, plan }: { env: Environ
         </table>
       </div>
       <p className="field-hint">The AI ledger gives known subtotals. Benefits and separately declared implementation and operating costs are outside those amounts. Cashable savings stay as declared across scenarios.</p>
+      <div className="actions"><button type="button" className="button" onClick={() => include(comparison)}>Include comparison in Full Report</button></div>
     </>}</div>
   </form>;
 }

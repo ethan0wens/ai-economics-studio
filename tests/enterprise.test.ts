@@ -147,7 +147,7 @@ describe('evidence boundaries', () => {
 
   it('validates catalogue references, date windows and old JSON', () => {
     expect(new Set(entitlementRules.map(rule => rule.id)).size).toBe(entitlementRules.length);
-    expect(entitlementRules.flatMap(rule => [...rule.products, ...(rule.eligible ?? [])])
+    expect(entitlementRules.flatMap(rule => [...rule.products, ...(rule.eligible ?? []), ...(rule.possible ?? [])])
       .every(id => enterpriseInventory.some(offer => offer.id === id))).toBe(true);
     expect([...entitlementRules, ...compatibilityEvidence.regions, ...compatibilityEvidence.integrations, ...compatibilityEvidence.capabilities]
       .every(rule => rule.verifiedOn < rule.reviewBy)).toBe(true);
@@ -156,5 +156,17 @@ describe('evidence boundaries', () => {
     expect(new Set(combinations).size).toBe(combinations.length);
     const older = blankEnvironment();
     expect(importEnvironment(JSON.stringify(older))).toEqual(older);
+  });
+
+  it('flags plan-dependent Entra eligibility without claiming an extra P1 purchase', () => {
+    const env: Environment = { ...blankEnvironment(), objects: [
+      { id: 'p2', name: 'Existing identity', kind: 'licence-entitlement', offeringId: 'entra-p2-gb', product: 'Microsoft Entra ID P2',
+        procurement: 'existing', seats: 50 },
+      { id: 'suite', name: 'New governance', kind: 'licence-entitlement', offeringId: 'entra-suite-gb', product: 'Microsoft Entra Suite',
+        procurement: 'incremental', seats: 25 },
+    ] };
+    expect(licensing(env, enterpriseInventory, referenceAt).findings).toContainEqual(expect.objectContaining({
+      rule: 'entra-suite-base', status: 'Conditional', detail: expect.stringContaining('Confirm them before adding another licence.'),
+    }));
   });
 });

@@ -11,7 +11,7 @@ export const evidenceWindow = {
 const ruleSchema = z.strictObject({
   id: z.string(), products: z.array(z.string()).min(1), market: z.literal('GB'),
   kind: z.enum(['requirement', 'included', 'conditional', 'unverified']),
-  capability: z.string().min(1), eligible: z.array(z.string()).optional(), ...evidenceWindow,
+  capability: z.string().min(1), eligible: z.array(z.string()).optional(), possible: z.array(z.string()).optional(), ...evidenceWindow,
 });
 export const entitlementRules = z.array(ruleSchema).parse(reviewed);
 export function currentEvidence(rule: { verifiedOn: string; reviewBy: string }, at: string) {
@@ -72,7 +72,7 @@ export function licensing(env: Environment, inventory: readonly Offering[], at: 
     }
   }
   function sku(licence: Licence) {
-    return offers.get(licence.id) ?? scopeKey(licence.product);
+    return scopeKey(licence.product);
   }
   for (const licence of licences) {
     const scope = scopeKey(licence.seatScope);
@@ -97,6 +97,8 @@ export function licensing(env: Environment, inventory: readonly Offering[], at: 
         candidate.capability === rule.capability && currentEvidence(candidate, at)).flatMap(candidate => candidate.products)]);
       const eligible = licences.filter(other => other.id !== licence.id && eligibleIds.has(offers.get(other.id) ?? '') &&
         !blocked.has(other.id) && (other.procurement === 'existing' || other.procurement === 'incremental'));
+      const potential = licences.some(other => other.id !== licence.id && rule.possible?.includes(offers.get(other.id) ?? '') &&
+        !blocked.has(other.id) && (other.procurement === 'existing' || other.procurement === 'incremental'));
       const allGroupsCovered = groups.length > 0 && groups.every(group => {
         const object = objects.get(group.from);
         return object?.kind === 'user-group' && object.population !== undefined &&
@@ -106,11 +108,12 @@ export function licensing(env: Environment, inventory: readonly Offering[], at: 
       });
       const status = !dateValid || rule.kind === 'unverified' ? 'Unverified'
         : rule.kind === 'included' ? 'Verified'
-        : rule.kind === 'requirement' ? allGroupsCovered ? 'Verified' : eligible.length ? 'Conditional' : 'Action required'
+        : rule.kind === 'requirement' ? allGroupsCovered ? 'Verified' : (eligible.length || potential) ? 'Conditional' : 'Action required'
         : 'Conditional';
       const assignment = rule.kind === 'requirement'
         ? allGroupsCovered ? ' A qualifying base licence covers each assigned group in the plan.'
         : eligible.length ? ' Confirm that the same users hold the prerequisite, or model a fully covered group.'
+        : potential ? ' The selected plan can have different eligibility or commercial terms. Confirm them before adding another licence.'
         : ' Add an eligible base entitlement or confirm coverage in the customer agreement.' : '';
       findings.push({
         id: licence.id, rule: rule.id, title: rule.capability, status, source: rule.source, verifiedOn: rule.verifiedOn,

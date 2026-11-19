@@ -170,6 +170,11 @@
     "condition": "Entra Suite requires Entra ID P1 or a package that includes it. P2 and Microsoft 365 E5 customers should confirm applicable offer terms.",
     "eligible": [
       "entra-p1-gb"
+    ],
+    "possible": [
+      "entra-p2-gb",
+      "m365-e5-gb",
+      "m365-e5-no-teams-gb"
     ]
   },
   {

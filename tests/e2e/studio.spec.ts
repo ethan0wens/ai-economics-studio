@@ -10,6 +10,12 @@ async function add(page: Page, kind: string, name: string) {
   await expect(page.getByRole('heading', { name, exact: true })).toBeVisible();
 }
 
+async function createAdvanced(page: Page) {
+  await page.getByLabel('Environment name', { exact: true }).fill('Fictional test environment');
+  await page.getByRole('button', { name: 'Create Environment', exact: true }).click();
+  await page.getByRole('group', { name: 'Builder mode' }).getByRole('button', { name: 'Advanced' }).click();
+}
+
 async function fileFrom(page: Page, button: string) {
   const event = page.waitForEvent('download');
   await page.getByRole('button', { name: button, exact: true }).first().click();
@@ -20,7 +26,8 @@ test('draft creation, shared costing, keyboard graph, reconciled report and JSON
   const requests: { url: string; method: string; body: string | null }[] = [];
   page.on('request', request => requests.push({ url: request.url(), method: request.method(), body: request.postData() }));
   await page.goto('/');
-  await expect(page.getByRole('heading', { name: 'Your inventory is empty' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Plan and estimate a Microsoft AI environment' })).toBeVisible();
+  await createAdvanced(page);
   await add(page, 'Agent', 'Fictional Alpha');
   await page.getByRole('combobox', { name: 'Platform', exact: true }).selectOption('foundry-agent-service');
   await page.getByLabel('Model source', { exact: true }).selectOption('deployment-ref');
@@ -39,7 +46,7 @@ test('draft creation, shared costing, keyboard graph, reconciled report and JSON
     await page.getByRole('button', { name: new RegExp(name) }).click();
     await page.getByRole('combobox', { name: 'Model deployment', exact: true }).selectOption({ label: 'Fictional capacity / TEST ONLY / uksouth / provisioned' });
   }
-  await page.getByRole('button', { name: 'Cost Analysis' }).click();
+  await page.getByRole('link', { name: 'Cost Analysis' }).click();
   await page.getByText('Shared provisioned capacity', { exact: true }).click();
   await page.getByRole('combobox', { name: 'Price agreement', exact: true }).selectOption('fixed');
   await page.getByRole('textbox', { name: /^Rate per billed unit/ }).fill('70');
@@ -51,7 +58,8 @@ test('draft creation, shared costing, keyboard graph, reconciled report and JSON
   await page.getByLabel('Apply forecast to fixed contracts', { exact: true }).check();
   await expect(page.locator('.compare-grid > div').last()).toContainText('£840.00');
 
-  await page.getByRole('button', { name: 'Architecture', exact: true }).click();
+  await page.getByRole('link', { name: 'Reports & Export' }).click();
+  await page.getByRole('link', { name: 'Architecture', exact: true }).click();
   const node = page.getByRole('button', { name: 'Inspect Fictional capacity' });
   await expect(node).toBeVisible();
   await node.focus();
@@ -61,7 +69,7 @@ test('draft creation, shared costing, keyboard graph, reconciled report and JSON
   await expect(page.getByRole('dialog')).toContainText('Fictional Beta');
   await page.getByRole('button', { name: 'Cancel', exact: true }).click();
 
-  await page.getByRole('button', { name: 'Reports & Export' }).click();
+  await page.getByRole('link', { name: 'Reports & Export' }).click();
   const pdf = await fileFrom(page, 'Generate PDF');
   const loading = getDocument({ data: new Uint8Array(pdf), standardFontDataUrl: 'node_modules/pdfjs-dist/standard_fonts/' });
   const pdfDocument = await loading.promise;
@@ -80,10 +88,11 @@ test('draft creation, shared costing, keyboard graph, reconciled report and JSON
   expect(JSON.parse(json.toString()).sourceSnapshot).toMatchObject({ current: '700.00', incomplete: 0 });
   expect(await page.evaluate(async () => [localStorage.length, sessionStorage.length, document.cookie, (await indexedDB.databases()).length])).toEqual([0, 0, '', 0]);
   await page.reload();
-  await expect(page.getByRole('heading', { name: 'Your inventory is empty' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Open an environment' })).toBeVisible();
   await page.locator('input[type=file]').setInputFiles({ name: 'env.json', mimeType: 'application/json', buffer: json });
   await expect(page.locator('.metric').first()).toContainText('£700.00');
   await expect(page.getByText(/Current ledger recalculated/)).toBeVisible();
+  await page.getByRole('group', { name: 'Builder mode' }).getByRole('button', { name: 'Advanced' }).click();
   await page.getByLabel('Search inventory', { exact: true }).fill('Beta');
   await expect(page.getByRole('button', { name: /Fictional Beta/ })).toBeVisible();
   await expect(page.getByRole('button', { name: /Fictional Alpha/ })).toHaveCount(0);
@@ -105,7 +114,8 @@ test('mobile reflow, keyboard drafts and accessible overview', async ({ page }) 
   await expect.poll(overflow).toBe(0);
   const accessibility = await new AxeBuilder({ page }).withTags(['wcag2a', 'wcag2aa', 'wcag21aa']).analyze();
   expect(accessibility.violations).toEqual([]);
-  const addButton = page.getByRole('button', { name: 'Add first object' });
+  await createAdvanced(page);
+  const addButton = page.getByRole('button', { name: 'Add object', exact: true });
   await addButton.focus();
   await page.keyboard.press('Enter');
   const group = page.getByRole('dialog').getByRole('button', { name: 'User group' });
@@ -114,7 +124,7 @@ test('mobile reflow, keyboard drafts and accessible overview', async ({ page }) 
   await expect(page.getByRole('heading', { name: 'New user group' })).toBeVisible();
   await expect.poll(overflow).toBe(0);
   await page.getByRole('button', { name: 'Toggle navigation' }).click();
-  await page.getByRole('button', { name: 'Cost Analysis' }).click();
+  await page.getByRole('link', { name: 'Cost Analysis' }).click();
   await expect(page.getByRole('heading', { name: 'Cost Analysis' })).toBeVisible();
   await expect.poll(overflow).toBe(0);
   await page.setViewportSize({ width: 640, height: 950 });
@@ -125,11 +135,12 @@ test('mobile reflow, keyboard drafts and accessible overview', async ({ page }) 
 
 test('an unexported workspace is discarded on accepted reload and invalid JSON is reported', async ({ page }) => {
   await page.goto('/');
+  await createAdvanced(page);
   await add(page, 'Supporting resource', 'Fictional resource');
   await expect(page.getByText('Not exported')).toBeVisible();
   page.on('dialog', dialog => dialog.accept());
   await page.reload();
-  await expect(page.getByRole('heading', { name: 'Your inventory is empty' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Open an environment' })).toBeVisible();
   await page.locator('input[type=file]').setInputFiles({ name: 'bad.json', mimeType: 'application/json', buffer: Buffer.from('{') });
   await expect(page.getByRole('alert')).toContainText('Import failed');
 });
@@ -150,12 +161,15 @@ test('catalogue changes require explicit adoption and preserve a fixed agreement
   await page.route('**/pricing/manifest.json', route => route.fulfill({ json: current.manifest }));
   await page.route('**/pricing/catalogue-*.json', route => route.fulfill({ contentType: 'application/json', body: current.data }));
   await page.goto('/');
+  await page.getByRole('link', { name: 'Pricing Catalogue' }).click();
   await expect(page.getByText(/1 published rates/)).toBeVisible();
+  await page.getByRole('link', { name: 'Home', exact: true }).click();
+  await createAdvanced(page);
   await add(page, 'Supporting resource', 'Fictional billable resource');
   await page.getByLabel('Verified Azure retail meter', { exact: true }).selectOption({ label: 'Fictional test-only meter / fictional / 1 Hour' });
   await page.getByLabel('Monthly usage quantity', { exact: true }).fill('2');
   await expect(page.locator('.metric').first()).toContainText('£20.00');
-  await page.getByRole('button', { name: 'Cost Analysis' }).click();
+  await page.getByRole('link', { name: 'Cost Analysis' }).click();
   await page.getByText('Supporting usage', { exact: true }).click();
   await page.getByRole('combobox', { name: 'Price agreement', exact: true }).selectOption('fixed');
   await page.getByRole('textbox', { name: /^Rate per billed unit/ }).fill('7');

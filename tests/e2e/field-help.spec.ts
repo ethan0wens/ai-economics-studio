@@ -24,6 +24,7 @@ async function workspace(page: Page, fixture = data) {
   await page.goto('/');
   await page.locator('input[type=file]').setInputFiles({ name: 'scenario.json', mimeType: 'application/json', buffer: Buffer.from(JSON.stringify(fixture)) });
   await expect(page.getByRole('heading', { name: 'Environment Builder' })).toBeVisible();
+  await page.getByRole('group', { name: 'Builder mode' }).getByRole('button', { name: 'Advanced' }).click();
 }
 
 test('every registered field is reachable with an accessible help trigger', async ({ page }) => {
@@ -81,17 +82,21 @@ test('every registered field is reachable with an accessible help trigger', asyn
   await inspector.getByRole('button', { name: 'Dependencies' }).click();
   await inspector.getByLabel('Relationship type', { exact: true }).selectOption('policy-applies-to-environment');
   await inspect();
-  await page.getByRole('button', { name: 'Untitled environment' }).click();
+  await page.getByRole('button', { name: 'Settings for Untitled environment' }).click();
   await inspect();
   await page.keyboard.press('Escape');
-  await page.getByRole('button', { name: 'Cost Analysis' }).click();
+  await page.getByRole('link', { name: 'Cost Analysis' }).click();
   await page.getByText('Shared provisioned capacity', { exact: true }).click();
   await page.getByRole('combobox', { name: 'Price agreement', exact: true }).selectOption('fixed');
   await page.locator('.ledger-row[open] .price-more summary').click();
   await inspect();
   await page.getByRole('combobox', { name: 'Price agreement', exact: true }).selectOption('discount');
   await inspect();
-  await page.getByRole('button', { name: 'Pricing Catalogue', exact: true }).click();
+  await page.getByText('Compare pricing assumptions', { exact: true }).click();
+  await inspect();
+  await page.getByRole('link', { name: 'Reports & Export' }).click();
+  await inspect();
+  await page.getByRole('link', { name: 'Pricing Catalogue', exact: true }).click();
   await inspect();
   expect([...revealed].sort()).toEqual(Object.keys(fieldHelp).sort());
 });
@@ -108,7 +113,7 @@ test('help opens on focus and hover, supports links and dismisses without losing
   await trigger.focus();
   await expect(help).toContainText('Required · One platform');
   await page.keyboard.press('Tab');
-  await expect(help.getByRole('link')).toBeFocused();
+  await expect(help.getByRole('link').first()).toBeFocused();
   await page.keyboard.press('Escape');
   await expect(trigger).toBeFocused();
   await expect(help).toBeHidden();

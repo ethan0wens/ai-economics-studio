@@ -24,13 +24,14 @@ for (const item of scenarios) {
       name: 'fictional-enterprise-reference.json', mimeType: 'application/json', buffer: Buffer.from(JSON.stringify(item.env)),
     });
     await expect(page.locator('.metric').first()).toContainText(money(item.expected.monthly));
-    await page.getByRole('button', { name: 'Cost Analysis', exact: true }).click();
-    await expect(page.getByRole('heading', { name: 'Environment validation' })).toBeVisible();
+    await page.getByRole('link', { name: 'Cost Analysis', exact: true }).click();
+    await expect(page.getByRole('heading', { name: 'Estimate readiness' })).toBeVisible();
     await expect(page.locator('.metric').first()).toContainText(money(item.expected.monthly));
-    await page.getByRole('button', { name: 'Architecture', exact: true }).click();
+    await page.getByRole('link', { name: 'Reports & Export' }).click();
+    await page.getByRole('link', { name: 'Architecture', exact: true }).click();
     await expect(page.getByRole('table', { name: 'Architecture objects and outgoing links' })).toBeVisible();
     if (item.expected.missing) await expect(page.getByRole('cell', { name: /Verified incompatible/ })).toBeVisible();
-    await page.getByRole('button', { name: 'Reports & Export', exact: true }).click();
+    await page.getByRole('link', { name: 'Reports & Export', exact: true }).click();
     const raw = await exported(page, 'Export JSON');
     const snapshot = JSON.parse(raw.toString()).sourceSnapshot;
     expect(snapshot).toMatchObject({ catalogueId, currentKnown: item.expected.monthly, annualKnown: item.expected.annual, incomplete: item.expected.missing });
@@ -40,7 +41,7 @@ for (const item of scenarios) {
     try {
       const text = (await Promise.all(Array.from({ length: document.numPages }, async (_, index) =>
         (await (await document.getPage(index + 1)).getTextContent()).items.map(entry => 'str' in entry ? entry.str : '').join(' ')))).join(' ').replace(/\s+/g, ' ');
-      expect(text).toContain(`Current contract: ${money(item.expected.monthly)} monthly known subtotal | ${money(item.expected.annual)} annual run-rate | ${item.expected.missing} incomplete`);
+      expect(text).toContain(`Current estimate: ${money(item.expected.monthly)} monthly known subtotal | ${money(item.expected.annual)} annual run-rate | ${item.expected.missing} incomplete`);
       expect(text).toContain('Technical compatibility and licensing evidence');
       expect(text).toContain('Itemised monthly cost ledger');
       if (item.expected.forecast) expect(text).toContain(`Forecast effective: ${money(item.expected.forecast)} monthly known subtotal`);
@@ -81,6 +82,7 @@ if (process.env.STUDIO_CHECK_PUBLISHED_CATALOGUE === '1') {
     ], relationships: [] };
     await page.goto('/');
     await page.locator('input[type=file]').setInputFiles({ name: 'published-rates-smoke.json', mimeType: 'application/json', buffer: Buffer.from(JSON.stringify(env)) });
+    await page.getByRole('group', { name: 'Builder mode' }).getByRole('button', { name: 'Advanced' }).click();
     await page.getByRole('button', { name: /^Example base licence / }).click();
     await expect(page.locator('.inspector').getByText('Microsoft retail pricing')).toBeVisible();
     if (Date.parse(rate.review.expiresAt) >= Date.now()) {
@@ -110,6 +112,7 @@ test('provisioned reservation and PAYG comparison reconcile in the builder, arch
     name: 'fictional-reservation.json', mimeType: 'application/json', buffer: Buffer.from(JSON.stringify(fixture.env)),
   });
   await expect(page.locator('.metric').first()).toContainText('£7,400.00');
+  await page.getByRole('group', { name: 'Builder mode' }).getByRole('button', { name: 'Advanced' }).click();
   await page.getByRole('button', { name: /^Reserved model / }).click();
   const inspector = page.locator('.inspector');
   await inspector.getByRole('button', { name: 'Usage', exact: true }).click();
@@ -123,12 +126,14 @@ test('provisioned reservation and PAYG comparison reconcile in the builder, arch
   await inspector.getByLabel('Billable hours covered by reservation', { exact: true }).fill('400');
   await inspector.getByLabel('Reservation evidence reference', { exact: true }).fill('Fictional quote fixture');
   await expect(page.locator('.metric').first()).toContainText('£5,600.00');
-  await page.getByRole('button', { name: 'Cost Analysis', exact: true }).click();
+  await page.getByRole('link', { name: 'Cost Analysis', exact: true }).click();
+  await page.getByText('Compare pricing assumptions', { exact: true }).click();
   await expect(page.getByRole('heading', { name: 'Provisioned and PAYG costs' })).toBeVisible();
   await expect(page.getByText('£5,400.00 provisioned · £3.77 PAYG retail')).toBeVisible();
-  await page.getByRole('button', { name: 'Architecture', exact: true }).click();
+  await page.getByRole('link', { name: 'Reports & Export' }).click();
+  await page.getByRole('link', { name: 'Architecture', exact: true }).click();
   await expect(page.getByRole('cell', { name: /PAYG comparison £3.77/ })).toBeVisible();
-  await page.getByRole('button', { name: 'Reports & Export', exact: true }).click();
+  await page.getByRole('link', { name: 'Reports & Export', exact: true }).click();
   const json = JSON.parse((await exported(page, 'Export JSON')).toString());
   expect(json.sourceSnapshot).toMatchObject({ currentKnown: '5600.00', annualKnown: '67200.00', incomplete: 0 });
   expect(json.objects.find((row: { id: string }) => row.id === 'Reserved model')).toMatchObject({
@@ -140,7 +145,7 @@ test('provisioned reservation and PAYG comparison reconcile in the builder, arch
   try {
     const texts = (await Promise.all(Array.from({ length: doc.numPages }, async (_, i) =>
       (await (await doc.getPage(i + 1)).getTextContent()).items.map(item => 'str' in item ? item.str : '').join(' ')))).join(' ').replace(/\s+/g, ' ');
-    expect(texts).toContain('Current contract: £5,600.00 monthly known subtotal | £67,200.00 annual run-rate');
+    expect(texts).toContain('Current estimate: £5,600.00 monthly known subtotal | £67,200.00 annual run-rate');
     expect(texts).toContain('£5,400.00 provisioned | £3.77 PAYG retail | Provisioned minus PAYG £5,396.23');
     expect(texts).toContain('Retail comparison quantity without reservation: 18000 PTU-hours.');
   } finally {

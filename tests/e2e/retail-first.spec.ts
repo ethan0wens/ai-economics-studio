@@ -20,6 +20,7 @@ test('selected model applies both catalogue meters, restores retail and opens ex
   }));
   await page.route(`**/pricing/catalogue-${catalogueId}.json`, route => route.fulfill({ body: payload, contentType: 'application/json' }));
   await page.goto('/');
+  await page.getByRole('link', { name: 'Pricing Catalogue', exact: true }).click();
   await expect(page.getByText(/2 published rates/)).toBeVisible();
   const env = { ...blankEnvironment(),
     objects: [
@@ -32,13 +33,14 @@ test('selected model applies both catalogue meters, restores retail and opens ex
     ],
   };
   await page.locator('input[type=file]').setInputFiles({ name: 'fixture.json', mimeType: 'application/json', buffer: Buffer.from(JSON.stringify(env)) });
+  await page.getByRole('group', { name: 'Builder mode' }).getByRole('button', { name: 'Advanced' }).click();
   await page.getByRole('button', { name: /^Catalogue model / }).click();
   const inspector = page.locator('.inspector');
   await inspector.getByRole('combobox', { name: 'Microsoft retail configuration', exact: true }).selectOption(offering.id);
   await expect(inspector.getByRole('link', { name: 'GBP 0.20 per 1,000 tokens' })).toBeVisible();
   // 3,000,000 input × 0.20/1,000 + 1,000,000 output × 0.50/1,000 = 1,100.
   await expect(page.locator('.metric').first()).toContainText('£1,100.00');
-  await page.getByRole('button', { name: 'Cost Analysis' }).click();
+  await page.getByRole('link', { name: 'Cost Analysis' }).click();
   await page.getByText('Input tokens', { exact: true }).click();
   await page.getByRole('combobox', { name: 'Price agreement', exact: true }).selectOption('fixed');
   await page.getByRole('textbox', { name: /^Rate per billed unit/ }).fill('0.10');
@@ -47,7 +49,7 @@ test('selected model applies both catalogue meters, restores retail and opens ex
   await expect(page.locator('.metric').first()).toContainText('£800.00');
   await page.getByRole('button', { name: 'Restore Microsoft retail for this object' }).click();
   await expect(page.locator('.metric').first()).toContainText('£1,100.00');
-  await page.getByRole('button', { name: 'Pricing Catalogue', exact: true }).click();
+  await page.getByRole('link', { name: 'Pricing Catalogue', exact: true }).click();
   await page.getByText('Microsoft Foundry models', { exact: true }).click();
   await expect(page.getByText('1 / 3 verified · 33.3%', { exact: true })).toBeVisible();
   await expect(page.getByText('GPT-4o mini · Global Standard', { exact: true })).toBeVisible();
@@ -81,8 +83,8 @@ if (process.env.STUDIO_CHECK_PUBLISHED_CATALOGUE === '1') {
     expect(verified).toBeGreaterThan(offerings.length);
     expect(supported).toBeGreaterThan(verified);
     await page.goto('/');
+    await page.getByRole('link', { name: 'Pricing Catalogue', exact: true }).click();
     await expect(page.getByText(new RegExp(`${manifest.records} published rates`))).toBeVisible();
-    await page.getByRole('button', { name: 'Pricing Catalogue', exact: true }).click();
     await expect(page.getByText(new RegExp(`${verified} of ${supported} supported configurations`))).toBeVisible();
     for (const name of ['Microsoft Foundry models', 'Copilot Studio', 'Microsoft licensing', 'Supporting Azure services', 'Security and governance']) {
       await expect(page.getByText(name, { exact: true })).toBeVisible();
@@ -97,6 +99,7 @@ if (process.env.STUDIO_CHECK_PUBLISHED_CATALOGUE === '1') {
       { kind: 'supporting-resource', id: 'azure-resource', name: 'Regional service test', monthlyQuantity: offer.components[0].quantityPerUnit * 1000 },
     ] };
     await page.locator('input[type=file]').setInputFiles({ name: 'fictional.json', mimeType: 'application/json', buffer: Buffer.from(JSON.stringify(env)) });
+    await page.getByRole('group', { name: 'Builder mode' }).getByRole('button', { name: 'Advanced' }).click();
     await page.getByRole('button', { name: /^Regional service test / }).click();
     await page.getByLabel('Microsoft retail configuration', { exact: true }).selectOption(offer.id);
     await expect(page.locator('.inspector .retail-preview').getByRole('link', { name: /^GBP / })).toBeVisible();
@@ -115,7 +118,7 @@ if (process.env.STUDIO_CHECK_RELEASE_HEALTH === '1') {
     expect(release.application).toMatch(/^[a-f0-9]{40}$/);
     expect(Array.isArray(maintenance.unresolved)).toBe(true);
     await page.goto('/');
-    await page.getByRole('button', { name: 'Pricing Catalogue', exact: true }).click();
+    await page.getByRole('link', { name: 'Pricing Catalogue', exact: true }).click();
     const health = page.getByRole('region', { name: 'Catalogue health' });
     await expect(health.getByText(new RegExp('Published application ' + release.application.slice(0, 12)))).toBeVisible();
     await expect(health.getByText('PTU sizing', { exact: true })).toBeVisible();

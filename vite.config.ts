@@ -6,7 +6,10 @@ export default defineConfig({
   test: { include: ['tests/**/*.test.ts'] },
   build: {
     rolldownOptions: {
-      output: { codeSplitting: { groups: [{ name: 'react-runtime', test: /[\\/]node_modules[\\/](?:react|react-dom|scheduler)[\\/]/ }] } },
+      output: { codeSplitting: { groups: [
+        { name: 'react-runtime', test: /[\\/]node_modules[\\/](?:react|react-dom|scheduler)[\\/]/ },
+        { name: 'catalogue-evidence', test: /[\\/]catalogue[\\/](?:compatibility|entitlements|provisioned)\.json$/ },
+      ] } },
     },
   },
 });

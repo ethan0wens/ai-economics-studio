@@ -11,7 +11,7 @@ const muted = rgb(.28, .35, .44);
 const blue = rgb(.14, .39, .92);
 const border = rgb(.88, .92, .96);
 const categoryColors = ['#2563eb', '#7c3aed', '#0d9488', '#d97706', '#475569'];
-const labels = { retail: 'Retail baseline', current: 'Current contract', forecast: 'Forecast effective' };
+const labels = { retail: 'Retail baseline', current: 'Current estimate', forecast: 'Forecast effective' };
 function swatch(hex: string) {
   return rgb(parseInt(hex.slice(1, 3), 16) / 255, parseInt(hex.slice(3, 5), 16) / 255, parseInt(hex.slice(5), 16) / 255);
 }
@@ -161,12 +161,12 @@ export async function report(env: Environment, result: Ledger, catalogue: Catalo
   for (const item of result.technicalFindings) {
     paragraph(`${names.get(item.id)} | ${item.title} | ${compatibilityLabels[item.status]}${item.related ? ' | ' + names.get(item.related) : ''}`, { font: bold, gap: 1 });
     paragraph(item.detail, { gap: 1 });
-    if (item.source) paragraph(`${item.source} | Reviewed ${item.verifiedOn}`, { size: 9, color: muted, gap: 1 });
+    if (item.source) paragraph(item.verifiedOn ? `${item.source} | Reviewed ${item.verifiedOn}` : item.source, { size: 9, color: muted, gap: 1 });
   }
   for (const item of result.licensingFindings) {
     paragraph(`${names.get(item.id)} | ${item.title} | ${item.status}`, { font: bold, gap: 1 });
     paragraph(item.detail, { gap: 1 });
-    if (item.source) paragraph(`${item.source} | Reviewed ${item.verifiedOn}`, { size: 9, color: muted, gap: 1 });
+    if (item.source) paragraph(item.verifiedOn ? `${item.source} | Reviewed ${item.verifiedOn}` : item.source, { size: 9, color: muted, gap: 1 });
   }
   heading('Itemised monthly cost ledger');
   if (!result.lines.length) paragraph('No ledger entries.');

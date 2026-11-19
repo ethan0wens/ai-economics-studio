@@ -11,18 +11,23 @@ npm ci
 npm run dev
 ```
 
-The studio starts with an empty workspace. Open **Pricing Catalogue** to search supported and unpriced Microsoft configurations by billing region and market, then use the builder to calculate your environment’s separate pricing completeness. Add an object of any type, then use the inspector to set its configuration, usage and relationships. In **Cost Analysis**, open a line to see its billed unit, sources, rate assumptions and forecast. Open **Environment validation** to review pricing, technical compatibility and licensing confidence independently. Cloud accounts and credentials are only needed for production deployment.
+Name an environment on **Home** or preview a fictional example. **Environment Builder** opens in Guided mode, where you can choose platforms, add agents, enter usage and see the estimate update. Advanced opens the same inventory and its settings. **Cost Analysis** shows known costs, unresolved items, the cost ledger and the fields that need attention. Use **Reports & Export** for a PDF or to save editable JSON. **Documentation** offers searchable instructions and **Pricing Catalogue** shows the scope and evidence behind the rates. Cloud accounts and credentials are needed for production deployment.
 
 ```sh
 npm run typecheck
 npm run lint
 npm test
+npm run pricing:validate
+npm run evidence:validate
+npm run docs:validate
 npm run build
 npx playwright install chromium
 npm run test:e2e
 ```
 
 See the [field guide](docs/13-field-guide.md) for configuration inputs, units and requirements. See [source coverage](SOURCES.md) for the pricing coverage matrix, exact Azure mappings, commercial review dates and remaining evidence gaps, and the [operations runbook](docs/12-operations.md) for publishing, incident response and checks.
+
+See the [Stage 2 delivery notes](docs/30-stage-2-ux-delivery.md) for navigation, example reconciliations and documentation maintenance.
 
 See the [licensing and technical evidence guide](docs/18-licensing-and-technical-evidence.md), [enterprise financial reconciliations](docs/19-enterprise-financial-validation.md), [UK licensing review](docs/21-uk-licensing-gap-review.md) and [provisioned sizing and Foundry review](docs/22-ptu-and-foundry-review.md) for current coverage and test results. See [catalogue maintenance](docs/23-maintenance-automation.md) for schedules, source rules and recovery.
 
@@ -34,7 +39,7 @@ See the [licensing and technical evidence guide](docs/18-licensing-and-technical
 - **Compute and privacy**: all app state, TCO, validation, diagrams and PDF generation in the user's browser. No login, telemetry, persistent environment storage, data collection, application server or database.
 - **Saving**: users explicitly export/import versioned JSON; no `localStorage`, `sessionStorage`, IndexedDB or automatic cloud saves for environment data.
 - **Financial accuracy**: latest verified published rates by default; user-fixed contract prices, retail percentage discounts and forecast adjustments; never use zero when price is unknown. An unverified cost is visibly **incomplete**.
-- **Workflow**: inventory-first Environment Builder with **no fixed object creation order**. Incomplete drafts are allowed and visibly identified.
+- **Workflow**: solution-first Guided builder with a running estimate and an Advanced inventory with no fixed object creation order. Both views support incomplete drafts.
 - **Current scope**: Microsoft Foundry/Foundry Agent Service, Copilot Studio, relevant Microsoft licensing, Azure supporting services and security/governance; future provider-neutral extension points only, not AWS/other provider implementation.
 
 ## Product specification

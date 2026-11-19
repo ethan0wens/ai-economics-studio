@@ -12,6 +12,7 @@ import { EvidenceFindings } from './validation-ui';
 import { deploymentFindings } from './compatibility';
 import { deployedIdentity } from './provisioned';
 import { CapacityComparisons } from './capacity-ui';
+import type { EditTarget } from './estimate-ui';
 
 const edgeLabels: Record<EdgeType, string> = {
   'agent-uses-deployment': 'Model deployment', 'agent-uses-usage': 'Usage profile', 'group-can-access-agent': 'Can access agent',
@@ -26,14 +27,18 @@ const levels = ['Essential', 'Detailed', 'Advanced'] as const;
 type Level = typeof levels[number];
 const modalities = ['text', 'image', 'audio', 'video'];
 
-export function Inspector({ item, env, catalogue, result, update, select, remove }: {
+export function Inspector({ item, env, catalogue, result, update, select, remove, focus }: {
   item: StudioObject; env: Environment; catalogue: Catalogue; result: Ledger;
-  update: (env: Environment) => void; select: (id: string) => void; remove: () => void;
+  update: (env: Environment) => void; select: (id: string) => void; remove: () => void; focus?: EditTarget;
 }) {
   const panel = useRef<HTMLElement>(null);
-  useEffect(() => { panel.current?.querySelector('input')?.focus(); }, []);
-  const [tab, setTab] = useState('Configuration');
-  const [level, setLevel] = useState<Level>('Essential');
+  const [tab, setTab] = useState<string>(focus?.section ?? 'Configuration');
+  const [level, setLevel] = useState<Level>(focus?.field ? 'Advanced' : 'Essential');
+  useEffect(() => {
+    const field = focus?.field ? panel.current?.querySelector<HTMLElement>(`[data-field="${focus.field}"] :is(input, select, textarea)`) : undefined;
+    const heading = panel.current?.querySelector<HTMLElement>('#inspector-title');
+    (field ?? (focus ? heading : panel.current?.querySelector('input')))?.focus();
+  }, [focus]);
   const detailed = level !== 'Essential';
   const advanced = level === 'Advanced';
   const missing = missingInputs(item, env);
@@ -243,7 +248,7 @@ export function Inspector({ item, env, catalogue, result, update, select, remove
   const sections = ['Configuration', ...(item.kind === 'agent' || item.kind === 'model-deployment' ? ['Usage'] : []), 'Dependencies', 'Costs'];
 
   return <aside ref={panel} className="panel inspector" aria-labelledby="inspector-title">
-    <header className="inspector-header"><span className="subtle-label">{kindLabels[item.kind]}</span><h2 id="inspector-title">{item.name}</h2>
+    <header className="inspector-header"><span className="subtle-label">{kindLabels[item.kind]}</span><h2 id="inspector-title" tabIndex={-1}>{item.name}</h2>
       <div className="inspector-badges">
         {missing.length > 0 && <span className="status warning">Draft · {missing.length} missing</span>}
         {unknownPrice && <span className="status price-unknown">Unknown price</span>}

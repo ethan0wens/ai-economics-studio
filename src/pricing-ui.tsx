@@ -1,9 +1,9 @@
-import { useState, type FormEvent } from 'react';
+import { useEffect, useRef, useState, type FormEvent } from 'react';
 import { forecastException, overrideSchema, scopeKey, type Environment, type Override } from './domain';
 import { bases, formatMoney, type Line, type Ledger } from './ledger';
 import { Field, NumberField, Select, Text } from './fields';
 
-export const basisNames = { retail: 'Retail baseline', current: 'Current contract', forecast: 'Forecast' };
+export const basisNames = { retail: 'Retail baseline', current: 'Current estimate', forecast: 'Forecast' };
 export function Scenario({ env, update }: { env: Environment; update: (env: Environment) => void }) {
   return <section className="panel padded">
     <h2>Forecast assumptions</h2>
@@ -94,12 +94,22 @@ function PriceEditor({ line, env, update }: { line: Line; env: Environment; upda
   </div>;
 }
 
-export function Lines({ lines, env, update, compact = false, checkedAt }: {
-  lines: Line[]; env: Environment; update: (env: Environment) => void; compact?: boolean; checkedAt?: string | null;
+export function Lines({ lines, env, update, compact = false, checkedAt, focusLine }: {
+  lines: Line[]; env: Environment; update: (env: Environment) => void; compact?: boolean; checkedAt?: string | null; focusLine?: string;
 }) {
+  const list = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    if (!focusLine) return;
+    const row = Array.from(list.current?.querySelectorAll<HTMLDetailsElement>('details[data-line]') ?? [])
+      .find(item => item.dataset.line === focusLine);
+    if (row) {
+      row.open = true;
+      (row.querySelector<HTMLElement>('[data-field="agreement"] select') ?? row.querySelector('summary'))?.focus();
+    }
+  }, [focusLine]);
   if (!lines.length) return <p className="muted">No cost lines in this view.</p>;
-  return <div className={compact ? 'ledger-list compact' : 'ledger-list'}>
-    {lines.map(line => <details key={line.id} className="ledger-row">
+  return <div ref={list} className={compact ? 'ledger-list compact' : 'ledger-list'}>
+    {lines.map(line => <details key={line.id} data-line={line.id} className="ledger-row">
       <summary>
         <div><span className="subtle-label">{line.category}</span><strong>{line.component}</strong><small>{line.object}</small></div>
         {!compact && <span className="muted">{line.fixed ? 'Fixed' : 'Variable'}</span>}
@@ -131,18 +141,17 @@ export function Lines({ lines, env, update, compact = false, checkedAt }: {
   </div>;
 }
 
-export function CostAnalysis({ env, result, update, checkedAt }: { env: Environment; result: Ledger; update: (env: Environment) => void; checkedAt?: string | null }) {
+export function CostAnalysis({ env, result, update, checkedAt, focusLine }: { env: Environment; result: Ledger; update: (env: Environment) => void; checkedAt?: string | null; focusLine?: string }) {
   const [filter, setFilter] = useState('');
   const [source, setSource] = useState('');
   return <>
-    <Scenario env={env} update={update} />
     <section className="panel padded">
       <div className="section-heading"><div><h2>Monthly cost ledger</h2><p className="muted">Open a line to review rates, evidence and assumptions.</p></div></div>
       <div className="form-grid">
         <Text field="ledgerFilter" value={filter} onChange={setFilter} />
         <Select field="priceStatus" value={source} empty="All statuses" onChange={setSource} options={[...new Set(result.lines.map(line => line.status))]} />
       </div>
-      <Lines env={env} update={update} checkedAt={checkedAt} lines={result.lines.filter(line => (!source || line.status === source) &&
+      <Lines env={env} update={update} checkedAt={checkedAt} focusLine={focusLine} lines={result.lines.filter(line => (!source || line.status === source) &&
         [line.object, line.category, line.component, line.meter?.sku].join(' ').toLowerCase().includes(filter.toLowerCase()))} />
     </section>
   </>;

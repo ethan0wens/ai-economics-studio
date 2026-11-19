@@ -1,9 +1,12 @@
 import { cloneElement, useEffect, useId, useRef, useState, type ReactElement } from 'react';
 import { Info } from 'lucide-react';
+import { helpTopics } from './help-links';
+import { routeHref } from './navigation';
 import { fieldHelp, type FieldId, type Requirement } from './field-help';
 
 export function FieldHelp({ field, label, requirement }: {field: FieldId; label: string; requirement: Requirement}) {
   const { units, guidance, source } = fieldHelp[field];
+  const topic = (helpTopics as Partial<Record<FieldId, readonly [string, string]>>)[field];
   const id = useId();
   const container = useRef<HTMLDivElement>(null);
   const button = useRef<HTMLButtonElement>(null);
@@ -47,6 +50,7 @@ export function FieldHelp({ field, label, requirement }: {field: FieldId; label:
       <p className="help-meta">{requirement} · {units}</p>
       <p>{guidance}</p>
       {source && <a href={source.href} target="_blank" rel="noreferrer">{source.label}</a>}
+      {topic && <a className="field-learn" href={routeHref('documentation', ...topic)}>Learn more in Documentation</a>}
     </div>
   </div>;
 }

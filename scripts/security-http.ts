@@ -154,7 +154,7 @@ export async function verifyPublicSecurity(site: string, options: ReleaseSecurit
     verifySecurityHeaders(response.headers, 'immutable');
     const mime = response.headers.get('content-type')?.split(';', 1)[0].trim().toLowerCase();
     if (path.endsWith('.js') ? !['text/javascript', 'application/javascript'].includes(mime ?? '') : mime !== 'text/css') {
-      throw new Error(`Unexpected asset MIME type for ${path}: ${mime || 'missing'}.`);
+      throw new Error(`Unexpected asset MIME type for ${path}.`);
     }
     await readResponseBytes(response, maxAssetBytes, 'Application asset');
   }));

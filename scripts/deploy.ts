@@ -46,14 +46,16 @@ export async function verifyWorker(configText: string, accountId?: string, token
   return worker;
 }
 
-export async function verifyPublishedAssets(expected: ReadonlyMap<string, string>, request = fetch) {
+type AssetContents = string | Uint8Array;
+
+export async function verifyPublishedAssets(expected: ReadonlyMap<string, AssetContents>, request = fetch) {
   await Promise.all([...expected].map(async ([path, contents]) => {
     const response = await request(new URL(path, site), {
       headers: { 'Cache-Control': 'no-cache' },
       redirect: 'error',
       signal: AbortSignal.timeout(10_000),
     });
-    const bytes = Buffer.from(contents);
+    const bytes = typeof contents === 'string' ? Buffer.from(contents, 'utf8') : Buffer.from(contents);
     const matches = response.ok && await readResponseBytes(response, bytes.length, `Published ${path}`)
       .then(actual => bytes.equals(actual), () => false);
     if (!matches) throw new Error(`Live ${path} does not match the build (HTTP ${response.status}).`);
@@ -98,8 +100,8 @@ async function builtAssets(previous: ActiveWorker, previousAssets: Awaited<Retur
   const raw = await readAsset(manifestPath);
   const manifest = manifestSchema.parse(JSON.parse(raw));
   const html = await readAsset('/index.html');
-  const assets = new Map([['/', html], [manifestPath, raw]]);
-  for (const path of documentAssetPaths(html).assets) assets.set(path, await readAsset(path));
+  const assets = new Map<string, AssetContents>([['/', html], [manifestPath, raw]]);
+  for (const path of documentAssetPaths(html).assets) assets.set(path, await readFile(new URL(`../dist${path}`, import.meta.url)));
   const catalogue = manifest.catalogueId ? await readAsset(`/pricing/${catalogueFilename(manifest.catalogueId)}`) : undefined;
   const checksum = (source: string) => createHash('sha256').update(source).digest('hex');
   if (manifest.catalogueId && (!catalogue || checksum(catalogue) !== manifest.catalogueId)) throw new Error('Built pricing asset has an invalid checksum.');
@@ -165,7 +167,7 @@ function report(status: 'notice' | 'error', message: string) {
   else console.log(message);
 }
 
-async function waitForPublishedAssets(assets: ReadonlyMap<string, string>) {
+async function waitForPublishedAssets(assets: ReadonlyMap<string, AssetContents>) {
   for (let attempt = 1; ; attempt++) {
     try {
       await verifyPublishedAssets(assets);

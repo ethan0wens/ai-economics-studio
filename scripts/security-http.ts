@@ -69,6 +69,17 @@ export function verifySecurityHeaders(headers: Headers, mode: 'document' | 'muta
   if (['camera', 'microphone', 'geolocation'].some(name => !permissions.includes(`${name}=()`))) throw new Error('Expected restricted browser permissions.');
 }
 
+export const browserIcons = new Map([
+  ['/brand/favicon.ico', { rel: 'icon', mime: ['image/x-icon', 'image/vnd.microsoft.icon'] }],
+  ['/brand/favicon.svg', { rel: 'icon', mime: ['image/svg+xml'] }],
+  ['/brand/favicon-16.png', { rel: 'icon', mime: ['image/png'] }],
+  ['/brand/favicon-32.png', { rel: 'icon', mime: ['image/png'] }],
+  ['/brand/favicon-48.png', { rel: 'icon', mime: ['image/png'] }],
+  ['/brand/app-icon-192.png', { rel: 'icon', mime: ['image/png'] }],
+  ['/brand/app-icon-512.png', { rel: 'icon', mime: ['image/png'] }],
+  ['/brand/apple-touch-icon.png', { rel: 'apple-touch-icon', mime: ['image/png'] }],
+]);
+
 export function documentAssetPaths(source: string) {
   const scripts: string[] = [];
   const assets = new Set<string>();
@@ -81,7 +92,11 @@ export function documentAssetPaths(source: string) {
       const path = node.tagName === 'script' ? attributes.get('src') : node.tagName === 'link' ? attributes.get('href') : undefined;
       if (node.tagName === 'script' && !path) throw new Error('The built HTML includes an inline script.');
       if (path) {
-        if (!/^\/assets\/[a-z0-9][a-z0-9._-]*\.(?:js|css)$/i.test(path)) throw new Error('The built HTML references an unexpected resource.');
+        const icon = browserIcons.get(path);
+        const approvedIcon = icon && node.tagName === 'link' && attributes.get('rel') === icon.rel;
+        if (!approvedIcon && !/^\/assets\/[a-z0-9][a-z0-9._-]*\.(?:js|css)$/i.test(path)) {
+          throw new Error('The built HTML references an unexpected resource.');
+        }
         assets.add(path);
         if (node.tagName === 'script') scripts.push(path);
       }
@@ -151,9 +166,11 @@ export async function verifyPublicSecurity(site: string, options: ReleaseSecurit
 
   await Promise.all([...assets].map(async path => {
     const response = await get(path);
-    verifySecurityHeaders(response.headers, 'immutable');
+    const icon = browserIcons.get(path);
+    verifySecurityHeaders(response.headers, icon ? 'mutable' : 'immutable');
     const mime = response.headers.get('content-type')?.split(';', 1)[0].trim().toLowerCase();
-    if (path.endsWith('.js') ? !['text/javascript', 'application/javascript'].includes(mime ?? '') : mime !== 'text/css') {
+    const expected = icon?.mime ?? (path.endsWith('.js') ? ['text/javascript', 'application/javascript'] : ['text/css']);
+    if (!expected.includes(mime ?? '')) {
       throw new Error(`Unexpected asset MIME type for ${path}.`);
     }
     await readResponseBytes(response, maxAssetBytes, 'Application asset');

@@ -2,7 +2,7 @@ import { readdir, readFile } from 'node:fs/promises';
 import { dirname, join, resolve } from 'node:path';
 import { createHash } from 'node:crypto';
 import { catalogueFilename, manifestSchema, maxCatalogueBytes } from '../src/catalogue';
-import { documentAssetPaths, verifySecurityHeaders } from './security-http';
+import { browserIcons, documentAssetPaths, verifySecurityHeaders } from './security-http';
 
 const dist = resolve('dist');
 const allowed = /^(?:_headers|index\.html|assets\/[\w.-]+\.(?:js|css|woff2?|svg|png)|pricing\/(?:manifest|catalogue-[a-f0-9]{64})\.json)$/;
@@ -13,7 +13,7 @@ async function files(directory: string): Promise<string[]> {
   return (await Promise.all(entries.map(async entry => {
     const path = join(directory, entry.name);
     if (entry.isDirectory()) return files(path);
-    if (!entry.isFile() || !allowed.test(path)) throw new Error(`Unexpected production build asset ${path}.`);
+    if (!entry.isFile() || !(allowed.test(path) || browserIcons.has('/' + path))) throw new Error(`Unexpected production build asset ${path}.`);
     return [path];
   }))).flat();
 }
@@ -38,6 +38,7 @@ verifySecurityHeaders(configured, 'document');
 
 const { assets: entry } = documentAssetPaths(await readFile(join(dist, 'index.html'), 'utf8'));
 for (const path of entry) if (!present.has(path.slice(1))) throw new Error('HTML references a missing build asset.');
+for (const path of browserIcons.keys()) if (!entry.has(path)) throw new Error(`HTML is missing the browser icon ${path}.`);
 const manifest = manifestSchema.parse(JSON.parse(await readFile(join(dist, 'pricing/manifest.json'), 'utf8')));
 for (const id of [manifest.catalogueId, manifest.previous]) {
   if (id === null) continue;

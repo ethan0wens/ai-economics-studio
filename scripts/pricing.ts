@@ -7,10 +7,9 @@ import { z } from 'zod';
 import { catalogueFilename, catalogueSchema, manifestSchema, type Manifest, type RetailRecord } from '../src/catalogue';
 import { meterKey, version } from '../src/domain';
 import { curatedPrices } from './commercial-pricing';
+import { discoverPrices, inventoryPlan, retailOrigin as origin, retailPath as pathname } from './discovery';
 import { mappings, type Mapping } from './retail-mappings';
 
-const origin = 'https://prices.azure.com';
-const pathname = '/api/retail/prices';
 const directory = fileURLToPath(new URL('../public/pricing/', import.meta.url));
 const digest = (source: string) => createHash('sha256').update(source).digest('hex');
 const pageSchema = z.object({ Items: z.array(z.record(z.string(), z.unknown())), NextPageLink: z.url().nullable() });
@@ -106,27 +105,32 @@ export async function ingest(mapping: Mapping, request: Fetcher = fetch, checked
 async function readVersion(root: string, hash: string) {
   const source = await readFile(join(root, catalogueFilename(hash)), 'utf8');
   if (digest(source) !== hash) throw new Error(`Catalogue checksum mismatch for ${hash}.`);
-  return catalogueSchema.parse(JSON.parse(source)).records;
+  return catalogueSchema.parse(JSON.parse(source));
 }
 
 export async function validate(root: string) {
   const manifest = manifestSchema.parse(JSON.parse(await readFile(join(root, 'manifest.json'), 'utf8')));
-  const records = manifest.catalogueId ? await readVersion(root, manifest.catalogueId) : [];
+  const { records, inventory } = manifest.catalogueId ? await readVersion(root, manifest.catalogueId) : { records: [], inventory: undefined };
   if (records.length !== manifest.records) throw new Error('The manifest does not match its catalogue record count.');
   if (manifest.previous) await readVersion(root, manifest.previous);
-  return { manifest, records };
+  return { manifest, records, inventory };
 }
 
-export async function refresh(root: string, selectors: readonly Mapping[], request: Fetcher = fetch, checkedAt = new Date().toISOString(), commercial: RetailRecord[] = []) {
+export async function refresh(root: string, selectors: readonly Mapping[], request: Fetcher = fetch, checkedAt = new Date().toISOString(), commercial: RetailRecord[] = [], discovery?: ReturnType<typeof inventoryPlan>) {
   if (!selectors.length) throw new Error('No curated meter selectors are configured.');
   const prior = await validate(root);
   const records: RetailRecord[] = [...commercial];
   for (const mapping of selectors) records.push(await ingest(mapping, request, checkedAt));
+  if (discovery) records.push(...await discoverPrices(discovery.targets, url => retailPage(url, request), checkedAt));
   records.sort((a, b) => meterKey(a).localeCompare(meterKey(b)) || a.currency.localeCompare(b.currency));
-  const payload = catalogueSchema.parse({ schemaVersion: version, records });
+  const payload = catalogueSchema.parse({ schemaVersion: version, records, inventory: discovery?.inventory });
+  const byIdentity = new Map(records.map(record => [JSON.stringify([meterKey(record), record.currency]), record]));
   for (const old of prior.records) {
-    const candidate = records.find(row => meterKey(row) === meterKey(old) && row.currency === old.currency);
+    const candidate = byIdentity.get(JSON.stringify([meterKey(old), old.currency]));
     if (!candidate) throw new Error(`Coverage dropped for meter ${old.meterId}; review the mapping before republishing.`);
+    if (old.sourceMeterId && old.sourceMeterId !== candidate.sourceMeterId) {
+      throw new Error(`Azure changed the meter identity for ${old.meterId}; verify the replacement before republishing.`);
+    }
     const previous = old.tiers ?? [{ from: 0, price: old.price }];
     const next = candidate.tiers ?? [{ from: 0, price: candidate.price }];
     if (previous.length !== next.length || previous.some((tier, index) => tier.from !== next[index].from)) {
@@ -166,7 +170,7 @@ export async function refresh(root: string, selectors: readonly Mapping[], reque
 if (process.argv[1] && pathToFileURL(process.argv[1]).href === import.meta.url) {
   const command = process.argv[2];
   try {
-    if (command === 'refresh') console.log(await refresh(directory, mappings, fetch, new Date().toISOString(), curatedPrices));
+    if (command === 'refresh') console.log(await refresh(directory, mappings, fetch, new Date().toISOString(), curatedPrices, inventoryPlan()));
     else if (command === 'validate') {
       const { manifest } = await validate(directory);
       console.log(`Catalogue valid: ${manifest.records} verified records${manifest.catalogueId ? ` (${manifest.catalogueId})` : ' in unpublished bootstrap state'}.`);

@@ -1,0 +1,107 @@
+[
+  {
+    "meterId": "entra-p1-gb/seats",
+    "sku": "entra-p1-gb",
+    "region": "gb",
+    "unit": "seat/month",
+    "quantityPerUnit": 1,
+    "priceType": "Consumption",
+    "currency": "GBP",
+    "product": "Microsoft Entra ID P1",
+    "price": "5.40",
+    "source": "https://www.microsoft.com/en-gb/security/business/microsoft-entra-pricing",
+    "offeringId": "entra-p1-gb",
+    "component": "seats",
+    "effectiveAt": "2026-11-18T00:00:00Z",
+    "verification": "microsoft-commercial",
+    "review": {
+      "checkedAt": "2026-11-18T00:00:00Z",
+      "expiresAt": "2027-01-17T23:59:59Z",
+      "terms": "UK per user per month paid yearly, excluding VAT. Verify whether P1 is already included in a declared licence."
+    }
+  },
+  {
+    "meterId": "agent-365-gb/seats",
+    "sku": "agent-365-gb",
+    "region": "gb",
+    "unit": "seat/month",
+    "quantityPerUnit": 1,
+    "priceType": "Consumption",
+    "currency": "GBP",
+    "product": "Microsoft Agent 365",
+    "price": "11.50",
+    "source": "https://www.microsoft.com/en-gb/microsoft-agent-365",
+    "offeringId": "agent-365-gb",
+    "component": "seats",
+    "effectiveAt": "2026-11-18T00:00:00Z",
+    "verification": "microsoft-commercial",
+    "review": {
+      "checkedAt": "2026-11-18T00:00:00Z",
+      "expiresAt": "2027-01-17T23:59:59Z",
+      "terms": "UK per user per month, annual commitment, excluding VAT. Do not infer prerequisite eligibility or consumption allowances."
+    }
+  },
+  {
+    "meterId": "copilot-credit-pack-gb/usage",
+    "sku": "copilot-credit-pack-gb",
+    "region": "gb",
+    "unit": "pack/month",
+    "quantityPerUnit": 1,
+    "priceType": "Consumption",
+    "currency": "GBP",
+    "product": "Copilot Studio · 25,000-credit monthly pack",
+    "price": "153.80",
+    "source": "https://www.microsoft.com/en-gb/microsoft-365-copilot/microsoft-copilot-studio#Pricing",
+    "offeringId": "copilot-credit-pack-gb",
+    "component": "usage",
+    "effectiveAt": "2026-11-18T00:00:00Z",
+    "verification": "microsoft-commercial",
+    "review": {
+      "checkedAt": "2026-11-18T00:00:00Z",
+      "expiresAt": "2027-01-17T23:59:59Z",
+      "terms": "UK public prepaid monthly pack. 25,000 credits per pack. The pack price is separate from pay-as-you-go overage and other licences."
+    }
+  },
+  {
+    "meterId": "m365-standard-copilot-gb/seats",
+    "sku": "m365-standard-copilot-gb",
+    "region": "gb",
+    "unit": "seat/month",
+    "quantityPerUnit": 1,
+    "priceType": "Consumption",
+    "currency": "GBP",
+    "product": "Microsoft 365 Business Standard with Copilot",
+    "price": "18.10",
+    "source": "https://www.microsoft.com/en-gb/microsoft-365-copilot/pricing",
+    "offeringId": "m365-standard-copilot-gb",
+    "component": "seats",
+    "effectiveAt": "2026-11-18T00:00:00Z",
+    "verification": "microsoft-commercial",
+    "review": {
+      "checkedAt": "2026-11-18T00:00:00Z",
+      "expiresAt": "2027-01-17T23:59:59Z",
+      "terms": "Microsoft 365 Business Standard with Copilot. UK per user per month paid yearly, excluding VAT. Bundle, not the standalone Copilot add-on."
+    }
+  },
+  {
+    "meterId": "entra-suite-gb/seats",
+    "sku": "entra-suite-gb",
+    "region": "gb",
+    "unit": "seat/month",
+    "quantityPerUnit": 1,
+    "priceType": "Consumption",
+    "currency": "GBP",
+    "product": "Microsoft Entra Suite",
+    "price": "9.20",
+    "source": "https://www.microsoft.com/en-gb/security/business/microsoft-entra-pricing",
+    "offeringId": "entra-suite-gb",
+    "component": "seats",
+    "effectiveAt": "2026-11-18T00:00:00Z",
+    "verification": "microsoft-commercial",
+    "review": {
+      "checkedAt": "2026-11-18T00:00:00Z",
+      "expiresAt": "2027-01-17T23:59:59Z",
+      "terms": "UK per user per month paid yearly, excluding VAT. Prerequisite eligibility and overlapping licences are separate."
+    }
+  }
+]

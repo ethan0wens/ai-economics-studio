@@ -10,7 +10,7 @@ const groups: Record<string, [string, string, string?][]> = {
     ['Azure NAT', "contains(meterName,'NAT Gateway') and serviceName eq 'Virtual Network'"],
   ],
   models: [
-    ['OpenAI', "serviceName eq 'Foundry Models' and productName eq 'Azure OpenAI'", "gpt.?4\.1 |gpt.?4o |o3.mini|gpt.?5.mini|embedding|speech|Whisper|Provisioned Managed"],
+    ['OpenAI', "serviceName eq 'Foundry Models' and productName eq 'Azure OpenAI'", "gpt.?4[.]1 |gpt.?4o |o3.mini|gpt.?5.mini|embedding|speech|Whisper|Provisioned Managed"],
     ['Partners', "serviceName eq 'Foundry Models' and productName ne 'Azure OpenAI'", "DeepSeek|Llama|Grok|Mistral|Cohere|Claude"],
   ],
   compute: [

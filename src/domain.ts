@@ -38,7 +38,7 @@ const parts = {
   }),
   'usage-profile': z.strictObject({
     ...common, kind: z.literal('usage-profile'),
-    executions: count.optional(), calls: quantity.optional(), input: count.optional(), output: count.optional(),
+    executions: count.optional(), calls: quantity.optional(), input: count.optional(), output: count.optional(), cachedInput: count.optional(),
     retries: quantity.max(100).optional(), toolCalls: quantity.optional(),
   }),
   'user-group': z.strictObject({

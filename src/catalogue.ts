@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { offeringMeter, type Component, type Offering } from './offerings';
+import { componentId, inventorySchema, offeringMeter, type Component, type Offering } from './offerings';
 import { currency, meterKey, version, type Meter } from './domain';
 
 export const retailDocs = 'https://learn.microsoft.com/en-us/rest/api/cost-management/retail-prices/azure-retail-prices';
@@ -10,8 +10,9 @@ export const sourceRecord = z.strictObject({
   tiers: z.array(z.strictObject({ from: z.number().nonnegative(), price: z.string().regex(/^\d+(\.\d+)?$/).refine(value => Number.isFinite(Number(value))) })).min(2).max(20).optional(),
   effectiveAt: z.iso.datetime({ offset: true }), source: z.url(),
   product: z.string().min(1), verification: z.enum(['azure-retail-api', 'microsoft-commercial']),
-  offeringId: z.string().min(1).optional(), component: z.enum(['input', 'output', 'capacity', 'credits', 'seats', 'usage']).optional(),
+  offeringId: z.string().min(1).optional(), component: componentId.optional(),
   meterName: z.string().optional(), publishedSku: z.string().optional(),
+  sourceMeterId: z.uuid().optional(), publishedUnit: z.string().optional(),
   review: z.strictObject({ checkedAt: z.iso.datetime({ offset: true }), expiresAt: z.iso.datetime({ offset: true }), terms: z.string().min(1) }).optional(),
 }).superRefine((record, ctx) => {
   const invalid = () => ctx.addIssue({ code: 'custom', message: 'Invalid price source or commercial review metadata' });
@@ -27,12 +28,22 @@ export const sourceRecord = z.strictObject({
     Date.parse(record.review.expiresAt) <= Date.parse(record.review.checkedAt)) invalid();
 });
 export const catalogueSchema = z.strictObject({
-  schemaVersion: z.literal(version), records: z.array(sourceRecord).max(5000),
+  schemaVersion: z.literal(version), records: z.array(sourceRecord).max(5000), inventory: inventorySchema.optional(),
 }).refine(value => new Set(value.records.map(item => JSON.stringify([meterKey(item), item.currency]))).size === value.records.length, 'Duplicate catalogue identity')
   .refine(({ records }) => {
     const bound = records.filter(record => record.offeringId);
     return new Set(bound.map(record => JSON.stringify([record.offeringId, record.component, record.currency]))).size === bound.length;
-  }, 'Duplicate configuration component');
+  }, 'Duplicate configuration component')
+  .refine(({ records, inventory }) => {
+    if (!inventory) return true;
+    const offers = new Map(inventory.map(offer => [offer.id, offer]));
+    return records.every(record => {
+      if (!record.offeringId || !record.component) return false;
+      const offer = offers.get(record.offeringId);
+      const meter = offer && offeringMeter(offer, record.component);
+      return offer?.selectable !== false && offer?.currency === record.currency && meter && meterKey(meter) === meterKey(record);
+    });
+  }, 'Retail rate does not match the published billing configuration');
 export const manifestSchema = z.strictObject({
   schemaVersion: z.literal(version), catalogueId: z.string().regex(/^[a-f0-9]{64}$/).nullable(),
   lastCheckedAt: z.iso.datetime({ offset: true }).nullable(), records: z.number().int().nonnegative(),
@@ -40,7 +51,7 @@ export const manifestSchema = z.strictObject({
 }).refine(item => item.catalogueId ? item.lastCheckedAt !== null && item.records > 0 : item.lastCheckedAt === null && item.records === 0 && item.previous === null);
 export type Manifest = z.infer<typeof manifestSchema>;
 export type RetailRecord = z.infer<typeof sourceRecord>;
-export type Catalogue = { manifest: Manifest; records: RetailRecord[]; fallback?: boolean };
+export type Catalogue = { manifest: Manifest; records: RetailRecord[]; inventory?: Offering[]; fallback?: boolean };
 export const emptyCatalogue: Catalogue = {
   manifest: { schemaVersion: version, catalogueId: null, lastCheckedAt: null, records: 0, previous: null }, records: [],
 };
@@ -59,20 +70,20 @@ async function readAsset(hash: string) {
   const digest = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(raw));
   const actual = [...new Uint8Array(digest)].map(byte => byte.toString(16).padStart(2, '0')).join('');
   if (actual !== hash) throw new Error('Catalogue integrity check failed.');
-  return catalogueSchema.parse(JSON.parse(raw)).records;
+  return catalogueSchema.parse(JSON.parse(raw));
 }
 
 export async function loadCatalogue(): Promise<Catalogue> {
   const manifest = manifestSchema.parse(await (await fetchAsset('manifest.json', 'no-cache')).json());
   if (!manifest.catalogueId) return { manifest, records: [] };
   try {
-    const records = await readAsset(manifest.catalogueId);
+    const { records, inventory } = await readAsset(manifest.catalogueId);
     if (records.length !== manifest.records) throw new Error('Catalogue record count mismatch.');
-    return { manifest, records };
+    return { manifest, records, inventory };
   } catch (error) {
     if (!manifest.previous) throw error;
-    const records = await readAsset(manifest.previous);
-    return { manifest: { ...manifest, catalogueId: manifest.previous, records: records.length, lastCheckedAt: null }, records, fallback: true };
+    const { records, inventory } = await readAsset(manifest.previous);
+    return { manifest: { ...manifest, catalogueId: manifest.previous, records: records.length, lastCheckedAt: null }, records, inventory, fallback: true };
   }
 }
 

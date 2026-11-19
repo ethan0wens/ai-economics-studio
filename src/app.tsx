@@ -91,7 +91,7 @@ export default function App() {
   const [exporting, setExporting] = useState(false);
   const imported = useRef<HTMLInputElement>(null);
   const main = useRef<HTMLElement>(null);
-  const result = useMemo(() => ledger(env, catalogue.records), [env, catalogue]);
+  const result = useMemo(() => ledger(env, catalogue.records, undefined, catalogue.inventory), [env, catalogue]);
   const advice = useMemo(() => governance(env), [env]);
   const selectedItem = env.objects.find(item => item.id === selected);
   const fileName = env.name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') || 'environment';

@@ -45,7 +45,9 @@ export function Inspector({ item, env, catalogue, result, update, select, remove
       update({ ...env, objects: env.objects.map(object => object.id === item.id ? checked.data : object) });
     } else setError(checked.error.issues[0].message);
   };
-  const activeOffer = applicableOffering(item, 'region' in item ? item.region ?? env.region : env.region, env.currency);
+  const inventory = catalogue.inventory ?? offerings;
+  const regionForOffer = 'region' in item ? item.region ?? env.region : env.region;
+  const activeOffer = applicableOffering(item, regionForOffer, env.currency, inventory);
   const change = (key: string, value: unknown) => {
     const draft = { ...item, [key]: value };
     if ('offeringId' in draft && ['modelId', 'modelVersion', 'sku', 'mode', 'region', 'product', 'platform', 'modelSource'].includes(key)) {
@@ -59,7 +61,8 @@ export function Inspector({ item, env, catalogue, result, update, select, remove
     save(draft);
   };
   function retailSelector() {
-    const choices = offerings.filter(offer => offer.kind === item.kind);
+    const choices = inventory.filter(offer => offer.selectable !== false && offer.kind === item.kind &&
+      (offer.id === activeOffer?.id || (offer.currency === env.currency && (offer.region === regionForOffer || offer.region === 'gb'))));
     return <><Select field="retailOffering" value={activeOffer?.id}
       options={choices.map(offer => [offer.id, `${offer.name} · ${offer.region === 'gb' ? 'UK market' : offer.region} · ${offer.currency}`])}
       hint={activeOffer

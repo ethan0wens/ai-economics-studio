@@ -1,0 +1,50 @@
+[
+  {
+    "family": "foundry",
+    "name": "Foundry agent tools and orchestration",
+    "status": "manual",
+    "reason": "Model separately billed tools or services as supporting resources. The workspace does not assume a per-agent or per-execution fee."
+  },
+  {
+    "family": "foundry",
+    "name": "Other models, deployment modes, regions and tiered rates",
+    "status": "manual",
+    "reason": "These require an exact published meter and operating assumptions. Enter separate input/output rates or an evidenced capacity rate."
+  },
+  {
+    "family": "copilot",
+    "name": "Other prepaid capacity and bundled Copilot Credits",
+    "status": "unsupported",
+    "reason": "The reviewed UK monthly pack can be pooled. Account-specific entitlements and other capacity plans must be reconciled separately."
+  },
+  {
+    "family": "copilot",
+    "name": "External or user-provided model paths",
+    "status": "unsupported",
+    "reason": "Copilot Studio prompt integrations do not establish a primary agent model replacement or a separately billable model deployment."
+  },
+  {
+    "family": "licensing",
+    "name": "Enterprise agreements and Microsoft 365 licence prerequisites",
+    "status": "manual",
+    "reason": "Declare prerequisite and incremental seats explicitly. Eligibility, overlap and discounts depend on the agreement."
+  },
+  {
+    "family": "licensing",
+    "name": "Other unreviewed licence markets or SKUs",
+    "status": "manual",
+    "reason": "Select only reviewed commercial offers or enter an evidenced contract rate per seat."
+  },
+  {
+    "family": "infrastructure",
+    "name": "Other supporting services and usage bands",
+    "status": "manual",
+    "reason": "Enter a matching rate and base unit. Reservations, unlisted volume tiers, cross-region networking paths and free thresholds are not inferred."
+  },
+  {
+    "family": "security",
+    "name": "Defender, Purview and unlisted Sentinel or Entra plans",
+    "status": "manual",
+    "reason": "Enter each separately billable service as a resource or licence. A security policy records a declaration and does not imply a charge."
+  }
+]

@@ -1,0 +1,3610 @@
+{
+  "currency": "GBP",
+  "regions": [
+    "uksouth",
+    "westeurope",
+    "eastus2"
+  ],
+  "templates": [
+    {
+      "id": "gpt-4o-mini-global-standard",
+      "name": "GPT-4o mini · Global Standard",
+      "family": "foundry",
+      "kind": "model-deployment",
+      "regions": [
+        "uksouth",
+        "westeurope",
+        "eastus2"
+      ],
+      "components": [
+        {
+          "id": "input",
+          "label": "Uncached input tokens",
+          "unit": "1K",
+          "quantityPerUnit": 1000,
+          "azure": {
+            "service": "Foundry Models",
+            "product": "Azure OpenAI",
+            "sku": "gpt-4o-mini-0718-Inp-glbl",
+            "meter": "gpt-4o-mini-0718-Inp-glbl Tokens"
+          }
+        },
+        {
+          "id": "output",
+          "label": "Output tokens",
+          "unit": "1K",
+          "quantityPerUnit": 1000,
+          "azure": {
+            "service": "Foundry Models",
+            "product": "Azure OpenAI",
+            "sku": "gpt-4o-mini-0718-Outp-glbl",
+            "meter": "gpt-4o-mini-0718-Outp-glbl Tokens"
+          }
+        },
+        {
+          "id": "cached",
+          "label": "Cached input tokens",
+          "unit": "1K",
+          "quantityPerUnit": 1000,
+          "azure": {
+            "service": "Foundry Models",
+            "product": "Azure OpenAI",
+            "sku": "gpt 4o mini 0718 cached Inp glbl",
+            "meter": "gpt 4o mini 0718 cached Inp glbl Tokens"
+          }
+        }
+      ],
+      "evidence": "https://learn.microsoft.com/en-us/azure/ai-services/openai/concepts/models",
+      "model": {
+        "id": "gpt-4o-mini",
+        "version": "2024-07-18",
+        "sku": "GlobalStandard",
+        "mode": "payg"
+      },
+      "deployment": "global-standard",
+      "retained": {
+        "uksouth": "gpt-4o-mini-global-uksouth"
+      }
+    },
+    {
+      "id": "gpt-4o-global-standard",
+      "name": "GPT-4o · Global Standard",
+      "family": "foundry",
+      "kind": "model-deployment",
+      "regions": [
+        "uksouth",
+        "westeurope",
+        "eastus2"
+      ],
+      "components": [
+        {
+          "id": "input",
+          "label": "Uncached input tokens",
+          "unit": "1K",
+          "quantityPerUnit": 1000,
+          "azure": {
+            "service": "Foundry Models",
+            "product": "Azure OpenAI",
+            "sku": "gpt 4o 0513 Input global",
+            "meter": "gpt 4o 0513 Input global Tokens"
+          }
+        },
+        {
+          "id": "output",
+          "label": "Output tokens",
+          "unit": "1K",
+          "quantityPerUnit": 1000,
+          "azure": {
+            "service": "Foundry Models",
+            "product": "Azure OpenAI",
+            "sku": "gpt 4o 0513 Output global",
+            "meter": "gpt 4o 0513 Output global Tokens"
+          }
+        }
+      ],
+      "evidence": "https://learn.microsoft.com/en-us/azure/ai-services/openai/concepts/models",
+      "model": {
+        "id": "gpt-4o",
+        "version": "2024-05-13",
+        "sku": "GlobalStandard",
+        "mode": "payg"
+      },
+      "deployment": "global-standard"
+    },
+    {
+      "id": "gpt-4-1-global-standard",
+      "name": "GPT-4.1 · Global Standard",
+      "family": "foundry",
+      "kind": "model-deployment",
+      "regions": [
+        "uksouth",
+        "westeurope",
+        "eastus2"
+      ],
+      "components": [
+        {
+          "id": "input",
+          "label": "Uncached input tokens",
+          "unit": "1K",
+          "quantityPerUnit": 1000,
+          "azure": {
+            "service": "Foundry Models",
+            "product": "Azure OpenAI",
+            "sku": "gpt 4.1 Inp glbl",
+            "meter": "gpt 4.1 Inp glbl Tokens"
+          }
+        },
+        {
+          "id": "output",
+          "label": "Output tokens",
+          "unit": "1K",
+          "quantityPerUnit": 1000,
+          "azure": {
+            "service": "Foundry Models",
+            "product": "Azure OpenAI",
+            "sku": "gpt 4.1 Outp glbl",
+            "meter": "gpt 4.1 Outp glbl Tokens"
+          }
+        },
+        {
+          "id": "cached",
+          "label": "Cached input tokens",
+          "unit": "1K",
+          "quantityPerUnit": 1000,
+          "azure": {
+            "service": "Foundry Models",
+            "product": "Azure OpenAI",
+            "sku": "gpt 4.1 cached Inp glbl",
+            "meter": "gpt 4.1 cached Inp glbl Tokens"
+          }
+        }
+      ],
+      "evidence": "https://learn.microsoft.com/en-us/azure/ai-services/openai/concepts/models",
+      "model": {
+        "id": "gpt-4.1",
+        "version": "2025-04-14",
+        "sku": "GlobalStandard",
+        "mode": "payg"
+      },
+      "deployment": "global-standard"
+    },
+    {
+      "id": "gpt-4-1-mini-global-standard",
+      "name": "GPT-4.1 mini · Global Standard",
+      "family": "foundry",
+      "kind": "model-deployment",
+      "regions": [
+        "uksouth",
+        "westeurope",
+        "eastus2"
+      ],
+      "components": [
+        {
+          "id": "input",
+          "label": "Uncached input tokens",
+          "unit": "1K",
+          "quantityPerUnit": 1000,
+          "azure": {
+            "service": "Foundry Models",
+            "product": "Azure OpenAI",
+            "sku": "gpt 4.1 mini Inp glbl",
+            "meter": "gpt 4.1 mini Inp glbl Tokens"
+          }
+        },
+        {
+          "id": "output",
+          "label": "Output tokens",
+          "unit": "1K",
+          "quantityPerUnit": 1000,
+          "azure": {
+            "service": "Foundry Models",
+            "product": "Azure OpenAI",
+            "sku": "gpt 4.1 mini Outp glbl",
+            "meter": "gpt 4.1 mini Outp glbl Tokens"
+          }
+        },
+        {
+          "id": "cached",
+          "label": "Cached input tokens",
+          "unit": "1K",
+          "quantityPerUnit": 1000,
+          "azure": {
+            "service": "Foundry Models",
+            "product": "Azure OpenAI",
+            "sku": "gpt 4.1 mini cached Inp glbl",
+            "meter": "gpt 4.1 mini cached Inp glbl Tokens"
+          }
+        }
+      ],
+      "evidence": "https://learn.microsoft.com/en-us/azure/ai-services/openai/concepts/models",
+      "model": {
+        "id": "gpt-4.1-mini",
+        "version": "2025-04-14",
+        "sku": "GlobalStandard",
+        "mode": "payg"
+      },
+      "deployment": "global-standard",
+      "retained": {
+        "uksouth": "gpt-4-1-mini-global-uksouth"
+      }
+    },
+    {
+      "id": "gpt-4-1-mini-regional-standard",
+      "name": "GPT-4.1 mini · Regional Standard",
+      "family": "foundry",
+      "kind": "model-deployment",
+      "regions": [
+        "uksouth",
+        "westeurope",
+        "eastus2"
+      ],
+      "components": [
+        {
+          "id": "input",
+          "label": "Uncached input tokens",
+          "unit": "1K",
+          "quantityPerUnit": 1000,
+          "azure": {
+            "service": "Foundry Models",
+            "product": "Azure OpenAI",
+            "sku": "gpt 4.1 mini Inp regnl",
+            "meter": "gpt 4.1 mini Inp regnl Tokens"
+          }
+        },
+        {
+          "id": "output",
+          "label": "Output tokens",
+          "unit": "1K",
+          "quantityPerUnit": 1000,
+          "azure": {
+            "service": "Foundry Models",
+            "product": "Azure OpenAI",
+            "sku": "gpt 4.1 mini Outp regnl",
+            "meter": "gpt 4.1 mini Outp regnl Tokens"
+          }
+        },
+        {
+          "id": "cached",
+          "label": "Cached input tokens",
+          "unit": "1K",
+          "quantityPerUnit": 1000,
+          "azure": {
+            "service": "Foundry Models",
+            "product": "Azure OpenAI",
+            "sku": "gpt 4.1 mini cached Inp regnl",
+            "meter": "gpt 4.1 mini cached Inp regnl Tokens"
+          }
+        }
+      ],
+      "evidence": "https://learn.microsoft.com/en-us/azure/ai-services/openai/concepts/models",
+      "model": {
+        "id": "gpt-4.1-mini",
+        "version": "2025-04-14",
+        "sku": "Standard",
+        "mode": "payg"
+      },
+      "deployment": "regional-standard"
+    },
+    {
+      "id": "gpt-4-1-nano-global-standard",
+      "name": "GPT-4.1 nano · Global Standard",
+      "family": "foundry",
+      "kind": "model-deployment",
+      "regions": [
+        "uksouth",
+        "westeurope",
+        "eastus2"
+      ],
+      "components": [
+        {
+          "id": "input",
+          "label": "Uncached input tokens",
+          "unit": "1K",
+          "quantityPerUnit": 1000,
+          "azure": {
+            "service": "Foundry Models",
+            "product": "Azure OpenAI",
+            "sku": "gpt 4.1 nano Inp glbl",
+            "meter": "gpt 4.1 nano Inp glbl Tokens"
+          }
+        },
+        {
+          "id": "output",
+          "label": "Output tokens",
+          "unit": "1K",
+          "quantityPerUnit": 1000,
+          "azure": {
+            "service": "Foundry Models",
+            "product": "Azure OpenAI",
+            "sku": "gpt 4.1 nano Outp glbl",
+            "meter": "gpt 4.1 nano Outp glbl Tokens"
+          }
+        },
+        {
+          "id": "cached",
+          "label": "Cached input tokens",
+          "unit": "1K",
+          "quantityPerUnit": 1000,
+          "azure": {
+            "service": "Foundry Models",
+            "product": "Azure OpenAI",
+            "sku": "gpt 4.1 nano cached Inp glbl",
+            "meter": "gpt 4.1 nano cached Inp glbl Tokens"
+          }
+        }
+      ],
+      "evidence": "https://learn.microsoft.com/en-us/azure/ai-services/openai/concepts/models",
+      "model": {
+        "id": "gpt-4.1-nano",
+        "version": "2025-04-14",
+        "sku": "GlobalStandard",
+        "mode": "payg"
+      },
+      "deployment": "global-standard"
+    },
+    {
+      "id": "deepseek-r1-global-standard",
+      "name": "DeepSeek R1 · Global Standard",
+      "family": "foundry",
+      "kind": "model-deployment",
+      "regions": [
+        "uksouth",
+        "westeurope",
+        "eastus2"
+      ],
+      "components": [
+        {
+          "id": "input",
+          "label": "Uncached input tokens",
+          "unit": "1K",
+          "quantityPerUnit": 1000,
+          "azure": {
+            "service": "Foundry Models",
+            "product": "Azure Deepseek Models",
+            "sku": "R1 Inp glbl",
+            "meter": "R1 Inp glbl Tokens"
+          }
+        },
+        {
+          "id": "output",
+          "label": "Output tokens",
+          "unit": "1K",
+          "quantityPerUnit": 1000,
+          "azure": {
+            "service": "Foundry Models",
+            "product": "Azure Deepseek Models",
+            "sku": "R1 Outp glbl",
+            "meter": "R1 Outp glbl Tokens"
+          }
+        }
+      ],
+      "evidence": "https://learn.microsoft.com/en-us/azure/ai-foundry/concepts/foundry-models-overview",
+      "model": {
+        "id": "deepseek-r1",
+        "version": "R1",
+        "sku": "GlobalStandard",
+        "mode": "payg"
+      },
+      "deployment": "global-standard"
+    },
+    {
+      "id": "deepseek-v3-global-standard",
+      "name": "DeepSeek V3 · Global Standard",
+      "family": "foundry",
+      "kind": "model-deployment",
+      "regions": [
+        "uksouth",
+        "westeurope",
+        "eastus2"
+      ],
+      "components": [
+        {
+          "id": "input",
+          "label": "Uncached input tokens",
+          "unit": "1K",
+          "quantityPerUnit": 1000,
+          "azure": {
+            "service": "Foundry Models",
+            "product": "Azure Deepseek Models",
+            "sku": "V3 Inp glbl",
+            "meter": "V3 Inp glbl Tokens"
+          }
+        },
+        {
+          "id": "output",
+          "label": "Output tokens",
+          "unit": "1K",
+          "quantityPerUnit": 1000,
+          "azure": {
+            "service": "Foundry Models",
+            "product": "Azure Deepseek Models",
+            "sku": "V3 Outp glbl",
+            "meter": "V3 Outp glbl Tokens"
+          }
+        }
+      ],
+      "evidence": "https://learn.microsoft.com/en-us/azure/ai-foundry/concepts/foundry-models-overview",
+      "model": {
+        "id": "deepseek-v3",
+        "version": "V3",
+        "sku": "GlobalStandard",
+        "mode": "payg"
+      },
+      "deployment": "global-standard"
+    },
+    {
+      "id": "deepseek-v3-0324-global-standard",
+      "name": "DeepSeek V3-0324 · Global Standard",
+      "family": "foundry",
+      "kind": "model-deployment",
+      "regions": [
+        "uksouth",
+        "westeurope",
+        "eastus2"
+      ],
+      "components": [
+        {
+          "id": "input",
+          "label": "Uncached input tokens",
+          "unit": "1K",
+          "quantityPerUnit": 1000,
+          "azure": {
+            "service": "Foundry Models",
+            "product": "Azure Deepseek Models",
+            "sku": "V3-0324 Inp glbl",
+            "meter": "V3-0324 Inp glbl Tokens"
+          }
+        },
+        {
+          "id": "output",
+          "label": "Output tokens",
+          "unit": "1K",
+          "quantityPerUnit": 1000,
+          "azure": {
+            "service": "Foundry Models",
+            "product": "Azure Deepseek Models",
+            "sku": "V3-0324 Outp glbl",
+            "meter": "V3-0324 Outp glbl Tokens"
+          }
+        }
+      ],
+      "evidence": "https://learn.microsoft.com/en-us/azure/ai-foundry/concepts/foundry-models-overview",
+      "model": {
+        "id": "deepseek-v3-0324",
+        "version": "V3-0324",
+        "sku": "GlobalStandard",
+        "mode": "payg"
+      },
+      "deployment": "global-standard"
+    },
+    {
+      "id": "deepseek-v3-1-global-standard",
+      "name": "DeepSeek V3.1 · Global Standard",
+      "family": "foundry",
+      "kind": "model-deployment",
+      "regions": [
+        "uksouth",
+        "westeurope",
+        "eastus2"
+      ],
+      "components": [
+        {
+          "id": "input",
+          "label": "Uncached input tokens",
+          "unit": "1K",
+          "quantityPerUnit": 1000,
+          "azure": {
+            "service": "Foundry Models",
+            "product": "Azure Deepseek Models",
+            "sku": "V3.1 Inp glbl",
+            "meter": "V3.1 Inp glbl Tokens"
+          }
+        },
+        {
+          "id": "output",
+          "label": "Output tokens",
+          "unit": "1K",
+          "quantityPerUnit": 1000,
+          "azure": {
+            "service": "Foundry Models",
+            "product": "Azure Deepseek Models",
+            "sku": "V3.1 Outp glbl",
+            "meter": "V3.1 Outp glbl Tokens"
+          }
+        }
+      ],
+      "evidence": "https://learn.microsoft.com/en-us/azure/ai-foundry/concepts/foundry-models-overview",
+      "model": {
+        "id": "deepseek-v3-1",
+        "version": "V3.1",
+        "sku": "GlobalStandard",
+        "mode": "payg"
+      },
+      "deployment": "global-standard"
+    },
+    {
+      "id": "deepseek-v3-2-global-standard",
+      "name": "DeepSeek V3.2 · Global Standard",
+      "family": "foundry",
+      "kind": "model-deployment",
+      "regions": [
+        "uksouth",
+        "westeurope",
+        "eastus2"
+      ],
+      "components": [
+        {
+          "id": "input",
+          "label": "Uncached input tokens",
+          "unit": "1K",
+          "quantityPerUnit": 1000,
+          "azure": {
+            "service": "Foundry Models",
+            "product": "Azure Deepseek Models",
+            "sku": "V3.2 Inp glbl",
+            "meter": "V3.2 Inp glbl Tokens"
+          }
+        },
+        {
+          "id": "output",
+          "label": "Output tokens",
+          "unit": "1K",
+          "quantityPerUnit": 1000,
+          "azure": {
+            "service": "Foundry Models",
+            "product": "Azure Deepseek Models",
+            "sku": "V3.2 Outp glbl",
+            "meter": "V3.2 Outp glbl Tokens"
+          }
+        }
+      ],
+      "evidence": "https://learn.microsoft.com/en-us/azure/ai-foundry/concepts/foundry-models-overview",
+      "model": {
+        "id": "deepseek-v3-2",
+        "version": "V3.2",
+        "sku": "GlobalStandard",
+        "mode": "payg"
+      },
+      "deployment": "global-standard"
+    },
+    {
+      "id": "deepseek-v3-2-data-zone-standard",
+      "name": "DeepSeek V3.2 · Data Zone Standard",
+      "family": "foundry",
+      "kind": "model-deployment",
+      "regions": [
+        "uksouth",
+        "westeurope",
+        "eastus2"
+      ],
+      "components": [
+        {
+          "id": "input",
+          "label": "Uncached input tokens",
+          "unit": "1K",
+          "quantityPerUnit": 1000,
+          "azure": {
+            "service": "Foundry Models",
+            "product": "Azure Deepseek Models",
+            "sku": "V3.2 Inp DZ",
+            "meter": "V3.2 Inp DZ Tokens"
+          }
+        },
+        {
+          "id": "output",
+          "label": "Output tokens",
+          "unit": "1K",
+          "quantityPerUnit": 1000,
+          "azure": {
+            "service": "Foundry Models",
+            "product": "Azure Deepseek Models",
+            "sku": "V3.2 Outp DZ",
+            "meter": "V3.2 Outp DZ Tokens"
+          }
+        }
+      ],
+      "evidence": "https://learn.microsoft.com/en-us/azure/ai-foundry/concepts/foundry-models-overview",
+      "model": {
+        "id": "deepseek-v3-2",
+        "version": "V3.2",
+        "sku": "DataZoneStandard",
+        "mode": "payg"
+      },
+      "deployment": "data-zone-standard"
+    },
+    {
+      "id": "gpt-5-regional-standard",
+      "name": "GPT-5 · Regional Standard",
+      "family": "foundry",
+      "kind": "model-deployment",
+      "regions": [
+        "uksouth",
+        "westeurope",
+        "eastus2"
+      ],
+      "components": [
+        {
+          "id": "input",
+          "label": "Uncached input tokens",
+          "unit": "1K",
+          "quantityPerUnit": 1000
+        },
+        {
+          "id": "output",
+          "label": "Output tokens",
+          "unit": "1K",
+          "quantityPerUnit": 1000
+        }
+      ],
+      "evidence": "https://learn.microsoft.com/en-us/azure/ai-foundry/concepts/foundry-models-overview",
+      "model": {
+        "id": "gpt-5",
+        "version": "edition unconfirmed",
+        "sku": "Standard",
+        "mode": "payg"
+      },
+      "deployment": "regional-standard",
+      "selectable": false
+    },
+    {
+      "id": "claude-sonnet-global-standard",
+      "name": "Anthropic Claude Sonnet · Global Standard",
+      "family": "foundry",
+      "kind": "model-deployment",
+      "regions": [
+        "uksouth",
+        "westeurope",
+        "eastus2"
+      ],
+      "components": [
+        {
+          "id": "input",
+          "label": "Uncached input tokens",
+          "unit": "1K",
+          "quantityPerUnit": 1000
+        },
+        {
+          "id": "output",
+          "label": "Output tokens",
+          "unit": "1K",
+          "quantityPerUnit": 1000
+        }
+      ],
+      "evidence": "https://learn.microsoft.com/en-us/azure/ai-foundry/concepts/foundry-models-overview",
+      "model": {
+        "id": "claude-sonnet",
+        "version": "edition unconfirmed",
+        "sku": "GlobalStandard",
+        "mode": "payg"
+      },
+      "deployment": "global-standard",
+      "selectable": false
+    },
+    {
+      "id": "llama-maverick-global-standard",
+      "name": "Llama 4 Maverick 17B · Global Standard",
+      "family": "foundry",
+      "kind": "model-deployment",
+      "regions": [
+        "uksouth",
+        "westeurope",
+        "eastus2"
+      ],
+      "components": [
+        {
+          "id": "input",
+          "label": "Uncached input tokens",
+          "unit": "1K",
+          "quantityPerUnit": 1000,
+          "azure": {
+            "service": "Foundry Models",
+            "product": "Azure Llama Models",
+            "sku": "Llama 4 Maverick 17B Inp glbl",
+            "meter": "Llama 4 Maverick 17B Inp glbl Tokens"
+          }
+        },
+        {
+          "id": "output",
+          "label": "Output tokens",
+          "unit": "1K",
+          "quantityPerUnit": 1000,
+          "azure": {
+            "service": "Foundry Models",
+            "product": "Azure Llama Models",
+            "sku": "Llama 4 Maverick 17B Outp glbl",
+            "meter": "Llama 4 Maverick 17B Outp glbl Tokens"
+          }
+        }
+      ],
+      "evidence": "https://learn.microsoft.com/en-us/azure/ai-foundry/concepts/foundry-models-overview",
+      "model": {
+        "id": "Llama-4-Maverick-17B-128E-Instruct-FP8",
+        "version": "Published model",
+        "sku": "GlobalStandard",
+        "mode": "payg"
+      },
+      "deployment": "global-standard",
+      "note": "Meter availability is published by billing region. Check Microsoft’s model availability and agent integration independently."
+    },
+    {
+      "id": "mistral-large-regional-standard",
+      "name": "Mistral Large · Regional Standard",
+      "family": "foundry",
+      "kind": "model-deployment",
+      "regions": [
+        "uksouth",
+        "westeurope",
+        "eastus2"
+      ],
+      "components": [
+        {
+          "id": "input",
+          "label": "Uncached input tokens",
+          "unit": "1K",
+          "quantityPerUnit": 1000
+        },
+        {
+          "id": "output",
+          "label": "Output tokens",
+          "unit": "1K",
+          "quantityPerUnit": 1000
+        }
+      ],
+      "evidence": "https://learn.microsoft.com/en-us/azure/ai-foundry/concepts/foundry-models-overview",
+      "model": {
+        "id": "mistral-large",
+        "version": "edition unconfirmed",
+        "sku": "Standard",
+        "mode": "payg"
+      },
+      "deployment": "regional-standard",
+      "selectable": false
+    },
+    {
+      "id": "cohere-command-global-standard",
+      "name": "Cohere Command · Global Standard",
+      "family": "foundry",
+      "kind": "model-deployment",
+      "regions": [
+        "uksouth",
+        "westeurope",
+        "eastus2"
+      ],
+      "components": [
+        {
+          "id": "input",
+          "label": "Uncached input tokens",
+          "unit": "1K",
+          "quantityPerUnit": 1000
+        },
+        {
+          "id": "output",
+          "label": "Output tokens",
+          "unit": "1K",
+          "quantityPerUnit": 1000
+        }
+      ],
+      "evidence": "https://learn.microsoft.com/en-us/azure/ai-foundry/concepts/foundry-models-overview",
+      "model": {
+        "id": "cohere-command",
+        "version": "edition unconfirmed",
+        "sku": "GlobalStandard",
+        "mode": "payg"
+      },
+      "deployment": "global-standard",
+      "selectable": false
+    },
+    {
+      "id": "openai-global-ptu",
+      "name": "Azure OpenAI · Global Provisioned capacity",
+      "family": "foundry",
+      "kind": "model-deployment",
+      "regions": [
+        "uksouth",
+        "westeurope",
+        "eastus2"
+      ],
+      "components": [
+        {
+          "id": "capacity",
+          "label": "PTU-hours",
+          "unit": "1/Hour",
+          "quantityPerUnit": 1,
+          "azure": {
+            "service": "Foundry Models",
+            "product": "Azure OpenAI",
+            "sku": "Provisioned Managed Global",
+            "meter": "Provisioned Managed Global Unit",
+            "armSku": "OpenAI_Provisioned_Managed_Global"
+          }
+        }
+      ],
+      "evidence": "https://learn.microsoft.com/en-us/azure/ai-services/openai/concepts/provisioned-throughput",
+      "model": {
+        "id": "azure-openai",
+        "version": "capacity meter",
+        "mode": "provisioned",
+        "sku": "GlobalProvisionedManaged"
+      },
+      "retained": {
+        "uksouth": "openai-global-ptu-uksouth"
+      },
+      "deployment": "global-provisioned"
+    },
+    {
+      "id": "openai-regional-ptu",
+      "name": "Azure OpenAI · Regional Provisioned capacity",
+      "family": "foundry",
+      "kind": "model-deployment",
+      "regions": [
+        "uksouth",
+        "westeurope",
+        "eastus2"
+      ],
+      "components": [
+        {
+          "id": "capacity",
+          "label": "PTU-hours",
+          "unit": "1/Hour",
+          "quantityPerUnit": 1,
+          "azure": {
+            "service": "Foundry Models",
+            "product": "Azure OpenAI",
+            "sku": "Provisioned Managed Regional",
+            "meter": "Provisioned Managed Regional Unit",
+            "armSku": "OpenAI_Provisioned_Throughput"
+          }
+        }
+      ],
+      "evidence": "https://learn.microsoft.com/en-us/azure/ai-services/openai/concepts/provisioned-throughput",
+      "model": {
+        "id": "azure-openai",
+        "version": "capacity meter",
+        "mode": "provisioned",
+        "sku": "ProvisionedManaged"
+      },
+      "deployment": "regional-provisioned"
+    },
+    {
+      "id": "openai-data-zone-ptu",
+      "name": "Azure OpenAI · Data-Zone Provisioned capacity",
+      "family": "foundry",
+      "kind": "model-deployment",
+      "regions": [
+        "uksouth",
+        "westeurope",
+        "eastus2"
+      ],
+      "components": [
+        {
+          "id": "capacity",
+          "label": "PTU-hours",
+          "unit": "1/Hour",
+          "quantityPerUnit": 1,
+          "azure": {
+            "service": "Foundry Models",
+            "product": "Azure OpenAI",
+            "sku": "Provisioned Managed Data Zone",
+            "meter": "Provisioned Managed Data Zone Unit",
+            "armSku": "OpenAI_Provisioned_Managed_DataZone"
+          }
+        }
+      ],
+      "evidence": "https://learn.microsoft.com/en-us/azure/ai-services/openai/concepts/provisioned-throughput",
+      "model": {
+        "id": "azure-openai",
+        "version": "capacity meter",
+        "mode": "provisioned",
+        "sku": "DataZoneProvisionedManaged"
+      },
+      "deployment": "data-zone-provisioned"
+    },
+    {
+      "id": "embedding-ada-global",
+      "name": "Text embedding ada · global",
+      "family": "foundry",
+      "kind": "supporting-resource",
+      "regions": [
+        "uksouth",
+        "westeurope",
+        "eastus2"
+      ],
+      "components": [
+        {
+          "id": "usage",
+          "label": "Monthly billable base units",
+          "unit": "1K",
+          "quantityPerUnit": 1000,
+          "azure": {
+            "service": "Foundry Models",
+            "product": "Azure OpenAI",
+            "sku": "embedding-ada-glbl",
+            "meter": "embedding-ada-glbl Tokens"
+          }
+        }
+      ],
+      "evidence": "https://learn.microsoft.com/en-us/azure/ai-services/openai/concepts/models",
+      "note": "Enter billable tokens for this modality. Other request inputs and outputs require their own meter."
+    },
+    {
+      "id": "embedding-ada-regional",
+      "name": "Text embedding ada · regional",
+      "family": "foundry",
+      "kind": "supporting-resource",
+      "regions": [
+        "uksouth",
+        "westeurope",
+        "eastus2"
+      ],
+      "components": [
+        {
+          "id": "usage",
+          "label": "Monthly billable base units",
+          "unit": "1K",
+          "quantityPerUnit": 1000,
+          "azure": {
+            "service": "Foundry Models",
+            "product": "Azure OpenAI",
+            "sku": "embedding-ada-regional",
+            "meter": "embedding-ada-regional Tokens"
+          }
+        }
+      ],
+      "evidence": "https://learn.microsoft.com/en-us/azure/ai-services/openai/concepts/models",
+      "note": "Enter billable tokens for this modality. Other request inputs and outputs require their own meter."
+    },
+    {
+      "id": "transcribe-audio",
+      "name": "GPT-4o mini Transcribe · audio input",
+      "family": "foundry",
+      "kind": "supporting-resource",
+      "regions": [
+        "uksouth",
+        "westeurope",
+        "eastus2"
+      ],
+      "components": [
+        {
+          "id": "usage",
+          "label": "Monthly billable base units",
+          "unit": "1K",
+          "quantityPerUnit": 1000,
+          "azure": {
+            "service": "Foundry Models",
+            "product": "Azure OpenAI",
+            "sku": "gpt-4o-mini-transcribe-aud-inp-glbl",
+            "meter": "gpt-4o-mini-transcribe-aud-inp-glbl Tokens"
+          }
+        }
+      ],
+      "evidence": "https://learn.microsoft.com/en-us/azure/ai-services/openai/concepts/models",
+      "note": "Enter billable tokens for this modality. Other request inputs and outputs require their own meter."
+    },
+    {
+      "id": "transcribe-output",
+      "name": "GPT-4o mini Transcribe · text output",
+      "family": "foundry",
+      "kind": "supporting-resource",
+      "regions": [
+        "uksouth",
+        "westeurope",
+        "eastus2"
+      ],
+      "components": [
+        {
+          "id": "usage",
+          "label": "Monthly billable base units",
+          "unit": "1K",
+          "quantityPerUnit": 1000,
+          "azure": {
+            "service": "Foundry Models",
+            "product": "Azure OpenAI",
+            "sku": "gpt-4o-mini-transcribe-txt-out-glbl",
+            "meter": "gpt-4o-mini-transcribe-txt-out-glbl Tokens"
+          }
+        }
+      ],
+      "evidence": "https://learn.microsoft.com/en-us/azure/ai-services/openai/concepts/models",
+      "note": "Enter billable tokens for this modality. Other request inputs and outputs require their own meter."
+    },
+    {
+      "id": "tts-audio",
+      "name": "GPT-4o mini TTS · audio output",
+      "family": "foundry",
+      "kind": "supporting-resource",
+      "regions": [
+        "uksouth",
+        "westeurope",
+        "eastus2"
+      ],
+      "components": [
+        {
+          "id": "usage",
+          "label": "Monthly billable base units",
+          "unit": "1K",
+          "quantityPerUnit": 1000,
+          "azure": {
+            "service": "Foundry Models",
+            "product": "Azure OpenAI",
+            "sku": "gpt-4o-mini-tts-aud-out-glbl",
+            "meter": "gpt-4o-mini-tts-aud-out-glbl Tokens"
+          }
+        }
+      ],
+      "evidence": "https://learn.microsoft.com/en-us/azure/ai-services/openai/concepts/models",
+      "note": "Enter billable tokens for this modality. Other request inputs and outputs require their own meter."
+    },
+    {
+      "id": "tts-text",
+      "name": "GPT-4o mini TTS · text input",
+      "family": "foundry",
+      "kind": "supporting-resource",
+      "regions": [
+        "uksouth",
+        "westeurope",
+        "eastus2"
+      ],
+      "components": [
+        {
+          "id": "usage",
+          "label": "Monthly billable base units",
+          "unit": "1K",
+          "quantityPerUnit": 1000,
+          "azure": {
+            "service": "Foundry Models",
+            "product": "Azure OpenAI",
+            "sku": "gpt-4o-mini-tts-txt-inp-glbl",
+            "meter": "gpt-4o-mini-tts-txt-inp-glbl Tokens"
+          }
+        }
+      ],
+      "evidence": "https://learn.microsoft.com/en-us/azure/ai-services/openai/concepts/models",
+      "note": "Enter billable tokens for this modality. Other request inputs and outputs require their own meter."
+    },
+    {
+      "id": "vm-d2s-v5-linux",
+      "name": "Azure VM D2s v5 · Linux",
+      "family": "infrastructure",
+      "kind": "supporting-resource",
+      "regions": [
+        "uksouth",
+        "westeurope",
+        "eastus2"
+      ],
+      "components": [
+        {
+          "id": "usage",
+          "label": "Monthly billable base units",
+          "unit": "1 Hour",
+          "quantityPerUnit": 1,
+          "azure": {
+            "service": "Virtual Machines",
+            "product": "Virtual Machines Dsv5 Series",
+            "sku": "Standard_D2s_v5",
+            "meter": "D2s v5",
+            "armSku": "Standard_D2s_v5"
+          }
+        }
+      ],
+      "evidence": "https://learn.microsoft.com/en-us/azure/virtual-machines/sizes/overview"
+    },
+    {
+      "id": "vm-d4s-v5-linux",
+      "name": "Azure VM D4s v5 · Linux",
+      "family": "infrastructure",
+      "kind": "supporting-resource",
+      "regions": [
+        "uksouth",
+        "westeurope",
+        "eastus2"
+      ],
+      "components": [
+        {
+          "id": "usage",
+          "label": "Monthly billable base units",
+          "unit": "1 Hour",
+          "quantityPerUnit": 1,
+          "azure": {
+            "service": "Virtual Machines",
+            "product": "Virtual Machines Dsv5 Series",
+            "sku": "Standard_D4s_v5",
+            "meter": "D4s v5",
+            "armSku": "Standard_D4s_v5"
+          }
+        }
+      ],
+      "evidence": "https://learn.microsoft.com/en-us/azure/virtual-machines/sizes/overview"
+    },
+    {
+      "id": "vm-d8s-v5-linux",
+      "name": "Azure VM D8s v5 · Linux",
+      "family": "infrastructure",
+      "kind": "supporting-resource",
+      "regions": [
+        "uksouth",
+        "westeurope",
+        "eastus2"
+      ],
+      "components": [
+        {
+          "id": "usage",
+          "label": "Monthly billable base units",
+          "unit": "1 Hour",
+          "quantityPerUnit": 1,
+          "azure": {
+            "service": "Virtual Machines",
+            "product": "Virtual Machines Dsv5 Series",
+            "sku": "Standard_D8s_v5",
+            "meter": "D8s v5",
+            "armSku": "Standard_D8s_v5"
+          }
+        }
+      ],
+      "evidence": "https://learn.microsoft.com/en-us/azure/virtual-machines/sizes/overview"
+    },
+    {
+      "id": "vm-d16s-v5-linux",
+      "name": "Azure VM D16s v5 · Linux",
+      "family": "infrastructure",
+      "kind": "supporting-resource",
+      "regions": [
+        "uksouth",
+        "westeurope",
+        "eastus2"
+      ],
+      "components": [
+        {
+          "id": "usage",
+          "label": "Monthly billable base units",
+          "unit": "1 Hour",
+          "quantityPerUnit": 1,
+          "azure": {
+            "service": "Virtual Machines",
+            "product": "Virtual Machines Dsv5 Series",
+            "sku": "Standard_D16s_v5",
+            "meter": "D16s v5",
+            "armSku": "Standard_D16s_v5"
+          }
+        }
+      ],
+      "evidence": "https://learn.microsoft.com/en-us/azure/virtual-machines/sizes/overview"
+    },
+    {
+      "id": "vm-e2s-v5-linux",
+      "name": "Azure VM E2s v5 · Linux",
+      "family": "infrastructure",
+      "kind": "supporting-resource",
+      "regions": [
+        "uksouth",
+        "westeurope",
+        "eastus2"
+      ],
+      "components": [
+        {
+          "id": "usage",
+          "label": "Monthly billable base units",
+          "unit": "1 Hour",
+          "quantityPerUnit": 1,
+          "azure": {
+            "service": "Virtual Machines",
+            "product": "Virtual Machines Esv5 Series",
+            "sku": "E2s v5",
+            "meter": "E2s v5",
+            "armSku": "Standard_E2s_v5"
+          }
+        }
+      ],
+      "evidence": "https://learn.microsoft.com/en-us/azure/virtual-machines/sizes/overview"
+    },
+    {
+      "id": "vm-e4s-v5-linux",
+      "name": "Azure VM E4s v5 · Linux",
+      "family": "infrastructure",
+      "kind": "supporting-resource",
+      "regions": [
+        "uksouth",
+        "westeurope",
+        "eastus2"
+      ],
+      "components": [
+        {
+          "id": "usage",
+          "label": "Monthly billable base units",
+          "unit": "1 Hour",
+          "quantityPerUnit": 1,
+          "azure": {
+            "service": "Virtual Machines",
+            "product": "Virtual Machines Esv5 Series",
+            "sku": "E4s v5",
+            "meter": "E4s v5",
+            "armSku": "Standard_E4s_v5"
+          }
+        }
+      ],
+      "evidence": "https://learn.microsoft.com/en-us/azure/virtual-machines/sizes/overview"
+    },
+    {
+      "id": "vm-e8s-v5-linux",
+      "name": "Azure VM E8s v5 · Linux",
+      "family": "infrastructure",
+      "kind": "supporting-resource",
+      "regions": [
+        "uksouth",
+        "westeurope",
+        "eastus2"
+      ],
+      "components": [
+        {
+          "id": "usage",
+          "label": "Monthly billable base units",
+          "unit": "1 Hour",
+          "quantityPerUnit": 1,
+          "azure": {
+            "service": "Virtual Machines",
+            "product": "Virtual Machines Esv5 Series",
+            "sku": "E8s v5",
+            "meter": "E8s v5",
+            "armSku": "Standard_E8s_v5"
+          }
+        }
+      ],
+      "evidence": "https://learn.microsoft.com/en-us/azure/virtual-machines/sizes/overview"
+    },
+    {
+      "id": "vm-e16s-v5-linux",
+      "name": "Azure VM E16s v5 · Linux",
+      "family": "infrastructure",
+      "kind": "supporting-resource",
+      "regions": [
+        "uksouth",
+        "westeurope",
+        "eastus2"
+      ],
+      "components": [
+        {
+          "id": "usage",
+          "label": "Monthly billable base units",
+          "unit": "1 Hour",
+          "quantityPerUnit": 1,
+          "azure": {
+            "service": "Virtual Machines",
+            "product": "Virtual Machines Esv5 Series",
+            "sku": "E16s v5",
+            "meter": "E16s v5",
+            "armSku": "Standard_E16s_v5"
+          }
+        }
+      ],
+      "evidence": "https://learn.microsoft.com/en-us/azure/virtual-machines/sizes/overview"
+    },
+    {
+      "id": "aca-dedicated-plan-management",
+      "name": "Container Apps · plan management",
+      "family": "infrastructure",
+      "kind": "supporting-resource",
+      "regions": [
+        "uksouth",
+        "westeurope",
+        "eastus2"
+      ],
+      "components": [
+        {
+          "id": "usage",
+          "label": "Monthly billable base units",
+          "unit": "1 Hour",
+          "quantityPerUnit": 1,
+          "azure": {
+            "service": "Azure Container Apps",
+            "product": "Azure Container Apps",
+            "sku": "Dedicated",
+            "meter": "Dedicated Plan Management"
+          }
+        }
+      ],
+      "evidence": "https://azure.microsoft.com/en-gb/pricing/details/container-apps/",
+      "note": "Supply billed usage after externally confirmed subscription grants, where applicable. Requests, CPU and memory are separate."
+    },
+    {
+      "id": "aca-dedicated-vcpu-usage",
+      "name": "Container Apps · vCPU hours",
+      "family": "infrastructure",
+      "kind": "supporting-resource",
+      "regions": [
+        "uksouth",
+        "westeurope",
+        "eastus2"
+      ],
+      "components": [
+        {
+          "id": "usage",
+          "label": "Monthly billable base units",
+          "unit": "1 Hour",
+          "quantityPerUnit": 1,
+          "azure": {
+            "service": "Azure Container Apps",
+            "product": "Azure Container Apps",
+            "sku": "Dedicated",
+            "meter": "Dedicated vCPU Usage"
+          }
+        }
+      ],
+      "evidence": "https://azure.microsoft.com/en-gb/pricing/details/container-apps/",
+      "note": "Supply billed usage after externally confirmed subscription grants, where applicable. Requests, CPU and memory are separate."
+    },
+    {
+      "id": "aca-standard-vcpu-active-usage",
+      "name": "Container Apps · active vCPU seconds",
+      "family": "infrastructure",
+      "kind": "supporting-resource",
+      "regions": [
+        "uksouth",
+        "westeurope",
+        "eastus2"
+      ],
+      "components": [
+        {
+          "id": "usage",
+          "label": "Monthly billable base units",
+          "unit": "1 Second",
+          "quantityPerUnit": 1,
+          "azure": {
+            "service": "Azure Container Apps",
+            "product": "Azure Container Apps",
+            "sku": "Standard",
+            "meter": "Standard vCPU Active Usage"
+          }
+        }
+      ],
+      "evidence": "https://azure.microsoft.com/en-gb/pricing/details/container-apps/",
+      "note": "Supply billed usage after externally confirmed subscription grants, where applicable. Requests, CPU and memory are separate."
+    },
+    {
+      "id": "aca-standard-vcpu-idle-usage",
+      "name": "Container Apps · idle vCPU seconds",
+      "family": "infrastructure",
+      "kind": "supporting-resource",
+      "regions": [
+        "uksouth",
+        "westeurope",
+        "eastus2"
+      ],
+      "components": [
+        {
+          "id": "usage",
+          "label": "Monthly billable base units",
+          "unit": "1 Second",
+          "quantityPerUnit": 1,
+          "azure": {
+            "service": "Azure Container Apps",
+            "product": "Azure Container Apps",
+            "sku": "Standard",
+            "meter": "Standard vCPU Idle Usage"
+          }
+        }
+      ],
+      "evidence": "https://azure.microsoft.com/en-gb/pricing/details/container-apps/",
+      "note": "Supply billed usage after externally confirmed subscription grants, where applicable. Requests, CPU and memory are separate."
+    },
+    {
+      "id": "aca-standard-memory-active-usage",
+      "name": "Container Apps · active memory GiB-seconds",
+      "family": "infrastructure",
+      "kind": "supporting-resource",
+      "regions": [
+        "uksouth",
+        "westeurope",
+        "eastus2"
+      ],
+      "components": [
+        {
+          "id": "usage",
+          "label": "Monthly billable base units",
+          "unit": "1 GiB Second",
+          "quantityPerUnit": 1,
+          "azure": {
+            "service": "Azure Container Apps",
+            "product": "Azure Container Apps",
+            "sku": "Standard",
+            "meter": "Standard Memory Active Usage"
+          }
+        }
+      ],
+      "evidence": "https://azure.microsoft.com/en-gb/pricing/details/container-apps/",
+      "note": "Supply billed usage after externally confirmed subscription grants, where applicable. Requests, CPU and memory are separate."
+    },
+    {
+      "id": "aca-standard-memory-idle-usage",
+      "name": "Container Apps · idle memory GiB-seconds",
+      "family": "infrastructure",
+      "kind": "supporting-resource",
+      "regions": [
+        "uksouth",
+        "westeurope",
+        "eastus2"
+      ],
+      "components": [
+        {
+          "id": "usage",
+          "label": "Monthly billable base units",
+          "unit": "1 GiB Second",
+          "quantityPerUnit": 1,
+          "azure": {
+            "service": "Azure Container Apps",
+            "product": "Azure Container Apps",
+            "sku": "Standard",
+            "meter": "Standard Memory Idle Usage"
+          }
+        }
+      ],
+      "evidence": "https://azure.microsoft.com/en-gb/pricing/details/container-apps/",
+      "note": "Supply billed usage after externally confirmed subscription grants, where applicable. Requests, CPU and memory are separate."
+    },
+    {
+      "id": "aca-standard-requests",
+      "name": "Container Apps · requests",
+      "family": "infrastructure",
+      "kind": "supporting-resource",
+      "regions": [
+        "uksouth",
+        "westeurope",
+        "eastus2"
+      ],
+      "components": [
+        {
+          "id": "usage",
+          "label": "Monthly billable base units",
+          "unit": "1M",
+          "quantityPerUnit": 1000000,
+          "azure": {
+            "service": "Azure Container Apps",
+            "product": "Azure Container Apps",
+            "sku": "Standard",
+            "meter": "Standard Requests"
+          }
+        }
+      ],
+      "evidence": "https://azure.microsoft.com/en-gb/pricing/details/container-apps/",
+      "note": "Supply billed usage after externally confirmed subscription grants, where applicable. Requests, CPU and memory are separate."
+    },
+    {
+      "id": "aks-standard",
+      "name": "AKS Standard · uptime SLA",
+      "family": "infrastructure",
+      "kind": "supporting-resource",
+      "regions": [
+        "uksouth",
+        "westeurope",
+        "eastus2"
+      ],
+      "components": [
+        {
+          "id": "usage",
+          "label": "Monthly billable base units",
+          "unit": "1 Hour",
+          "quantityPerUnit": 1,
+          "azure": {
+            "service": "Azure Kubernetes Service",
+            "product": "Azure Kubernetes Service",
+            "sku": "Standard",
+            "meter": "Standard Uptime SLA"
+          }
+        }
+      ],
+      "evidence": "https://learn.microsoft.com/en-us/azure/aks/free-standard-pricing-tiers",
+      "note": "Management meter only. Worker nodes, storage and network are separate."
+    },
+    {
+      "id": "aks-lts",
+      "name": "AKS Standard · long-term support",
+      "family": "infrastructure",
+      "kind": "supporting-resource",
+      "regions": [
+        "uksouth",
+        "westeurope",
+        "eastus2"
+      ],
+      "components": [
+        {
+          "id": "usage",
+          "label": "Monthly billable base units",
+          "unit": "1 Hour",
+          "quantityPerUnit": 1,
+          "azure": {
+            "service": "Azure Kubernetes Service",
+            "product": "Azure Kubernetes Service",
+            "sku": "Standard",
+            "meter": "Standard Long Term Support"
+          }
+        }
+      ],
+      "evidence": "https://learn.microsoft.com/en-us/azure/aks/free-standard-pricing-tiers",
+      "note": "Management meter only. Worker nodes, storage and network are separate."
+    },
+    {
+      "id": "aci-vcpu",
+      "name": "Container Instances Standard · vCPU-hours",
+      "family": "infrastructure",
+      "kind": "supporting-resource",
+      "regions": [
+        "uksouth",
+        "westeurope",
+        "eastus2"
+      ],
+      "components": [
+        {
+          "id": "usage",
+          "label": "Monthly billable base units",
+          "unit": "1 Hour",
+          "quantityPerUnit": 1,
+          "azure": {
+            "service": "Container Instances",
+            "product": "Container Instances",
+            "sku": "Standard",
+            "meter": "Standard vCPU Duration"
+          }
+        }
+      ],
+      "evidence": "https://azure.microsoft.com/en-gb/pricing/details/container-instances/"
+    },
+    {
+      "id": "aci-memory",
+      "name": "Container Instances Standard · GB-hours",
+      "family": "infrastructure",
+      "kind": "supporting-resource",
+      "regions": [
+        "uksouth",
+        "westeurope",
+        "eastus2"
+      ],
+      "components": [
+        {
+          "id": "usage",
+          "label": "Monthly billable base units",
+          "unit": "1 GB Hour",
+          "quantityPerUnit": 1,
+          "azure": {
+            "service": "Container Instances",
+            "product": "Container Instances",
+            "sku": "Standard",
+            "meter": "Standard Memory Duration"
+          }
+        }
+      ],
+      "evidence": "https://azure.microsoft.com/en-gb/pricing/details/container-instances/"
+    },
+    {
+      "id": "flex-ready-baseline",
+      "name": "Functions Flex Always Ready · baseline memory",
+      "family": "infrastructure",
+      "kind": "supporting-resource",
+      "regions": [
+        "uksouth",
+        "westeurope",
+        "eastus2"
+      ],
+      "components": [
+        {
+          "id": "usage",
+          "label": "Monthly billable base units",
+          "unit": "1 GB Second",
+          "quantityPerUnit": 1,
+          "azure": {
+            "service": "Functions",
+            "product": "Flex Consumption",
+            "sku": "Always Ready",
+            "meter": "Always Ready Baseline"
+          }
+        }
+      ],
+      "evidence": "https://azure.microsoft.com/en-gb/pricing/details/functions/"
+    },
+    {
+      "id": "flex-ready-time",
+      "name": "Functions Flex Always Ready · execution memory",
+      "family": "infrastructure",
+      "kind": "supporting-resource",
+      "regions": [
+        "uksouth",
+        "westeurope",
+        "eastus2"
+      ],
+      "components": [
+        {
+          "id": "usage",
+          "label": "Monthly billable base units",
+          "unit": "1 GB Second",
+          "quantityPerUnit": 1,
+          "azure": {
+            "service": "Functions",
+            "product": "Flex Consumption",
+            "sku": "Always Ready",
+            "meter": "Always Ready Execution Time"
+          }
+        }
+      ],
+      "evidence": "https://azure.microsoft.com/en-gb/pricing/details/functions/"
+    },
+    {
+      "id": "flex-ready-executions",
+      "name": "Functions Flex Always Ready · executions",
+      "family": "infrastructure",
+      "kind": "supporting-resource",
+      "regions": [
+        "uksouth",
+        "westeurope",
+        "eastus2"
+      ],
+      "components": [
+        {
+          "id": "usage",
+          "label": "Monthly billable base units",
+          "unit": "10",
+          "quantityPerUnit": 10,
+          "azure": {
+            "service": "Functions",
+            "product": "Flex Consumption",
+            "sku": "Always Ready",
+            "meter": "Always Ready Total Executions"
+          }
+        }
+      ],
+      "evidence": "https://azure.microsoft.com/en-gb/pricing/details/functions/"
+    },
+    {
+      "id": "search-basic",
+      "name": "Azure AI Search Basic",
+      "family": "infrastructure",
+      "kind": "supporting-resource",
+      "regions": [
+        "uksouth",
+        "westeurope",
+        "eastus2"
+      ],
+      "components": [
+        {
+          "id": "usage",
+          "label": "Monthly billable base units",
+          "unit": "1 Hour",
+          "quantityPerUnit": 1,
+          "azure": {
+            "service": "Azure Cognitive Search",
+            "product": "Azure AI Search",
+            "sku": "Basic",
+            "meter": "Basic Unit"
+          }
+        }
+      ],
+      "evidence": "https://azure.microsoft.com/en-gb/pricing/details/search/",
+      "retained": {
+        "uksouth": "search-basic-uksouth"
+      },
+      "note": "Enter search-unit hours. Semantic ranking and other features may be separate."
+    },
+    {
+      "id": "search-standard-s1",
+      "name": "Azure AI Search Standard S1",
+      "family": "infrastructure",
+      "kind": "supporting-resource",
+      "regions": [
+        "uksouth",
+        "westeurope",
+        "eastus2"
+      ],
+      "components": [
+        {
+          "id": "usage",
+          "label": "Monthly billable base units",
+          "unit": "1 Hour",
+          "quantityPerUnit": 1,
+          "azure": {
+            "service": "Azure Cognitive Search",
+            "product": "Azure AI Search",
+            "sku": "Standard S1",
+            "meter": "Standard S1 Unit"
+          }
+        }
+      ],
+      "evidence": "https://azure.microsoft.com/en-gb/pricing/details/search/",
+      "retained": {
+        "uksouth": "search-s1-uksouth"
+      },
+      "note": "Enter search-unit hours. Semantic ranking and other features may be separate."
+    },
+    {
+      "id": "search-standard-s2",
+      "name": "Azure AI Search Standard S2",
+      "family": "infrastructure",
+      "kind": "supporting-resource",
+      "regions": [
+        "uksouth",
+        "westeurope",
+        "eastus2"
+      ],
+      "components": [
+        {
+          "id": "usage",
+          "label": "Monthly billable base units",
+          "unit": "1 Hour",
+          "quantityPerUnit": 1,
+          "azure": {
+            "service": "Azure Cognitive Search",
+            "product": "Azure AI Search",
+            "sku": "Standard S2",
+            "meter": "Standard S2 Unit"
+          }
+        }
+      ],
+      "evidence": "https://azure.microsoft.com/en-gb/pricing/details/search/",
+      "note": "Enter search-unit hours. Semantic ranking and other features may be separate."
+    },
+    {
+      "id": "search-standard-s3",
+      "name": "Azure AI Search Standard S3",
+      "family": "infrastructure",
+      "kind": "supporting-resource",
+      "regions": [
+        "uksouth",
+        "westeurope",
+        "eastus2"
+      ],
+      "components": [
+        {
+          "id": "usage",
+          "label": "Monthly billable base units",
+          "unit": "1 Hour",
+          "quantityPerUnit": 1,
+          "azure": {
+            "service": "Azure Cognitive Search",
+            "product": "Azure AI Search",
+            "sku": "Standard S3",
+            "meter": "Standard S3 Unit"
+          }
+        }
+      ],
+      "evidence": "https://azure.microsoft.com/en-gb/pricing/details/search/",
+      "note": "Enter search-unit hours. Semantic ranking and other features may be separate."
+    },
+    {
+      "id": "search-storage-optimized-l1",
+      "name": "Azure AI Search Storage Optimized L1",
+      "family": "infrastructure",
+      "kind": "supporting-resource",
+      "regions": [
+        "uksouth",
+        "westeurope",
+        "eastus2"
+      ],
+      "components": [
+        {
+          "id": "usage",
+          "label": "Monthly billable base units",
+          "unit": "1 Hour",
+          "quantityPerUnit": 1,
+          "azure": {
+            "service": "Azure Cognitive Search",
+            "product": "Azure AI Search",
+            "sku": "Storage Optimized L1",
+            "meter": "Storage Optimized L1 Unit"
+          }
+        }
+      ],
+      "evidence": "https://azure.microsoft.com/en-gb/pricing/details/search/",
+      "note": "Enter search-unit hours. Semantic ranking and other features may be separate."
+    },
+    {
+      "id": "search-storage-optimized-l2",
+      "name": "Azure AI Search Storage Optimized L2",
+      "family": "infrastructure",
+      "kind": "supporting-resource",
+      "regions": [
+        "uksouth",
+        "westeurope",
+        "eastus2"
+      ],
+      "components": [
+        {
+          "id": "usage",
+          "label": "Monthly billable base units",
+          "unit": "1 Hour",
+          "quantityPerUnit": 1,
+          "azure": {
+            "service": "Azure Cognitive Search",
+            "product": "Azure AI Search",
+            "sku": "Storage Optimized L2",
+            "meter": "Storage Optimized L2 Unit"
+          }
+        }
+      ],
+      "evidence": "https://azure.microsoft.com/en-gb/pricing/details/search/",
+      "note": "Enter search-unit hours. Semantic ranking and other features may be separate."
+    },
+    {
+      "id": "sql-standard-s0",
+      "name": "Azure SQL Database Single Standard S0",
+      "family": "infrastructure",
+      "kind": "supporting-resource",
+      "regions": [
+        "uksouth",
+        "westeurope",
+        "eastus2"
+      ],
+      "components": [
+        {
+          "id": "usage",
+          "label": "Monthly billable base units",
+          "unit": "1/Day",
+          "quantityPerUnit": 1,
+          "azure": {
+            "service": "SQL Database",
+            "product": "SQL Database Single Standard",
+            "sku": "S0",
+            "meter": "S0 DTUs"
+          }
+        }
+      ],
+      "retained": {
+        "uksouth": "sql-s0-uksouth"
+      },
+      "note": "Primary database-days. Replicas and backup are separate.",
+      "evidence": "https://azure.microsoft.com/en-gb/pricing/details/azure-sql-database/single/"
+    },
+    {
+      "id": "sql-standard-s1",
+      "name": "Azure SQL Database Single Standard S1",
+      "family": "infrastructure",
+      "kind": "supporting-resource",
+      "regions": [
+        "uksouth",
+        "westeurope",
+        "eastus2"
+      ],
+      "components": [
+        {
+          "id": "usage",
+          "label": "Monthly billable base units",
+          "unit": "1/Day",
+          "quantityPerUnit": 1,
+          "azure": {
+            "service": "SQL Database",
+            "product": "SQL Database Single Standard",
+            "sku": "S1",
+            "meter": "S1 DTUs"
+          }
+        }
+      ],
+      "note": "Primary database-days. Replicas and backup are separate.",
+      "evidence": "https://azure.microsoft.com/en-gb/pricing/details/azure-sql-database/"
+    },
+    {
+      "id": "sql-standard-s2",
+      "name": "Azure SQL Database Single Standard S2",
+      "family": "infrastructure",
+      "kind": "supporting-resource",
+      "regions": [
+        "uksouth",
+        "westeurope",
+        "eastus2"
+      ],
+      "components": [
+        {
+          "id": "usage",
+          "label": "Monthly billable base units",
+          "unit": "1/Day",
+          "quantityPerUnit": 1,
+          "azure": {
+            "service": "SQL Database",
+            "product": "SQL Database Single Standard",
+            "sku": "S2",
+            "meter": "S2 DTUs"
+          }
+        }
+      ],
+      "note": "Primary database-days. Replicas and backup are separate.",
+      "evidence": "https://azure.microsoft.com/en-gb/pricing/details/azure-sql-database/"
+    },
+    {
+      "id": "sql-standard-s3",
+      "name": "Azure SQL Database Single Standard S3",
+      "family": "infrastructure",
+      "kind": "supporting-resource",
+      "regions": [
+        "uksouth",
+        "westeurope",
+        "eastus2"
+      ],
+      "components": [
+        {
+          "id": "usage",
+          "label": "Monthly billable base units",
+          "unit": "1/Day",
+          "quantityPerUnit": 1,
+          "azure": {
+            "service": "SQL Database",
+            "product": "SQL Database Single Standard",
+            "sku": "S3",
+            "meter": "S3 DTUs"
+          }
+        }
+      ],
+      "note": "Primary database-days. Replicas and backup are separate.",
+      "evidence": "https://azure.microsoft.com/en-gb/pricing/details/azure-sql-database/"
+    },
+    {
+      "id": "blob-hot-lrs-read",
+      "name": "Blob Hot LRS · read operations",
+      "family": "infrastructure",
+      "kind": "supporting-resource",
+      "regions": [
+        "uksouth",
+        "westeurope",
+        "eastus2"
+      ],
+      "components": [
+        {
+          "id": "usage",
+          "label": "Monthly billable base units",
+          "unit": "10K",
+          "quantityPerUnit": 10000,
+          "azure": {
+            "service": "Storage",
+            "product": "General Block Blob v2",
+            "sku": "Hot LRS",
+            "meter": "Hot LRS Read Operations"
+          }
+        }
+      ],
+      "note": "Enter individual billed operations. Storage, retrieval, replication and early deletion are separate.",
+      "evidence": "https://azure.microsoft.com/en-gb/pricing/details/storage/blobs/"
+    },
+    {
+      "id": "blob-hot-lrs-write",
+      "name": "Blob Hot LRS · write operations",
+      "family": "infrastructure",
+      "kind": "supporting-resource",
+      "regions": [
+        "uksouth",
+        "westeurope",
+        "eastus2"
+      ],
+      "components": [
+        {
+          "id": "usage",
+          "label": "Monthly billable base units",
+          "unit": "10K",
+          "quantityPerUnit": 10000,
+          "azure": {
+            "service": "Storage",
+            "product": "General Block Blob v2",
+            "sku": "Hot LRS",
+            "meter": "Hot LRS Write Operations"
+          }
+        }
+      ],
+      "retained": {
+        "uksouth": "blob-hot-lrs-write-uksouth"
+      },
+      "note": "Enter individual billed operations. Storage, retrieval, replication and early deletion are separate.",
+      "evidence": "https://azure.microsoft.com/en-gb/pricing/details/storage/blobs/"
+    },
+    {
+      "id": "blob-cool-lrs-read",
+      "name": "Blob Cool LRS · read operations",
+      "family": "infrastructure",
+      "kind": "supporting-resource",
+      "regions": [
+        "uksouth",
+        "westeurope",
+        "eastus2"
+      ],
+      "components": [
+        {
+          "id": "usage",
+          "label": "Monthly billable base units",
+          "unit": "10K",
+          "quantityPerUnit": 10000,
+          "azure": {
+            "service": "Storage",
+            "product": "General Block Blob v2",
+            "sku": "Cool LRS",
+            "meter": "Cool LRS Read Operations"
+          }
+        }
+      ],
+      "note": "Enter individual billed operations. Storage, retrieval, replication and early deletion are separate.",
+      "evidence": "https://azure.microsoft.com/en-gb/pricing/details/storage/blobs/"
+    },
+    {
+      "id": "blob-cool-lrs-write",
+      "name": "Blob Cool LRS · write operations",
+      "family": "infrastructure",
+      "kind": "supporting-resource",
+      "regions": [
+        "uksouth",
+        "westeurope",
+        "eastus2"
+      ],
+      "components": [
+        {
+          "id": "usage",
+          "label": "Monthly billable base units",
+          "unit": "10K",
+          "quantityPerUnit": 10000,
+          "azure": {
+            "service": "Storage",
+            "product": "General Block Blob v2",
+            "sku": "Cool LRS",
+            "meter": "Cool LRS Write Operations"
+          }
+        }
+      ],
+      "note": "Enter individual billed operations. Storage, retrieval, replication and early deletion are separate.",
+      "evidence": "https://azure.microsoft.com/en-gb/pricing/details/storage/blobs/"
+    },
+    {
+      "id": "blob-cold-lrs-read",
+      "name": "Blob Cold LRS · read operations",
+      "family": "infrastructure",
+      "kind": "supporting-resource",
+      "regions": [
+        "uksouth",
+        "westeurope",
+        "eastus2"
+      ],
+      "components": [
+        {
+          "id": "usage",
+          "label": "Monthly billable base units",
+          "unit": "10K",
+          "quantityPerUnit": 10000,
+          "azure": {
+            "service": "Storage",
+            "product": "General Block Blob v2",
+            "sku": "Cold LRS",
+            "meter": "Cold LRS Read Operations"
+          }
+        }
+      ],
+      "note": "Enter individual billed operations. Storage, retrieval, replication and early deletion are separate.",
+      "evidence": "https://azure.microsoft.com/en-gb/pricing/details/storage/blobs/"
+    },
+    {
+      "id": "blob-cold-lrs-write",
+      "name": "Blob Cold LRS · write operations",
+      "family": "infrastructure",
+      "kind": "supporting-resource",
+      "regions": [
+        "uksouth",
+        "westeurope",
+        "eastus2"
+      ],
+      "components": [
+        {
+          "id": "usage",
+          "label": "Monthly billable base units",
+          "unit": "10K",
+          "quantityPerUnit": 10000,
+          "azure": {
+            "service": "Storage",
+            "product": "General Block Blob v2",
+            "sku": "Cold LRS",
+            "meter": "Cold LRS Write Operations"
+          }
+        }
+      ],
+      "note": "Enter individual billed operations. Storage, retrieval, replication and early deletion are separate.",
+      "evidence": "https://azure.microsoft.com/en-gb/pricing/details/storage/blobs/"
+    },
+    {
+      "id": "blob-archive-lrs-read",
+      "name": "Blob Archive LRS · read operations",
+      "family": "infrastructure",
+      "kind": "supporting-resource",
+      "regions": [
+        "uksouth",
+        "westeurope",
+        "eastus2"
+      ],
+      "components": [
+        {
+          "id": "usage",
+          "label": "Monthly billable base units",
+          "unit": "10K",
+          "quantityPerUnit": 10000,
+          "azure": {
+            "service": "Storage",
+            "product": "General Block Blob v2",
+            "sku": "Archive LRS",
+            "meter": "Archive LRS Read Operations"
+          }
+        }
+      ],
+      "note": "Enter individual billed operations. Storage, retrieval, replication and early deletion are separate.",
+      "evidence": "https://azure.microsoft.com/en-gb/pricing/details/storage/blobs/"
+    },
+    {
+      "id": "blob-archive-lrs-write",
+      "name": "Blob Archive LRS · write operations",
+      "family": "infrastructure",
+      "kind": "supporting-resource",
+      "regions": [
+        "uksouth",
+        "westeurope",
+        "eastus2"
+      ],
+      "components": [
+        {
+          "id": "usage",
+          "label": "Monthly billable base units",
+          "unit": "10K",
+          "quantityPerUnit": 10000,
+          "azure": {
+            "service": "Storage",
+            "product": "General Block Blob v2",
+            "sku": "Archive LRS",
+            "meter": "Archive LRS Write Operations"
+          }
+        }
+      ],
+      "note": "Enter individual billed operations. Storage, retrieval, replication and early deletion are separate.",
+      "evidence": "https://azure.microsoft.com/en-gb/pricing/details/storage/blobs/"
+    },
+    {
+      "id": "blob-hot-zrs-read",
+      "name": "Blob Hot ZRS · read operations",
+      "family": "infrastructure",
+      "kind": "supporting-resource",
+      "regions": [
+        "uksouth",
+        "westeurope",
+        "eastus2"
+      ],
+      "components": [
+        {
+          "id": "usage",
+          "label": "Monthly billable base units",
+          "unit": "10K",
+          "quantityPerUnit": 10000,
+          "azure": {
+            "service": "Storage",
+            "product": "General Block Blob v2",
+            "sku": "Hot ZRS",
+            "meter": "Hot ZRS Read Operations"
+          }
+        }
+      ],
+      "note": "Enter individual billed operations. Storage, retrieval, replication and early deletion are separate.",
+      "evidence": "https://azure.microsoft.com/en-gb/pricing/details/storage/blobs/"
+    },
+    {
+      "id": "blob-hot-zrs-write",
+      "name": "Blob Hot ZRS · write operations",
+      "family": "infrastructure",
+      "kind": "supporting-resource",
+      "regions": [
+        "uksouth",
+        "westeurope",
+        "eastus2"
+      ],
+      "components": [
+        {
+          "id": "usage",
+          "label": "Monthly billable base units",
+          "unit": "10K",
+          "quantityPerUnit": 10000,
+          "azure": {
+            "service": "Storage",
+            "product": "General Block Blob v2",
+            "sku": "Hot ZRS",
+            "meter": "Hot ZRS Write Operations"
+          }
+        }
+      ],
+      "note": "Enter individual billed operations. Storage, retrieval, replication and early deletion are separate.",
+      "evidence": "https://azure.microsoft.com/en-gb/pricing/details/storage/blobs/"
+    },
+    {
+      "id": "blob-cool-zrs-read",
+      "name": "Blob Cool ZRS · read operations",
+      "family": "infrastructure",
+      "kind": "supporting-resource",
+      "regions": [
+        "uksouth",
+        "westeurope",
+        "eastus2"
+      ],
+      "components": [
+        {
+          "id": "usage",
+          "label": "Monthly billable base units",
+          "unit": "10K",
+          "quantityPerUnit": 10000,
+          "azure": {
+            "service": "Storage",
+            "product": "General Block Blob v2",
+            "sku": "Cool ZRS",
+            "meter": "Cool ZRS Read Operations"
+          }
+        }
+      ],
+      "note": "Enter individual billed operations. Storage, retrieval, replication and early deletion are separate.",
+      "evidence": "https://azure.microsoft.com/en-gb/pricing/details/storage/blobs/"
+    },
+    {
+      "id": "blob-cool-zrs-write",
+      "name": "Blob Cool ZRS · write operations",
+      "family": "infrastructure",
+      "kind": "supporting-resource",
+      "regions": [
+        "uksouth",
+        "westeurope",
+        "eastus2"
+      ],
+      "components": [
+        {
+          "id": "usage",
+          "label": "Monthly billable base units",
+          "unit": "10K",
+          "quantityPerUnit": 10000,
+          "azure": {
+            "service": "Storage",
+            "product": "General Block Blob v2",
+            "sku": "Cool ZRS",
+            "meter": "Cool ZRS Write Operations"
+          }
+        }
+      ],
+      "note": "Enter individual billed operations. Storage, retrieval, replication and early deletion are separate.",
+      "evidence": "https://azure.microsoft.com/en-gb/pricing/details/storage/blobs/"
+    },
+    {
+      "id": "cosmos-serverless-ru",
+      "name": "Cosmos DB Serverless · request units",
+      "family": "infrastructure",
+      "kind": "supporting-resource",
+      "regions": [
+        "uksouth",
+        "westeurope",
+        "eastus2"
+      ],
+      "components": [
+        {
+          "id": "usage",
+          "label": "Monthly billable base units",
+          "unit": "1M",
+          "quantityPerUnit": 1000000,
+          "azure": {
+            "service": "Azure Cosmos DB",
+            "product": "Azure Cosmos DB serverless",
+            "sku": "RUs",
+            "meter": "1M RUs"
+          }
+        }
+      ],
+      "evidence": "https://azure.microsoft.com/en-gb/pricing/details/cosmos-db/"
+    },
+    {
+      "id": "cosmos-provisioned-ru",
+      "name": "Cosmos DB · provisioned 100 RU/s",
+      "family": "infrastructure",
+      "kind": "supporting-resource",
+      "regions": [
+        "uksouth",
+        "westeurope",
+        "eastus2"
+      ],
+      "components": [
+        {
+          "id": "usage",
+          "label": "Monthly billable base units",
+          "unit": "1/Hour",
+          "quantityPerUnit": 1,
+          "azure": {
+            "service": "Azure Cosmos DB",
+            "product": "Azure Cosmos DB",
+            "sku": "RUs",
+            "meter": "100 RU/s"
+          }
+        }
+      ],
+      "note": "Enter the number of 100-RU/s blocks multiplied by their billable hours.",
+      "evidence": "https://azure.microsoft.com/en-gb/pricing/details/cosmos-db/"
+    },
+    {
+      "id": "redis-balanced-b0",
+      "name": "Azure Managed Redis Balanced B0",
+      "family": "infrastructure",
+      "kind": "supporting-resource",
+      "regions": [
+        "uksouth",
+        "westeurope",
+        "eastus2"
+      ],
+      "components": [
+        {
+          "id": "usage",
+          "label": "Monthly billable base units",
+          "unit": "1 Hour",
+          "quantityPerUnit": 1,
+          "azure": {
+            "service": "Redis Cache",
+            "product": "Azure Managed Redis - Balanced",
+            "sku": "B0",
+            "meter": "B0 Cache Instance"
+          }
+        }
+      ],
+      "evidence": "https://azure.microsoft.com/en-gb/pricing/details/managed-redis/"
+    },
+    {
+      "id": "redis-balanced-b1",
+      "name": "Azure Managed Redis Balanced B1",
+      "family": "infrastructure",
+      "kind": "supporting-resource",
+      "regions": [
+        "uksouth",
+        "westeurope",
+        "eastus2"
+      ],
+      "components": [
+        {
+          "id": "usage",
+          "label": "Monthly billable base units",
+          "unit": "1 Hour",
+          "quantityPerUnit": 1,
+          "azure": {
+            "service": "Redis Cache",
+            "product": "Azure Managed Redis - Balanced",
+            "sku": "B1",
+            "meter": "B1 Cache Instance"
+          }
+        }
+      ],
+      "evidence": "https://azure.microsoft.com/en-gb/pricing/details/managed-redis/"
+    },
+    {
+      "id": "redis-balanced-b3",
+      "name": "Azure Managed Redis Balanced B3",
+      "family": "infrastructure",
+      "kind": "supporting-resource",
+      "regions": [
+        "uksouth",
+        "westeurope",
+        "eastus2"
+      ],
+      "components": [
+        {
+          "id": "usage",
+          "label": "Monthly billable base units",
+          "unit": "1 Hour",
+          "quantityPerUnit": 1,
+          "azure": {
+            "service": "Redis Cache",
+            "product": "Azure Managed Redis - Balanced",
+            "sku": "B3",
+            "meter": "B3 Cache Instance"
+          }
+        }
+      ],
+      "evidence": "https://azure.microsoft.com/en-gb/pricing/details/managed-redis/"
+    },
+    {
+      "id": "redis-balanced-b5",
+      "name": "Azure Managed Redis Balanced B5",
+      "family": "infrastructure",
+      "kind": "supporting-resource",
+      "regions": [
+        "uksouth",
+        "westeurope",
+        "eastus2"
+      ],
+      "components": [
+        {
+          "id": "usage",
+          "label": "Monthly billable base units",
+          "unit": "1 Hour",
+          "quantityPerUnit": 1,
+          "azure": {
+            "service": "Redis Cache",
+            "product": "Azure Managed Redis - Balanced",
+            "sku": "B5",
+            "meter": "B5 Cache Instance"
+          }
+        }
+      ],
+      "evidence": "https://azure.microsoft.com/en-gb/pricing/details/managed-redis/"
+    },
+    {
+      "id": "redis-balanced-b10",
+      "name": "Azure Managed Redis Balanced B10",
+      "family": "infrastructure",
+      "kind": "supporting-resource",
+      "regions": [
+        "uksouth",
+        "westeurope",
+        "eastus2"
+      ],
+      "components": [
+        {
+          "id": "usage",
+          "label": "Monthly billable base units",
+          "unit": "1 Hour",
+          "quantityPerUnit": 1,
+          "azure": {
+            "service": "Redis Cache",
+            "product": "Azure Managed Redis - Balanced",
+            "sku": "B10",
+            "meter": "B10 Cache Instance"
+          }
+        }
+      ],
+      "evidence": "https://azure.microsoft.com/en-gb/pricing/details/managed-redis/"
+    },
+    {
+      "id": "redis-balanced-b20",
+      "name": "Azure Managed Redis Balanced B20",
+      "family": "infrastructure",
+      "kind": "supporting-resource",
+      "regions": [
+        "uksouth",
+        "westeurope",
+        "eastus2"
+      ],
+      "components": [
+        {
+          "id": "usage",
+          "label": "Monthly billable base units",
+          "unit": "1 Hour",
+          "quantityPerUnit": 1,
+          "azure": {
+            "service": "Redis Cache",
+            "product": "Azure Managed Redis - Balanced",
+            "sku": "B20",
+            "meter": "B20 Cache Instance"
+          }
+        }
+      ],
+      "evidence": "https://azure.microsoft.com/en-gb/pricing/details/managed-redis/"
+    },
+    {
+      "id": "postgres-flex-b2ms",
+      "name": "PostgreSQL Flexible Server Burstable B2ms · compute",
+      "family": "infrastructure",
+      "kind": "supporting-resource",
+      "regions": [
+        "uksouth",
+        "westeurope",
+        "eastus2"
+      ],
+      "components": [
+        {
+          "id": "usage",
+          "label": "Monthly billable base units",
+          "unit": "1 Hour",
+          "quantityPerUnit": 1,
+          "azure": {
+            "service": "Azure Database for PostgreSQL",
+            "product": "Azure Database for PostgreSQL Flexible Server Burstable BS Series Compute",
+            "sku": "B2ms",
+            "meter": "B2ms vCore"
+          }
+        }
+      ],
+      "note": "Enter billed vCore-hours; storage and backup are separate.",
+      "evidence": "https://azure.microsoft.com/en-gb/pricing/details/postgresql/"
+    },
+    {
+      "id": "postgres-flex-b4ms",
+      "name": "PostgreSQL Flexible Server Burstable B4ms · compute",
+      "family": "infrastructure",
+      "kind": "supporting-resource",
+      "regions": [
+        "uksouth",
+        "westeurope",
+        "eastus2"
+      ],
+      "components": [
+        {
+          "id": "usage",
+          "label": "Monthly billable base units",
+          "unit": "1 Hour",
+          "quantityPerUnit": 1,
+          "azure": {
+            "service": "Azure Database for PostgreSQL",
+            "product": "Azure Database for PostgreSQL Flexible Server Burstable BS Series Compute",
+            "sku": "B4ms",
+            "meter": "B4ms vCore"
+          }
+        }
+      ],
+      "note": "Enter billed vCore-hours; storage and backup are separate.",
+      "evidence": "https://azure.microsoft.com/en-gb/pricing/details/postgresql/"
+    },
+    {
+      "id": "postgres-flex-b8ms",
+      "name": "PostgreSQL Flexible Server Burstable B8ms · compute",
+      "family": "infrastructure",
+      "kind": "supporting-resource",
+      "regions": [
+        "uksouth",
+        "westeurope",
+        "eastus2"
+      ],
+      "components": [
+        {
+          "id": "usage",
+          "label": "Monthly billable base units",
+          "unit": "1 Hour",
+          "quantityPerUnit": 1,
+          "azure": {
+            "service": "Azure Database for PostgreSQL",
+            "product": "Azure Database for PostgreSQL Flexible Server Burstable BS Series Compute",
+            "sku": "B8ms",
+            "meter": "B8ms vCore"
+          }
+        }
+      ],
+      "note": "Enter billed vCore-hours; storage and backup are separate.",
+      "evidence": "https://azure.microsoft.com/en-gb/pricing/details/postgresql/"
+    },
+    {
+      "id": "postgres-flex-b12ms",
+      "name": "PostgreSQL Flexible Server Burstable B12ms · compute",
+      "family": "infrastructure",
+      "kind": "supporting-resource",
+      "regions": [
+        "uksouth",
+        "westeurope",
+        "eastus2"
+      ],
+      "components": [
+        {
+          "id": "usage",
+          "label": "Monthly billable base units",
+          "unit": "1 Hour",
+          "quantityPerUnit": 1,
+          "azure": {
+            "service": "Azure Database for PostgreSQL",
+            "product": "Azure Database for PostgreSQL Flexible Server Burstable BS Series Compute",
+            "sku": "B12ms",
+            "meter": "B12ms vCore"
+          }
+        }
+      ],
+      "note": "Enter billed vCore-hours; storage and backup are separate.",
+      "evidence": "https://azure.microsoft.com/en-gb/pricing/details/postgresql/"
+    },
+    {
+      "id": "event-hubs-basic-throughput",
+      "name": "Event Hubs Basic · capacity",
+      "family": "infrastructure",
+      "kind": "supporting-resource",
+      "regions": [
+        "uksouth",
+        "westeurope",
+        "eastus2"
+      ],
+      "components": [
+        {
+          "id": "usage",
+          "label": "Monthly billable base units",
+          "unit": "1 Hour",
+          "quantityPerUnit": 1,
+          "azure": {
+            "service": "Event Hubs",
+            "product": "Event Hubs",
+            "sku": "Basic",
+            "meter": "Basic Throughput Unit"
+          }
+        }
+      ],
+      "evidence": "https://azure.microsoft.com/en-gb/pricing/details/event-hubs/"
+    },
+    {
+      "id": "event-hubs-basic-events",
+      "name": "Event Hubs Basic · ingress events",
+      "family": "infrastructure",
+      "kind": "supporting-resource",
+      "regions": [
+        "uksouth",
+        "westeurope",
+        "eastus2"
+      ],
+      "components": [
+        {
+          "id": "usage",
+          "label": "Monthly billable base units",
+          "unit": "1M",
+          "quantityPerUnit": 1000000,
+          "azure": {
+            "service": "Event Hubs",
+            "product": "Event Hubs",
+            "sku": "Basic",
+            "meter": "Basic Ingress Events"
+          }
+        }
+      ],
+      "evidence": "https://azure.microsoft.com/en-gb/pricing/details/event-hubs/"
+    },
+    {
+      "id": "event-hubs-standard-throughput",
+      "name": "Event Hubs Standard · capacity",
+      "family": "infrastructure",
+      "kind": "supporting-resource",
+      "regions": [
+        "uksouth",
+        "westeurope",
+        "eastus2"
+      ],
+      "components": [
+        {
+          "id": "usage",
+          "label": "Monthly billable base units",
+          "unit": "1 Hour",
+          "quantityPerUnit": 1,
+          "azure": {
+            "service": "Event Hubs",
+            "product": "Event Hubs",
+            "sku": "Standard",
+            "meter": "Standard Throughput Unit"
+          }
+        }
+      ],
+      "evidence": "https://azure.microsoft.com/en-gb/pricing/details/event-hubs/"
+    },
+    {
+      "id": "event-hubs-standard-events",
+      "name": "Event Hubs Standard · ingress events",
+      "family": "infrastructure",
+      "kind": "supporting-resource",
+      "regions": [
+        "uksouth",
+        "westeurope",
+        "eastus2"
+      ],
+      "components": [
+        {
+          "id": "usage",
+          "label": "Monthly billable base units",
+          "unit": "1M",
+          "quantityPerUnit": 1000000,
+          "azure": {
+            "service": "Event Hubs",
+            "product": "Event Hubs",
+            "sku": "Standard",
+            "meter": "Standard Ingress Events"
+          }
+        }
+      ],
+      "evidence": "https://azure.microsoft.com/en-gb/pricing/details/event-hubs/"
+    },
+    {
+      "id": "event-hubs-premium-throughput",
+      "name": "Event Hubs Premium · capacity",
+      "family": "infrastructure",
+      "kind": "supporting-resource",
+      "regions": [
+        "uksouth",
+        "westeurope",
+        "eastus2"
+      ],
+      "components": [
+        {
+          "id": "usage",
+          "label": "Monthly billable base units",
+          "unit": "1 Hour",
+          "quantityPerUnit": 1,
+          "azure": {
+            "service": "Event Hubs",
+            "product": "Event Hubs",
+            "sku": "Premium",
+            "meter": "Premium Processing Unit"
+          }
+        }
+      ],
+      "evidence": "https://azure.microsoft.com/en-gb/pricing/details/event-hubs/"
+    },
+    {
+      "id": "key-vault-standard-operations",
+      "name": "Key Vault Standard · operations",
+      "family": "security",
+      "kind": "supporting-resource",
+      "regions": [
+        "uksouth",
+        "westeurope",
+        "eastus2"
+      ],
+      "components": [
+        {
+          "id": "usage",
+          "label": "Monthly billable base units",
+          "unit": "10K",
+          "quantityPerUnit": 10000,
+          "azure": {
+            "service": "Key Vault",
+            "product": "Key Vault",
+            "sku": "Standard",
+            "meter": "Operations"
+          }
+        }
+      ],
+      "evidence": "https://azure.microsoft.com/en-gb/pricing/details/key-vault/"
+    },
+    {
+      "id": "key-vault-premium-operations",
+      "name": "Key Vault Premium · operations",
+      "family": "security",
+      "kind": "supporting-resource",
+      "regions": [
+        "uksouth",
+        "westeurope",
+        "eastus2"
+      ],
+      "components": [
+        {
+          "id": "usage",
+          "label": "Monthly billable base units",
+          "unit": "10K",
+          "quantityPerUnit": 10000,
+          "azure": {
+            "service": "Key Vault",
+            "product": "Key Vault",
+            "sku": "Premium",
+            "meter": "Operations"
+          }
+        }
+      ],
+      "evidence": "https://azure.microsoft.com/en-gb/pricing/details/key-vault/"
+    },
+    {
+      "id": "service-bus-basic",
+      "name": "Service Bus Basic · messaging operations",
+      "family": "infrastructure",
+      "kind": "supporting-resource",
+      "regions": [
+        "uksouth",
+        "westeurope",
+        "eastus2"
+      ],
+      "components": [
+        {
+          "id": "usage",
+          "label": "Monthly billable base units",
+          "unit": "1M",
+          "quantityPerUnit": 1000000,
+          "azure": {
+            "service": "Service Bus",
+            "product": "Service Bus",
+            "sku": "Basic",
+            "meter": "Basic Messaging Operations"
+          }
+        }
+      ],
+      "evidence": "https://azure.microsoft.com/en-gb/pricing/details/service-bus/"
+    },
+    {
+      "id": "service-bus-standard-base",
+      "name": "Service Bus Standard · base hours",
+      "family": "infrastructure",
+      "kind": "supporting-resource",
+      "regions": [
+        "uksouth",
+        "westeurope",
+        "eastus2"
+      ],
+      "components": [
+        {
+          "id": "usage",
+          "label": "Monthly billable base units",
+          "unit": "1/Hour",
+          "quantityPerUnit": 1,
+          "azure": {
+            "service": "Service Bus",
+            "product": "Service Bus",
+            "sku": "Standard",
+            "meter": "Standard Base Unit"
+          }
+        }
+      ],
+      "evidence": "https://azure.microsoft.com/en-gb/pricing/details/service-bus/"
+    },
+    {
+      "id": "sentinel-payg",
+      "name": "Sentinel · billable log analysis",
+      "family": "security",
+      "kind": "supporting-resource",
+      "regions": [
+        "uksouth",
+        "westeurope",
+        "eastus2"
+      ],
+      "components": [
+        {
+          "id": "usage",
+          "label": "Monthly billable base units",
+          "unit": "1 GB",
+          "quantityPerUnit": 1,
+          "azure": {
+            "service": "Sentinel",
+            "product": "Sentinel",
+            "sku": "Pay-as-you-go",
+            "meter": "Pay-as-you-go Analysis"
+          }
+        }
+      ],
+      "retained": {
+        "uksouth": "sentinel-payg-analysis-uksouth"
+      },
+      "note": "Enter GB after independently established benefits. Commitment, retention and other log types are separate.",
+      "evidence": "https://azure.microsoft.com/en-gb/pricing/details/microsoft-sentinel/"
+    },
+    {
+      "id": "log-analytics-analytics",
+      "name": "Log Analytics · Analytics Logs ingestion",
+      "family": "infrastructure",
+      "kind": "supporting-resource",
+      "regions": [
+        "uksouth",
+        "westeurope",
+        "eastus2"
+      ],
+      "components": [
+        {
+          "id": "usage",
+          "label": "Monthly billable base units",
+          "unit": "1 GB",
+          "quantityPerUnit": 1
+        }
+      ],
+      "note": "Shared free-tier eligibility and workspace/billing-account aggregation are not modelled.",
+      "selectable": false,
+      "evidence": "https://azure.microsoft.com/en-gb/pricing/details/monitor/"
+    },
+    {
+      "id": "functions-on-demand",
+      "name": "Functions Flex On Demand · execution time",
+      "family": "infrastructure",
+      "kind": "supporting-resource",
+      "regions": [
+        "uksouth",
+        "westeurope",
+        "eastus2"
+      ],
+      "components": [
+        {
+          "id": "usage",
+          "label": "Monthly billable base units",
+          "unit": "1 GB Second",
+          "quantityPerUnit": 1
+        }
+      ],
+      "note": "Subscription free grants are not applied to individual applications. Use a manually reconciled charge.",
+      "selectable": false,
+      "evidence": "https://azure.microsoft.com/en-gb/pricing/details/functions/"
+    },
+    {
+      "id": "bandwidth-inter-region",
+      "name": "Azure egress · inter-region transfer",
+      "family": "infrastructure",
+      "kind": "supporting-resource",
+      "regions": [
+        "uksouth",
+        "westeurope",
+        "eastus2"
+      ],
+      "components": [
+        {
+          "id": "usage",
+          "label": "Monthly billable base units",
+          "unit": "1 GB",
+          "quantityPerUnit": 1
+        }
+      ],
+      "note": "Zone and routing eligibility are not confirmed. Use exact billed traffic and an evidenced manual rate.",
+      "selectable": false,
+      "evidence": "https://azure.microsoft.com/en-gb/pricing/details/bandwidth/"
+    },
+    {
+      "id": "copilot-payg",
+      "name": "Copilot Studio pay-as-you-go",
+      "family": "copilot",
+      "kind": "agent",
+      "regions": [
+        "uksouth",
+        "westeurope",
+        "eastus2"
+      ],
+      "components": [
+        {
+          "id": "credits",
+          "label": "Copilot Credits",
+          "unit": "1",
+          "quantityPerUnit": 1,
+          "azure": {
+            "service": "Microsoft Copilot Studio",
+            "product": "Microsoft Copilot Studio",
+            "sku": "Pay As You Go",
+            "meter": "Pay As You Go Copilot Credit",
+            "armSku": "Microsoft_Copilot_Studio_Pay_As_You_Go"
+          }
+        }
+      ],
+      "evidence": "https://learn.microsoft.com/en-us/microsoft-copilot-studio/requirements-licensing-subscriptions",
+      "retained": {
+        "uksouth": "copilot-payg-uksouth"
+      },
+      "note": "Enter consumed credits. The estimate allocates independently confirmed eligible linked UK packs before PAYG billing."
+    },
+    {
+      "id": "copilot-generative-answers",
+      "name": "Generative answers",
+      "family": "copilot",
+      "kind": "agent",
+      "regions": [
+        "gb"
+      ],
+      "components": [
+        {
+          "id": "credits",
+          "label": "Copilot Credits",
+          "unit": "1",
+          "quantityPerUnit": 1
+        }
+      ],
+      "evidence": "https://learn.microsoft.com/en-us/microsoft-copilot-studio/requirements-licensing-subscriptions",
+      "selectable": false,
+      "note": "Calculate applicable Copilot Credits per the published billing table. Include these in consumption without creating a second charge."
+    },
+    {
+      "id": "copilot-classic-answers",
+      "name": "Classic answers",
+      "family": "copilot",
+      "kind": "agent",
+      "regions": [
+        "gb"
+      ],
+      "components": [
+        {
+          "id": "credits",
+          "label": "Copilot Credits",
+          "unit": "1",
+          "quantityPerUnit": 1
+        }
+      ],
+      "evidence": "https://learn.microsoft.com/en-us/microsoft-copilot-studio/requirements-licensing-subscriptions",
+      "selectable": false,
+      "note": "Use the documented credit rate for each applicable answer."
+    },
+    {
+      "id": "copilot-agent-actions",
+      "name": "Agent actions and tools",
+      "family": "copilot",
+      "kind": "agent",
+      "regions": [
+        "gb"
+      ],
+      "components": [
+        {
+          "id": "credits",
+          "label": "Copilot Credits",
+          "unit": "1",
+          "quantityPerUnit": 1
+        }
+      ],
+      "evidence": "https://learn.microsoft.com/en-us/microsoft-copilot-studio/requirements-licensing-subscriptions",
+      "selectable": false,
+      "note": "Action execution can contribute credits; underlying connectors or services can have separate tariffs."
+    },
+    {
+      "id": "copilot-agent-flow",
+      "name": "Agent flows",
+      "family": "copilot",
+      "kind": "agent",
+      "regions": [
+        "gb"
+      ],
+      "components": [
+        {
+          "id": "credits",
+          "label": "Copilot Credits",
+          "unit": "1",
+          "quantityPerUnit": 1
+        }
+      ],
+      "evidence": "https://learn.microsoft.com/en-us/microsoft-copilot-studio/requirements-licensing-subscriptions",
+      "selectable": false,
+      "note": "Review billing based on flow actions and scope."
+    },
+    {
+      "id": "copilot-included-use",
+      "name": "Included Microsoft 365 Copilot use",
+      "family": "copilot",
+      "kind": "agent",
+      "regions": [
+        "gb"
+      ],
+      "components": [
+        {
+          "id": "credits",
+          "label": "Copilot Credits",
+          "unit": "1",
+          "quantityPerUnit": 1
+        }
+      ],
+      "evidence": "https://learn.microsoft.com/en-us/microsoft-copilot-studio/requirements-licensing-subscriptions",
+      "selectable": false,
+      "note": "Verify entitlement and interaction eligibility before subtracting usage. The application does not infer included rights."
+    },
+    {
+      "id": "copilot-pre-purchase",
+      "name": "Copilot Studio pre-purchase commitments",
+      "family": "copilot",
+      "kind": "agent",
+      "regions": [
+        "gb"
+      ],
+      "components": [
+        {
+          "id": "credits",
+          "label": "Copilot Credits",
+          "unit": "1",
+          "quantityPerUnit": 1
+        }
+      ],
+      "evidence": "https://learn.microsoft.com/en-us/microsoft-copilot-studio/requirements-licensing-subscriptions",
+      "selectable": false,
+      "note": "Contract commitments and overage eligibility are outside the linked monthly-pack calculation."
+    },
+    {
+      "id": "m365-e3",
+      "name": "Microsoft 365 E3",
+      "family": "licensing",
+      "kind": "licence-entitlement",
+      "regions": [
+        "gb"
+      ],
+      "components": [
+        {
+          "id": "seats",
+          "label": "Monthly seats",
+          "unit": "seat/month",
+          "quantityPerUnit": 1
+        }
+      ],
+      "evidence": "https://www.microsoft.com/en-gb/microsoft-365/enterprise/microsoft365-plans-and-pricing",
+      "note": "Verify the exact commercial agreement, prerequisites and existing entitlement. No price is assigned without a reviewed rate."
+    },
+    {
+      "id": "m365-e5",
+      "name": "Microsoft 365 E5",
+      "family": "licensing",
+      "kind": "licence-entitlement",
+      "regions": [
+        "gb"
+      ],
+      "components": [
+        {
+          "id": "seats",
+          "label": "Monthly seats",
+          "unit": "seat/month",
+          "quantityPerUnit": 1
+        }
+      ],
+      "evidence": "https://www.microsoft.com/en-gb/microsoft-365/enterprise/microsoft365-plans-and-pricing",
+      "note": "Verify the exact commercial agreement, prerequisites and existing entitlement. No price is assigned without a reviewed rate."
+    },
+    {
+      "id": "m365-f3",
+      "name": "Microsoft 365 F3",
+      "family": "licensing",
+      "kind": "licence-entitlement",
+      "regions": [
+        "gb"
+      ],
+      "components": [
+        {
+          "id": "seats",
+          "label": "Monthly seats",
+          "unit": "seat/month",
+          "quantityPerUnit": 1
+        }
+      ],
+      "evidence": "https://www.microsoft.com/en-gb/microsoft-365/enterprise/frontline-plans-and-pricing",
+      "note": "Verify the exact commercial agreement, prerequisites and existing entitlement. No price is assigned without a reviewed rate."
+    },
+    {
+      "id": "m365-business-basic",
+      "name": "Microsoft 365 Business Basic",
+      "family": "licensing",
+      "kind": "licence-entitlement",
+      "regions": [
+        "gb"
+      ],
+      "components": [
+        {
+          "id": "seats",
+          "label": "Monthly seats",
+          "unit": "seat/month",
+          "quantityPerUnit": 1
+        }
+      ],
+      "evidence": "https://www.microsoft.com/en-gb/microsoft-365/business/compare-all-microsoft-365-business-products",
+      "note": "Verify the exact commercial agreement, prerequisites and existing entitlement. No price is assigned without a reviewed rate."
+    },
+    {
+      "id": "m365-business-standard",
+      "name": "Microsoft 365 Business Standard",
+      "family": "licensing",
+      "kind": "licence-entitlement",
+      "regions": [
+        "gb"
+      ],
+      "components": [
+        {
+          "id": "seats",
+          "label": "Monthly seats",
+          "unit": "seat/month",
+          "quantityPerUnit": 1
+        }
+      ],
+      "evidence": "https://www.microsoft.com/en-gb/microsoft-365/business/compare-all-microsoft-365-business-products",
+      "note": "Verify the exact commercial agreement, prerequisites and existing entitlement. No price is assigned without a reviewed rate."
+    },
+    {
+      "id": "m365-business-premium",
+      "name": "Microsoft 365 Business Premium",
+      "family": "licensing",
+      "kind": "licence-entitlement",
+      "regions": [
+        "gb"
+      ],
+      "components": [
+        {
+          "id": "seats",
+          "label": "Monthly seats",
+          "unit": "seat/month",
+          "quantityPerUnit": 1
+        }
+      ],
+      "evidence": "https://www.microsoft.com/en-gb/microsoft-365/business/compare-all-microsoft-365-business-products",
+      "note": "Verify the exact commercial agreement, prerequisites and existing entitlement. No price is assigned without a reviewed rate."
+    },
+    {
+      "id": "m365-business-copilot",
+      "name": "Microsoft 365 Copilot Business add-on",
+      "family": "licensing",
+      "kind": "licence-entitlement",
+      "regions": [
+        "gb"
+      ],
+      "components": [
+        {
+          "id": "seats",
+          "label": "Monthly seats",
+          "unit": "seat/month",
+          "quantityPerUnit": 1
+        }
+      ],
+      "evidence": "https://www.microsoft.com/en-gb/microsoft-365-copilot/pricing",
+      "note": "Verify the exact commercial agreement, prerequisites and existing entitlement. No price is assigned without a reviewed rate."
+    },
+    {
+      "id": "m365-copilot-enterprise",
+      "name": "Microsoft 365 Copilot enterprise add-on",
+      "family": "licensing",
+      "kind": "licence-entitlement",
+      "regions": [
+        "gb"
+      ],
+      "components": [
+        {
+          "id": "seats",
+          "label": "Monthly seats",
+          "unit": "seat/month",
+          "quantityPerUnit": 1
+        }
+      ],
+      "evidence": "https://www.microsoft.com/en-gb/microsoft-365-copilot/pricing",
+      "note": "Verify the exact commercial agreement, prerequisites and existing entitlement. No price is assigned without a reviewed rate."
+    },
+    {
+      "id": "m365-premium-copilot",
+      "name": "Microsoft 365 Business Premium with Copilot",
+      "family": "licensing",
+      "kind": "licence-entitlement",
+      "regions": [
+        "gb"
+      ],
+      "components": [
+        {
+          "id": "seats",
+          "label": "Monthly seats",
+          "unit": "seat/month",
+          "quantityPerUnit": 1
+        }
+      ],
+      "evidence": "https://www.microsoft.com/en-gb/microsoft-365-copilot/pricing",
+      "note": "Verify the exact commercial agreement, prerequisites and existing entitlement. No price is assigned without a reviewed rate."
+    },
+    {
+      "id": "entra-p2",
+      "name": "Microsoft Entra ID P2",
+      "family": "security",
+      "kind": "licence-entitlement",
+      "regions": [
+        "gb"
+      ],
+      "components": [
+        {
+          "id": "seats",
+          "label": "Monthly seats",
+          "unit": "seat/month",
+          "quantityPerUnit": 1
+        }
+      ],
+      "evidence": "https://www.microsoft.com/en-gb/security/business/microsoft-entra-pricing",
+      "note": "Verify the exact commercial agreement, prerequisites and existing entitlement. No price is assigned without a reviewed rate."
+    },
+    {
+      "id": "entra-governance",
+      "name": "Microsoft Entra ID Governance",
+      "family": "security",
+      "kind": "licence-entitlement",
+      "regions": [
+        "gb"
+      ],
+      "components": [
+        {
+          "id": "seats",
+          "label": "Monthly seats",
+          "unit": "seat/month",
+          "quantityPerUnit": 1
+        }
+      ],
+      "evidence": "https://www.microsoft.com/en-gb/security/business/microsoft-entra-pricing",
+      "note": "Verify the exact commercial agreement, prerequisites and existing entitlement. No price is assigned without a reviewed rate."
+    },
+    {
+      "id": "defender-business",
+      "name": "Microsoft Defender for Business",
+      "family": "security",
+      "kind": "licence-entitlement",
+      "regions": [
+        "gb"
+      ],
+      "components": [
+        {
+          "id": "seats",
+          "label": "Monthly seats",
+          "unit": "seat/month",
+          "quantityPerUnit": 1
+        }
+      ],
+      "evidence": "https://www.microsoft.com/en-gb/security/business/endpoint-security/microsoft-defender-business",
+      "note": "Verify the exact commercial agreement, prerequisites and existing entitlement. No price is assigned without a reviewed rate."
+    },
+    {
+      "id": "defender-endpoint-p1",
+      "name": "Microsoft Defender for Endpoint Plan 1",
+      "family": "security",
+      "kind": "licence-entitlement",
+      "regions": [
+        "gb"
+      ],
+      "components": [
+        {
+          "id": "seats",
+          "label": "Monthly seats",
+          "unit": "seat/month",
+          "quantityPerUnit": 1
+        }
+      ],
+      "evidence": "https://www.microsoft.com/en-gb/security/business/endpoint-security/microsoft-defender-endpoint",
+      "note": "Verify the exact commercial agreement, prerequisites and existing entitlement. No price is assigned without a reviewed rate."
+    },
+    {
+      "id": "defender-endpoint-p2",
+      "name": "Microsoft Defender for Endpoint Plan 2",
+      "family": "security",
+      "kind": "licence-entitlement",
+      "regions": [
+        "gb"
+      ],
+      "components": [
+        {
+          "id": "seats",
+          "label": "Monthly seats",
+          "unit": "seat/month",
+          "quantityPerUnit": 1
+        }
+      ],
+      "evidence": "https://www.microsoft.com/en-gb/security/business/endpoint-security/microsoft-defender-endpoint",
+      "note": "Verify the exact commercial agreement, prerequisites and existing entitlement. No price is assigned without a reviewed rate."
+    },
+    {
+      "id": "defender-identity",
+      "name": "Microsoft Defender for Identity",
+      "family": "security",
+      "kind": "licence-entitlement",
+      "regions": [
+        "gb"
+      ],
+      "components": [
+        {
+          "id": "seats",
+          "label": "Monthly seats",
+          "unit": "seat/month",
+          "quantityPerUnit": 1
+        }
+      ],
+      "evidence": "https://www.microsoft.com/en-gb/security/business/siem-and-xdr/microsoft-defender-identity",
+      "note": "Verify the exact commercial agreement, prerequisites and existing entitlement. No price is assigned without a reviewed rate."
+    },
+    {
+      "id": "purview-suite",
+      "name": "Microsoft Purview Suite",
+      "family": "security",
+      "kind": "licence-entitlement",
+      "regions": [
+        "gb"
+      ],
+      "components": [
+        {
+          "id": "seats",
+          "label": "Monthly seats",
+          "unit": "seat/month",
+          "quantityPerUnit": 1
+        }
+      ],
+      "evidence": "https://www.microsoft.com/en-gb/security/business/microsoft-purview-pricing",
+      "note": "Verify the exact commercial agreement, prerequisites and existing entitlement. No price is assigned without a reviewed rate."
+    },
+    {
+      "id": "purview-data-governance",
+      "name": "Microsoft Purview Data Governance",
+      "family": "security",
+      "kind": "supporting-resource",
+      "regions": [
+        "gb"
+      ],
+      "components": [
+        {
+          "id": "usage",
+          "label": "Provider billed usage",
+          "unit": "declared usage unit",
+          "quantityPerUnit": 1
+        }
+      ],
+      "evidence": "https://azure.microsoft.com/en-gb/pricing/details/purview/",
+      "note": "Verify the exact commercial agreement, prerequisites and existing entitlement. No price is assigned without a reviewed rate.",
+      "selectable": false
+    },
+    {
+      "id": "defender-cloud-servers",
+      "name": "Microsoft Defender for Cloud Servers",
+      "family": "security",
+      "kind": "supporting-resource",
+      "regions": [
+        "gb"
+      ],
+      "components": [
+        {
+          "id": "usage",
+          "label": "Provider billed usage",
+          "unit": "declared usage unit",
+          "quantityPerUnit": 1
+        }
+      ],
+      "evidence": "https://azure.microsoft.com/en-gb/pricing/details/defender-for-cloud/",
+      "note": "Verify the exact commercial agreement, prerequisites and existing entitlement. No price is assigned without a reviewed rate.",
+      "selectable": false
+    },
+    {
+      "id": "embedding-3-small-global",
+      "name": "Azure OpenAI text-embedding-3-small · Global input tokens",
+      "family": "foundry",
+      "kind": "supporting-resource",
+      "regions": [
+        "uksouth",
+        "westeurope",
+        "eastus2"
+      ],
+      "deployment": "global-standard",
+      "evidence": "https://learn.microsoft.com/en-us/azure/ai-services/openai/concepts/models",
+      "note": "Enter monthly embedding input tokens. Embedding calls are a separate input-only supporting resource.",
+      "components": [
+        {
+          "id": "usage",
+          "label": "Embedding input tokens",
+          "unit": "1K",
+          "quantityPerUnit": 1000,
+          "azure": {
+            "service": "Foundry Models",
+            "product": "Azure OpenAI",
+            "sku": "text-embedding-3-small-glbl",
+            "meter": "text-embedding-3-small-glbl Tokens"
+          }
+        }
+      ]
+    },
+    {
+      "id": "embedding-3-small-regional",
+      "name": "Azure OpenAI text-embedding-3-small · Regional input tokens",
+      "family": "foundry",
+      "kind": "supporting-resource",
+      "regions": [
+        "uksouth",
+        "westeurope",
+        "eastus2"
+      ],
+      "deployment": "regional-standard",
+      "evidence": "https://learn.microsoft.com/en-us/azure/ai-services/openai/concepts/models",
+      "note": "Enter monthly embedding input tokens. Embedding calls are a separate input-only supporting resource.",
+      "components": [
+        {
+          "id": "usage",
+          "label": "Embedding input tokens",
+          "unit": "1K",
+          "quantityPerUnit": 1000,
+          "azure": {
+            "service": "Foundry Models",
+            "product": "Azure OpenAI",
+            "sku": "text-embedding-3-small-regional",
+            "meter": "text-embedding-3-small-regional Tokens"
+          }
+        }
+      ]
+    },
+    {
+      "id": "embedding-3-large-global",
+      "name": "Azure OpenAI text-embedding-3-large · Global input tokens",
+      "family": "foundry",
+      "kind": "supporting-resource",
+      "regions": [
+        "uksouth",
+        "westeurope",
+        "eastus2"
+      ],
+      "deployment": "global-standard",
+      "evidence": "https://learn.microsoft.com/en-us/azure/ai-services/openai/concepts/models",
+      "note": "Enter monthly embedding input tokens. Embedding calls are a separate input-only supporting resource.",
+      "components": [
+        {
+          "id": "usage",
+          "label": "Embedding input tokens",
+          "unit": "1K",
+          "quantityPerUnit": 1000,
+          "azure": {
+            "service": "Foundry Models",
+            "product": "Azure OpenAI",
+            "sku": "text-embedding-3-large-glbl",
+            "meter": "text-embedding-3-large-glbl Tokens"
+          }
+        }
+      ]
+    },
+    {
+      "id": "embedding-3-large-regional",
+      "name": "Azure OpenAI text-embedding-3-large · Regional input tokens",
+      "family": "foundry",
+      "kind": "supporting-resource",
+      "regions": [
+        "uksouth",
+        "westeurope",
+        "eastus2"
+      ],
+      "deployment": "regional-standard",
+      "evidence": "https://learn.microsoft.com/en-us/azure/ai-services/openai/concepts/models",
+      "note": "Enter monthly embedding input tokens. Embedding calls are a separate input-only supporting resource.",
+      "components": [
+        {
+          "id": "usage",
+          "label": "Embedding input tokens",
+          "unit": "1K",
+          "quantityPerUnit": 1000,
+          "azure": {
+            "service": "Foundry Models",
+            "product": "Azure OpenAI",
+            "sku": "text-embedding-3-large-regional",
+            "meter": "text-embedding-3-large-regional Tokens"
+          }
+        }
+      ]
+    },
+    {
+      "id": "grok-4-1-global-standard",
+      "name": "xAI Grok 4.1 · Global Standard",
+      "family": "foundry",
+      "kind": "model-deployment",
+      "regions": [
+        "uksouth",
+        "westeurope",
+        "eastus2"
+      ],
+      "deployment": "global-standard",
+      "model": {
+        "id": "grok-4-1",
+        "version": "Published model",
+        "sku": "GlobalStandard",
+        "mode": "payg"
+      },
+      "evidence": "https://learn.microsoft.com/en-us/azure/ai-foundry/foundry-models/concepts/models",
+      "note": "Verify deployment eligibility in Microsoft’s availability matrix.",
+      "components": [
+        {
+          "id": "input",
+          "label": "Input tokens",
+          "unit": "1K",
+          "quantityPerUnit": 1000,
+          "azure": {
+            "service": "Foundry Models",
+            "product": "Azure Grok Models",
+            "sku": "Grok 4.1 Inp Glbl",
+            "meter": "Grok 4.1 Inp Glbl Tokens",
+            "armSku": "Grok 6 Inp glbl"
+          }
+        },
+        {
+          "id": "output",
+          "label": "Output tokens",
+          "unit": "1K",
+          "quantityPerUnit": 1000,
+          "azure": {
+            "service": "Foundry Models",
+            "product": "Azure Grok Models",
+            "sku": "Grok 4.1 Outp Glbl",
+            "meter": "Grok 4.1 Outp Glbl Tokens",
+            "armSku": "Grok 6 Outp glbl"
+          }
+        }
+      ]
+    },
+    {
+      "id": "grok-4-1-data-zone-standard",
+      "name": "xAI Grok 4.1 · Data Zone Standard",
+      "family": "foundry",
+      "kind": "model-deployment",
+      "regions": [
+        "uksouth",
+        "westeurope",
+        "eastus2"
+      ],
+      "deployment": "data-zone-standard",
+      "model": {
+        "id": "grok-4-1",
+        "version": "Published model",
+        "sku": "DataZoneStandard",
+        "mode": "payg"
+      },
+      "evidence": "https://learn.microsoft.com/en-us/azure/ai-foundry/foundry-models/concepts/models",
+      "note": "Verify deployment eligibility in Microsoft’s availability matrix.",
+      "components": [
+        {
+          "id": "input",
+          "label": "Input tokens",
+          "unit": "1K",
+          "quantityPerUnit": 1000,
+          "azure": {
+            "service": "Foundry Models",
+            "product": "Azure Grok Models",
+            "sku": "Grok 4.1 Inp DZone",
+            "meter": "Grok 4.1 Inp DZone Tokens",
+            "armSku": "Grok 6 Inp DZone"
+          }
+        },
+        {
+          "id": "output",
+          "label": "Output tokens",
+          "unit": "1K",
+          "quantityPerUnit": 1000,
+          "azure": {
+            "service": "Foundry Models",
+            "product": "Azure Grok Models",
+            "sku": "Grok 4.1 Outp DZone",
+            "meter": "Grok 4.1 Outp DZone Tokens",
+            "armSku": "Grok 6 Outp DZone"
+          }
+        }
+      ]
+    }
+  ]
+}

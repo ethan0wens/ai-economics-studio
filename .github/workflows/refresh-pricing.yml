@@ -5,6 +5,9 @@ on:
     paths:
       - '.github/workflows/refresh-pricing.yml'
       - 'scripts/pricing.ts'
+      - 'scripts/discovery.ts'
+      - 'catalogue/**'
+      - 'src/coverage.ts'
       - 'scripts/retail-mappings.ts'
       - 'scripts/commercial-pricing.ts'
       - 'src/offerings.ts'

@@ -1,7 +1,7 @@
 import Decimal from 'decimal.js';
 import { findRetail, resolveOffering, type RetailRecord } from './catalogue';
 import { meterKey, type Environment, type Meter, type Override, type StudioObject } from './domain';
-import { applicableOffering, copilotPack, offeringMeter, type Component, type Offering } from './offerings';
+import { applicableOffering, copilotPack, offeringMeter, offerings, type Component, type Offering } from './offerings';
 import { compatibility, microsoft } from './microsoft';
 
 const Money = Decimal.clone({ precision: 50, rounding: Decimal.ROUND_HALF_UP });
@@ -57,7 +57,7 @@ export function formatMoney(value: string | null, currency: string) {
   return `${currency} ${new Intl.NumberFormat('en-GB').format(BigInt(whole))}${fraction ? `.${fraction}` : ''}`;
 }
 
-export function ledger(env: Environment, records: RetailRecord[], at = new Date().toISOString()) {
+export function ledger(env: Environment, records: RetailRecord[], at = new Date().toISOString(), inventory: readonly Offering[] = offerings) {
   const lines: Line[] = [];
   const issues: { id: string; message: string }[] = [];
   const objects = new Map(env.objects.map(item => [item.id, item]));
@@ -103,7 +103,7 @@ export function ledger(env: Environment, records: RetailRecord[], at = new Date(
     });
   };
   function selection(object: StudioObject) {
-    return applicableOffering(object, 'region' in object ? object.region ?? env.region : env.region, code);
+    return applicableOffering(object, 'region' in object ? object.region ?? env.region : env.region, code, inventory);
   }
   const tariffScopes = new Map<string, number>();
   for (const object of env.objects) {

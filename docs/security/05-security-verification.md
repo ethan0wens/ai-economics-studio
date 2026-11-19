@@ -13,6 +13,10 @@ Review began on 19 November 2026. The assessment used source inspection, control
 
 The dependency review included React, Marked, Zod, Decimal, Dagre, pdf-lib, Vite, Tailwind, TypeScript, Vitest, Playwright, PDF.js and Wrangler, including their locked transitive packages. The registry result reflects reported advisories at the time of the scan. The installed packages and referenced action releases have versioned sources. A zero count does not establish package maintainership, unreported vulnerability status or the absence of compromise. Review release activity and reachable functionality for each new alert.
 
+## Local candidate results
+
+A clean lockfile installation with disabled lifecycle scripts succeeded after assigning a writable npm cache. Type checking, the injection-sink rules, security build validation, all 77 Vitest tests and all 43 Chromium tests passed. This includes the existing financial reconciliation and new import, export, network, storage and CSP checks. Wrangler's local Static Assets server returned the candidate CSP, frame denial, no-sniff and separate mutable/immutable cache policies. A direct SPA route returned the same shell. The candidate contained the validated 377-rate manifest and its bound snapshots. A lockfile-only CycloneDX SBOM was generated locally with 348 components.
+
 ## Release decision
 
 **FAIL for wider release pending essential owner verification.** Required evidence includes the rules protecting the GitHub production path and actual scope of the Cloudflare publishing credential. The settings APIs were unavailable to the review. The Stage 6 candidate is suitable for review from the work branch. Resume through the existing guarded workflow after the [owner checks](06-operational-security.md). A complete independent security assessment and penetration test have not been performed.

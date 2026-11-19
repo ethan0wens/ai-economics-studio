@@ -121,4 +121,16 @@ jobs:
           cache: npm
       - run: npm ci --ignore-scripts
       - name: Verify the current public delivery boundary
-        run: npm run security:http >> "$GITHUB_STEP_SUMMARY"
+        run: |
+          if result=$(npm run --silent security:http 2>&1); then
+            printf '%s\n' "$result" >> "$GITHUB_STEP_SUMMARY"
+            level=notice
+          else
+            level=error
+          fi
+          printf '%s\n' "$result"
+          result=${result//%/%25}
+          result=${result//$'\r'/%0D}
+          result=${result//$'\n'/%0A}
+          printf '::%s title=Public security probe::%s\n' "$level" "$result"
+          test "$level" = notice

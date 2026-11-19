@@ -142,25 +142,49 @@ export const articles: Article[] = [
     intro: 'Reconcile the simplest linked Foundry agent from its workload to two token charges.',
     tool: { page: 'examples', item: 'foundry-assistant', label: 'Preview Basic Foundry Assistant' }, related: ['foundry-usage', 'billing-units'], sections: [
       s('open', 'Open and inspect the example', 'The example uses a fictional 1,000 runs/month, one request/run, and 1,500 input and 300 output tokens/request. It links one agent, one usage profile and one GPT-4.1 mini deployment.'),
-      s('reconcile', 'Change usage and compare amounts', 'Open an editable copy and choose Estimate usage. Enter 2,000 executions directly or preview a fictional 200 users × 10 interactions at one request per run in Help me estimate usage. In Cost & Value Analysis check both monthly token quantities doubled, from 1.5 to 3 million input and from 300,000 to 600,000 output. Multiply each verified rate by its exact unit conversion and round at the line boundary.'),
+      s('reconcile', 'Change usage and compare amounts', 'Open an editable copy and choose Estimate usage. Enter 2,000 executions directly or preview a fictional 200 users × 10 interactions at one request per run in Help me estimate usage. In Cost & Value Analysis check both monthly token quantities doubled, from 1.5 to 3 million input and from 300,000 to 600,000 output. Multiply each verified rate by its exact unit conversion and round at the line boundary. If the matching rate is absent, the charge remains unresolved.'),
+      s('compare-without-editing', 'Try a temporary usage comparison', 'Start from the original 1,000-run copy. In Cost & Value Analysis, choose Explore changes and preview 2,000 monthly executions for the assistant. Compare the new token quantities and monthly costs. Return to Costs to see the accepted 1,000-run estimate.'),
     ] },
   { id: 'example-copilot-agent', topic: 'Worked examples', title: 'Walk through the Copilot Studio Business Agent',
     intro: 'Estimate a platform-managed Copilot agent from declared monthly credits.',
     tool: { page: 'examples', item: 'copilot-agent', label: 'Preview Copilot Studio Business Agent' }, related: ['copilot-credits', 'licence-evidence'], sections: [
       s('open', 'Inspect the credit basis', 'Open an editable copy. The fictional starting value is 12,000 credits/month. Cost & Value Analysis uses the verified matching PAYG rate where present. The example has one platform-managed agent.'),
       s('reconcile', 'Try a different workload', 'Change monthly credits to 15,000 under Estimate usage. You can enter the total or preview and apply a hypothetical breakdown of 10,000 credits for answers and 5,000 for actions. The known charge is 15,000 times the applicable per-credit rate when available. Review a separate allowance only if it applies to your customer plan.'),
+      s('adoption', 'Explore adoption using your own credit assumption', 'Start from a fresh copy. In Potential value, accept fictional assumptions of 100 target users and 50% adoption. In Explore changes, enter 25% and 75% and link the business agent using 240 monthly Copilot Credits per active user. Record that this is a fictional customer forecast. The comparison uses 6,000, 12,000 and 18,000 monthly credits. Microsoft evidence defines applicable billing and allowances separately.'),
     ] },
   { id: 'example-existing-licensing', topic: 'Worked examples', title: 'Walk through the Enterprise AI Environment',
     intro: 'Compare two groups’ licence assignments, new spend and a supporting Azure service.',
     tool: { page: 'examples', item: 'enterprise-ai', label: 'Preview Enterprise AI Environment' }, related: ['existing-and-new-spend', 'agreements-and-manual-rates'], sections: [
       s('open', 'Inspect fictional purchases and existing spend', 'The fictional example uses 200 existing E3 seats for two groups, 40 new Copilot add-on seats, 18,000 monthly credits and 240 search-unit-hours. It declares £4,000 of existing monthly spend and a hypothetical 10% Search discount.'),
       s('reconcile', 'Compare the two scopes', 'Open Cost & Value Analysis and compare the new seat amount, credit amount and Search agreement amount with the proposed environment including retained E3 spend. Open the Search line to see its retail amount multiplied by 0.90 before line rounding. Review the prerequisite and then change an assignment in Advanced.'),
+      s('review', 'Review the plan and its evidence', 'In Environment Review, open Architecture to trace group assignments and the Search resource. Open Technical fit to inspect licensing and technical evidence for this scope. Controls shows which safeguards still need assessment. Customer declarations describe plans or reported implementation. Confirm both assignments and controls in the tenant.'),
     ] },
   { id: 'example-shared-deployment', topic: 'Worked examples', title: 'Walk through the Shared Model Deployment',
     intro: 'Verify shared fixed capacity and its reporting allocation.',
     tool: { page: 'examples', item: 'shared-deployment', label: 'Preview Shared Model Deployment' }, related: ['share-and-connect', 'ptu-and-reservations'], sections: [
       s('open', 'Find the shared bill', 'Two fictional Foundry workloads share one deployment. 15 PTUs × 400 hours gives 6,000 PTU-hours. The 6,000 and 2,000 runs have equal input tokens per request, so the figure is apportioned 75/25.'),
-      s('reconcile', 'Change allocation without changing the charge', 'Open the single Shared provisioned capacity cost line. Edit one agent’s usage profile in Advanced and verify that the share changes while the monthly capacity amount stays tied to PTUs, hours and the rate.'),
+      s('reconcile', 'Change allocation without changing the charge', 'In Environment Review, open Architecture and use the register to trace both agents to the same deployment. In Cost & Value Analysis, open the single Shared provisioned capacity line. Change one agent’s executions in Advanced. The allocation shares change while capacity stays at 6,000 PTU-hours billed once. Check actual capacity and quota separately.'),
+    ] },
+  { id: 'example-ai-adoption-business-case', topic: 'Worked examples', title: 'Walk through AI Adoption & Business Case',
+    intro: 'Follow a fictional Foundry assistant from workload and AI spend through adoption, productivity assumptions and stakeholder reporting.',
+    tool: { page: 'examples', item: 'ai-adoption-business-case', label: 'Preview AI Adoption & Business Case' },
+    related: ['potential-business-value', 'read-your-estimate', 'architecture-and-controls', 'save-and-reopen'], sections: [
+      s('open', 'Open the example and check its accepted assumptions', 'The example contains one Foundry assistant, a GPT-4.1 mini deployment, a dedicated usage profile and a planned identity control.', [
+        'Open the preview and choose Open editable copy.',
+        'Open Cost & Value Analysis. Check that 1,000 executions at one request each produce 1.5 million input and 300,000 output tokens per month. Inspect the exact billed units and applied sources. Leave any unresolved charges visible.',
+        'Choose Potential value. The accepted fictional plan has 200 target users, 50% adoption, 20 monthly tasks per active user, 12 minutes saved per task, 60% realisation and an assumed £25 per productive hour. The result is 100 active users, 400 gross hours, 240 realised hours and £6,000 monthly economic equivalent. Cashable savings, implementation and additional operating costs are undeclared.',
+      ]),
+      s('compare', 'Connect adoption to a workload', 'Keep the accepted 50% plan and the 1,000-execution workload as your baseline.', [
+        'In Explore changes, compare 25%, 50% and 75% adoption without a workload link. Potential value changes and projected AI expenditure stays unknown.',
+        'Open Link adoption to workload usage. Select the internal support assistant, enter ten monthly interactions per active user and compare again.',
+        'Check for 500, 1,000 and 1,500 executions and £3,000, £6,000 and £9,000 monthly economic equivalents. Read projected AI expenditure and any unresolved charges separately. The economic equivalents describe assumed productivity capacity. Cashable savings remain unknown.',
+      ]),
+      s('share', 'Check the evidence and share the plan', 'Use the accepted estimate and assumptions for both PDF formats.', [
+        'Open Environment Review. Trace the linked model and dedicated profile in Architecture, check the evidence scope in Technical fit, then inspect the fictional planned identity control in Controls. Its status is a declaration.',
+        'In Reports & Export, generate an Executive Summary. Check the accepted expenditure and value amounts in their separate sections.',
+        'Generate a Full Report and check the pricing sources and value assumption provenance. To include the hypothetical adoption table, return to Explore changes, recreate the comparison as needed and choose Include comparison in Full Report. Generate the Full Report again.',
+        'Export JSON and re-import it. The accepted 50% plan and workload round-trip, with fictional source labels. Temporary comparisons stay in the current session.',
+      ]),
     ] },
   { id: 'pricing-sources', topic: 'Pricing and evidence methodology', title: 'Where prices come from', intro: 'Studio applies public rates for exact matches. The ledger records quantity, unit, effective date and source.',
     tool: catalogue, reference: 'pricing', related: ['coverage-and-freshness', 'billing-units', 'agreements-and-manual-rates'], sources: [retailSource], sections: [
@@ -199,7 +223,7 @@ export const articles: Article[] = [
     ] },
   { id: 'architecture-and-controls', topic: 'Technical reference', title: 'Review the environment design and controls', intro: 'Explain the cost relationships, intended controls and outstanding decisions in your plan.',
     tool: { page: 'review', label: 'Open Environment Review' }, related: ['share-and-connect', 'limits-of-an-estimate'], sections: [
-      s('architecture', 'Inspect relationships', 'Choose Review your design from the Guided review step, Advanced or Reports & Export. Open Architecture. Use the diagram or its text register to select an object. Shared links explain cost attribution and the diagram can be exported as SVG.'),
+      s('architecture', 'Inspect relationships', 'Open Environment Review from the sidebar or choose Review your design from the workspace. Open Architecture. Use the diagram or its text register to select an object. Shared links explain cost attribution and the diagram can be exported as SVG.'),
       s('technical-fit', 'Check technical fit and licensing', 'Open Technical fit to see which combinations were checked, the current evidence, and what to confirm. Open Review input to reach the existing editor. Return to Environment Review after inspecting the field.'),
       s('governance', 'Review declared controls', 'Open Controls in Environment Review. A declaration records a planned or existing safeguard. It still needs confirmation in the actual environment. Use the existing Advanced editor for relevant declarations. The report retains the scope and guidance.'),
     ] },

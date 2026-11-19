@@ -20,30 +20,33 @@ on:
     - cron: '17 6 * * 1'
   workflow_dispatch:
 
-permissions:
-  actions: read
-  contents: write
-  issues: write
+permissions: {}
 
 concurrency:
   group: production-static-assets
   cancel-in-progress: false
 
 jobs:
-  refresh:
+  prepare:
     if: github.ref == 'refs/heads/main'
+    permissions:
+      contents: read
     runs-on: ubuntu-latest
-    timeout-minutes: 25
-    environment: production
+    timeout-minutes: 20
+    outputs:
+      review: ${{ steps.review.outcome }}
+      refresh: ${{ steps.refresh.outcome }}
+      regression: ${{ steps.regression.outcome }}
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
         with:
-          ref: main
-      - uses: actions/setup-node@v6
+          persist-credentials: false
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
         with:
           node-version: '24'
           cache: npm
-      - run: npm ci
+      - run: npm ci --ignore-scripts
+      - run: npm run security:audit
       - name: Reconcile official Microsoft evidence
         id: review
         run: |
@@ -54,11 +57,17 @@ jobs:
           fi
         env:
           STUDIO_SCHEDULE: ${{ github.event.schedule }}
+      - name: Preserve reviewed evidence for diagnostics
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7
+        with:
+          name: reviewed-evidence-${{ github.run_attempt }}
+          path: catalogue/maintenance.json
+          retention-days: 7
       - name: Refresh and validate the Azure retail snapshot
         id: refresh
         run: |
           npm run pricing:refresh
-          npx tsx scripts/pricing.ts coverage >> "$GITHUB_STEP_SUMMARY"
+          npx --no-install tsx scripts/pricing.ts coverage >> "$GITHUB_STEP_SUMMARY"
       - uses: ./.github/actions/setup-browser
       - name: Validate the catalogue and reconcile financial and browser scenarios
         id: regression
@@ -70,18 +79,75 @@ jobs:
           npm run test:e2e
         env:
           STUDIO_CHECK_PUBLISHED_CATALOGUE: '1'
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7
+        with:
+          name: staged-studio-${{ github.run_attempt }}
+          path: |
+            catalogue/
+            public/pricing/
+            dist/
+          if-no-files-found: error
+          retention-days: 2
+
+  publish:
+    needs: prepare
+    environment: production
+    permissions:
+      contents: write
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        with:
+          node-version: '24'
+      - run: npm ci --ignore-scripts
+      - uses: ./.github/actions/setup-browser
+      - name: Clear the checkout's pricing snapshot before loading the staged snapshot
+        run: node -e "require('node:fs').rmSync('public/pricing', { recursive:true })"
+      - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8
+        with:
+          name: staged-studio-${{ github.run_attempt }}
+          path: .
+      - run: npm run pricing:validate && npm run evidence:validate && npm run security:build
       - name: Deploy, verify and publish the staged catalogue
-        id: deploy
         run: npm run deploy -- --publish-catalogue
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          STUDIO_PUBLISH_TOKEN: ${{ github.token }}
+
+  notify:
+    if: always() && !cancelled() && github.ref == 'refs/heads/main'
+    needs: [prepare, publish]
+    permissions:
+      contents: read
+      actions: read
+      issues: write
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        with:
+          node-version: '24'
+      - run: npm ci --ignore-scripts
+      - id: evidence
+        if: needs.prepare.outputs.review == 'success'
+        uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8
+        with:
+          name: reviewed-evidence-${{ github.run_attempt }}
+          path: catalogue
       - name: Reconcile exception issues
         if: always()
-        run: npx tsx scripts/maintenance-notify.ts
+        run: npx --no-install tsx scripts/maintenance-notify.ts
         env:
           GITHUB_TOKEN: ${{ github.token }}
-          STUDIO_REVIEW_OUTCOME: ${{ steps.review.outcome }}
-          STUDIO_REFRESH_OUTCOME: ${{ steps.refresh.outcome }}
-          STUDIO_REGRESSION_OUTCOME: ${{ steps.regression.outcome }}
-          STUDIO_DEPLOY_OUTCOME: ${{ steps.deploy.outcome }}
+          STUDIO_REVIEW_OUTCOME: ${{ needs.prepare.outputs.review == 'success' && steps.evidence.outcome != 'success' && 'failure' || needs.prepare.outputs.review }}
+          STUDIO_REFRESH_OUTCOME: ${{ needs.prepare.outputs.refresh }}
+          STUDIO_REGRESSION_OUTCOME: ${{ needs.prepare.outputs.regression }}
+          STUDIO_DEPLOY_OUTCOME: ${{ needs.publish.result }}

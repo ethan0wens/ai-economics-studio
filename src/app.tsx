@@ -8,7 +8,7 @@ import { Inspector } from './inspector';
 import { basisNames, CostAnalysis, Scenario } from './pricing-ui';
 import { Field, FieldHelp } from './fields';
 import { hasUnknownPrice, missingInputs } from './inspector-status';
-import { download } from './download';
+import { download, exportName } from './download';
 import { CapacityComparisons } from './capacity-ui';
 import { LicenceEstate } from './validation-ui';
 import { currentRoute, destinations, routeHref, type Destination } from './navigation';
@@ -95,7 +95,14 @@ export default function App() {
   const [workspace, setWorkspace] = useState<Environment>();
   const blank = useMemo(blankEnvironment, []);
   const env = workspace ?? blank;
-  const [dirty, setDirty] = useState(false);
+  const [dirty, setDirtyState] = useState(false);
+  const dirtyNow = useRef(false);
+  const openSequence = useRef(0);
+  const workspaceVersion = useRef(0);
+  function setDirty(value: boolean) {
+    dirtyNow.current = value;
+    setDirtyState(value);
+  }
   const [exported, setExported] = useState(false);
   const [estimateChanged, setEstimateChanged] = useState(false);
   const [route, setRoute] = useState(currentRoute);
@@ -124,7 +131,7 @@ export default function App() {
   const result = useMemo(() => ledger(env, catalogue.records, undefined, catalogue.inventory), [env, catalogue]);
   const advice = useMemo(() => governance(env), [env]);
   const selectedItem = env.objects.find(item => item.id === selected);
-  const fileName = env.name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') || 'environment';
+  const fileName = exportName(env.name);
   const status = dirty ? 'Unexported changes' : estimateChanged ? 'Estimate changed since export' : exported ? 'JSON copy available' : 'Open in this tab';
   const sourceSnapshot = env.sourceSnapshot;
   const snapshotCurrent = result.lines.some(line => line.amounts.current !== null) ? result.summary.current.known : null;
@@ -253,6 +260,10 @@ export default function App() {
     }
   }
   function finishOpen(value: Opening) {
+    openSequence.current++;
+    workspaceVersion.current++;
+    setExporting(false);
+    setToast('');
     setWorkspace(value.env); setDirty(value.kind === 'copy' || value.kind === 'example');
     setExported(value.kind === 'import'); setEstimateChanged(false); setSelected(undefined); setTarget(undefined); setReturnView(undefined);
     setIntent(undefined); setGenerated(new Set()); setMode('guided'); setStep(value.kind === 'new' ? 0 : 4); setOpening(undefined); setError('');
@@ -260,15 +271,19 @@ export default function App() {
     navigate('builder');
   }
   function requestOpen(value: Opening) {
-    if (dirty && workspace) setOpening(value);
+    openSequence.current++;
+    if (dirtyNow.current && workspace) setOpening(value);
     else finishOpen(value);
   }
   async function importFile(file?: File) {
     if (!file) return;
+    const sequence = ++openSequence.current;
     try {
       if (file.size > maxBytes) throw new Error('Choose an AI Economics Studio JSON export of 2 MB or less.');
-      requestOpen({ env: importEnvironment(await file.text()), kind: 'import' });
+      const content = await file.text();
+      if (sequence === openSequence.current) requestOpen({ env: importEnvironment(content), kind: 'import' });
     } catch (reason) {
+      if (sequence !== openSequence.current) return;
       const detail = reason instanceof SyntaxError ? 'The file is not valid JSON.' :
         reason instanceof Error ? reason.message : 'The file could not be read.';
       setError(`Could not import this environment. ${detail} Choose a valid JSON export from the studio.`);
@@ -283,14 +298,19 @@ export default function App() {
     setDirty(false); setExported(true); setEstimateChanged(false); setToast('JSON copy downloaded. Use it to reopen this environment later.');
   }
   async function exportPdf() {
+    const version = workspaceVersion.current;
     setExporting(true);
     try {
       const { report } = await import('./report');
       const bytes = await report(env, result, catalogue, advice);
+      if (version !== workspaceVersion.current) return;
       download(new Uint8Array(bytes).buffer, `${fileName}.pdf`, 'application/pdf');
       setToast('Your PDF report is ready.');
-    } catch (reason) { setError(`Could not create the PDF. Try again or export JSON to keep your work. ${reason instanceof Error ? reason.message : ''}`); }
-    finally { setExporting(false); }
+    } catch {
+      if (version === workspaceVersion.current) setError('Could not create the PDF. Try again or export JSON to keep your work.');
+    } finally {
+      if (version === workspaceVersion.current) setExporting(false);
+    }
   }
   async function refreshCatalogue() {
     try {

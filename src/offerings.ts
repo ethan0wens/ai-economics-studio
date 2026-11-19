@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { microsoftEvidenceUrl } from './untrusted-data';
 import type { Meter, StudioObject } from './domain';
 import retained from '../catalogue/retained.json' with { type: 'json' };
 import gaps from '../catalogue/gaps.json' with { type: 'json' };
@@ -16,15 +17,15 @@ export type Family = keyof typeof families;
 export const componentId = z.enum(['input', 'output', 'cached', 'capacity', 'credits', 'seats', 'usage']);
 export type Component = z.infer<typeof componentId>;
 export const priceComponentSchema = z.strictObject({
-  id: componentId, label: z.string().min(1), unit: z.string().min(1), quantityPerUnit: z.number().positive(),
+  id: componentId, label: z.string().min(1), unit: z.string().min(1), quantityPerUnit: z.number().min(1).max(1e15),
   meterId: z.string().min(1).optional(), sku: z.string().min(1).optional(),
 });
 const shared = {
-  id: z.string().regex(/^[a-z0-9][a-z0-9-]*$/), name: z.string().min(1),
+  id: z.string().regex(/^[a-z0-9][a-z0-9-]*$/), name: z.string().min(1).max(300),
   family: z.enum(['foundry', 'copilot', 'licensing', 'infrastructure', 'security']),
   currency: z.string().regex(/^[A-Z]{3}$/), region: z.string().regex(/^[a-z0-9-]+$/),
   components: z.array(priceComponentSchema).min(1).max(5), note: z.string().optional(),
-  selectable: z.literal(false).optional(), evidence: z.url().optional(),
+  selectable: z.literal(false).optional(), evidence: z.url().max(4096).refine(microsoftEvidenceUrl).optional(),
   deployment: z.enum(['global-standard', 'regional-standard', 'data-zone-standard', 'global-provisioned', 'regional-provisioned', 'data-zone-provisioned']).optional(),
 };
 export const offeringSchema = z.discriminatedUnion('kind', [

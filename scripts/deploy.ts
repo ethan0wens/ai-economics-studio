@@ -7,6 +7,7 @@ import { parseConfigFileTextToJson } from 'typescript';
 import { catalogueFilename, catalogueSchema, manifestSchema } from '../src/catalogue';
 import { catalogueCoverage } from '../src/coverage';
 import { maintenanceHealthSchema, releaseHealthSchema } from '../src/catalogue-health';
+import { verifyPublicSecurity } from './security-http';
 import { promoteWorker, workerReleases, type ActiveWorker } from './worker-release';
 
 const worker = 'ai-econmics-studio';
@@ -59,10 +60,11 @@ export async function verifyPublishedAssets(expected: ReadonlyMap<string, string
 
 const manifestPath = '/pricing/manifest.json';
 const healthPath = '/pricing/health.json';
-const cleanEnv = { ...process.env, CLOUDFLARE_ACCOUNT_ID: undefined, CLOUDFLARE_API_TOKEN: undefined };
+const cleanEnv = { ...process.env, CLOUDFLARE_ACCOUNT_ID: undefined, CLOUDFLARE_API_TOKEN: undefined,
+  GITHUB_TOKEN: undefined, STUDIO_PUBLISH_TOKEN: undefined };
 
-function command(program: string, args: string[]) {
-  const result = spawnSync(program, args, { env: cleanEnv, encoding: 'utf8', maxBuffer: 4_000_000 });
+function command(program: string, args: string[], env: NodeJS.ProcessEnv = cleanEnv) {
+  const result = spawnSync(program, args, { env, encoding: 'utf8', maxBuffer: 4_000_000 });
   if (result.error) throw result.error;
   if (result.status !== 0) throw new Error(`${program} ${args[0]} failed (exit ${result.status ?? result.signal}). ${result.stderr.trim()}`);
   return result.stdout.trim();
@@ -120,20 +122,31 @@ function assertUpstream(application: string) {
   if (remote !== application) throw new Error('main advanced during this run. The checked candidate cannot supersede it.');
 }
 
-function publishCatalogue(application: string) {
+function publishCatalogue(application: string, token: string) {
   assertUpstream(application);
   command('git', ['add', '--', 'catalogue/commercial.json', 'catalogue/compatibility.json', 'catalogue/entitlements.json',
     'catalogue/provisioned.json', 'catalogue/discovered.json', 'catalogue/maintenance.json', 'public/pricing']);
   if (!command('git', ['diff', '--cached', '--name-only'])) return;
   command('git', ['-c', 'user.name=github-actions[bot]', '-c', 'user.email=41898282+github-actions[bot]@users.noreply.github.com',
     'commit', '-m', 'Publish validated catalogue and Microsoft evidence']);
-  command('git', ['push', 'origin', 'HEAD:main']);
+  // Send the scoped repository token to git for this push. Neither Wrangler nor browser checks receive it.
+  const origin = command('git', ['remote', 'get-url', 'origin']);
+  if (!/^https:\/\/github\.com\/ethan0wens\/ai-economics-studio(?:\.git)?$/.test(origin)) throw new Error('Unexpected catalogue publication remote.');
+  const basic = Buffer.from(`x-access-token:${token}`).toString('base64');
+  try {
+    command('git', ['-c', 'credential.helper=', '-c', 'http.followRedirects=false', 'push', 'origin', 'HEAD:main'], {
+      ...cleanEnv, GIT_CONFIG_COUNT: '1', GIT_CONFIG_KEY_0: 'http.https://github.com/.extraheader',
+      GIT_CONFIG_VALUE_0: `AUTHORIZATION: basic ${basic}`, GIT_TERMINAL_PROMPT: '0',
+    });
+  } catch {
+    throw new Error('GitHub refused the staged catalogue commit. Verify the production publisher and branch rules.');
+  }
 }
 
 function liveBrowser(catalogueId: string | null) {
   const browser = spawnSync('npm', ['run', 'test:e2e', '--', '--retries=1', 'tests/e2e/field-help.spec.ts',
     'tests/e2e/retail-first.spec.ts', 'tests/e2e/enterprise.spec.ts', 'tests/e2e/guided.spec.ts', 'tests/e2e/technical-docs.spec.ts',
-    'tests/e2e/documentation-links.spec.ts', 'tests/e2e/estimation.spec.ts'], {
+    'tests/e2e/documentation-links.spec.ts', 'tests/e2e/estimation.spec.ts', 'tests/e2e/security.spec.ts'], {
     stdio: 'inherit', env: { ...cleanEnv, STUDIO_TEST_URL: site, STUDIO_EXPECTED_CATALOGUE_ID: catalogueId ?? undefined, STUDIO_CHECK_RELEASE_HEALTH: '1', STUDIO_CHECK_PUBLISHED_CATALOGUE: '1' },
   });
   if (browser.error) throw browser.error;
@@ -166,6 +179,8 @@ async function waitForPublishedAssets(assets: ReadonlyMap<string, string>) {
 if (process.argv[1] && pathToFileURL(process.argv[1]).href === import.meta.url) {
   try {
     const publish = process.argv[2] === '--publish-catalogue';
+    const publishToken = process.env.STUDIO_PUBLISH_TOKEN;
+    if (publish && !publishToken) throw new Error('Catalogue publication requires the scoped GitHub workflow token.');
     if (process.argv.length !== (publish ? 3 : 2)) throw new Error('Production deploy uses the checked-in Worker target.');
     const { CLOUDFLARE_ACCOUNT_ID: account, CLOUDFLARE_API_TOKEN: token } = process.env;
     const name = await verifyWorker(await readFile(config, 'utf8'), account, token);
@@ -175,12 +190,17 @@ if (process.argv[1] && pathToFileURL(process.argv[1]).href === import.meta.url) 
     const previous = await worker.current();
     const previousAssets = await currentAssets();
     if ((await worker.current()).deployment !== previous.deployment) throw new Error('The active Worker changed while capturing the rollback target.');
+    if (publish && await readFile(new URL('../public/pricing/manifest.json', import.meta.url), 'utf8') !==
+      await readFile(new URL('../dist/pricing/manifest.json', import.meta.url), 'utf8')) {
+      throw new Error('Staged deployment and Git publication use different catalogue manifests.');
+    }
     const { assets, manifest } = await builtAssets(previous, previousAssets, application);
     report('notice', `Verified existing Worker ${site} with rollback target ${previous.version}`);
     await promoteWorker({
       previous,
       upload() {
-        const result = spawnSync(process.execPath, [wrangler, 'deploy', '--config', config, '--name', name], { encoding: 'utf8', maxBuffer: 4_000_000 });
+        const result = spawnSync(process.execPath, [wrangler, 'deploy', '--config', config, '--name', name], { encoding: 'utf8', maxBuffer: 4_000_000,
+          env: { ...cleanEnv, CLOUDFLARE_ACCOUNT_ID: account, CLOUDFLARE_API_TOKEN: token } });
         if (result.stdout) console.log(result.stdout);
         if (result.stderr) console.error(result.stderr);
         if (result.error) throw result.error;
@@ -192,9 +212,10 @@ if (process.argv[1] && pathToFileURL(process.argv[1]).href === import.meta.url) 
       current: worker.current,
       async verify() {
         await waitForPublishedAssets(assets);
+        await verifyPublicSecurity(site, manifest.catalogueId);
         liveBrowser(manifest.catalogueId);
       },
-      persist() { if (publish) publishCatalogue(application); },
+      persist() { if (publish) publishCatalogue(application, publishToken!); },
       restore: worker.restore,
       verifyRestore: () => waitForPublishedAssets(previousAssets.assets),
     });

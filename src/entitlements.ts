@@ -1,11 +1,12 @@
 import Decimal from 'decimal.js';
 import { z } from 'zod';
+import { microsoftEvidenceUrl } from './untrusted-data';
 import type { Edge, Environment, StudioObject } from './domain';
 import { offeringFor, type Offering } from './offerings';
 import reviewed from '../catalogue/entitlements.json' with { type: 'json' };
 
 export const evidenceWindow = {
-  source: z.url().refine(url => URL.canParse(url) && ['learn.microsoft.com', 'www.microsoft.com', 'azure.microsoft.com'].includes(new URL(url).hostname)),
+  source: z.url().refine(microsoftEvidenceUrl),
   verifiedOn: z.iso.date(), observedSince: z.iso.date().optional(), reviewBy: z.iso.date(), condition: z.string().min(1),
 };
 const ruleSchema = z.strictObject({

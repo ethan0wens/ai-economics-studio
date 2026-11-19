@@ -11,6 +11,7 @@ const navy = rgb(.09, .14, .23);
 const muted = rgb(.28, .35, .44);
 const blue = rgb(.14, .39, .92);
 const border = rgb(.88, .92, .96);
+const presentationControls = /[\p{Cc}\p{Bidi_Control}]/gu;
 const categoryColors = ['#2563eb', '#7c3aed', '#0d9488', '#d97706', '#475569'];
 const labels = { retail: 'Retail baseline', current: 'Current estimate', forecast: 'Price forecast' };
 function swatch(hex: string) {
@@ -19,12 +20,12 @@ function swatch(hex: string) {
 
 export async function report(env: Environment, result: Ledger, catalogue: Catalogue, assessment: ReturnType<typeof governance>) {
   const doc = await PDFDocument.create();
-  doc.setTitle(`AI Economics Studio | ${env.name}`);
+  doc.setTitle(`AI Economics Studio | ${env.name.replace(presentationControls, ' ')}`);
   doc.setSubject('Environment planning, cost ledger and logical architecture');
   const regular = await doc.embedFont(StandardFonts.Helvetica);
   const bold = await doc.embedFont(StandardFonts.HelveticaBold);
   const charset = new Set(regular.getCharacterSet());
-  const safe = (value: string) => Array.from(value, char => charset.has(char.codePointAt(0)!) ? char : char === '→' ? ' > ' : '?').join('');
+  const safe = (value: string) => Array.from(value.replace(presentationControls, ' '), char => charset.has(char.codePointAt(0)!) ? char : char === '→' ? ' > ' : '?').join('');
   const generated = new Date().toISOString();
   const width = 595;
   const height = 842;

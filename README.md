@@ -36,6 +36,10 @@ See the [licensing and technical evidence guide](docs/18-licensing-and-technical
 
 Read the [seven-section technical reference](docs/technical/README.md) for architecture, schemas, financial calculations, Microsoft evidence, catalogue maintenance, deployment and testing. The same articles are available in the studio under **Documentation → Technical Documentation**. Start with the [source traceability matrix](docs/technical/traceability.md) for an audit or the [maintenance guidance](docs/technical/maintenance.md) for a contribution.
 
+## Security
+
+Review the [threat model](docs/security/01-threat-model.md), [security verification](docs/security/05-security-verification.md) and [reporting policy](SECURITY.md). Run `npm run security:audit` for dependency checks. The production build includes the static asset security gate.
+
 ## Locked architecture
 
 - **UI**: React + TypeScript + Vite, light-first Cloud Professional design system.

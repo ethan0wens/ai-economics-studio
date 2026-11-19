@@ -54,3 +54,7 @@ curl --fail --silent --show-error "$studio_url/pricing/health.json" | jq '.relea
 ```
 
 Compare the health report's application, catalogue ID and pricing timestamp with the workflow. Open the studio and a deep documentation link. Build an illustrative example, inspect one known and one unresolved cost path, and generate an export. The production smoke in Actions performs repeatable public checks. For documented details see [testing](07-verification-and-tests.md), [freshness and coverage](05-catalogue-contract.md#coverage-and-freshness) and [operator catalogue recovery](05-catalogue-maintenance.md#operator-procedures).
+
+## Verify the delivery boundary
+
+The production gate checks the actual HTTPS policy, SPA fallback, immutable bundle and snapshot caching and the revalidated manifest, then runs browser smoke. See [Security & Privacy](06-security-and-privacy.md). The validation job reads public sources, the publisher receives production credentials, and issue reporting has a separate job.

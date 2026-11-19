@@ -1,0 +1,16 @@
+# Operational security
+
+## Owner checks before wider release
+
+1. In GitHub **Settings → Rules → Rulesets** and **Settings → Branches**, review the rules applying to `main`. Confirm required reviews and passing CI checks, authorised maintainers, bypass roles, force-push and deletion rules. Confirm the approved path for verified catalogue writes. If a required-PR rule rejects the current built-in publisher, approve a scoped bot or reviewed catalogue workflow that preserves the same-run deployment and rollback safeguards.
+2. In **Settings → Environments → production**, verify branch restrictions, reviewers and bypass roles. Confirm that only trusted main jobs use the Cloudflare deployment secrets. Review **Settings → Actions → General** for fork approval and read-only token defaults. Record the settings without secret values.
+3. In Cloudflare **My Profile → API Tokens**, inspect the deployment token's permissions and account scope. Confirm it uses the intended account and required Workers Scripts access. Review people who can create or promote deployments outside GitHub, and confirm `ai-econmics-studio` uses Static Assets.
+4. In GitHub **Settings → Code security** or **Advanced Security**, verify Dependabot alerts, security updates, secret scanning and push protection where available. Under **Security → Advisories**, enable private vulnerability reporting if needed. Confirm an authorised maintainer receives and can acknowledge a test advisory before advertising that channel as monitored.
+5. Review the latest dependency and regression results, the staged artefact and evidence. After the protection checks and approvals, permit the exact reviewed revision to release. Confirm HTTPS and cache policy, expected application and pricing bytes, browser smoke and catalogue health. Save workflow results with the release review.
+
+## Release failure and incident handling
+
+- Keep activation and restoration serialised in the production concurrency group. Review the active Worker version. An intervening deployment requires an explicit operator decision. After restoring a known release, confirm its public catalogue matches the recorded digest.
+- If a credential may have been disclosed, revoke or rotate it in the provider settings, restrict affected accounts and review workflow history. Verify production before resuming scheduled publication.
+- For each proposed security exception record the advisory, component, severity, reachability, compensating controls, owner, review date and follow-up. Review a new advisory against the installed and shipped files.
+- Coordinate disclosure after the fix. Keep customer data, credentials and private infrastructure details out of publicly shared artefacts.

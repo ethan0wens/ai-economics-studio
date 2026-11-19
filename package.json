@@ -13,14 +13,17 @@
     "lint": "eslint . --max-warnings 0",
     "test": "vitest run",
     "test:e2e": "playwright test",
-    "build": "npm run pricing:validate && npm run evidence:validate && npm run docs:validate && vite build",
+    "build": "npm run pricing:validate && npm run evidence:validate && npm run docs:validate && vite build && npm run security:build",
     "pricing:refresh": "tsx scripts/pricing.ts refresh",
     "pricing:validate": "tsx scripts/pricing.ts validate",
     "deploy": "tsx scripts/deploy.ts",
     "evidence:validate": "tsx scripts/evidence.ts",
     "maintenance:review": "tsx scripts/maintenance.ts",
     "docs:validate": "tsx scripts/docs.ts",
-    "docs:index": "tsx scripts/technical-docs.ts"
+    "docs:index": "tsx scripts/technical-docs.ts",
+    "security:audit": "npm audit --audit-level=high && npm audit --omit=dev --audit-level=moderate",
+    "security:build": "tsx scripts/security-build.ts",
+    "security:http": "tsx scripts/security-http.ts"
   },
   "dependencies": {
     "@dagrejs/dagre": "^3.1.3",

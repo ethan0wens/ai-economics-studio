@@ -1,7 +1,8 @@
 import { marked, type Token, type Tokens } from 'marked';
 import { z } from 'zod';
 import index from '../docs/technical/index.json' with { type: 'json' };
-import { technicalHref } from './navigation';
+import { currentRoute, routeHref, technicalHref } from './navigation';
+import { httpsUrl } from './untrusted-data';
 
 export const slug = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
 const id = z.string().regex(slug);
@@ -52,19 +53,34 @@ function implementationPath(path: string) {
     /^\/(?:package(?:-lock)?\.json|wrangler\.jsonc|vite\.config\.ts|playwright\.config\.ts|index\.html|public\/_headers|docs\/technical\/(?:index|sources)\.json)$/.test(path);
 }
 
+function internalLink(hash: string): TechnicalLink | undefined {
+  if (hash === '#/') return { href: hash, kind: 'internal' };
+  const route = currentRoute(hash);
+  if (route.page === 'home') return;
+  if ([route.item, route.technicalArticle, route.section].some(value => value && !slug.test(value))) return;
+  return { kind: 'internal', href: route.item === 'technical' && route.page === 'documentation'
+    ? technicalHref(route.technicalArticle, route.section) : routeHref(route.page, route.item, route.section) };
+}
+
 export function technicalLink(href: string, file: string): TechnicalLink | undefined {
   if (!href.trim()) return;
-  if (href.startsWith('#/')) return { href, kind: 'internal' };
-  const target = new URL(href, documentLocation(file));
+  if (href.startsWith('#/')) return internalLink(href);
+  const target = URL.parse(href, documentLocation(file));
+  if (!target || target.username || target.password) return;
   if (target.origin === virtualRoot) {
     const article = technicalEntries.find(entry => target.pathname === documentLocation(entry.file).pathname);
-    if (article) return { href: technicalHref(article.id, target.hash ? decodeURIComponent(target.hash.slice(1)) : undefined), kind: 'internal' };
+    if (article) {
+      let anchor: string | undefined;
+      try { anchor = target.hash ? decodeURIComponent(target.hash.slice(1)) : undefined; } catch { return; }
+      if (anchor && !slug.test(anchor)) return;
+      return { href: technicalHref(article.id, anchor), kind: 'internal' };
+    }
     if (target.pathname === '/docs/technical/README.md') return { href: technicalHref(), kind: 'internal' };
     if (implementationPath(target.pathname)) return { href: repo + target.pathname.slice(1) + target.hash, kind: 'implementation' };
     return;
   }
-  if (target.protocol !== 'https:' || !allowedTechnicalSources.includes(target.hostname)) return;
-  if (target.hostname === 'ai-econmics-studio.ethan0wens.workers.dev') return { href: target.hash || '#/', kind: 'internal' };
+  if (!httpsUrl(target.href, allowedTechnicalSources)) return;
+  if (target.hostname === 'ai-econmics-studio.ethan0wens.workers.dev') return internalLink(target.hash || '#/');
   if (target.hostname === 'github.com') {
     if (!target.href.startsWith(repo) || !implementationPath('/' + target.href.slice(repo.length).split('#')[0])) return;
     return { href: target.href, kind: 'implementation' };

@@ -52,7 +52,8 @@
       "summary": "Local setup, GitHub release gates, Cloudflare routing and incident response.",
       "articles": [
         { "id": "build-and-deploy", "file": "06-build-and-deploy.md", "title": "Local development and Cloudflare deployment", "summary": "Run the application, review workflow triggers and trace a verified production release.", "aliases": ["Cloudflare deployment", "wrangler", "GitHub Actions", "production secrets"], "related": ["security-and-operations", "catalogue-maintenance", "verification-and-tests"], "guides": ["architecture-and-controls"], "reference": "commands" },
-        { "id": "security-and-operations", "file": "06-security-and-operations.md", "title": "Security, privacy and release recovery", "summary": "Inspect the content policy, understand data boundaries and restore a known-good version.", "aliases": ["CSP", "rollback", "incident response", "browser privacy"], "related": ["build-and-deploy", "catalogue-maintenance", "limitations"], "guides": ["privacy", "limits-of-an-estimate"] }
+        { "id": "security-and-operations", "file": "06-security-and-operations.md", "title": "Security, privacy and release recovery", "summary": "Inspect the content policy, understand data boundaries and restore a known-good version.", "aliases": ["CSP", "rollback", "incident response", "browser privacy"], "related": ["build-and-deploy", "catalogue-maintenance", "limitations"], "guides": ["privacy", "limits-of-an-estimate"] },
+        { "id": "security-and-privacy", "file": "06-security-and-privacy.md", "title": "Security & Privacy", "summary": "Review browser data handling, file boundaries, catalogue integrity and release safeguards.", "aliases": ["security assurance", "customer privacy", "supply chain"], "related": ["security-and-operations", "catalogue-contract", "verification-and-tests"], "guides": ["privacy", "save-and-reopen"] }
       ]
     },
     {

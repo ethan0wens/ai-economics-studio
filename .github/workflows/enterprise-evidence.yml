@@ -19,14 +19,16 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
         with:
           persist-credentials: false
-      - uses: actions/setup-node@v6
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
         with:
           node-version: '24'
-      - run: node scripts/survey-enterprise.ts ${{ matrix.scope }}
-      - uses: actions/upload-artifact@v7
+      - run: node scripts/survey-enterprise.ts "$STUDIO_SURVEY_SCOPE"
+        env:
+          STUDIO_SURVEY_SCOPE: ${{ matrix.scope }}
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7
         with:
           name: microsoft-evidence-${{ matrix.scope }}
           path: enterprise-*.txt
@@ -38,14 +40,16 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
         with:
           persist-credentials: false
-      - uses: actions/setup-node@v6
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
         with:
           node-version: '24'
-      - run: node scripts/survey-catalogue.ts ${{ matrix.scope }}
-      - uses: actions/upload-artifact@v7
+      - run: node scripts/survey-catalogue.ts "$STUDIO_SURVEY_SCOPE"
+        env:
+          STUDIO_SURVEY_SCOPE: ${{ matrix.scope }}
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7
         with:
           name: catalogue-accuracy-${{ matrix.scope }}
           path: enterprise-accuracy-*.txt
@@ -54,14 +58,14 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 6
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
         with:
           persist-credentials: false
-      - uses: actions/setup-node@v6
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
         with:
           node-version: '24'
           cache: npm
-      - run: npm ci
+      - run: npm ci --ignore-scripts
       - uses: ./.github/actions/setup-browser
       - name: Check the public Worker
         run: |
@@ -78,14 +82,14 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 12
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
         with:
           persist-credentials: false
-      - uses: actions/setup-node@v6
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
         with:
           node-version: '24'
           cache: npm
-      - run: npm ci
+      - run: npm ci --ignore-scripts
       - run: npm run maintenance:review
       - run: npm run pricing:refresh
       - run: npm run typecheck && npm run lint && npm test && npm run build
@@ -93,7 +97,7 @@ jobs:
       - run: npm run test:e2e
         env:
           STUDIO_CHECK_PUBLISHED_CATALOGUE: '1'
-      - uses: actions/upload-artifact@v7
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7
         if: always()
         with:
           name: catalogue-maintenance-preview

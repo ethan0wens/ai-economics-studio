@@ -1,30 +1,32 @@
 import { z } from 'zod';
+import { decodeUtf8, httpsUrl, parseBoundedJson, readResponseBytes } from './untrusted-data';
 import { componentId, inventorySchema, offeringMeter, type Component, type Offering } from './offerings';
 import { currency, meterKey, version, type Meter } from './domain';
 
 export const retailDocs = 'https://learn.microsoft.com/en-us/rest/api/cost-management/retail-prices/azure-retail-prices';
+const priceValue = z.string().max(64).regex(/^\d+(\.\d+)?$/).refine(value => Number(value) <= 1e9);
 export const sourceRecord = z.strictObject({
-  meterId: z.string().min(1), sku: z.string().min(1), region: z.string().min(1), unit: z.string().min(1),
-  quantityPerUnit: z.number().positive(), priceType: z.literal('Consumption'), currency,
-  price: z.string().regex(/^\d+(\.\d+)?$/).refine(value => Number.isFinite(Number(value))),
-  tiers: z.array(z.strictObject({ from: z.number().nonnegative(), price: z.string().regex(/^\d+(\.\d+)?$/).refine(value => Number.isFinite(Number(value))) })).min(2).max(20).optional(),
-  effectiveAt: z.iso.datetime({ offset: true }), source: z.url(),
-  product: z.string().min(1), verification: z.enum(['azure-retail-api', 'microsoft-commercial']),
+  meterId: z.string().min(1).max(300), sku: z.string().min(1).max(300), region: z.string().regex(/^[a-z0-9-]{1,80}$/), unit: z.string().min(1).max(300),
+  quantityPerUnit: z.number().min(1).max(1e15), priceType: z.literal('Consumption'), currency,
+  price: priceValue,
+  tiers: z.array(z.strictObject({ from: z.number().nonnegative(), price: priceValue })).min(2).max(20).optional(),
+  effectiveAt: z.iso.datetime({ offset: true }), source: z.url().max(4096),
+  product: z.string().min(1).max(300), verification: z.enum(['azure-retail-api', 'microsoft-commercial']),
   offeringId: z.string().min(1).optional(), component: componentId.optional(),
   meterName: z.string().optional(), publishedSku: z.string().optional(),
   sourceMeterId: z.uuid().optional(), publishedUnit: z.string().optional(),
   review: z.strictObject({ checkedAt: z.iso.datetime({ offset: true }), expiresAt: z.iso.datetime({ offset: true }), terms: z.string().min(1), term: z.enum(['annual', 'monthly', 'monthly-pack']).optional(), identity: z.string().regex(/^[A-Z0-9]+:[A-Z0-9]+$/i).optional(), corroboration: z.array(z.url().refine(url => /^https:\/\/www\.microsoft\.com\/en-gb\//.test(url))).optional() }).optional(),
 }).superRefine((record, ctx) => {
   const invalid = () => ctx.addIssue({ code: 'custom', message: 'Invalid price source or commercial review metadata' });
-  const origin = URL.canParse(record.source) ? new URL(record.source).origin : '';
+  const source = httpsUrl(record.source, ['prices.azure.com', 'www.microsoft.com', 'learn.microsoft.com']);
   if (record.tiers ? record.verification !== 'azure-retail-api' || record.tiers[0].from !== 0 ||
     record.tiers[0].price !== record.price || !record.tiers.some(tier => Number(tier.price) > 0) ||
     record.tiers.some((tier, index) => index > 0 && tier.from <= record.tiers![index - 1].from)
     : Number(record.price) <= 0) invalid();
   if (Boolean(record.offeringId) !== Boolean(record.component)) invalid();
   if (record.verification === 'azure-retail-api') {
-    if (origin !== 'https://prices.azure.com' || record.review) invalid();
-  } else if (!['https://www.microsoft.com', 'https://learn.microsoft.com'].includes(origin) || !record.offeringId || !record.review ||
+    if (source?.hostname !== 'prices.azure.com' || source.pathname !== '/api/retail/prices' || record.review) invalid();
+  } else if (!source || source.hostname === 'prices.azure.com' || !record.offeringId || !record.review ||
     Date.parse(record.review.expiresAt) <= Date.parse(record.review.checkedAt)) invalid();
 });
 export const catalogueSchema = z.strictObject({
@@ -46,35 +48,38 @@ export const catalogueSchema = z.strictObject({
   }, 'Retail rate does not match the published billing configuration');
 export const manifestSchema = z.strictObject({
   schemaVersion: z.literal(version), catalogueId: z.string().regex(/^[a-f0-9]{64}$/).nullable(),
-  lastCheckedAt: z.iso.datetime({ offset: true }).nullable(), records: z.number().int().nonnegative(),
+  lastCheckedAt: z.iso.datetime({ offset: true }).nullable(), records: z.number().int().nonnegative().max(5000),
   previous: z.string().regex(/^[a-f0-9]{64}$/).nullable(),
-}).refine(item => item.catalogueId ? item.lastCheckedAt !== null && item.records > 0 : item.lastCheckedAt === null && item.records === 0 && item.previous === null);
+}).refine(item => item.catalogueId ? item.lastCheckedAt !== null && item.records > 0 && item.previous !== item.catalogueId : item.lastCheckedAt === null && item.records === 0 && item.previous === null);
 export type Manifest = z.infer<typeof manifestSchema>;
 export type RetailRecord = z.infer<typeof sourceRecord>;
 export type Catalogue = { manifest: Manifest; records: RetailRecord[]; inventory?: Offering[]; fallback?: boolean };
 export const emptyCatalogue: Catalogue = {
   manifest: { schemaVersion: version, catalogueId: null, lastCheckedAt: null, records: 0, previous: null }, records: [],
 };
+export const maxCatalogueBytes = 6_000_000;
+export const maxManifestBytes = 8_192;
 export function catalogueFilename(hash: string) {
   return `catalogue-${hash}.json`;
 }
 
 async function fetchAsset(name: string, cache: RequestCache) {
-  const response = await fetch(`${import.meta.env.BASE_URL}pricing/${name}`, { cache, signal: AbortSignal.timeout(10000) });
+  const response = await fetch(`${import.meta.env.BASE_URL}pricing/${name}`, { cache, credentials: 'omit', redirect: 'error', signal: AbortSignal.timeout(10000) });
   if (!response.ok) throw new Error(`Catalogue asset returned HTTP ${response.status}.`);
   return response;
 }
 
 async function readAsset(hash: string) {
-  const raw = await (await fetchAsset(catalogueFilename(hash), 'default')).text();
-  const digest = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(raw));
+  const raw = await readResponseBytes(await fetchAsset(catalogueFilename(hash), 'default'), maxCatalogueBytes, 'Pricing catalogue');
+  const digest = await crypto.subtle.digest('SHA-256', raw);
   const actual = [...new Uint8Array(digest)].map(byte => byte.toString(16).padStart(2, '0')).join('');
   if (actual !== hash) throw new Error('Catalogue integrity check failed.');
-  return catalogueSchema.parse(JSON.parse(raw));
+  return catalogueSchema.parse(parseBoundedJson(decodeUtf8(raw), 275_000, 'Pricing catalogue'));
 }
 
 export async function loadCatalogue(): Promise<Catalogue> {
-  const manifest = manifestSchema.parse(await (await fetchAsset('manifest.json', 'no-cache')).json());
+  const raw = await readResponseBytes(await fetchAsset('manifest.json', 'no-cache'), maxManifestBytes, 'Pricing manifest');
+  const manifest = manifestSchema.parse(parseBoundedJson(decodeUtf8(raw), 30, 'Pricing manifest'));
   if (!manifest.catalogueId) return { manifest, records: [] };
   try {
     const { records, inventory } = await readAsset(manifest.catalogueId);

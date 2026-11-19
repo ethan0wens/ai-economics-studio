@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { parseBoundedJson } from './untrusted-data';
 
 export const disclaimer = 'Independent community project. Not affiliated with or endorsed by Microsoft. Estimates depend on assumptions and are not invoices, quotes, licensing advice or compliance certifications.';
 export const version = '1.0.0';
@@ -206,17 +207,13 @@ export function blankEnvironment(): Environment {
 
 export function importEnvironment(input: string): Environment {
   if (new TextEncoder().encode(input).length > maxBytes) throw new Error('Environment files must be 2 MB or smaller.');
-  const value: unknown = JSON.parse(input);
-  const pending: [unknown, number][] = [[value, 0]];
-  while (pending.length) {
-    const [item, depth] = pending.pop()!;
-    if (depth > 12) throw new Error('Environment JSON exceeds the supported nesting depth.');
-    if (item && typeof item === 'object') {
-      for (const child of Object.values(item)) pending.push([child, depth + 1]);
-    }
-  }
+  const value = parseBoundedJson(input, 55_000, 'Environment file');
   const result = environmentSchema.safeParse(value);
-  if (!result.success) throw new Error(result.error.issues.slice(0, 4).map(issue => `${issue.path.join('.')} ${issue.message}`.trim()).join(' · '));
+  if (!result.success) throw new Error(result.error.issues.slice(0, 4).map(issue => {
+    const location = issue.path.join('.');
+    const message = issue.code === 'unrecognized_keys' ? 'Contains unsupported properties.' : 'Invalid value or configuration.';
+    return issue.code === 'custom' ? issue.message : [location, message].filter(Boolean).join(' ');
+  }).join(' · '));
   const env = result.data;
   function bindVersion<T extends { objectId?: string; meter: Meter }>(rules: T[], key: (rule: T) => string) {
     const occupied = new Set(rules.map(key));

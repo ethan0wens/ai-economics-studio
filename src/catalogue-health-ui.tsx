@@ -2,6 +2,7 @@ import { regionName } from './presentation';
 import { useEffect, useState } from 'react';
 import { z } from 'zod';
 import { maintenanceHealthSchema, releaseHealthSchema, reviewGroups } from './catalogue-health';
+import { decodeUtf8, parseBoundedJson, readResponseBytes } from './untrusted-data';
 import type { Manifest } from './catalogue';
 
 const payload = z.strictObject({ release: releaseHealthSchema, maintenance: maintenanceHealthSchema });
@@ -20,8 +21,8 @@ export function CatalogueHealth({ manifest }: { manifest: Manifest }) {
   useEffect(() => {
     const controller = new AbortController();
     void fetch(`${import.meta.env.BASE_URL}pricing/health.json`, {
-      signal: AbortSignal.any([controller.signal, AbortSignal.timeout(10000)]), cache: 'no-cache',
-    }).then(async response => response.ok ? payload.safeParse(await response.json()) : undefined)
+      signal: AbortSignal.any([controller.signal, AbortSignal.timeout(10000)]), cache: 'no-cache', redirect: 'error', credentials: 'omit',
+    }).then(async response => response.ok ? payload.safeParse(parseBoundedJson(decodeUtf8(await readResponseBytes(response, 1_000_000, 'Catalogue health')), 30_000, 'Catalogue health')) : undefined)
       .then(parsed => { if (parsed?.success && !controller.signal.aborted) setData(parsed.data); })
       .catch(() => { /* Older or development deployments may not have a release report. */ })
       .finally(() => { if (!controller.signal.aborted) setLoading(false); });

@@ -44,6 +44,7 @@ Local setup, GitHub release gates, Cloudflare routing and incident response.
 
 - [Local development and Cloudflare deployment](06-build-and-deploy.md). Run the application, review workflow triggers and trace a verified production release.
 - [Security, privacy and release recovery](06-security-and-operations.md). Inspect the content policy, understand data boundaries and restore a known-good version.
+- [Security & Privacy](06-security-and-privacy.md). Review browser data handling, file boundaries, catalogue integrity and release safeguards.
 
 ## 7. Testing, Validation & Technical Reference
 

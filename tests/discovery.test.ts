@@ -14,7 +14,7 @@ const signature = {
 const component = { id: 'usage', label: 'Requests', unit: '1K Requests', quantityPerUnit: 1000 };
 const selectable = {
   id: 'fictional-s1', kind: 'supporting-resource', family: 'infrastructure', name: 'Fictional S1',
-  regions: ['uksouth', 'westeurope'], evidence: 'https://example.com/',
+  regions: ['uksouth', 'westeurope'], evidence: 'https://learn.microsoft.com/',
   components: [{ ...component, azure: signature }],
 };
 const review = {

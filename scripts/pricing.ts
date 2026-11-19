@@ -4,16 +4,17 @@ import { join } from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import Decimal from 'decimal.js';
 import { z } from 'zod';
-import { catalogueFilename, catalogueSchema, manifestSchema, type Manifest, type RetailRecord } from '../src/catalogue';
+import { catalogueFilename, catalogueSchema, manifestSchema, maxCatalogueBytes, maxManifestBytes, type Manifest, type RetailRecord } from '../src/catalogue';
 import { catalogueCoverage } from '../src/coverage';
 import { meterKey, version } from '../src/domain';
 import { curatedPrices } from './commercial-pricing';
 import { discoverExactModelPrices, discoverPrices, inventoryPlan, retailOrigin as origin, retailPath as pathname } from './discovery';
+import { decodeUtf8, parseBoundedJson, readResponseBytes } from '../src/untrusted-data';
 import { mappings, type Mapping } from './retail-mappings';
 
 const directory = fileURLToPath(new URL('../public/pricing/', import.meta.url));
 const digest = (source: string) => createHash('sha256').update(source).digest('hex');
-const pageSchema = z.object({ Items: z.array(z.record(z.string(), z.unknown())), NextPageLink: z.url().nullable() });
+const pageSchema = z.object({ Items: z.array(z.record(z.string(), z.unknown())).max(1000), NextPageLink: z.url().max(4096).nullable() });
 const retailer = z.object({
   retailPrice: z.number().nonnegative().max(1e9), tierMinimumUnits: z.number().nonnegative(), effectiveStartDate: z.iso.datetime({ offset: true }),
   meterId: z.uuid(), currencyCode: z.string().length(3),
@@ -34,6 +35,9 @@ function target(mapping: Mapping) {
 }
 
 export async function retailPage(url: URL, request: Fetcher) {
+  if (url.origin !== origin || url.pathname !== pathname || url.username || url.password || url.hash) {
+    throw new Error('Azure Retail Prices API URL is outside the permitted endpoint.');
+  }
   const maxAttempts = 3;
   for (let attempt = 0; attempt < maxAttempts; attempt++) {
     let response: Response | undefined;
@@ -42,7 +46,11 @@ export async function retailPage(url: URL, request: Fetcher) {
     } catch (error) {
       if (attempt === maxAttempts - 1) throw error;
     }
-    if (response?.ok) return pageSchema.parse(await response.json());
+    if (response?.ok) {
+      const raw = await readResponseBytes(response, 4_000_000, 'Azure retail page');
+      return pageSchema.parse(parseBoundedJson(decodeUtf8(raw), 90_000, 'Azure retail page'));
+    }
+    await response?.body?.cancel();
     if (response && ((response.status !== 429 && response.status < 500) || attempt === maxAttempts - 1)) {
       throw new Error(`Azure Retail Prices API returned HTTP ${response.status}.`);
     }
@@ -104,13 +112,15 @@ export async function ingest(mapping: Mapping, request: Fetcher = fetch, checked
 }
 
 async function readVersion(root: string, hash: string) {
-  const source = await readFile(join(root, catalogueFilename(hash)), 'utf8');
-  if (digest(source) !== hash) throw new Error(`Catalogue checksum mismatch for ${hash}.`);
-  return catalogueSchema.parse(JSON.parse(source));
+  const source = await readFile(join(root, catalogueFilename(hash)));
+  if (source.length > maxCatalogueBytes || createHash('sha256').update(source).digest('hex') !== hash) throw new Error(`Catalogue checksum mismatch for ${hash}.`);
+  return catalogueSchema.parse(parseBoundedJson(decodeUtf8(source), 275_000, 'Pricing catalogue'));
 }
 
 export async function validate(root: string) {
-  const manifest = manifestSchema.parse(JSON.parse(await readFile(join(root, 'manifest.json'), 'utf8')));
+  const source = await readFile(join(root, 'manifest.json'));
+  if (source.length > maxManifestBytes) throw new Error('Pricing manifest exceeds the supported file size.');
+  const manifest = manifestSchema.parse(parseBoundedJson(decodeUtf8(source), 30, 'Pricing manifest'));
   const { records, inventory } = manifest.catalogueId ? await readVersion(root, manifest.catalogueId) : { records: [], inventory: undefined };
   if (records.length !== manifest.records) throw new Error('The manifest does not match its catalogue record count.');
   if (manifest.previous) await readVersion(root, manifest.previous);
@@ -149,6 +159,8 @@ export async function refresh(root: string, selectors: readonly Mapping[], reque
     }
   }
   const raw = JSON.stringify(payload, null, 2) + '\n';
+  if (Buffer.byteLength(raw) > maxCatalogueBytes) throw new Error('Generated catalogue exceeds the supported file size.');
+  parseBoundedJson(raw, 275_000, 'Pricing catalogue');
   const hash = digest(raw);
   const manifest: Manifest = manifestSchema.parse({
     schemaVersion: version, catalogueId: hash, lastCheckedAt: checkedAt, records: records.length,

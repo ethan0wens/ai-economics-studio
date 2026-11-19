@@ -18,6 +18,9 @@ on:
       - 'public/pricing/**'
       - 'tests/e2e/**'
       - 'package-lock.json'
+      - 'scripts/security-*.ts'
+      - 'src/untrusted-data.ts'
+      - 'public/_headers'
 
 permissions:
   contents: read
@@ -31,14 +34,15 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
         with:
           persist-credentials: false
-      - uses: actions/setup-node@v6
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
         with:
           node-version: '24'
           cache: npm
-      - run: npm ci
+      - run: npm ci --ignore-scripts
+      - run: npm run security:audit
       - name: Validate the live Azure response
         run: |
           if ! result=$(npm run --silent pricing:refresh 2>&1); then
@@ -53,8 +57,8 @@ jobs:
         run: |
           printf '### Read-only Azure retail preview\n\n' >> "$GITHUB_STEP_SUMMARY"
           jq -r '"Validated records: \(.records)\n\nChecked at: \(.lastCheckedAt)\n\nCatalogue ID: \(.catalogueId)"' public/pricing/manifest.json >> "$GITHUB_STEP_SUMMARY"
-          npx tsx scripts/pricing.ts coverage >> "$GITHUB_STEP_SUMMARY"
-      - uses: actions/upload-artifact@v7
+          npx --no-install tsx scripts/pricing.ts coverage >> "$GITHUB_STEP_SUMMARY"
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7
         with:
           name: verified-retail-preview
           path: public/pricing/*.json
@@ -72,3 +76,49 @@ jobs:
           cat "$RUNNER_TEMP/studio-browser.log"
         env:
           STUDIO_CHECK_PUBLISHED_CATALOGUE: '1'
+
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7
+        with:
+          name: staged-preview-${{ github.run_attempt }}
+          path: |
+            catalogue/
+            public/pricing/
+            dist/
+          if-no-files-found: error
+          retention-days: 2
+
+  staged-security:
+    needs: verify-feed
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        with:
+          node-version: '24'
+          cache: npm
+      - run: npm ci --ignore-scripts
+      - name: Clear the checkout's pricing snapshot before loading the staged snapshot
+        run: node -e "require('node:fs').rmSync('public/pricing', { recursive:true })"
+      - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8
+        with:
+          name: staged-preview-${{ github.run_attempt }}
+          path: .
+      - run: npm run pricing:validate && npm run evidence:validate && npm run security:build
+
+  public-security:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        with:
+          node-version: '24'
+          cache: npm
+      - run: npm ci --ignore-scripts
+      - name: Verify the current public delivery boundary
+        run: npm run security:http >> "$GITHUB_STEP_SUMMARY"

@@ -5,6 +5,10 @@ import { getDocument } from 'pdfjs-dist/legacy/build/pdf.mjs';
 import { enterpriseInventory, referenceAt, scenarios } from '../../fixtures/enterprise-scenarios';
 
 const money = (value: string) => new Intl.NumberFormat('en-GB', { style: 'currency', currency: 'GBP' }).format(Number(value));
+async function navigate(page: Page, name: 'Cost Analysis' | 'Reports & Export') {
+  await page.getByRole('navigation', { name: 'Studio navigation' }).getByRole('link', { name, exact: true }).click();
+  await expect(page.getByRole('heading', { name, level: 1, exact: true })).toBeVisible();
+}
 async function exported(page: Page, action: string) {
   const download = page.waitForEvent('download');
   await page.getByRole('button', { name: action, exact: true }).first().click();
@@ -24,14 +28,14 @@ for (const item of scenarios) {
       name: 'fictional-enterprise-reference.json', mimeType: 'application/json', buffer: Buffer.from(JSON.stringify(item.env)),
     });
     await expect(page.locator('.metric').first()).toContainText(money(item.expected.monthly));
-    await page.getByRole('link', { name: 'Cost Analysis', exact: true }).click();
+    await navigate(page, 'Cost Analysis');
     await expect(page.getByRole('heading', { name: 'Estimate readiness' })).toBeVisible();
     await expect(page.locator('.metric').first()).toContainText(money(item.expected.monthly));
-    await page.getByRole('link', { name: 'Reports & Export' }).click();
+    await navigate(page, 'Reports & Export');
     await page.getByRole('link', { name: 'Architecture', exact: true }).click();
     await expect(page.getByRole('table', { name: 'Architecture objects and outgoing links' })).toBeVisible();
     if (item.expected.missing) await expect(page.getByRole('cell', { name: /Verified incompatible/ })).toBeVisible();
-    await page.getByRole('link', { name: 'Reports & Export', exact: true }).click();
+    await navigate(page, 'Reports & Export');
     const raw = await exported(page, 'Export JSON');
     const snapshot = JSON.parse(raw.toString()).sourceSnapshot;
     expect(snapshot).toMatchObject({ catalogueId, currentKnown: item.expected.monthly, annualKnown: item.expected.annual, incomplete: item.expected.missing });
@@ -126,14 +130,14 @@ test('provisioned reservation and PAYG comparison reconcile in the builder, arch
   await inspector.getByLabel('Billable hours covered by reservation', { exact: true }).fill('400');
   await inspector.getByLabel('Reservation evidence reference', { exact: true }).fill('Fictional quote fixture');
   await expect(page.locator('.metric').first()).toContainText('£5,600.00');
-  await page.getByRole('link', { name: 'Cost Analysis', exact: true }).click();
+  await navigate(page, 'Cost Analysis');
   await page.getByText('Compare pricing assumptions', { exact: true }).click();
   await expect(page.getByRole('heading', { name: 'Provisioned and PAYG costs' })).toBeVisible();
   await expect(page.getByText('£5,400.00 provisioned · £3.77 PAYG retail')).toBeVisible();
-  await page.getByRole('link', { name: 'Reports & Export' }).click();
+  await navigate(page, 'Reports & Export');
   await page.getByRole('link', { name: 'Architecture', exact: true }).click();
   await expect(page.getByRole('cell', { name: /PAYG comparison £3.77/ })).toBeVisible();
-  await page.getByRole('link', { name: 'Reports & Export', exact: true }).click();
+  await navigate(page, 'Reports & Export');
   const json = JSON.parse((await exported(page, 'Export JSON')).toString());
   expect(json.sourceSnapshot).toMatchObject({ currentKnown: '5600.00', annualKnown: '67200.00', incomplete: 0 });
   expect(json.objects.find((row: { id: string }) => row.id === 'Reserved model')).toMatchObject({

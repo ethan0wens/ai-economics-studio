@@ -1,5 +1,6 @@
 import { z } from 'zod';
 import { parseBoundedJson } from './untrusted-data';
+import { valueKeys, valuePlanSchema } from './value';
 
 export const disclaimer = 'Independent community project. Not affiliated with or endorsed by Microsoft. Estimates depend on assumptions and are not invoices, quotes, licensing advice or compliance certifications.';
 export const version = '1.0.0';
@@ -147,6 +148,7 @@ const baseEnvironment = z.strictObject({
   region, currency, objects: z.array(objectSchema).max(maxObjects), relationships: z.array(edgeSchema).max(1500),
   pricingOverrides: z.array(overrideSchema).max(1500),
   forecast: z.strictObject({ percent, applyToFixed: z.boolean(), exceptions: z.array(forecastException).max(1500) }),
+  valuePlan: valuePlanSchema.optional(),
   sourceSnapshot: z.strictObject({
     catalogueId: id.nullable(), checkedAt: datetime.nullable(), current: moneySnapshot.nullable(), incomplete: count,
     currentKnown: moneySnapshot.optional(), annualKnown: moneySnapshot.optional(), forecastKnown: moneySnapshot.optional(),
@@ -215,6 +217,12 @@ export function importEnvironment(input: string): Environment {
     return issue.code === 'custom' ? issue.message : [location, message].filter(Boolean).join(' ');
   }).join(' · '));
   const env = result.data;
+  if (env.valuePlan) {
+    for (const key of valueKeys) {
+      const assumption = env.valuePlan.assumptions[key];
+      if (assumption?.source === 'entered') assumption.source = 'imported';
+    }
+  }
   function bindVersion<T extends { objectId?: string; meter: Meter }>(rules: T[], key: (rule: T) => string) {
     const occupied = new Set(rules.map(key));
     return rules.map(rule => {

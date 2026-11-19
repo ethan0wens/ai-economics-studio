@@ -435,3 +435,4 @@ dialog::backdrop{background:#17243b70}dialog p{margin:8px 0 12px}dialog ul{list-
 
 .view-choice { justify-self: start; max-width: 100%; flex-wrap: wrap; }
 .scenario-choice { margin-block: 14px; max-width: 24rem; }
+.assumption-note { display: block; font-weight: 400; color: var(--muted); }

@@ -17,6 +17,7 @@ import { GuidedBuilder } from './guided-ui';
 import type { Intent } from './guided-state';
 import { CostDrivers, EstimateReadiness, EstimateSummary, type EditTarget } from './estimate-ui';
 import { ExploreChanges } from './scenario-ui';
+import { PotentialValue } from './value-ui';
 import { openExample } from './examples';
 import { LearnMore } from './learn-more';
 
@@ -109,7 +110,7 @@ export default function App() {
   const [estimateChanged, setEstimateChanged] = useState(false);
   const [route, setRoute] = useState(currentRoute);
   const [step, setStep] = useState(0);
-  const [costView, setCostView] = useState<'costs' | 'explore'>('costs');
+  const [costView, setCostView] = useState<'costs' | 'explore' | 'value'>('costs');
   const [mode, setMode] = useState<View>('guided');
   const [intent, setIntent] = useState<Intent>();
   const [selected, setSelected] = useState<string>();
@@ -392,9 +393,11 @@ export default function App() {
           <div className="mode-control view-choice" role="group" aria-label="Analysis view">
             <button className="button" aria-pressed={costView === 'costs'} aria-controls="analysis-content" onClick={() => setCostView('costs')}>Costs</button>
             <button className="button" aria-pressed={costView === 'explore'} aria-controls="analysis-content" onClick={() => setCostView('explore')}>Explore changes</button>
+            <button className="button" aria-pressed={costView === 'value'} aria-controls="analysis-content" onClick={() => setCostView('value')}>Potential value</button>
           </div>
           <div id="analysis-content" className="page-stack">
-          {costView === 'explore' ? <ExploreChanges {...{ env, result, catalogue }} /> : <>
+          {costView === 'explore' ? <ExploreChanges {...{ env, result, catalogue }} /> : costView === 'value' ?
+            <PotentialValue {...{ env, result, update }} /> : <>
           <EstimateSummary {...{ env, result, catalogue }} />
           <EstimateReadiness env={env} result={result} edit={edit} />
           <CostDrivers env={env} result={result} edit={edit} />

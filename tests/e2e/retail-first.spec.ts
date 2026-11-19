@@ -121,6 +121,6 @@ if (process.env.STUDIO_CHECK_RELEASE_HEALTH === '1') {
     await page.getByRole('link', { name: 'Pricing Catalogue', exact: true }).click();
     const health = page.getByRole('region', { name: 'Catalogue health' });
     await expect(health.getByText(new RegExp('Published application ' + release.application.slice(0, 12)))).toBeVisible();
-    await expect(health.getByText('PTU sizing', { exact: true })).toBeVisible();
+    await expect(health.getByText('Provisioned capacity sizing', { exact: true })).toBeVisible();
   });
 }

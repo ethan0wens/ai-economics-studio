@@ -26,3 +26,27 @@ jobs:
           name: microsoft-evidence-${{ matrix.scope }}
           path: enterprise-*.txt
           retention-days: 7
+  live-reconciliation:
+    runs-on: ubuntu-latest
+    timeout-minutes: 6
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v6
+        with:
+          node-version: '24'
+          cache: npm
+      - run: npm ci
+      - uses: ./.github/actions/setup-browser
+      - name: Check the public Worker
+        run: |
+          if ! npm run test:e2e -- tests/e2e/enterprise.spec.ts tests/e2e/field-help.spec.ts tests/e2e/retail-first.spec.ts > "$RUNNER_TEMP/live-check.log" 2>&1; then
+            cat "$RUNNER_TEMP/live-check.log"
+            tail -c 5800 "$RUNNER_TEMP/live-check.log" | jq -Rsr 'gsub("%"; "%25") | gsub("\r"; "%0D") | gsub("\n"; "%0A")' | sed 's/^/::error title=Public Worker browser checks::/'
+            exit 1
+          fi
+          cat "$RUNNER_TEMP/live-check.log"
+        env:
+          STUDIO_TEST_URL: https://ai-econmics-studio.ethan0wens.workers.dev
+          STUDIO_CHECK_PUBLISHED_CATALOGUE: '1'

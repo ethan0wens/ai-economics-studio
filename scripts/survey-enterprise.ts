@@ -1,6 +1,16 @@
 export {};
 
 const sources: Record<string, [string, string, RegExp][]> = {
+  matrix: [
+    ['GLOBAL region matrix', 'https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure?tabs=global-standard%2Cstandard-chat-completions', /Global Standard|gpt-4.1|region/i],
+    ['REGIONAL region matrix', 'https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure?tabs=standard%2Cstandard-chat-completions', /Standard|gpt-4.1|region/i],
+    ['Foundry GA overview', 'https://learn.microsoft.com/en-us/azure/foundry/agents/overview', /gpt-4.1|model deployment|connect|tool/i],
+    ['Agent service current models', 'https://learn.microsoft.com/en-us/azure/foundry/agents/concepts/models', /gpt-4.1|region|deployment/i],
+    ['Agent service connected models', 'https://learn.microsoft.com/en-us/azure/foundry/agents/how-to/connected-models', /gpt-4.1|supported|endpoint|connection/i],
+    ['Search classic linked sources', 'https://learn.microsoft.com/en-us/azure/foundry-classic/agents/how-to/tools-classic/azure-ai-search', /same tenant|private|deprecated/i],
+    ['UK enterprise exact', 'https://www.microsoft.com/en-gb/microsoft-365/enterprise/microsoft-365-plans-and-pricing', /£|paid yearly|VAT/i],
+    ['Products by region', 'https://azure.microsoft.com/en-gb/explore/global-infrastructure/products-by-region/table', /Search|West Europe|UK South|East US 2/i],
+  ],
   technical: [
     ['OpenAI standard', 'https://learn.microsoft.com/en-us/azure/ai-foundry/openai/concepts/models', /gpt-4\.1|gpt-4o-mini|global standard|data zone standard/i],
     ['OpenAI regional matrices', 'https://learn.microsoft.com/en-us/azure/ai-foundry/openai/concepts/models?tabs=global-standard%2Cstandard-chat-completions', /uksouth|westeurope|eastus2|gpt-4\.1/i],
@@ -41,14 +51,19 @@ await Promise.all((sources[process.argv[2]] ?? []).map(async ([title, source, te
     const rows = [...body.matchAll(/<(tr|p|li|h[1-5]|div)\b[^>]*>((?:(?!<\1\b)[\s\S])*?)<\/\1>/gi)]
       .map(match => plain(match[2])).filter(value => value.length > 4 && value.length < 650 && terms.test(value));
     const pricing = rows.filter(row => row.includes('£'));
-    const tables = title === 'OpenAI regional matrices' ? [...body.matchAll(/<table\b[^>]*>([\s\S]*?)<\/table>/gi)].flatMap(table => {
-      const cells = [...table[1].matchAll(/<tr\b[^>]*>([\s\S]*?)<\/tr>/gi)].map(row => plain(row[1]));
-      return cells[0]?.includes('gpt-4.1') ? [cells[0], ...cells.filter(row => /^(uksouth|westeurope|eastus2|UK South|West Europe|East US 2) \|/i.test(row))] : [];
+    const tables = title.includes('region matrix') ? [...body.matchAll(/<table\b[^>]*>([\s\S]*?)<\/table>/gi)].flatMap(table => {
+      const result = [...table[1].matchAll(/<tr\b[^>]*>([\s\S]*?)<\/tr>/gi)].map(row => plain(row[1]));
+      const regions = result.filter(row => /^(uksouth|westeurope|eastus2|UK South|West Europe|East US 2)( |\|)/i.test(row));
+      const before = body.slice(0, table.index);
+      const heading = [...before.matchAll(/<h[2-5]\b[^>]*>([\s\S]*?)<\/h[2-5]>/gi)].at(-1);
+      return regions.length ? [plain(heading?.[1] ?? ''), result[0], ...regions] : [];
     }) : [];
+    const links = title === 'Search classic linked sources' ? [...body.matchAll(/<a\b[^>]*href="([^"]+)"[^>]*>([\s\S]*?)<\/a>/gi)]
+      .filter(link => /new Foundry IQ|new agents/i.test(plain(link[2]))).map(link => new URL(link[1], response.url).href) : [];
     const pageText = plain(body);
-    const near = ['M365 enterprise', 'Business', 'Office 365', 'Entra', 'Copilot commercial'].includes(title)
+    const near = ['M365 enterprise', 'UK enterprise exact', 'Business', 'Office 365', 'Entra', 'Copilot commercial'].includes(title)
       ? [...pageText.matchAll(/£[0-9]+\.[0-9]+/g)].slice(0, 32).map(match => pageText.slice(Math.max(0, match.index - 90), match.index + 150)) : [];
-    const output = [`HTTP ${response.status} ${response.url}`, ...[...new Set([...tables, ...near, ...pricing, ...rows])].slice(0, 44)];
+    const output = [`HTTP ${response.status} ${response.url}`, ...[...new Set([...tables, ...links, ...near, ...pricing, ...rows])].slice(0, 44)];
     console.log(`::notice title=${title}::${output.join('\n').replaceAll('%', '%25').replaceAll('\r', '%0D').replaceAll('\n', '%0A')}`);
     await import('node:fs/promises').then(fs => fs.writeFile(`enterprise-${title.toLowerCase().replaceAll(' ', '-')}.txt`, output.join('\n')));
   } catch (error) {

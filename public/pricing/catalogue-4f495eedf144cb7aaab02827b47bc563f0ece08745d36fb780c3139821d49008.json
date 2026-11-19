@@ -791,9 +791,10 @@
       "offeringId": "agent-365-gb",
       "component": "seats",
       "review": {
-        "checkedAt": "2026-11-18T00:00:00Z",
-        "expiresAt": "2027-01-17T23:59:59Z",
-        "terms": "UK per user per month, annual commitment, excluding VAT. Do not infer prerequisite eligibility or consumption allowances."
+        "checkedAt": "2026-11-19T13:19:56.956Z",
+        "expiresAt": "2027-01-03T13:19:56.956Z",
+        "terms": "UK per user per month, annual commitment, excluding VAT. Do not infer prerequisite eligibility or consumption allowances.",
+        "term": "annual"
       }
     },
     {
@@ -2559,9 +2560,10 @@
       "offeringId": "defender-business-gb",
       "component": "seats",
       "review": {
-        "checkedAt": "2026-11-19T00:00:00Z",
-        "expiresAt": "2027-01-17T23:59:00Z",
-        "terms": "UK public offer per user/month, paid yearly. Annual subscription auto-renews. Price excludes VAT."
+        "checkedAt": "2026-11-19T13:19:56.956Z",
+        "expiresAt": "2027-01-03T13:19:56.956Z",
+        "terms": "UK public offer per user/month, paid yearly. Annual subscription auto-renews. Price excludes VAT.",
+        "term": "annual"
       }
     },
     {
@@ -2580,9 +2582,10 @@
       "offeringId": "defender-o365-p1-gb",
       "component": "seats",
       "review": {
-        "checkedAt": "2026-11-19T00:00:00Z",
-        "expiresAt": "2027-01-17T23:59:00Z",
-        "terms": "UK public offer per user/month. Annual subscription, paid yearly, auto-renews. Excludes VAT. Plan 1. Confirm email and workload prerequisites."
+        "checkedAt": "2026-11-19T13:19:56.956Z",
+        "expiresAt": "2027-01-03T13:19:56.956Z",
+        "terms": "UK public offer per user/month. Annual subscription, paid yearly, auto-renews. Excludes VAT. Plan 1. Confirm email and workload prerequisites.",
+        "term": "annual"
       }
     },
     {
@@ -2601,9 +2604,10 @@
       "offeringId": "defender-o365-p2-gb",
       "component": "seats",
       "review": {
-        "checkedAt": "2026-11-19T00:00:00Z",
-        "expiresAt": "2027-01-17T23:59:00Z",
-        "terms": "UK public offer per user/month. Annual subscription, paid yearly, auto-renews. Excludes VAT. Plan 2. Confirm email and workload prerequisites."
+        "checkedAt": "2026-11-19T13:19:56.956Z",
+        "expiresAt": "2027-01-03T13:19:56.956Z",
+        "terms": "UK public offer per user/month. Annual subscription, paid yearly, auto-renews. Excludes VAT. Plan 2. Confirm email and workload prerequisites.",
+        "term": "annual"
       }
     },
     {
@@ -2622,9 +2626,14 @@
       "offeringId": "defender-suite-gb",
       "component": "seats",
       "review": {
-        "checkedAt": "2026-11-19T00:00:00Z",
-        "expiresAt": "2027-01-17T23:59:00Z",
-        "terms": "UK public offer per user/month. Annual subscription, paid yearly, auto-renews. Excludes VAT. Requires Microsoft 365 E3, or Office 365 E3 and Enterprise Mobility + Security E3."
+        "checkedAt": "2026-11-19T13:19:56.956Z",
+        "expiresAt": "2027-01-03T13:19:56.956Z",
+        "terms": "UK public offer per user/month. Annual subscription, paid yearly, auto-renews. Excludes VAT. Requires Microsoft 365 E3, or Office 365 E3 and Enterprise Mobility + Security E3.",
+        "term": "annual",
+        "corroboration": [
+          "https://www.microsoft.com/en-gb/security/business/siem-and-xdr/microsoft-defender-office-365",
+          "https://www.microsoft.com/en-gb/security/business/endpoint-security/microsoft-defender-endpoint"
+        ]
       }
     },
     {
@@ -3003,9 +3012,10 @@
       "offeringId": "ems-e3-gb",
       "component": "seats",
       "review": {
-        "checkedAt": "2026-11-19T00:00:00Z",
-        "expiresAt": "2027-01-17T23:59:00Z",
-        "terms": "UK public offer per user/month. Annual subscription, paid yearly, auto-renews. Excludes VAT. The separately purchased offer can be part of the Defender Suite prerequisite."
+        "checkedAt": "2026-11-19T13:19:56.956Z",
+        "expiresAt": "2027-01-03T13:19:56.956Z",
+        "terms": "UK public offer per user/month. Annual subscription, paid yearly, auto-renews. Excludes VAT. The separately purchased offer can be part of the Defender Suite prerequisite.",
+        "term": "annual"
       }
     },
     {
@@ -3024,9 +3034,10 @@
       "offeringId": "entra-governance-gb",
       "component": "seats",
       "review": {
-        "checkedAt": "2026-11-19T00:00:00Z",
-        "expiresAt": "2027-01-17T23:59:00Z",
-        "terms": "UK public offer per user/month, paid yearly. Annual subscription auto-renews. Price excludes VAT. Customer prerequisite and plan eligibility require separate review."
+        "checkedAt": "2026-11-19T13:19:56.956Z",
+        "expiresAt": "2027-01-03T13:19:56.956Z",
+        "terms": "UK public offer per user/month, paid yearly. Annual subscription auto-renews. Price excludes VAT. Customer prerequisite and plan eligibility require separate review.",
+        "term": "annual"
       }
     },
     {
@@ -3039,15 +3050,16 @@
       "currency": "GBP",
       "price": "5.40",
       "effectiveAt": "2026-11-18T00:00:00Z",
-      "source": "https://www.microsoft.com/en-gb/security/business/microsoft-entra-pricing",
+      "source": "https://www.microsoft.com/en-gb/security/microsoft-entra-pricing",
       "product": "Microsoft Entra ID P1",
       "verification": "microsoft-commercial",
       "offeringId": "entra-p1-gb",
       "component": "seats",
       "review": {
-        "checkedAt": "2026-11-18T00:00:00Z",
-        "expiresAt": "2027-01-17T23:59:59Z",
-        "terms": "UK per user per month paid yearly, excluding VAT. Verify whether P1 is already included in a declared licence."
+        "checkedAt": "2026-11-19T13:19:56.956Z",
+        "expiresAt": "2027-01-03T13:19:56.956Z",
+        "terms": "UK per user per month paid yearly, excluding VAT. Verify whether P1 is already included in a declared licence.",
+        "term": "annual"
       }
     },
     {
@@ -3066,9 +3078,10 @@
       "offeringId": "entra-p2-gb",
       "component": "seats",
       "review": {
-        "checkedAt": "2026-11-19T00:00:00Z",
-        "expiresAt": "2027-01-17T23:59:00Z",
-        "terms": "UK public offer per user/month, paid yearly. Annual subscription auto-renews. Price excludes VAT."
+        "checkedAt": "2026-11-19T13:19:56.956Z",
+        "expiresAt": "2027-01-03T13:19:56.956Z",
+        "terms": "UK public offer per user/month, paid yearly. Annual subscription auto-renews. Price excludes VAT.",
+        "term": "annual"
       }
     },
     {
@@ -3081,15 +3094,16 @@
       "currency": "GBP",
       "price": "9.20",
       "effectiveAt": "2026-11-18T00:00:00Z",
-      "source": "https://www.microsoft.com/en-gb/security/business/microsoft-entra-pricing",
+      "source": "https://www.microsoft.com/en-gb/security/microsoft-entra-pricing",
       "product": "Microsoft Entra Suite",
       "verification": "microsoft-commercial",
       "offeringId": "entra-suite-gb",
       "component": "seats",
       "review": {
-        "checkedAt": "2026-11-18T00:00:00Z",
-        "expiresAt": "2027-01-17T23:59:59Z",
-        "terms": "UK per user per month paid yearly, excluding VAT. Prerequisite eligibility and overlapping licences are separate."
+        "checkedAt": "2026-11-19T13:19:56.956Z",
+        "expiresAt": "2027-01-03T13:19:56.956Z",
+        "terms": "UK per user per month paid yearly, excluding VAT. Prerequisite eligibility and overlapping licences are separate.",
+        "term": "annual"
       }
     },
     {
@@ -5008,9 +5022,10 @@
       "offeringId": "m365-apps-business-gb",
       "component": "seats",
       "review": {
-        "checkedAt": "2026-11-19T00:00:00Z",
-        "expiresAt": "2027-01-17T23:59:00Z",
-        "terms": "UK public offer per user/month, paid yearly. Annual subscription auto-renews. Price excludes VAT."
+        "checkedAt": "2026-11-19T13:19:56.956Z",
+        "expiresAt": "2027-01-03T13:19:56.956Z",
+        "terms": "UK public offer per user/month, paid yearly. Annual subscription auto-renews. Price excludes VAT.",
+        "term": "annual"
       }
     },
     {
@@ -5029,9 +5044,10 @@
       "offeringId": "m365-apps-enterprise-gb",
       "component": "seats",
       "review": {
-        "checkedAt": "2026-11-19T00:00:00Z",
-        "expiresAt": "2027-01-17T23:59:00Z",
-        "terms": "UK public offer per user/month, paid yearly. Annual subscription auto-renews. Price excludes VAT."
+        "checkedAt": "2026-11-19T13:19:56.956Z",
+        "expiresAt": "2027-01-03T13:19:56.956Z",
+        "terms": "UK public offer per user/month, paid yearly. Annual subscription auto-renews. Price excludes VAT.",
+        "term": "annual"
       }
     },
     {
@@ -5050,9 +5066,10 @@
       "offeringId": "m365-business-basic-gb",
       "component": "seats",
       "review": {
-        "checkedAt": "2026-11-19T00:00:00Z",
-        "expiresAt": "2027-01-17T23:59:00Z",
-        "terms": "UK public offer per user/month, paid yearly. Annual subscription auto-renews. Price excludes VAT."
+        "checkedAt": "2026-11-19T13:19:56.956Z",
+        "expiresAt": "2027-01-03T13:19:56.956Z",
+        "terms": "UK public offer per user/month, paid yearly. Annual subscription auto-renews. Price excludes VAT.",
+        "term": "annual"
       }
     },
     {
@@ -5071,9 +5088,10 @@
       "offeringId": "m365-business-basic-no-teams-gb",
       "component": "seats",
       "review": {
-        "checkedAt": "2026-11-19T00:00:00Z",
-        "expiresAt": "2027-01-17T23:59:00Z",
-        "terms": "UK public offer per user/month, paid yearly. Annual subscription auto-renews. Price excludes VAT."
+        "checkedAt": "2026-11-19T13:19:56.956Z",
+        "expiresAt": "2027-01-03T13:19:56.956Z",
+        "terms": "UK public offer per user/month, paid yearly. Annual subscription auto-renews. Price excludes VAT.",
+        "term": "annual"
       }
     },
     {
@@ -5092,9 +5110,10 @@
       "offeringId": "m365-business-copilot-gb",
       "component": "seats",
       "review": {
-        "checkedAt": "2026-11-19T00:00:00Z",
-        "expiresAt": "2027-01-17T23:59:00Z",
-        "terms": "UK public offer per user/month. Monthly subscription, auto-renews. Excludes VAT. Exact non-promotional monthly offer for the standalone Business add-on with an eligible Microsoft subscription. Advanced usage can be billed separately."
+        "checkedAt": "2026-11-19T13:19:56.956Z",
+        "expiresAt": "2027-01-03T13:19:56.956Z",
+        "terms": "UK public offer per user/month. Monthly subscription, auto-renews. Excludes VAT. Exact non-promotional monthly offer for the standalone Business add-on with an eligible Microsoft subscription. Advanced usage can be billed separately.",
+        "term": "monthly"
       }
     },
     {
@@ -5113,9 +5132,11 @@
       "offeringId": "m365-business-premium-gb",
       "component": "seats",
       "review": {
-        "checkedAt": "2026-11-19T00:00:00Z",
-        "expiresAt": "2027-01-17T23:59:00Z",
-        "terms": "UK public offer per user/month. Annual subscription, paid yearly, auto-renews. Excludes VAT. Standalone Business Premium with Teams."
+        "checkedAt": "2026-11-19T13:19:56.956Z",
+        "expiresAt": "2027-01-03T13:19:56.956Z",
+        "terms": "UK public offer per user/month. Annual subscription, paid yearly, auto-renews. Excludes VAT. Standalone Business Premium with Teams.",
+        "term": "annual",
+        "identity": "CFQ7TTC0LCHC:0002"
       }
     },
     {
@@ -5134,9 +5155,11 @@
       "offeringId": "m365-business-premium-no-teams-gb",
       "component": "seats",
       "review": {
-        "checkedAt": "2026-11-19T00:00:00Z",
-        "expiresAt": "2027-01-17T23:59:00Z",
-        "terms": "UK public offer per user/month. Annual subscription, paid yearly, auto-renews. Excludes VAT. No Teams edition."
+        "checkedAt": "2026-11-19T13:19:56.956Z",
+        "expiresAt": "2027-01-03T13:19:56.956Z",
+        "terms": "UK public offer per user/month. Annual subscription, paid yearly, auto-renews. Excludes VAT. No Teams edition.",
+        "term": "annual",
+        "identity": "CFQ7TTC0LCHC:000N"
       }
     },
     {
@@ -5155,9 +5178,11 @@
       "offeringId": "m365-business-standard-gb",
       "component": "seats",
       "review": {
-        "checkedAt": "2026-11-19T00:00:00Z",
-        "expiresAt": "2027-01-17T23:59:00Z",
-        "terms": "UK public offer per user/month. Annual subscription, paid yearly, auto-renews. Excludes VAT. Standalone Business Standard with Teams."
+        "checkedAt": "2026-11-19T13:19:56.956Z",
+        "expiresAt": "2027-01-03T13:19:56.956Z",
+        "terms": "UK public offer per user/month. Annual subscription, paid yearly, auto-renews. Excludes VAT. Standalone Business Standard with Teams.",
+        "term": "annual",
+        "identity": "CFQ7TTC0LDPB:0001"
       }
     },
     {
@@ -5176,9 +5201,11 @@
       "offeringId": "m365-business-standard-no-teams-gb",
       "component": "seats",
       "review": {
-        "checkedAt": "2026-11-19T00:00:00Z",
-        "expiresAt": "2027-01-17T23:59:00Z",
-        "terms": "UK public offer per user/month. Annual subscription, paid yearly, auto-renews. Excludes VAT. No Teams edition."
+        "checkedAt": "2026-11-19T13:19:56.956Z",
+        "expiresAt": "2027-01-03T13:19:56.956Z",
+        "terms": "UK public offer per user/month. Annual subscription, paid yearly, auto-renews. Excludes VAT. No Teams edition.",
+        "term": "annual",
+        "identity": "CFQ7TTC0LDPB:0011"
       }
     },
     {
@@ -5197,9 +5224,10 @@
       "offeringId": "m365-copilot-enterprise-gb",
       "component": "seats",
       "review": {
-        "checkedAt": "2026-11-19T00:00:00Z",
-        "expiresAt": "2027-01-17T23:59:00Z",
-        "terms": "UK public offer per user/month, paid yearly. Annual subscription auto-renews. Price excludes VAT. Eligible Microsoft 365 or Office 365 licence required under Microsoft terms."
+        "checkedAt": "2026-11-19T13:19:56.956Z",
+        "expiresAt": "2027-01-03T13:19:56.956Z",
+        "terms": "UK public offer per user/month, paid yearly. Annual subscription auto-renews. Price excludes VAT. Eligible Microsoft 365 or Office 365 licence required under Microsoft terms.",
+        "term": "annual"
       }
     },
     {
@@ -5218,9 +5246,10 @@
       "offeringId": "m365-e3-gb",
       "component": "seats",
       "review": {
-        "checkedAt": "2026-11-19T00:00:00Z",
-        "expiresAt": "2027-01-17T23:59:00Z",
-        "terms": "UK public offer per user/month, paid yearly. Annual commitment. Price excludes VAT."
+        "checkedAt": "2026-11-19T13:19:56.956Z",
+        "expiresAt": "2027-01-03T13:19:56.956Z",
+        "terms": "UK public offer per user/month, paid yearly. Annual commitment. Price excludes VAT.",
+        "term": "annual"
       }
     },
     {
@@ -5239,9 +5268,10 @@
       "offeringId": "m365-e3-no-teams-gb",
       "component": "seats",
       "review": {
-        "checkedAt": "2026-11-19T00:00:00Z",
-        "expiresAt": "2027-01-17T23:59:00Z",
-        "terms": "UK public offer per user/month, paid yearly. Annual commitment. Price excludes VAT."
+        "checkedAt": "2026-11-19T13:19:56.956Z",
+        "expiresAt": "2027-01-03T13:19:56.956Z",
+        "terms": "UK public offer per user/month, paid yearly. Annual commitment. Price excludes VAT.",
+        "term": "annual"
       }
     },
     {
@@ -5260,9 +5290,10 @@
       "offeringId": "m365-e5-gb",
       "component": "seats",
       "review": {
-        "checkedAt": "2026-11-19T00:00:00Z",
-        "expiresAt": "2027-01-17T23:59:00Z",
-        "terms": "UK public offer per user/month, paid yearly. Annual commitment. Price excludes VAT."
+        "checkedAt": "2026-11-19T13:19:56.956Z",
+        "expiresAt": "2027-01-03T13:19:56.956Z",
+        "terms": "UK public offer per user/month, paid yearly. Annual commitment. Price excludes VAT.",
+        "term": "annual"
       }
     },
     {
@@ -5281,9 +5312,10 @@
       "offeringId": "m365-e5-no-teams-gb",
       "component": "seats",
       "review": {
-        "checkedAt": "2026-11-19T00:00:00Z",
-        "expiresAt": "2027-01-17T23:59:00Z",
-        "terms": "UK public offer per user/month, paid yearly. Annual commitment. Price excludes VAT."
+        "checkedAt": "2026-11-19T13:19:56.956Z",
+        "expiresAt": "2027-01-03T13:19:56.956Z",
+        "terms": "UK public offer per user/month, paid yearly. Annual commitment. Price excludes VAT.",
+        "term": "annual"
       }
     },
     {
@@ -5302,9 +5334,10 @@
       "offeringId": "m365-e7-gb",
       "component": "seats",
       "review": {
-        "checkedAt": "2026-11-19T00:00:00Z",
-        "expiresAt": "2027-01-17T23:59:00Z",
-        "terms": "UK public offer per user/month, paid yearly. Annual commitment. Price excludes VAT."
+        "checkedAt": "2026-11-19T13:19:56.956Z",
+        "expiresAt": "2027-01-03T13:19:56.956Z",
+        "terms": "UK public offer per user/month, paid yearly. Annual commitment. Price excludes VAT.",
+        "term": "annual"
       }
     },
     {
@@ -5323,9 +5356,10 @@
       "offeringId": "m365-e7-no-teams-gb",
       "component": "seats",
       "review": {
-        "checkedAt": "2026-11-19T00:00:00Z",
-        "expiresAt": "2027-01-17T23:59:00Z",
-        "terms": "UK public offer per user/month, paid yearly. Annual commitment. Price excludes VAT."
+        "checkedAt": "2026-11-19T13:19:56.956Z",
+        "expiresAt": "2027-01-03T13:19:56.956Z",
+        "terms": "UK public offer per user/month, paid yearly. Annual commitment. Price excludes VAT.",
+        "term": "annual"
       }
     },
     {
@@ -5344,9 +5378,10 @@
       "offeringId": "m365-f3-gb",
       "component": "seats",
       "review": {
-        "checkedAt": "2026-11-19T00:00:00Z",
-        "expiresAt": "2027-01-17T23:59:00Z",
-        "terms": "UK public offer per user/month. Annual commitment, paid yearly. Excludes VAT. With Teams edition. Confirm frontline eligibility."
+        "checkedAt": "2026-11-19T13:19:56.956Z",
+        "expiresAt": "2027-01-03T13:19:56.956Z",
+        "terms": "UK public offer per user/month. Annual commitment, paid yearly. Excludes VAT. With Teams edition. Confirm frontline eligibility.",
+        "term": "annual"
       }
     },
     {
@@ -5365,9 +5400,10 @@
       "offeringId": "m365-f3-no-teams-gb",
       "component": "seats",
       "review": {
-        "checkedAt": "2026-11-19T00:00:00Z",
-        "expiresAt": "2027-01-17T23:59:00Z",
-        "terms": "UK public offer per user/month. Annual commitment, paid yearly. Excludes VAT. Frontline eligibility and the no-Teams edition apply."
+        "checkedAt": "2026-11-19T13:19:56.956Z",
+        "expiresAt": "2027-01-03T13:19:56.956Z",
+        "terms": "UK public offer per user/month. Annual commitment, paid yearly. Excludes VAT. Frontline eligibility and the no-Teams edition apply.",
+        "term": "annual"
       }
     },
     {
@@ -5380,15 +5416,16 @@
       "currency": "GBP",
       "price": "24.60",
       "effectiveAt": "2026-11-18T00:00:00Z",
-      "source": "https://www.microsoft.com/en-gb/microsoft-365-copilot/pricing",
+      "source": "https://www.microsoft.com/en-gb/copilot/pricing/business",
       "product": "Microsoft 365 Business Premium with Copilot",
       "verification": "microsoft-commercial",
       "offeringId": "m365-premium-copilot-gb",
       "component": "seats",
       "review": {
-        "checkedAt": "2026-11-18T00:00:00Z",
-        "expiresAt": "2027-01-17T23:59:00Z",
-        "terms": "UK public bundle. Per user/month, paid yearly, annual subscription with auto-renewal, excluding VAT. Usage-based billing for select advanced AI features is separate."
+        "checkedAt": "2026-11-19T13:19:56.956Z",
+        "expiresAt": "2027-01-03T13:19:56.956Z",
+        "terms": "UK public bundle. Per user/month, paid yearly, annual subscription with auto-renewal, excluding VAT. Usage-based billing for select advanced AI features is separate.",
+        "term": "annual"
       }
     },
     {
@@ -5401,15 +5438,16 @@
       "currency": "GBP",
       "price": "18.10",
       "effectiveAt": "2026-11-18T00:00:00Z",
-      "source": "https://www.microsoft.com/en-gb/microsoft-365-copilot/pricing",
+      "source": "https://www.microsoft.com/en-gb/copilot/pricing/business",
       "product": "Microsoft 365 Business Standard with Copilot",
       "verification": "microsoft-commercial",
       "offeringId": "m365-standard-copilot-gb",
       "component": "seats",
       "review": {
-        "checkedAt": "2026-11-18T00:00:00Z",
-        "expiresAt": "2027-01-17T23:59:59Z",
-        "terms": "Microsoft 365 Business Standard with Copilot. UK per user per month paid yearly, excluding VAT. Bundle, not the standalone Copilot add-on."
+        "checkedAt": "2026-11-19T13:19:56.956Z",
+        "expiresAt": "2027-01-03T13:19:56.956Z",
+        "terms": "Microsoft 365 Business Standard with Copilot. UK per user per month paid yearly, excluding VAT. Bundle, not the standalone Copilot add-on.",
+        "term": "annual"
       }
     },
     {
@@ -5428,9 +5466,10 @@
       "offeringId": "o365-e1-gb",
       "component": "seats",
       "review": {
-        "checkedAt": "2026-11-19T00:00:00Z",
-        "expiresAt": "2027-01-17T23:59:00Z",
-        "terms": "UK public offer per user/month, paid yearly. Annual subscription auto-renews. Price excludes VAT."
+        "checkedAt": "2026-11-19T13:19:56.956Z",
+        "expiresAt": "2027-01-03T13:19:56.956Z",
+        "terms": "UK public offer per user/month, paid yearly. Annual subscription auto-renews. Price excludes VAT.",
+        "term": "annual"
       }
     },
     {
@@ -5449,9 +5488,10 @@
       "offeringId": "o365-e1-no-teams-gb",
       "component": "seats",
       "review": {
-        "checkedAt": "2026-11-19T00:00:00Z",
-        "expiresAt": "2027-01-17T23:59:00Z",
-        "terms": "UK public offer per user/month, paid yearly. Annual subscription auto-renews. Price excludes VAT."
+        "checkedAt": "2026-11-19T13:19:56.956Z",
+        "expiresAt": "2027-01-03T13:19:56.956Z",
+        "terms": "UK public offer per user/month, paid yearly. Annual subscription auto-renews. Price excludes VAT.",
+        "term": "annual"
       }
     },
     {
@@ -5470,9 +5510,10 @@
       "offeringId": "o365-e3-gb",
       "component": "seats",
       "review": {
-        "checkedAt": "2026-11-19T00:00:00Z",
-        "expiresAt": "2027-01-17T23:59:00Z",
-        "terms": "UK public offer per user/month, paid yearly. Annual subscription auto-renews. Price excludes VAT."
+        "checkedAt": "2026-11-19T13:19:56.956Z",
+        "expiresAt": "2027-01-03T13:19:56.956Z",
+        "terms": "UK public offer per user/month, paid yearly. Annual subscription auto-renews. Price excludes VAT.",
+        "term": "annual"
       }
     },
     {
@@ -5491,9 +5532,10 @@
       "offeringId": "o365-e3-no-teams-gb",
       "component": "seats",
       "review": {
-        "checkedAt": "2026-11-19T00:00:00Z",
-        "expiresAt": "2027-01-17T23:59:00Z",
-        "terms": "UK public offer per user/month, paid yearly. Annual subscription auto-renews. Price excludes VAT."
+        "checkedAt": "2026-11-19T13:19:56.956Z",
+        "expiresAt": "2027-01-03T13:19:56.956Z",
+        "terms": "UK public offer per user/month, paid yearly. Annual subscription auto-renews. Price excludes VAT.",
+        "term": "annual"
       }
     },
     {
@@ -5512,9 +5554,10 @@
       "offeringId": "o365-e5-gb",
       "component": "seats",
       "review": {
-        "checkedAt": "2026-11-19T00:00:00Z",
-        "expiresAt": "2027-01-17T23:59:00Z",
-        "terms": "UK public offer per user/month, paid yearly. Annual subscription auto-renews. Price excludes VAT."
+        "checkedAt": "2026-11-19T13:19:56.956Z",
+        "expiresAt": "2027-01-03T13:19:56.956Z",
+        "terms": "UK public offer per user/month, paid yearly. Annual subscription auto-renews. Price excludes VAT.",
+        "term": "annual"
       }
     },
     {
@@ -5533,9 +5576,10 @@
       "offeringId": "o365-e5-no-teams-gb",
       "component": "seats",
       "review": {
-        "checkedAt": "2026-11-19T00:00:00Z",
-        "expiresAt": "2027-01-17T23:59:00Z",
-        "terms": "UK public offer per user/month, paid yearly. Annual subscription auto-renews. Price excludes VAT."
+        "checkedAt": "2026-11-19T13:19:56.956Z",
+        "expiresAt": "2027-01-03T13:19:56.956Z",
+        "terms": "UK public offer per user/month, paid yearly. Annual subscription auto-renews. Price excludes VAT.",
+        "term": "annual"
       }
     },
     {
@@ -6934,9 +6978,10 @@
       "offeringId": "teams-essentials-gb",
       "component": "seats",
       "review": {
-        "checkedAt": "2026-11-19T00:00:00Z",
-        "expiresAt": "2027-01-17T23:59:00Z",
-        "terms": "UK public offer per user/month. Annual subscription, paid yearly, auto-renews. Excludes VAT. Exact Teams Essentials subscription."
+        "checkedAt": "2026-11-19T13:19:56.956Z",
+        "expiresAt": "2027-01-03T13:19:56.956Z",
+        "terms": "UK public offer per user/month. Annual subscription, paid yearly, auto-renews. Excludes VAT. Exact Teams Essentials subscription.",
+        "term": "annual"
       }
     },
     {
@@ -8019,6 +8064,4066 @@
       "note": "Enter credits actually consumed. The estimate deducts eligible credits from one explicitly linked UK pack pool, then prices the balance.",
       "evidence": "https://learn.microsoft.com/en-us/microsoft-copilot-studio/requirements-licensing-subscriptions",
       "kind": "agent"
+    },
+    {
+      "id": "foundry-deepseek-v3-2-1-data-zone-provisioned-eastus2",
+      "name": "DeepSeek-V3.2 · 1",
+      "family": "foundry",
+      "currency": "GBP",
+      "region": "eastus2",
+      "components": [
+        {
+          "id": "capacity",
+          "label": "Provisioned throughput",
+          "unit": "1 Hour",
+          "quantityPerUnit": 1
+        }
+      ],
+      "note": "Official regional availability. Retail tariff is verified independently.",
+      "evidence": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#data-zone-provisioned-managed",
+      "deployment": "data-zone-provisioned",
+      "kind": "model-deployment",
+      "model": {
+        "id": "DeepSeek-V3.2",
+        "version": "1",
+        "sku": "DataZoneProvisionedManaged",
+        "mode": "provisioned"
+      }
+    },
+    {
+      "id": "foundry-deepseek-v3-2-1-data-zone-provisioned-westeurope",
+      "name": "DeepSeek-V3.2 · 1",
+      "family": "foundry",
+      "currency": "GBP",
+      "region": "westeurope",
+      "components": [
+        {
+          "id": "capacity",
+          "label": "Provisioned throughput",
+          "unit": "1 Hour",
+          "quantityPerUnit": 1
+        }
+      ],
+      "note": "Official regional availability. Retail tariff is verified independently.",
+      "evidence": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#data-zone-provisioned-managed",
+      "deployment": "data-zone-provisioned",
+      "kind": "model-deployment",
+      "model": {
+        "id": "DeepSeek-V3.2",
+        "version": "1",
+        "sku": "DataZoneProvisionedManaged",
+        "mode": "provisioned"
+      }
+    },
+    {
+      "id": "foundry-deepseek-v3-2-1-global-provisioned-eastus2",
+      "name": "DeepSeek-V3.2 · 1",
+      "family": "foundry",
+      "currency": "GBP",
+      "region": "eastus2",
+      "components": [
+        {
+          "id": "capacity",
+          "label": "Provisioned throughput",
+          "unit": "1 Hour",
+          "quantityPerUnit": 1
+        }
+      ],
+      "note": "Official regional availability. Retail tariff is verified independently.",
+      "evidence": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#global-provisioned-managed",
+      "deployment": "global-provisioned",
+      "kind": "model-deployment",
+      "model": {
+        "id": "DeepSeek-V3.2",
+        "version": "1",
+        "sku": "GlobalProvisionedManaged",
+        "mode": "provisioned"
+      }
+    },
+    {
+      "id": "foundry-deepseek-v3-2-1-global-provisioned-uksouth",
+      "name": "DeepSeek-V3.2 · 1",
+      "family": "foundry",
+      "currency": "GBP",
+      "region": "uksouth",
+      "components": [
+        {
+          "id": "capacity",
+          "label": "Provisioned throughput",
+          "unit": "1 Hour",
+          "quantityPerUnit": 1
+        }
+      ],
+      "note": "Official regional availability. Retail tariff is verified independently.",
+      "evidence": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#global-provisioned-managed",
+      "deployment": "global-provisioned",
+      "kind": "model-deployment",
+      "model": {
+        "id": "DeepSeek-V3.2",
+        "version": "1",
+        "sku": "GlobalProvisionedManaged",
+        "mode": "provisioned"
+      }
+    },
+    {
+      "id": "foundry-deepseek-v3-2-1-global-provisioned-westeurope",
+      "name": "DeepSeek-V3.2 · 1",
+      "family": "foundry",
+      "currency": "GBP",
+      "region": "westeurope",
+      "components": [
+        {
+          "id": "capacity",
+          "label": "Provisioned throughput",
+          "unit": "1 Hour",
+          "quantityPerUnit": 1
+        }
+      ],
+      "note": "Official regional availability. Retail tariff is verified independently.",
+      "evidence": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#global-provisioned-managed",
+      "deployment": "global-provisioned",
+      "kind": "model-deployment",
+      "model": {
+        "id": "DeepSeek-V3.2",
+        "version": "1",
+        "sku": "GlobalProvisionedManaged",
+        "mode": "provisioned"
+      }
+    },
+    {
+      "id": "foundry-gpt-4-1-2025-04-14-data-zone-provisioned-eastus2",
+      "name": "gpt-4.1 · 2025-04-14",
+      "family": "foundry",
+      "currency": "GBP",
+      "region": "eastus2",
+      "components": [
+        {
+          "id": "capacity",
+          "label": "Provisioned throughput",
+          "unit": "1 Hour",
+          "quantityPerUnit": 1
+        }
+      ],
+      "note": "Official regional availability. Retail tariff is verified independently.",
+      "evidence": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#data-zone-provisioned-managed",
+      "deployment": "data-zone-provisioned",
+      "kind": "model-deployment",
+      "model": {
+        "id": "gpt-4.1",
+        "version": "2025-04-14",
+        "sku": "DataZoneProvisionedManaged",
+        "mode": "provisioned"
+      }
+    },
+    {
+      "id": "foundry-gpt-4-1-2025-04-14-data-zone-provisioned-westeurope",
+      "name": "gpt-4.1 · 2025-04-14",
+      "family": "foundry",
+      "currency": "GBP",
+      "region": "westeurope",
+      "components": [
+        {
+          "id": "capacity",
+          "label": "Provisioned throughput",
+          "unit": "1 Hour",
+          "quantityPerUnit": 1
+        }
+      ],
+      "note": "Official regional availability. Retail tariff is verified independently.",
+      "evidence": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#data-zone-provisioned-managed",
+      "deployment": "data-zone-provisioned",
+      "kind": "model-deployment",
+      "model": {
+        "id": "gpt-4.1",
+        "version": "2025-04-14",
+        "sku": "DataZoneProvisionedManaged",
+        "mode": "provisioned"
+      }
+    },
+    {
+      "id": "foundry-gpt-4-1-2025-04-14-data-zone-standard-eastus2",
+      "name": "gpt-4.1 · 2025-04-14",
+      "family": "foundry",
+      "currency": "GBP",
+      "region": "eastus2",
+      "components": [
+        {
+          "id": "input",
+          "label": "Uncached input tokens",
+          "unit": "1M",
+          "quantityPerUnit": 1000000
+        },
+        {
+          "id": "output",
+          "label": "Output tokens",
+          "unit": "1M",
+          "quantityPerUnit": 1000000
+        }
+      ],
+      "note": "Official regional availability. Retail tariff is verified independently.",
+      "evidence": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#data-zone-standard",
+      "deployment": "data-zone-standard",
+      "kind": "model-deployment",
+      "model": {
+        "id": "gpt-4.1",
+        "version": "2025-04-14",
+        "sku": "DataZoneStandard",
+        "mode": "payg"
+      }
+    },
+    {
+      "id": "foundry-gpt-4-1-2025-04-14-data-zone-standard-westeurope",
+      "name": "gpt-4.1 · 2025-04-14",
+      "family": "foundry",
+      "currency": "GBP",
+      "region": "westeurope",
+      "components": [
+        {
+          "id": "input",
+          "label": "Uncached input tokens",
+          "unit": "1M",
+          "quantityPerUnit": 1000000
+        },
+        {
+          "id": "output",
+          "label": "Output tokens",
+          "unit": "1M",
+          "quantityPerUnit": 1000000
+        }
+      ],
+      "note": "Official regional availability. Retail tariff is verified independently.",
+      "evidence": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#data-zone-standard",
+      "deployment": "data-zone-standard",
+      "kind": "model-deployment",
+      "model": {
+        "id": "gpt-4.1",
+        "version": "2025-04-14",
+        "sku": "DataZoneStandard",
+        "mode": "payg"
+      }
+    },
+    {
+      "id": "foundry-gpt-4-1-2025-04-14-global-provisioned-eastus2",
+      "name": "gpt-4.1 · 2025-04-14",
+      "family": "foundry",
+      "currency": "GBP",
+      "region": "eastus2",
+      "components": [
+        {
+          "id": "capacity",
+          "label": "Provisioned throughput",
+          "unit": "1 Hour",
+          "quantityPerUnit": 1
+        }
+      ],
+      "note": "Official regional availability. Retail tariff is verified independently.",
+      "evidence": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#global-provisioned-managed",
+      "deployment": "global-provisioned",
+      "kind": "model-deployment",
+      "model": {
+        "id": "gpt-4.1",
+        "version": "2025-04-14",
+        "sku": "GlobalProvisionedManaged",
+        "mode": "provisioned"
+      }
+    },
+    {
+      "id": "foundry-gpt-4-1-2025-04-14-global-provisioned-uksouth",
+      "name": "gpt-4.1 · 2025-04-14",
+      "family": "foundry",
+      "currency": "GBP",
+      "region": "uksouth",
+      "components": [
+        {
+          "id": "capacity",
+          "label": "Provisioned throughput",
+          "unit": "1 Hour",
+          "quantityPerUnit": 1
+        }
+      ],
+      "note": "Official regional availability. Retail tariff is verified independently.",
+      "evidence": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#global-provisioned-managed",
+      "deployment": "global-provisioned",
+      "kind": "model-deployment",
+      "model": {
+        "id": "gpt-4.1",
+        "version": "2025-04-14",
+        "sku": "GlobalProvisionedManaged",
+        "mode": "provisioned"
+      }
+    },
+    {
+      "id": "foundry-gpt-4-1-2025-04-14-global-provisioned-westeurope",
+      "name": "gpt-4.1 · 2025-04-14",
+      "family": "foundry",
+      "currency": "GBP",
+      "region": "westeurope",
+      "components": [
+        {
+          "id": "capacity",
+          "label": "Provisioned throughput",
+          "unit": "1 Hour",
+          "quantityPerUnit": 1
+        }
+      ],
+      "note": "Official regional availability. Retail tariff is verified independently.",
+      "evidence": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#global-provisioned-managed",
+      "deployment": "global-provisioned",
+      "kind": "model-deployment",
+      "model": {
+        "id": "gpt-4.1",
+        "version": "2025-04-14",
+        "sku": "GlobalProvisionedManaged",
+        "mode": "provisioned"
+      }
+    },
+    {
+      "id": "foundry-gpt-4-1-2025-04-14-regional-provisioned-eastus2",
+      "name": "gpt-4.1 · 2025-04-14",
+      "family": "foundry",
+      "currency": "GBP",
+      "region": "eastus2",
+      "components": [
+        {
+          "id": "capacity",
+          "label": "Provisioned throughput",
+          "unit": "1 Hour",
+          "quantityPerUnit": 1
+        }
+      ],
+      "note": "Official regional availability. Retail tariff is verified independently.",
+      "evidence": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#regional-provisioned-managed",
+      "deployment": "regional-provisioned",
+      "kind": "model-deployment",
+      "model": {
+        "id": "gpt-4.1",
+        "version": "2025-04-14",
+        "sku": "ProvisionedManaged",
+        "mode": "provisioned"
+      }
+    },
+    {
+      "id": "foundry-gpt-4-1-2025-04-14-regional-provisioned-uksouth",
+      "name": "gpt-4.1 · 2025-04-14",
+      "family": "foundry",
+      "currency": "GBP",
+      "region": "uksouth",
+      "components": [
+        {
+          "id": "capacity",
+          "label": "Provisioned throughput",
+          "unit": "1 Hour",
+          "quantityPerUnit": 1
+        }
+      ],
+      "note": "Official regional availability. Retail tariff is verified independently.",
+      "evidence": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#regional-provisioned-managed",
+      "deployment": "regional-provisioned",
+      "kind": "model-deployment",
+      "model": {
+        "id": "gpt-4.1",
+        "version": "2025-04-14",
+        "sku": "ProvisionedManaged",
+        "mode": "provisioned"
+      }
+    },
+    {
+      "id": "foundry-gpt-4-1-2025-04-14-regional-standard-eastus2",
+      "name": "gpt-4.1 · 2025-04-14",
+      "family": "foundry",
+      "currency": "GBP",
+      "region": "eastus2",
+      "components": [
+        {
+          "id": "input",
+          "label": "Uncached input tokens",
+          "unit": "1M",
+          "quantityPerUnit": 1000000
+        },
+        {
+          "id": "output",
+          "label": "Output tokens",
+          "unit": "1M",
+          "quantityPerUnit": 1000000
+        }
+      ],
+      "note": "Official regional availability. Retail tariff is verified independently.",
+      "evidence": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#regional-standard",
+      "deployment": "regional-standard",
+      "kind": "model-deployment",
+      "model": {
+        "id": "gpt-4.1",
+        "version": "2025-04-14",
+        "sku": "Standard",
+        "mode": "payg"
+      }
+    },
+    {
+      "id": "foundry-gpt-4-1-mini-2025-04-14-data-zone-provisioned-eastus2",
+      "name": "gpt-4.1-mini · 2025-04-14",
+      "family": "foundry",
+      "currency": "GBP",
+      "region": "eastus2",
+      "components": [
+        {
+          "id": "capacity",
+          "label": "Provisioned throughput",
+          "unit": "1 Hour",
+          "quantityPerUnit": 1
+        }
+      ],
+      "note": "Official regional availability. Retail tariff is verified independently.",
+      "evidence": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#data-zone-provisioned-managed",
+      "deployment": "data-zone-provisioned",
+      "kind": "model-deployment",
+      "model": {
+        "id": "gpt-4.1-mini",
+        "version": "2025-04-14",
+        "sku": "DataZoneProvisionedManaged",
+        "mode": "provisioned"
+      }
+    },
+    {
+      "id": "foundry-gpt-4-1-mini-2025-04-14-data-zone-provisioned-westeurope",
+      "name": "gpt-4.1-mini · 2025-04-14",
+      "family": "foundry",
+      "currency": "GBP",
+      "region": "westeurope",
+      "components": [
+        {
+          "id": "capacity",
+          "label": "Provisioned throughput",
+          "unit": "1 Hour",
+          "quantityPerUnit": 1
+        }
+      ],
+      "note": "Official regional availability. Retail tariff is verified independently.",
+      "evidence": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#data-zone-provisioned-managed",
+      "deployment": "data-zone-provisioned",
+      "kind": "model-deployment",
+      "model": {
+        "id": "gpt-4.1-mini",
+        "version": "2025-04-14",
+        "sku": "DataZoneProvisionedManaged",
+        "mode": "provisioned"
+      }
+    },
+    {
+      "id": "foundry-gpt-4-1-mini-2025-04-14-data-zone-standard-eastus2",
+      "name": "gpt-4.1-mini · 2025-04-14",
+      "family": "foundry",
+      "currency": "GBP",
+      "region": "eastus2",
+      "components": [
+        {
+          "id": "input",
+          "label": "Uncached input tokens",
+          "unit": "1M",
+          "quantityPerUnit": 1000000
+        },
+        {
+          "id": "output",
+          "label": "Output tokens",
+          "unit": "1M",
+          "quantityPerUnit": 1000000
+        }
+      ],
+      "note": "Official regional availability. Retail tariff is verified independently.",
+      "evidence": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#data-zone-standard",
+      "deployment": "data-zone-standard",
+      "kind": "model-deployment",
+      "model": {
+        "id": "gpt-4.1-mini",
+        "version": "2025-04-14",
+        "sku": "DataZoneStandard",
+        "mode": "payg"
+      }
+    },
+    {
+      "id": "foundry-gpt-4-1-mini-2025-04-14-data-zone-standard-westeurope",
+      "name": "gpt-4.1-mini · 2025-04-14",
+      "family": "foundry",
+      "currency": "GBP",
+      "region": "westeurope",
+      "components": [
+        {
+          "id": "input",
+          "label": "Uncached input tokens",
+          "unit": "1M",
+          "quantityPerUnit": 1000000
+        },
+        {
+          "id": "output",
+          "label": "Output tokens",
+          "unit": "1M",
+          "quantityPerUnit": 1000000
+        }
+      ],
+      "note": "Official regional availability. Retail tariff is verified independently.",
+      "evidence": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#data-zone-standard",
+      "deployment": "data-zone-standard",
+      "kind": "model-deployment",
+      "model": {
+        "id": "gpt-4.1-mini",
+        "version": "2025-04-14",
+        "sku": "DataZoneStandard",
+        "mode": "payg"
+      }
+    },
+    {
+      "id": "foundry-gpt-4-1-mini-2025-04-14-global-provisioned-eastus2",
+      "name": "gpt-4.1-mini · 2025-04-14",
+      "family": "foundry",
+      "currency": "GBP",
+      "region": "eastus2",
+      "components": [
+        {
+          "id": "capacity",
+          "label": "Provisioned throughput",
+          "unit": "1 Hour",
+          "quantityPerUnit": 1
+        }
+      ],
+      "note": "Official regional availability. Retail tariff is verified independently.",
+      "evidence": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#global-provisioned-managed",
+      "deployment": "global-provisioned",
+      "kind": "model-deployment",
+      "model": {
+        "id": "gpt-4.1-mini",
+        "version": "2025-04-14",
+        "sku": "GlobalProvisionedManaged",
+        "mode": "provisioned"
+      }
+    },
+    {
+      "id": "foundry-gpt-4-1-mini-2025-04-14-global-provisioned-uksouth",
+      "name": "gpt-4.1-mini · 2025-04-14",
+      "family": "foundry",
+      "currency": "GBP",
+      "region": "uksouth",
+      "components": [
+        {
+          "id": "capacity",
+          "label": "Provisioned throughput",
+          "unit": "1 Hour",
+          "quantityPerUnit": 1
+        }
+      ],
+      "note": "Official regional availability. Retail tariff is verified independently.",
+      "evidence": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#global-provisioned-managed",
+      "deployment": "global-provisioned",
+      "kind": "model-deployment",
+      "model": {
+        "id": "gpt-4.1-mini",
+        "version": "2025-04-14",
+        "sku": "GlobalProvisionedManaged",
+        "mode": "provisioned"
+      }
+    },
+    {
+      "id": "foundry-gpt-4-1-mini-2025-04-14-global-provisioned-westeurope",
+      "name": "gpt-4.1-mini · 2025-04-14",
+      "family": "foundry",
+      "currency": "GBP",
+      "region": "westeurope",
+      "components": [
+        {
+          "id": "capacity",
+          "label": "Provisioned throughput",
+          "unit": "1 Hour",
+          "quantityPerUnit": 1
+        }
+      ],
+      "note": "Official regional availability. Retail tariff is verified independently.",
+      "evidence": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#global-provisioned-managed",
+      "deployment": "global-provisioned",
+      "kind": "model-deployment",
+      "model": {
+        "id": "gpt-4.1-mini",
+        "version": "2025-04-14",
+        "sku": "GlobalProvisionedManaged",
+        "mode": "provisioned"
+      }
+    },
+    {
+      "id": "foundry-gpt-4-1-mini-2025-04-14-regional-provisioned-eastus2",
+      "name": "gpt-4.1-mini · 2025-04-14",
+      "family": "foundry",
+      "currency": "GBP",
+      "region": "eastus2",
+      "components": [
+        {
+          "id": "capacity",
+          "label": "Provisioned throughput",
+          "unit": "1 Hour",
+          "quantityPerUnit": 1
+        }
+      ],
+      "note": "Official regional availability. Retail tariff is verified independently.",
+      "evidence": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#regional-provisioned-managed",
+      "deployment": "regional-provisioned",
+      "kind": "model-deployment",
+      "model": {
+        "id": "gpt-4.1-mini",
+        "version": "2025-04-14",
+        "sku": "ProvisionedManaged",
+        "mode": "provisioned"
+      }
+    },
+    {
+      "id": "foundry-gpt-4-1-mini-2025-04-14-regional-provisioned-uksouth",
+      "name": "gpt-4.1-mini · 2025-04-14",
+      "family": "foundry",
+      "currency": "GBP",
+      "region": "uksouth",
+      "components": [
+        {
+          "id": "capacity",
+          "label": "Provisioned throughput",
+          "unit": "1 Hour",
+          "quantityPerUnit": 1
+        }
+      ],
+      "note": "Official regional availability. Retail tariff is verified independently.",
+      "evidence": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#regional-provisioned-managed",
+      "deployment": "regional-provisioned",
+      "kind": "model-deployment",
+      "model": {
+        "id": "gpt-4.1-mini",
+        "version": "2025-04-14",
+        "sku": "ProvisionedManaged",
+        "mode": "provisioned"
+      }
+    },
+    {
+      "id": "foundry-gpt-4-1-nano-2025-04-14-data-zone-provisioned-eastus2",
+      "name": "gpt-4.1-nano · 2025-04-14",
+      "family": "foundry",
+      "currency": "GBP",
+      "region": "eastus2",
+      "components": [
+        {
+          "id": "capacity",
+          "label": "Provisioned throughput",
+          "unit": "1 Hour",
+          "quantityPerUnit": 1
+        }
+      ],
+      "note": "Official regional availability. Retail tariff is verified independently.",
+      "evidence": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#data-zone-provisioned-managed",
+      "deployment": "data-zone-provisioned",
+      "kind": "model-deployment",
+      "model": {
+        "id": "gpt-4.1-nano",
+        "version": "2025-04-14",
+        "sku": "DataZoneProvisionedManaged",
+        "mode": "provisioned"
+      }
+    },
+    {
+      "id": "foundry-gpt-4-1-nano-2025-04-14-data-zone-provisioned-westeurope",
+      "name": "gpt-4.1-nano · 2025-04-14",
+      "family": "foundry",
+      "currency": "GBP",
+      "region": "westeurope",
+      "components": [
+        {
+          "id": "capacity",
+          "label": "Provisioned throughput",
+          "unit": "1 Hour",
+          "quantityPerUnit": 1
+        }
+      ],
+      "note": "Official regional availability. Retail tariff is verified independently.",
+      "evidence": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#data-zone-provisioned-managed",
+      "deployment": "data-zone-provisioned",
+      "kind": "model-deployment",
+      "model": {
+        "id": "gpt-4.1-nano",
+        "version": "2025-04-14",
+        "sku": "DataZoneProvisionedManaged",
+        "mode": "provisioned"
+      }
+    },
+    {
+      "id": "foundry-gpt-4-1-nano-2025-04-14-data-zone-standard-eastus2",
+      "name": "gpt-4.1-nano · 2025-04-14",
+      "family": "foundry",
+      "currency": "GBP",
+      "region": "eastus2",
+      "components": [
+        {
+          "id": "input",
+          "label": "Uncached input tokens",
+          "unit": "1M",
+          "quantityPerUnit": 1000000
+        },
+        {
+          "id": "output",
+          "label": "Output tokens",
+          "unit": "1M",
+          "quantityPerUnit": 1000000
+        }
+      ],
+      "note": "Official regional availability. Retail tariff is verified independently.",
+      "evidence": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#data-zone-standard",
+      "deployment": "data-zone-standard",
+      "kind": "model-deployment",
+      "model": {
+        "id": "gpt-4.1-nano",
+        "version": "2025-04-14",
+        "sku": "DataZoneStandard",
+        "mode": "payg"
+      }
+    },
+    {
+      "id": "foundry-gpt-4-1-nano-2025-04-14-data-zone-standard-westeurope",
+      "name": "gpt-4.1-nano · 2025-04-14",
+      "family": "foundry",
+      "currency": "GBP",
+      "region": "westeurope",
+      "components": [
+        {
+          "id": "input",
+          "label": "Uncached input tokens",
+          "unit": "1M",
+          "quantityPerUnit": 1000000
+        },
+        {
+          "id": "output",
+          "label": "Output tokens",
+          "unit": "1M",
+          "quantityPerUnit": 1000000
+        }
+      ],
+      "note": "Official regional availability. Retail tariff is verified independently.",
+      "evidence": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#data-zone-standard",
+      "deployment": "data-zone-standard",
+      "kind": "model-deployment",
+      "model": {
+        "id": "gpt-4.1-nano",
+        "version": "2025-04-14",
+        "sku": "DataZoneStandard",
+        "mode": "payg"
+      }
+    },
+    {
+      "id": "foundry-gpt-4-1-nano-2025-04-14-global-provisioned-eastus2",
+      "name": "gpt-4.1-nano · 2025-04-14",
+      "family": "foundry",
+      "currency": "GBP",
+      "region": "eastus2",
+      "components": [
+        {
+          "id": "capacity",
+          "label": "Provisioned throughput",
+          "unit": "1 Hour",
+          "quantityPerUnit": 1
+        }
+      ],
+      "note": "Official regional availability. Retail tariff is verified independently.",
+      "evidence": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#global-provisioned-managed",
+      "deployment": "global-provisioned",
+      "kind": "model-deployment",
+      "model": {
+        "id": "gpt-4.1-nano",
+        "version": "2025-04-14",
+        "sku": "GlobalProvisionedManaged",
+        "mode": "provisioned"
+      }
+    },
+    {
+      "id": "foundry-gpt-4-1-nano-2025-04-14-global-provisioned-uksouth",
+      "name": "gpt-4.1-nano · 2025-04-14",
+      "family": "foundry",
+      "currency": "GBP",
+      "region": "uksouth",
+      "components": [
+        {
+          "id": "capacity",
+          "label": "Provisioned throughput",
+          "unit": "1 Hour",
+          "quantityPerUnit": 1
+        }
+      ],
+      "note": "Official regional availability. Retail tariff is verified independently.",
+      "evidence": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#global-provisioned-managed",
+      "deployment": "global-provisioned",
+      "kind": "model-deployment",
+      "model": {
+        "id": "gpt-4.1-nano",
+        "version": "2025-04-14",
+        "sku": "GlobalProvisionedManaged",
+        "mode": "provisioned"
+      }
+    },
+    {
+      "id": "foundry-gpt-4-1-nano-2025-04-14-global-provisioned-westeurope",
+      "name": "gpt-4.1-nano · 2025-04-14",
+      "family": "foundry",
+      "currency": "GBP",
+      "region": "westeurope",
+      "components": [
+        {
+          "id": "capacity",
+          "label": "Provisioned throughput",
+          "unit": "1 Hour",
+          "quantityPerUnit": 1
+        }
+      ],
+      "note": "Official regional availability. Retail tariff is verified independently.",
+      "evidence": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#global-provisioned-managed",
+      "deployment": "global-provisioned",
+      "kind": "model-deployment",
+      "model": {
+        "id": "gpt-4.1-nano",
+        "version": "2025-04-14",
+        "sku": "GlobalProvisionedManaged",
+        "mode": "provisioned"
+      }
+    },
+    {
+      "id": "foundry-gpt-4-1-nano-2025-04-14-regional-provisioned-eastus2",
+      "name": "gpt-4.1-nano · 2025-04-14",
+      "family": "foundry",
+      "currency": "GBP",
+      "region": "eastus2",
+      "components": [
+        {
+          "id": "capacity",
+          "label": "Provisioned throughput",
+          "unit": "1 Hour",
+          "quantityPerUnit": 1
+        }
+      ],
+      "note": "Official regional availability. Retail tariff is verified independently.",
+      "evidence": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#regional-provisioned-managed",
+      "deployment": "regional-provisioned",
+      "kind": "model-deployment",
+      "model": {
+        "id": "gpt-4.1-nano",
+        "version": "2025-04-14",
+        "sku": "ProvisionedManaged",
+        "mode": "provisioned"
+      }
+    },
+    {
+      "id": "foundry-gpt-4o-2024-05-13-data-zone-provisioned-eastus2",
+      "name": "gpt-4o · 2024-05-13",
+      "family": "foundry",
+      "currency": "GBP",
+      "region": "eastus2",
+      "components": [
+        {
+          "id": "capacity",
+          "label": "Provisioned throughput",
+          "unit": "1 Hour",
+          "quantityPerUnit": 1
+        }
+      ],
+      "note": "Official regional availability. Retail tariff is verified independently.",
+      "evidence": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#data-zone-provisioned-managed",
+      "deployment": "data-zone-provisioned",
+      "kind": "model-deployment",
+      "model": {
+        "id": "gpt-4o",
+        "version": "2024-05-13",
+        "sku": "DataZoneProvisionedManaged",
+        "mode": "provisioned"
+      }
+    },
+    {
+      "id": "foundry-gpt-4o-2024-05-13-data-zone-provisioned-westeurope",
+      "name": "gpt-4o · 2024-05-13",
+      "family": "foundry",
+      "currency": "GBP",
+      "region": "westeurope",
+      "components": [
+        {
+          "id": "capacity",
+          "label": "Provisioned throughput",
+          "unit": "1 Hour",
+          "quantityPerUnit": 1
+        }
+      ],
+      "note": "Official regional availability. Retail tariff is verified independently.",
+      "evidence": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#data-zone-provisioned-managed",
+      "deployment": "data-zone-provisioned",
+      "kind": "model-deployment",
+      "model": {
+        "id": "gpt-4o",
+        "version": "2024-05-13",
+        "sku": "DataZoneProvisionedManaged",
+        "mode": "provisioned"
+      }
+    },
+    {
+      "id": "foundry-gpt-4o-2024-05-13-global-provisioned-eastus2",
+      "name": "gpt-4o · 2024-05-13",
+      "family": "foundry",
+      "currency": "GBP",
+      "region": "eastus2",
+      "components": [
+        {
+          "id": "capacity",
+          "label": "Provisioned throughput",
+          "unit": "1 Hour",
+          "quantityPerUnit": 1
+        }
+      ],
+      "note": "Official regional availability. Retail tariff is verified independently.",
+      "evidence": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#global-provisioned-managed",
+      "deployment": "global-provisioned",
+      "kind": "model-deployment",
+      "model": {
+        "id": "gpt-4o",
+        "version": "2024-05-13",
+        "sku": "GlobalProvisionedManaged",
+        "mode": "provisioned"
+      }
+    },
+    {
+      "id": "foundry-gpt-4o-2024-05-13-global-provisioned-uksouth",
+      "name": "gpt-4o · 2024-05-13",
+      "family": "foundry",
+      "currency": "GBP",
+      "region": "uksouth",
+      "components": [
+        {
+          "id": "capacity",
+          "label": "Provisioned throughput",
+          "unit": "1 Hour",
+          "quantityPerUnit": 1
+        }
+      ],
+      "note": "Official regional availability. Retail tariff is verified independently.",
+      "evidence": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#global-provisioned-managed",
+      "deployment": "global-provisioned",
+      "kind": "model-deployment",
+      "model": {
+        "id": "gpt-4o",
+        "version": "2024-05-13",
+        "sku": "GlobalProvisionedManaged",
+        "mode": "provisioned"
+      }
+    },
+    {
+      "id": "foundry-gpt-4o-2024-05-13-global-provisioned-westeurope",
+      "name": "gpt-4o · 2024-05-13",
+      "family": "foundry",
+      "currency": "GBP",
+      "region": "westeurope",
+      "components": [
+        {
+          "id": "capacity",
+          "label": "Provisioned throughput",
+          "unit": "1 Hour",
+          "quantityPerUnit": 1
+        }
+      ],
+      "note": "Official regional availability. Retail tariff is verified independently.",
+      "evidence": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#global-provisioned-managed",
+      "deployment": "global-provisioned",
+      "kind": "model-deployment",
+      "model": {
+        "id": "gpt-4o",
+        "version": "2024-05-13",
+        "sku": "GlobalProvisionedManaged",
+        "mode": "provisioned"
+      }
+    },
+    {
+      "id": "foundry-gpt-4o-2024-05-13-regional-provisioned-eastus2",
+      "name": "gpt-4o · 2024-05-13",
+      "family": "foundry",
+      "currency": "GBP",
+      "region": "eastus2",
+      "components": [
+        {
+          "id": "capacity",
+          "label": "Provisioned throughput",
+          "unit": "1 Hour",
+          "quantityPerUnit": 1
+        }
+      ],
+      "note": "Official regional availability. Retail tariff is verified independently.",
+      "evidence": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#regional-provisioned-managed",
+      "deployment": "regional-provisioned",
+      "kind": "model-deployment",
+      "model": {
+        "id": "gpt-4o",
+        "version": "2024-05-13",
+        "sku": "ProvisionedManaged",
+        "mode": "provisioned"
+      }
+    },
+    {
+      "id": "foundry-gpt-4o-2024-05-13-regional-provisioned-uksouth",
+      "name": "gpt-4o · 2024-05-13",
+      "family": "foundry",
+      "currency": "GBP",
+      "region": "uksouth",
+      "components": [
+        {
+          "id": "capacity",
+          "label": "Provisioned throughput",
+          "unit": "1 Hour",
+          "quantityPerUnit": 1
+        }
+      ],
+      "note": "Official regional availability. Retail tariff is verified independently.",
+      "evidence": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#regional-provisioned-managed",
+      "deployment": "regional-provisioned",
+      "kind": "model-deployment",
+      "model": {
+        "id": "gpt-4o",
+        "version": "2024-05-13",
+        "sku": "ProvisionedManaged",
+        "mode": "provisioned"
+      }
+    },
+    {
+      "id": "foundry-gpt-4o-2024-08-06-data-zone-provisioned-eastus2",
+      "name": "gpt-4o · 2024-08-06",
+      "family": "foundry",
+      "currency": "GBP",
+      "region": "eastus2",
+      "components": [
+        {
+          "id": "capacity",
+          "label": "Provisioned throughput",
+          "unit": "1 Hour",
+          "quantityPerUnit": 1
+        }
+      ],
+      "note": "Official regional availability. Retail tariff is verified independently.",
+      "evidence": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#data-zone-provisioned-managed",
+      "deployment": "data-zone-provisioned",
+      "kind": "model-deployment",
+      "model": {
+        "id": "gpt-4o",
+        "version": "2024-08-06",
+        "sku": "DataZoneProvisionedManaged",
+        "mode": "provisioned"
+      }
+    },
+    {
+      "id": "foundry-gpt-4o-2024-08-06-data-zone-provisioned-westeurope",
+      "name": "gpt-4o · 2024-08-06",
+      "family": "foundry",
+      "currency": "GBP",
+      "region": "westeurope",
+      "components": [
+        {
+          "id": "capacity",
+          "label": "Provisioned throughput",
+          "unit": "1 Hour",
+          "quantityPerUnit": 1
+        }
+      ],
+      "note": "Official regional availability. Retail tariff is verified independently.",
+      "evidence": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#data-zone-provisioned-managed",
+      "deployment": "data-zone-provisioned",
+      "kind": "model-deployment",
+      "model": {
+        "id": "gpt-4o",
+        "version": "2024-08-06",
+        "sku": "DataZoneProvisionedManaged",
+        "mode": "provisioned"
+      }
+    },
+    {
+      "id": "foundry-gpt-4o-2024-08-06-global-provisioned-eastus2",
+      "name": "gpt-4o · 2024-08-06",
+      "family": "foundry",
+      "currency": "GBP",
+      "region": "eastus2",
+      "components": [
+        {
+          "id": "capacity",
+          "label": "Provisioned throughput",
+          "unit": "1 Hour",
+          "quantityPerUnit": 1
+        }
+      ],
+      "note": "Official regional availability. Retail tariff is verified independently.",
+      "evidence": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#global-provisioned-managed",
+      "deployment": "global-provisioned",
+      "kind": "model-deployment",
+      "model": {
+        "id": "gpt-4o",
+        "version": "2024-08-06",
+        "sku": "GlobalProvisionedManaged",
+        "mode": "provisioned"
+      }
+    },
+    {
+      "id": "foundry-gpt-4o-2024-08-06-global-provisioned-uksouth",
+      "name": "gpt-4o · 2024-08-06",
+      "family": "foundry",
+      "currency": "GBP",
+      "region": "uksouth",
+      "components": [
+        {
+          "id": "capacity",
+          "label": "Provisioned throughput",
+          "unit": "1 Hour",
+          "quantityPerUnit": 1
+        }
+      ],
+      "note": "Official regional availability. Retail tariff is verified independently.",
+      "evidence": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#global-provisioned-managed",
+      "deployment": "global-provisioned",
+      "kind": "model-deployment",
+      "model": {
+        "id": "gpt-4o",
+        "version": "2024-08-06",
+        "sku": "GlobalProvisionedManaged",
+        "mode": "provisioned"
+      }
+    },
+    {
+      "id": "foundry-gpt-4o-2024-08-06-global-provisioned-westeurope",
+      "name": "gpt-4o · 2024-08-06",
+      "family": "foundry",
+      "currency": "GBP",
+      "region": "westeurope",
+      "components": [
+        {
+          "id": "capacity",
+          "label": "Provisioned throughput",
+          "unit": "1 Hour",
+          "quantityPerUnit": 1
+        }
+      ],
+      "note": "Official regional availability. Retail tariff is verified independently.",
+      "evidence": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#global-provisioned-managed",
+      "deployment": "global-provisioned",
+      "kind": "model-deployment",
+      "model": {
+        "id": "gpt-4o",
+        "version": "2024-08-06",
+        "sku": "GlobalProvisionedManaged",
+        "mode": "provisioned"
+      }
+    },
+    {
+      "id": "foundry-gpt-4o-2024-08-06-regional-provisioned-eastus2",
+      "name": "gpt-4o · 2024-08-06",
+      "family": "foundry",
+      "currency": "GBP",
+      "region": "eastus2",
+      "components": [
+        {
+          "id": "capacity",
+          "label": "Provisioned throughput",
+          "unit": "1 Hour",
+          "quantityPerUnit": 1
+        }
+      ],
+      "note": "Official regional availability. Retail tariff is verified independently.",
+      "evidence": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#regional-provisioned-managed",
+      "deployment": "regional-provisioned",
+      "kind": "model-deployment",
+      "model": {
+        "id": "gpt-4o",
+        "version": "2024-08-06",
+        "sku": "ProvisionedManaged",
+        "mode": "provisioned"
+      }
+    },
+    {
+      "id": "foundry-gpt-4o-2024-08-06-regional-provisioned-uksouth",
+      "name": "gpt-4o · 2024-08-06",
+      "family": "foundry",
+      "currency": "GBP",
+      "region": "uksouth",
+      "components": [
+        {
+          "id": "capacity",
+          "label": "Provisioned throughput",
+          "unit": "1 Hour",
+          "quantityPerUnit": 1
+        }
+      ],
+      "note": "Official regional availability. Retail tariff is verified independently.",
+      "evidence": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#regional-provisioned-managed",
+      "deployment": "regional-provisioned",
+      "kind": "model-deployment",
+      "model": {
+        "id": "gpt-4o",
+        "version": "2024-08-06",
+        "sku": "ProvisionedManaged",
+        "mode": "provisioned"
+      }
+    },
+    {
+      "id": "foundry-gpt-4o-2024-11-20-data-zone-provisioned-eastus2",
+      "name": "gpt-4o · 2024-11-20",
+      "family": "foundry",
+      "currency": "GBP",
+      "region": "eastus2",
+      "components": [
+        {
+          "id": "capacity",
+          "label": "Provisioned throughput",
+          "unit": "1 Hour",
+          "quantityPerUnit": 1
+        }
+      ],
+      "note": "Official regional availability. Retail tariff is verified independently.",
+      "evidence": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#data-zone-provisioned-managed",
+      "deployment": "data-zone-provisioned",
+      "kind": "model-deployment",
+      "model": {
+        "id": "gpt-4o",
+        "version": "2024-11-20",
+        "sku": "DataZoneProvisionedManaged",
+        "mode": "provisioned"
+      }
+    },
+    {
+      "id": "foundry-gpt-4o-2024-11-20-data-zone-provisioned-westeurope",
+      "name": "gpt-4o · 2024-11-20",
+      "family": "foundry",
+      "currency": "GBP",
+      "region": "westeurope",
+      "components": [
+        {
+          "id": "capacity",
+          "label": "Provisioned throughput",
+          "unit": "1 Hour",
+          "quantityPerUnit": 1
+        }
+      ],
+      "note": "Official regional availability. Retail tariff is verified independently.",
+      "evidence": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#data-zone-provisioned-managed",
+      "deployment": "data-zone-provisioned",
+      "kind": "model-deployment",
+      "model": {
+        "id": "gpt-4o",
+        "version": "2024-11-20",
+        "sku": "DataZoneProvisionedManaged",
+        "mode": "provisioned"
+      }
+    },
+    {
+      "id": "foundry-gpt-4o-2024-11-20-global-provisioned-eastus2",
+      "name": "gpt-4o · 2024-11-20",
+      "family": "foundry",
+      "currency": "GBP",
+      "region": "eastus2",
+      "components": [
+        {
+          "id": "capacity",
+          "label": "Provisioned throughput",
+          "unit": "1 Hour",
+          "quantityPerUnit": 1
+        }
+      ],
+      "note": "Official regional availability. Retail tariff is verified independently.",
+      "evidence": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#global-provisioned-managed",
+      "deployment": "global-provisioned",
+      "kind": "model-deployment",
+      "model": {
+        "id": "gpt-4o",
+        "version": "2024-11-20",
+        "sku": "GlobalProvisionedManaged",
+        "mode": "provisioned"
+      }
+    },
+    {
+      "id": "foundry-gpt-4o-2024-11-20-global-provisioned-uksouth",
+      "name": "gpt-4o · 2024-11-20",
+      "family": "foundry",
+      "currency": "GBP",
+      "region": "uksouth",
+      "components": [
+        {
+          "id": "capacity",
+          "label": "Provisioned throughput",
+          "unit": "1 Hour",
+          "quantityPerUnit": 1
+        }
+      ],
+      "note": "Official regional availability. Retail tariff is verified independently.",
+      "evidence": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#global-provisioned-managed",
+      "deployment": "global-provisioned",
+      "kind": "model-deployment",
+      "model": {
+        "id": "gpt-4o",
+        "version": "2024-11-20",
+        "sku": "GlobalProvisionedManaged",
+        "mode": "provisioned"
+      }
+    },
+    {
+      "id": "foundry-gpt-4o-2024-11-20-global-provisioned-westeurope",
+      "name": "gpt-4o · 2024-11-20",
+      "family": "foundry",
+      "currency": "GBP",
+      "region": "westeurope",
+      "components": [
+        {
+          "id": "capacity",
+          "label": "Provisioned throughput",
+          "unit": "1 Hour",
+          "quantityPerUnit": 1
+        }
+      ],
+      "note": "Official regional availability. Retail tariff is verified independently.",
+      "evidence": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#global-provisioned-managed",
+      "deployment": "global-provisioned",
+      "kind": "model-deployment",
+      "model": {
+        "id": "gpt-4o",
+        "version": "2024-11-20",
+        "sku": "GlobalProvisionedManaged",
+        "mode": "provisioned"
+      }
+    },
+    {
+      "id": "foundry-gpt-4o-2024-11-20-regional-provisioned-eastus2",
+      "name": "gpt-4o · 2024-11-20",
+      "family": "foundry",
+      "currency": "GBP",
+      "region": "eastus2",
+      "components": [
+        {
+          "id": "capacity",
+          "label": "Provisioned throughput",
+          "unit": "1 Hour",
+          "quantityPerUnit": 1
+        }
+      ],
+      "note": "Official regional availability. Retail tariff is verified independently.",
+      "evidence": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#regional-provisioned-managed",
+      "deployment": "regional-provisioned",
+      "kind": "model-deployment",
+      "model": {
+        "id": "gpt-4o",
+        "version": "2024-11-20",
+        "sku": "ProvisionedManaged",
+        "mode": "provisioned"
+      }
+    },
+    {
+      "id": "foundry-gpt-4o-2024-11-20-regional-provisioned-uksouth",
+      "name": "gpt-4o · 2024-11-20",
+      "family": "foundry",
+      "currency": "GBP",
+      "region": "uksouth",
+      "components": [
+        {
+          "id": "capacity",
+          "label": "Provisioned throughput",
+          "unit": "1 Hour",
+          "quantityPerUnit": 1
+        }
+      ],
+      "note": "Official regional availability. Retail tariff is verified independently.",
+      "evidence": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#regional-provisioned-managed",
+      "deployment": "regional-provisioned",
+      "kind": "model-deployment",
+      "model": {
+        "id": "gpt-4o",
+        "version": "2024-11-20",
+        "sku": "ProvisionedManaged",
+        "mode": "provisioned"
+      }
+    },
+    {
+      "id": "foundry-gpt-4o-2024-11-20-regional-provisioned-westeurope",
+      "name": "gpt-4o · 2024-11-20",
+      "family": "foundry",
+      "currency": "GBP",
+      "region": "westeurope",
+      "components": [
+        {
+          "id": "capacity",
+          "label": "Provisioned throughput",
+          "unit": "1 Hour",
+          "quantityPerUnit": 1
+        }
+      ],
+      "note": "Official regional availability. Retail tariff is verified independently.",
+      "evidence": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#regional-provisioned-managed",
+      "deployment": "regional-provisioned",
+      "kind": "model-deployment",
+      "model": {
+        "id": "gpt-4o",
+        "version": "2024-11-20",
+        "sku": "ProvisionedManaged",
+        "mode": "provisioned"
+      }
+    },
+    {
+      "id": "foundry-gpt-4o-mini-2024-07-18-data-zone-provisioned-eastus2",
+      "name": "gpt-4o-mini · 2024-07-18",
+      "family": "foundry",
+      "currency": "GBP",
+      "region": "eastus2",
+      "components": [
+        {
+          "id": "capacity",
+          "label": "Provisioned throughput",
+          "unit": "1 Hour",
+          "quantityPerUnit": 1
+        }
+      ],
+      "note": "Official regional availability. Retail tariff is verified independently.",
+      "evidence": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#data-zone-provisioned-managed",
+      "deployment": "data-zone-provisioned",
+      "kind": "model-deployment",
+      "model": {
+        "id": "gpt-4o-mini",
+        "version": "2024-07-18",
+        "sku": "DataZoneProvisionedManaged",
+        "mode": "provisioned"
+      }
+    },
+    {
+      "id": "foundry-gpt-4o-mini-2024-07-18-data-zone-provisioned-westeurope",
+      "name": "gpt-4o-mini · 2024-07-18",
+      "family": "foundry",
+      "currency": "GBP",
+      "region": "westeurope",
+      "components": [
+        {
+          "id": "capacity",
+          "label": "Provisioned throughput",
+          "unit": "1 Hour",
+          "quantityPerUnit": 1
+        }
+      ],
+      "note": "Official regional availability. Retail tariff is verified independently.",
+      "evidence": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#data-zone-provisioned-managed",
+      "deployment": "data-zone-provisioned",
+      "kind": "model-deployment",
+      "model": {
+        "id": "gpt-4o-mini",
+        "version": "2024-07-18",
+        "sku": "DataZoneProvisionedManaged",
+        "mode": "provisioned"
+      }
+    },
+    {
+      "id": "foundry-gpt-4o-mini-2024-07-18-data-zone-standard-eastus2",
+      "name": "gpt-4o-mini · 2024-07-18",
+      "family": "foundry",
+      "currency": "GBP",
+      "region": "eastus2",
+      "components": [
+        {
+          "id": "input",
+          "label": "Uncached input tokens",
+          "unit": "1M",
+          "quantityPerUnit": 1000000
+        },
+        {
+          "id": "output",
+          "label": "Output tokens",
+          "unit": "1M",
+          "quantityPerUnit": 1000000
+        }
+      ],
+      "note": "Official regional availability. Retail tariff is verified independently.",
+      "evidence": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#data-zone-standard",
+      "deployment": "data-zone-standard",
+      "kind": "model-deployment",
+      "model": {
+        "id": "gpt-4o-mini",
+        "version": "2024-07-18",
+        "sku": "DataZoneStandard",
+        "mode": "payg"
+      }
+    },
+    {
+      "id": "foundry-gpt-4o-mini-2024-07-18-data-zone-standard-westeurope",
+      "name": "gpt-4o-mini · 2024-07-18",
+      "family": "foundry",
+      "currency": "GBP",
+      "region": "westeurope",
+      "components": [
+        {
+          "id": "input",
+          "label": "Uncached input tokens",
+          "unit": "1M",
+          "quantityPerUnit": 1000000
+        },
+        {
+          "id": "output",
+          "label": "Output tokens",
+          "unit": "1M",
+          "quantityPerUnit": 1000000
+        }
+      ],
+      "note": "Official regional availability. Retail tariff is verified independently.",
+      "evidence": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#data-zone-standard",
+      "deployment": "data-zone-standard",
+      "kind": "model-deployment",
+      "model": {
+        "id": "gpt-4o-mini",
+        "version": "2024-07-18",
+        "sku": "DataZoneStandard",
+        "mode": "payg"
+      }
+    },
+    {
+      "id": "foundry-gpt-4o-mini-2024-07-18-global-provisioned-eastus2",
+      "name": "gpt-4o-mini · 2024-07-18",
+      "family": "foundry",
+      "currency": "GBP",
+      "region": "eastus2",
+      "components": [
+        {
+          "id": "capacity",
+          "label": "Provisioned throughput",
+          "unit": "1 Hour",
+          "quantityPerUnit": 1
+        }
+      ],
+      "note": "Official regional availability. Retail tariff is verified independently.",
+      "evidence": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#global-provisioned-managed",
+      "deployment": "global-provisioned",
+      "kind": "model-deployment",
+      "model": {
+        "id": "gpt-4o-mini",
+        "version": "2024-07-18",
+        "sku": "GlobalProvisionedManaged",
+        "mode": "provisioned"
+      }
+    },
+    {
+      "id": "foundry-gpt-4o-mini-2024-07-18-global-provisioned-uksouth",
+      "name": "gpt-4o-mini · 2024-07-18",
+      "family": "foundry",
+      "currency": "GBP",
+      "region": "uksouth",
+      "components": [
+        {
+          "id": "capacity",
+          "label": "Provisioned throughput",
+          "unit": "1 Hour",
+          "quantityPerUnit": 1
+        }
+      ],
+      "note": "Official regional availability. Retail tariff is verified independently.",
+      "evidence": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#global-provisioned-managed",
+      "deployment": "global-provisioned",
+      "kind": "model-deployment",
+      "model": {
+        "id": "gpt-4o-mini",
+        "version": "2024-07-18",
+        "sku": "GlobalProvisionedManaged",
+        "mode": "provisioned"
+      }
+    },
+    {
+      "id": "foundry-gpt-4o-mini-2024-07-18-global-provisioned-westeurope",
+      "name": "gpt-4o-mini · 2024-07-18",
+      "family": "foundry",
+      "currency": "GBP",
+      "region": "westeurope",
+      "components": [
+        {
+          "id": "capacity",
+          "label": "Provisioned throughput",
+          "unit": "1 Hour",
+          "quantityPerUnit": 1
+        }
+      ],
+      "note": "Official regional availability. Retail tariff is verified independently.",
+      "evidence": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#global-provisioned-managed",
+      "deployment": "global-provisioned",
+      "kind": "model-deployment",
+      "model": {
+        "id": "gpt-4o-mini",
+        "version": "2024-07-18",
+        "sku": "GlobalProvisionedManaged",
+        "mode": "provisioned"
+      }
+    },
+    {
+      "id": "foundry-gpt-4o-mini-2024-07-18-regional-provisioned-eastus2",
+      "name": "gpt-4o-mini · 2024-07-18",
+      "family": "foundry",
+      "currency": "GBP",
+      "region": "eastus2",
+      "components": [
+        {
+          "id": "capacity",
+          "label": "Provisioned throughput",
+          "unit": "1 Hour",
+          "quantityPerUnit": 1
+        }
+      ],
+      "note": "Official regional availability. Retail tariff is verified independently.",
+      "evidence": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#regional-provisioned-managed",
+      "deployment": "regional-provisioned",
+      "kind": "model-deployment",
+      "model": {
+        "id": "gpt-4o-mini",
+        "version": "2024-07-18",
+        "sku": "ProvisionedManaged",
+        "mode": "provisioned"
+      }
+    },
+    {
+      "id": "foundry-gpt-4o-mini-2024-07-18-regional-provisioned-uksouth",
+      "name": "gpt-4o-mini · 2024-07-18",
+      "family": "foundry",
+      "currency": "GBP",
+      "region": "uksouth",
+      "components": [
+        {
+          "id": "capacity",
+          "label": "Provisioned throughput",
+          "unit": "1 Hour",
+          "quantityPerUnit": 1
+        }
+      ],
+      "note": "Official regional availability. Retail tariff is verified independently.",
+      "evidence": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#regional-provisioned-managed",
+      "deployment": "regional-provisioned",
+      "kind": "model-deployment",
+      "model": {
+        "id": "gpt-4o-mini",
+        "version": "2024-07-18",
+        "sku": "ProvisionedManaged",
+        "mode": "provisioned"
+      }
+    },
+    {
+      "id": "foundry-gpt-4o-mini-2024-07-18-regional-standard-eastus2",
+      "name": "gpt-4o-mini · 2024-07-18",
+      "family": "foundry",
+      "currency": "GBP",
+      "region": "eastus2",
+      "components": [
+        {
+          "id": "input",
+          "label": "Uncached input tokens",
+          "unit": "1M",
+          "quantityPerUnit": 1000000
+        },
+        {
+          "id": "output",
+          "label": "Output tokens",
+          "unit": "1M",
+          "quantityPerUnit": 1000000
+        }
+      ],
+      "note": "Official regional availability. Retail tariff is verified independently.",
+      "evidence": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#regional-standard",
+      "deployment": "regional-standard",
+      "kind": "model-deployment",
+      "model": {
+        "id": "gpt-4o-mini",
+        "version": "2024-07-18",
+        "sku": "Standard",
+        "mode": "payg"
+      }
+    },
+    {
+      "id": "foundry-gpt-5-2025-08-07-data-zone-provisioned-eastus2",
+      "name": "gpt-5 · 2025-08-07",
+      "family": "foundry",
+      "currency": "GBP",
+      "region": "eastus2",
+      "components": [
+        {
+          "id": "capacity",
+          "label": "Provisioned throughput",
+          "unit": "1 Hour",
+          "quantityPerUnit": 1
+        }
+      ],
+      "note": "Official regional availability. Retail tariff is verified independently.",
+      "evidence": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#data-zone-provisioned-managed",
+      "deployment": "data-zone-provisioned",
+      "kind": "model-deployment",
+      "model": {
+        "id": "gpt-5",
+        "version": "2025-08-07",
+        "sku": "DataZoneProvisionedManaged",
+        "mode": "provisioned"
+      }
+    },
+    {
+      "id": "foundry-gpt-5-2025-08-07-data-zone-provisioned-westeurope",
+      "name": "gpt-5 · 2025-08-07",
+      "family": "foundry",
+      "currency": "GBP",
+      "region": "westeurope",
+      "components": [
+        {
+          "id": "capacity",
+          "label": "Provisioned throughput",
+          "unit": "1 Hour",
+          "quantityPerUnit": 1
+        }
+      ],
+      "note": "Official regional availability. Retail tariff is verified independently.",
+      "evidence": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#data-zone-provisioned-managed",
+      "deployment": "data-zone-provisioned",
+      "kind": "model-deployment",
+      "model": {
+        "id": "gpt-5",
+        "version": "2025-08-07",
+        "sku": "DataZoneProvisionedManaged",
+        "mode": "provisioned"
+      }
+    },
+    {
+      "id": "foundry-gpt-5-2025-08-07-global-provisioned-eastus2",
+      "name": "gpt-5 · 2025-08-07",
+      "family": "foundry",
+      "currency": "GBP",
+      "region": "eastus2",
+      "components": [
+        {
+          "id": "capacity",
+          "label": "Provisioned throughput",
+          "unit": "1 Hour",
+          "quantityPerUnit": 1
+        }
+      ],
+      "note": "Official regional availability. Retail tariff is verified independently.",
+      "evidence": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#global-provisioned-managed",
+      "deployment": "global-provisioned",
+      "kind": "model-deployment",
+      "model": {
+        "id": "gpt-5",
+        "version": "2025-08-07",
+        "sku": "GlobalProvisionedManaged",
+        "mode": "provisioned"
+      }
+    },
+    {
+      "id": "foundry-gpt-5-2025-08-07-global-provisioned-uksouth",
+      "name": "gpt-5 · 2025-08-07",
+      "family": "foundry",
+      "currency": "GBP",
+      "region": "uksouth",
+      "components": [
+        {
+          "id": "capacity",
+          "label": "Provisioned throughput",
+          "unit": "1 Hour",
+          "quantityPerUnit": 1
+        }
+      ],
+      "note": "Official regional availability. Retail tariff is verified independently.",
+      "evidence": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#global-provisioned-managed",
+      "deployment": "global-provisioned",
+      "kind": "model-deployment",
+      "model": {
+        "id": "gpt-5",
+        "version": "2025-08-07",
+        "sku": "GlobalProvisionedManaged",
+        "mode": "provisioned"
+      }
+    },
+    {
+      "id": "foundry-gpt-5-2025-08-07-global-provisioned-westeurope",
+      "name": "gpt-5 · 2025-08-07",
+      "family": "foundry",
+      "currency": "GBP",
+      "region": "westeurope",
+      "components": [
+        {
+          "id": "capacity",
+          "label": "Provisioned throughput",
+          "unit": "1 Hour",
+          "quantityPerUnit": 1
+        }
+      ],
+      "note": "Official regional availability. Retail tariff is verified independently.",
+      "evidence": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#global-provisioned-managed",
+      "deployment": "global-provisioned",
+      "kind": "model-deployment",
+      "model": {
+        "id": "gpt-5",
+        "version": "2025-08-07",
+        "sku": "GlobalProvisionedManaged",
+        "mode": "provisioned"
+      }
+    },
+    {
+      "id": "foundry-gpt-5-2025-08-07-regional-provisioned-eastus2",
+      "name": "gpt-5 · 2025-08-07",
+      "family": "foundry",
+      "currency": "GBP",
+      "region": "eastus2",
+      "components": [
+        {
+          "id": "capacity",
+          "label": "Provisioned throughput",
+          "unit": "1 Hour",
+          "quantityPerUnit": 1
+        }
+      ],
+      "note": "Official regional availability. Retail tariff is verified independently.",
+      "evidence": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#regional-provisioned-managed",
+      "deployment": "regional-provisioned",
+      "kind": "model-deployment",
+      "model": {
+        "id": "gpt-5",
+        "version": "2025-08-07",
+        "sku": "ProvisionedManaged",
+        "mode": "provisioned"
+      }
+    },
+    {
+      "id": "foundry-gpt-5-2025-08-07-regional-provisioned-uksouth",
+      "name": "gpt-5 · 2025-08-07",
+      "family": "foundry",
+      "currency": "GBP",
+      "region": "uksouth",
+      "components": [
+        {
+          "id": "capacity",
+          "label": "Provisioned throughput",
+          "unit": "1 Hour",
+          "quantityPerUnit": 1
+        }
+      ],
+      "note": "Official regional availability. Retail tariff is verified independently.",
+      "evidence": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#regional-provisioned-managed",
+      "deployment": "regional-provisioned",
+      "kind": "model-deployment",
+      "model": {
+        "id": "gpt-5",
+        "version": "2025-08-07",
+        "sku": "ProvisionedManaged",
+        "mode": "provisioned"
+      }
+    },
+    {
+      "id": "foundry-gpt-5-mini-2025-08-07-data-zone-provisioned-eastus2",
+      "name": "gpt-5-mini · 2025-08-07",
+      "family": "foundry",
+      "currency": "GBP",
+      "region": "eastus2",
+      "components": [
+        {
+          "id": "capacity",
+          "label": "Provisioned throughput",
+          "unit": "1 Hour",
+          "quantityPerUnit": 1
+        }
+      ],
+      "note": "Official regional availability. Retail tariff is verified independently.",
+      "evidence": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#data-zone-provisioned-managed",
+      "deployment": "data-zone-provisioned",
+      "kind": "model-deployment",
+      "model": {
+        "id": "gpt-5-mini",
+        "version": "2025-08-07",
+        "sku": "DataZoneProvisionedManaged",
+        "mode": "provisioned"
+      }
+    },
+    {
+      "id": "foundry-gpt-5-mini-2025-08-07-data-zone-provisioned-westeurope",
+      "name": "gpt-5-mini · 2025-08-07",
+      "family": "foundry",
+      "currency": "GBP",
+      "region": "westeurope",
+      "components": [
+        {
+          "id": "capacity",
+          "label": "Provisioned throughput",
+          "unit": "1 Hour",
+          "quantityPerUnit": 1
+        }
+      ],
+      "note": "Official regional availability. Retail tariff is verified independently.",
+      "evidence": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#data-zone-provisioned-managed",
+      "deployment": "data-zone-provisioned",
+      "kind": "model-deployment",
+      "model": {
+        "id": "gpt-5-mini",
+        "version": "2025-08-07",
+        "sku": "DataZoneProvisionedManaged",
+        "mode": "provisioned"
+      }
+    },
+    {
+      "id": "foundry-gpt-5-mini-2025-08-07-global-provisioned-eastus2",
+      "name": "gpt-5-mini · 2025-08-07",
+      "family": "foundry",
+      "currency": "GBP",
+      "region": "eastus2",
+      "components": [
+        {
+          "id": "capacity",
+          "label": "Provisioned throughput",
+          "unit": "1 Hour",
+          "quantityPerUnit": 1
+        }
+      ],
+      "note": "Official regional availability. Retail tariff is verified independently.",
+      "evidence": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#global-provisioned-managed",
+      "deployment": "global-provisioned",
+      "kind": "model-deployment",
+      "model": {
+        "id": "gpt-5-mini",
+        "version": "2025-08-07",
+        "sku": "GlobalProvisionedManaged",
+        "mode": "provisioned"
+      }
+    },
+    {
+      "id": "foundry-gpt-5-mini-2025-08-07-global-provisioned-uksouth",
+      "name": "gpt-5-mini · 2025-08-07",
+      "family": "foundry",
+      "currency": "GBP",
+      "region": "uksouth",
+      "components": [
+        {
+          "id": "capacity",
+          "label": "Provisioned throughput",
+          "unit": "1 Hour",
+          "quantityPerUnit": 1
+        }
+      ],
+      "note": "Official regional availability. Retail tariff is verified independently.",
+      "evidence": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#global-provisioned-managed",
+      "deployment": "global-provisioned",
+      "kind": "model-deployment",
+      "model": {
+        "id": "gpt-5-mini",
+        "version": "2025-08-07",
+        "sku": "GlobalProvisionedManaged",
+        "mode": "provisioned"
+      }
+    },
+    {
+      "id": "foundry-gpt-5-mini-2025-08-07-global-provisioned-westeurope",
+      "name": "gpt-5-mini · 2025-08-07",
+      "family": "foundry",
+      "currency": "GBP",
+      "region": "westeurope",
+      "components": [
+        {
+          "id": "capacity",
+          "label": "Provisioned throughput",
+          "unit": "1 Hour",
+          "quantityPerUnit": 1
+        }
+      ],
+      "note": "Official regional availability. Retail tariff is verified independently.",
+      "evidence": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#global-provisioned-managed",
+      "deployment": "global-provisioned",
+      "kind": "model-deployment",
+      "model": {
+        "id": "gpt-5-mini",
+        "version": "2025-08-07",
+        "sku": "GlobalProvisionedManaged",
+        "mode": "provisioned"
+      }
+    },
+    {
+      "id": "foundry-gpt-5-mini-2025-08-07-regional-provisioned-eastus2",
+      "name": "gpt-5-mini · 2025-08-07",
+      "family": "foundry",
+      "currency": "GBP",
+      "region": "eastus2",
+      "components": [
+        {
+          "id": "capacity",
+          "label": "Provisioned throughput",
+          "unit": "1 Hour",
+          "quantityPerUnit": 1
+        }
+      ],
+      "note": "Official regional availability. Retail tariff is verified independently.",
+      "evidence": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#regional-provisioned-managed",
+      "deployment": "regional-provisioned",
+      "kind": "model-deployment",
+      "model": {
+        "id": "gpt-5-mini",
+        "version": "2025-08-07",
+        "sku": "ProvisionedManaged",
+        "mode": "provisioned"
+      }
+    },
+    {
+      "id": "foundry-gpt-5-mini-2025-08-07-regional-provisioned-uksouth",
+      "name": "gpt-5-mini · 2025-08-07",
+      "family": "foundry",
+      "currency": "GBP",
+      "region": "uksouth",
+      "components": [
+        {
+          "id": "capacity",
+          "label": "Provisioned throughput",
+          "unit": "1 Hour",
+          "quantityPerUnit": 1
+        }
+      ],
+      "note": "Official regional availability. Retail tariff is verified independently.",
+      "evidence": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#regional-provisioned-managed",
+      "deployment": "regional-provisioned",
+      "kind": "model-deployment",
+      "model": {
+        "id": "gpt-5-mini",
+        "version": "2025-08-07",
+        "sku": "ProvisionedManaged",
+        "mode": "provisioned"
+      }
+    },
+    {
+      "id": "foundry-gpt-5-1-2025-11-13-data-zone-provisioned-eastus2",
+      "name": "gpt-5.1 · 2025-11-13",
+      "family": "foundry",
+      "currency": "GBP",
+      "region": "eastus2",
+      "components": [
+        {
+          "id": "capacity",
+          "label": "Provisioned throughput",
+          "unit": "1 Hour",
+          "quantityPerUnit": 1
+        }
+      ],
+      "note": "Official regional availability. Retail tariff is verified independently.",
+      "evidence": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#data-zone-provisioned-managed",
+      "deployment": "data-zone-provisioned",
+      "kind": "model-deployment",
+      "model": {
+        "id": "gpt-5.1",
+        "version": "2025-11-13",
+        "sku": "DataZoneProvisionedManaged",
+        "mode": "provisioned"
+      }
+    },
+    {
+      "id": "foundry-gpt-5-1-2025-11-13-data-zone-provisioned-westeurope",
+      "name": "gpt-5.1 · 2025-11-13",
+      "family": "foundry",
+      "currency": "GBP",
+      "region": "westeurope",
+      "components": [
+        {
+          "id": "capacity",
+          "label": "Provisioned throughput",
+          "unit": "1 Hour",
+          "quantityPerUnit": 1
+        }
+      ],
+      "note": "Official regional availability. Retail tariff is verified independently.",
+      "evidence": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#data-zone-provisioned-managed",
+      "deployment": "data-zone-provisioned",
+      "kind": "model-deployment",
+      "model": {
+        "id": "gpt-5.1",
+        "version": "2025-11-13",
+        "sku": "DataZoneProvisionedManaged",
+        "mode": "provisioned"
+      }
+    },
+    {
+      "id": "foundry-gpt-5-1-2025-11-13-global-provisioned-eastus2",
+      "name": "gpt-5.1 · 2025-11-13",
+      "family": "foundry",
+      "currency": "GBP",
+      "region": "eastus2",
+      "components": [
+        {
+          "id": "capacity",
+          "label": "Provisioned throughput",
+          "unit": "1 Hour",
+          "quantityPerUnit": 1
+        }
+      ],
+      "note": "Official regional availability. Retail tariff is verified independently.",
+      "evidence": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#global-provisioned-managed",
+      "deployment": "global-provisioned",
+      "kind": "model-deployment",
+      "model": {
+        "id": "gpt-5.1",
+        "version": "2025-11-13",
+        "sku": "GlobalProvisionedManaged",
+        "mode": "provisioned"
+      }
+    },
+    {
+      "id": "foundry-gpt-5-1-2025-11-13-global-provisioned-uksouth",
+      "name": "gpt-5.1 · 2025-11-13",
+      "family": "foundry",
+      "currency": "GBP",
+      "region": "uksouth",
+      "components": [
+        {
+          "id": "capacity",
+          "label": "Provisioned throughput",
+          "unit": "1 Hour",
+          "quantityPerUnit": 1
+        }
+      ],
+      "note": "Official regional availability. Retail tariff is verified independently.",
+      "evidence": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#global-provisioned-managed",
+      "deployment": "global-provisioned",
+      "kind": "model-deployment",
+      "model": {
+        "id": "gpt-5.1",
+        "version": "2025-11-13",
+        "sku": "GlobalProvisionedManaged",
+        "mode": "provisioned"
+      }
+    },
+    {
+      "id": "foundry-gpt-5-1-2025-11-13-global-provisioned-westeurope",
+      "name": "gpt-5.1 · 2025-11-13",
+      "family": "foundry",
+      "currency": "GBP",
+      "region": "westeurope",
+      "components": [
+        {
+          "id": "capacity",
+          "label": "Provisioned throughput",
+          "unit": "1 Hour",
+          "quantityPerUnit": 1
+        }
+      ],
+      "note": "Official regional availability. Retail tariff is verified independently.",
+      "evidence": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#global-provisioned-managed",
+      "deployment": "global-provisioned",
+      "kind": "model-deployment",
+      "model": {
+        "id": "gpt-5.1",
+        "version": "2025-11-13",
+        "sku": "GlobalProvisionedManaged",
+        "mode": "provisioned"
+      }
+    },
+    {
+      "id": "foundry-gpt-5-1-2025-11-13-regional-provisioned-eastus2",
+      "name": "gpt-5.1 · 2025-11-13",
+      "family": "foundry",
+      "currency": "GBP",
+      "region": "eastus2",
+      "components": [
+        {
+          "id": "capacity",
+          "label": "Provisioned throughput",
+          "unit": "1 Hour",
+          "quantityPerUnit": 1
+        }
+      ],
+      "note": "Official regional availability. Retail tariff is verified independently.",
+      "evidence": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#regional-provisioned-managed",
+      "deployment": "regional-provisioned",
+      "kind": "model-deployment",
+      "model": {
+        "id": "gpt-5.1",
+        "version": "2025-11-13",
+        "sku": "ProvisionedManaged",
+        "mode": "provisioned"
+      }
+    },
+    {
+      "id": "foundry-gpt-5-1-2025-11-13-regional-provisioned-uksouth",
+      "name": "gpt-5.1 · 2025-11-13",
+      "family": "foundry",
+      "currency": "GBP",
+      "region": "uksouth",
+      "components": [
+        {
+          "id": "capacity",
+          "label": "Provisioned throughput",
+          "unit": "1 Hour",
+          "quantityPerUnit": 1
+        }
+      ],
+      "note": "Official regional availability. Retail tariff is verified independently.",
+      "evidence": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#regional-provisioned-managed",
+      "deployment": "regional-provisioned",
+      "kind": "model-deployment",
+      "model": {
+        "id": "gpt-5.1",
+        "version": "2025-11-13",
+        "sku": "ProvisionedManaged",
+        "mode": "provisioned"
+      }
+    },
+    {
+      "id": "foundry-gpt-5-2-2025-12-11-data-zone-provisioned-eastus2",
+      "name": "gpt-5.2 · 2025-12-11",
+      "family": "foundry",
+      "currency": "GBP",
+      "region": "eastus2",
+      "components": [
+        {
+          "id": "capacity",
+          "label": "Provisioned throughput",
+          "unit": "1 Hour",
+          "quantityPerUnit": 1
+        }
+      ],
+      "note": "Official regional availability. Retail tariff is verified independently.",
+      "evidence": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#data-zone-provisioned-managed",
+      "deployment": "data-zone-provisioned",
+      "kind": "model-deployment",
+      "model": {
+        "id": "gpt-5.2",
+        "version": "2025-12-11",
+        "sku": "DataZoneProvisionedManaged",
+        "mode": "provisioned"
+      }
+    },
+    {
+      "id": "foundry-gpt-5-2-2025-12-11-data-zone-provisioned-westeurope",
+      "name": "gpt-5.2 · 2025-12-11",
+      "family": "foundry",
+      "currency": "GBP",
+      "region": "westeurope",
+      "components": [
+        {
+          "id": "capacity",
+          "label": "Provisioned throughput",
+          "unit": "1 Hour",
+          "quantityPerUnit": 1
+        }
+      ],
+      "note": "Official regional availability. Retail tariff is verified independently.",
+      "evidence": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#data-zone-provisioned-managed",
+      "deployment": "data-zone-provisioned",
+      "kind": "model-deployment",
+      "model": {
+        "id": "gpt-5.2",
+        "version": "2025-12-11",
+        "sku": "DataZoneProvisionedManaged",
+        "mode": "provisioned"
+      }
+    },
+    {
+      "id": "foundry-gpt-5-2-2025-12-11-global-provisioned-eastus2",
+      "name": "gpt-5.2 · 2025-12-11",
+      "family": "foundry",
+      "currency": "GBP",
+      "region": "eastus2",
+      "components": [
+        {
+          "id": "capacity",
+          "label": "Provisioned throughput",
+          "unit": "1 Hour",
+          "quantityPerUnit": 1
+        }
+      ],
+      "note": "Official regional availability. Retail tariff is verified independently.",
+      "evidence": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#global-provisioned-managed",
+      "deployment": "global-provisioned",
+      "kind": "model-deployment",
+      "model": {
+        "id": "gpt-5.2",
+        "version": "2025-12-11",
+        "sku": "GlobalProvisionedManaged",
+        "mode": "provisioned"
+      }
+    },
+    {
+      "id": "foundry-gpt-5-2-2025-12-11-global-provisioned-uksouth",
+      "name": "gpt-5.2 · 2025-12-11",
+      "family": "foundry",
+      "currency": "GBP",
+      "region": "uksouth",
+      "components": [
+        {
+          "id": "capacity",
+          "label": "Provisioned throughput",
+          "unit": "1 Hour",
+          "quantityPerUnit": 1
+        }
+      ],
+      "note": "Official regional availability. Retail tariff is verified independently.",
+      "evidence": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#global-provisioned-managed",
+      "deployment": "global-provisioned",
+      "kind": "model-deployment",
+      "model": {
+        "id": "gpt-5.2",
+        "version": "2025-12-11",
+        "sku": "GlobalProvisionedManaged",
+        "mode": "provisioned"
+      }
+    },
+    {
+      "id": "foundry-gpt-5-2-2025-12-11-global-provisioned-westeurope",
+      "name": "gpt-5.2 · 2025-12-11",
+      "family": "foundry",
+      "currency": "GBP",
+      "region": "westeurope",
+      "components": [
+        {
+          "id": "capacity",
+          "label": "Provisioned throughput",
+          "unit": "1 Hour",
+          "quantityPerUnit": 1
+        }
+      ],
+      "note": "Official regional availability. Retail tariff is verified independently.",
+      "evidence": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#global-provisioned-managed",
+      "deployment": "global-provisioned",
+      "kind": "model-deployment",
+      "model": {
+        "id": "gpt-5.2",
+        "version": "2025-12-11",
+        "sku": "GlobalProvisionedManaged",
+        "mode": "provisioned"
+      }
+    },
+    {
+      "id": "foundry-gpt-5-2-2025-12-11-regional-provisioned-uksouth",
+      "name": "gpt-5.2 · 2025-12-11",
+      "family": "foundry",
+      "currency": "GBP",
+      "region": "uksouth",
+      "components": [
+        {
+          "id": "capacity",
+          "label": "Provisioned throughput",
+          "unit": "1 Hour",
+          "quantityPerUnit": 1
+        }
+      ],
+      "note": "Official regional availability. Retail tariff is verified independently.",
+      "evidence": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#regional-provisioned-managed",
+      "deployment": "regional-provisioned",
+      "kind": "model-deployment",
+      "model": {
+        "id": "gpt-5.2",
+        "version": "2025-12-11",
+        "sku": "ProvisionedManaged",
+        "mode": "provisioned"
+      }
+    },
+    {
+      "id": "foundry-gpt-5-4-2026-03-05-data-zone-provisioned-eastus2",
+      "name": "gpt-5.4 · 2026-03-05",
+      "family": "foundry",
+      "currency": "GBP",
+      "region": "eastus2",
+      "components": [
+        {
+          "id": "capacity",
+          "label": "Provisioned throughput",
+          "unit": "1 Hour",
+          "quantityPerUnit": 1
+        }
+      ],
+      "note": "Official regional availability. Retail tariff is verified independently.",
+      "evidence": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#data-zone-provisioned-managed",
+      "deployment": "data-zone-provisioned",
+      "kind": "model-deployment",
+      "model": {
+        "id": "gpt-5.4",
+        "version": "2026-03-05",
+        "sku": "DataZoneProvisionedManaged",
+        "mode": "provisioned"
+      }
+    },
+    {
+      "id": "foundry-gpt-5-4-2026-03-05-data-zone-provisioned-westeurope",
+      "name": "gpt-5.4 · 2026-03-05",
+      "family": "foundry",
+      "currency": "GBP",
+      "region": "westeurope",
+      "components": [
+        {
+          "id": "capacity",
+          "label": "Provisioned throughput",
+          "unit": "1 Hour",
+          "quantityPerUnit": 1
+        }
+      ],
+      "note": "Official regional availability. Retail tariff is verified independently.",
+      "evidence": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#data-zone-provisioned-managed",
+      "deployment": "data-zone-provisioned",
+      "kind": "model-deployment",
+      "model": {
+        "id": "gpt-5.4",
+        "version": "2026-03-05",
+        "sku": "DataZoneProvisionedManaged",
+        "mode": "provisioned"
+      }
+    },
+    {
+      "id": "foundry-gpt-5-4-2026-03-05-global-provisioned-eastus2",
+      "name": "gpt-5.4 · 2026-03-05",
+      "family": "foundry",
+      "currency": "GBP",
+      "region": "eastus2",
+      "components": [
+        {
+          "id": "capacity",
+          "label": "Provisioned throughput",
+          "unit": "1 Hour",
+          "quantityPerUnit": 1
+        }
+      ],
+      "note": "Official regional availability. Retail tariff is verified independently.",
+      "evidence": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#global-provisioned-managed",
+      "deployment": "global-provisioned",
+      "kind": "model-deployment",
+      "model": {
+        "id": "gpt-5.4",
+        "version": "2026-03-05",
+        "sku": "GlobalProvisionedManaged",
+        "mode": "provisioned"
+      }
+    },
+    {
+      "id": "foundry-gpt-5-4-2026-03-05-global-provisioned-uksouth",
+      "name": "gpt-5.4 · 2026-03-05",
+      "family": "foundry",
+      "currency": "GBP",
+      "region": "uksouth",
+      "components": [
+        {
+          "id": "capacity",
+          "label": "Provisioned throughput",
+          "unit": "1 Hour",
+          "quantityPerUnit": 1
+        }
+      ],
+      "note": "Official regional availability. Retail tariff is verified independently.",
+      "evidence": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#global-provisioned-managed",
+      "deployment": "global-provisioned",
+      "kind": "model-deployment",
+      "model": {
+        "id": "gpt-5.4",
+        "version": "2026-03-05",
+        "sku": "GlobalProvisionedManaged",
+        "mode": "provisioned"
+      }
+    },
+    {
+      "id": "foundry-gpt-5-4-2026-03-05-global-provisioned-westeurope",
+      "name": "gpt-5.4 · 2026-03-05",
+      "family": "foundry",
+      "currency": "GBP",
+      "region": "westeurope",
+      "components": [
+        {
+          "id": "capacity",
+          "label": "Provisioned throughput",
+          "unit": "1 Hour",
+          "quantityPerUnit": 1
+        }
+      ],
+      "note": "Official regional availability. Retail tariff is verified independently.",
+      "evidence": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#global-provisioned-managed",
+      "deployment": "global-provisioned",
+      "kind": "model-deployment",
+      "model": {
+        "id": "gpt-5.4",
+        "version": "2026-03-05",
+        "sku": "GlobalProvisionedManaged",
+        "mode": "provisioned"
+      }
+    },
+    {
+      "id": "foundry-gpt-5-4-2026-03-05-regional-provisioned-uksouth",
+      "name": "gpt-5.4 · 2026-03-05",
+      "family": "foundry",
+      "currency": "GBP",
+      "region": "uksouth",
+      "components": [
+        {
+          "id": "capacity",
+          "label": "Provisioned throughput",
+          "unit": "1 Hour",
+          "quantityPerUnit": 1
+        }
+      ],
+      "note": "Official regional availability. Retail tariff is verified independently.",
+      "evidence": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#regional-provisioned-managed",
+      "deployment": "regional-provisioned",
+      "kind": "model-deployment",
+      "model": {
+        "id": "gpt-5.4",
+        "version": "2026-03-05",
+        "sku": "ProvisionedManaged",
+        "mode": "provisioned"
+      }
+    },
+    {
+      "id": "foundry-gpt-5-4-mini-2026-03-17-data-zone-provisioned-eastus2",
+      "name": "gpt-5.4-mini · 2026-03-17",
+      "family": "foundry",
+      "currency": "GBP",
+      "region": "eastus2",
+      "components": [
+        {
+          "id": "capacity",
+          "label": "Provisioned throughput",
+          "unit": "1 Hour",
+          "quantityPerUnit": 1
+        }
+      ],
+      "note": "Official regional availability. Retail tariff is verified independently.",
+      "evidence": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#data-zone-provisioned-managed",
+      "deployment": "data-zone-provisioned",
+      "kind": "model-deployment",
+      "model": {
+        "id": "gpt-5.4-mini",
+        "version": "2026-03-17",
+        "sku": "DataZoneProvisionedManaged",
+        "mode": "provisioned"
+      }
+    },
+    {
+      "id": "foundry-gpt-5-4-mini-2026-03-17-data-zone-provisioned-westeurope",
+      "name": "gpt-5.4-mini · 2026-03-17",
+      "family": "foundry",
+      "currency": "GBP",
+      "region": "westeurope",
+      "components": [
+        {
+          "id": "capacity",
+          "label": "Provisioned throughput",
+          "unit": "1 Hour",
+          "quantityPerUnit": 1
+        }
+      ],
+      "note": "Official regional availability. Retail tariff is verified independently.",
+      "evidence": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#data-zone-provisioned-managed",
+      "deployment": "data-zone-provisioned",
+      "kind": "model-deployment",
+      "model": {
+        "id": "gpt-5.4-mini",
+        "version": "2026-03-17",
+        "sku": "DataZoneProvisionedManaged",
+        "mode": "provisioned"
+      }
+    },
+    {
+      "id": "foundry-gpt-5-4-mini-2026-03-17-global-provisioned-eastus2",
+      "name": "gpt-5.4-mini · 2026-03-17",
+      "family": "foundry",
+      "currency": "GBP",
+      "region": "eastus2",
+      "components": [
+        {
+          "id": "capacity",
+          "label": "Provisioned throughput",
+          "unit": "1 Hour",
+          "quantityPerUnit": 1
+        }
+      ],
+      "note": "Official regional availability. Retail tariff is verified independently.",
+      "evidence": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#global-provisioned-managed",
+      "deployment": "global-provisioned",
+      "kind": "model-deployment",
+      "model": {
+        "id": "gpt-5.4-mini",
+        "version": "2026-03-17",
+        "sku": "GlobalProvisionedManaged",
+        "mode": "provisioned"
+      }
+    },
+    {
+      "id": "foundry-gpt-5-4-mini-2026-03-17-global-provisioned-uksouth",
+      "name": "gpt-5.4-mini · 2026-03-17",
+      "family": "foundry",
+      "currency": "GBP",
+      "region": "uksouth",
+      "components": [
+        {
+          "id": "capacity",
+          "label": "Provisioned throughput",
+          "unit": "1 Hour",
+          "quantityPerUnit": 1
+        }
+      ],
+      "note": "Official regional availability. Retail tariff is verified independently.",
+      "evidence": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#global-provisioned-managed",
+      "deployment": "global-provisioned",
+      "kind": "model-deployment",
+      "model": {
+        "id": "gpt-5.4-mini",
+        "version": "2026-03-17",
+        "sku": "GlobalProvisionedManaged",
+        "mode": "provisioned"
+      }
+    },
+    {
+      "id": "foundry-gpt-5-4-mini-2026-03-17-global-provisioned-westeurope",
+      "name": "gpt-5.4-mini · 2026-03-17",
+      "family": "foundry",
+      "currency": "GBP",
+      "region": "westeurope",
+      "components": [
+        {
+          "id": "capacity",
+          "label": "Provisioned throughput",
+          "unit": "1 Hour",
+          "quantityPerUnit": 1
+        }
+      ],
+      "note": "Official regional availability. Retail tariff is verified independently.",
+      "evidence": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#global-provisioned-managed",
+      "deployment": "global-provisioned",
+      "kind": "model-deployment",
+      "model": {
+        "id": "gpt-5.4-mini",
+        "version": "2026-03-17",
+        "sku": "GlobalProvisionedManaged",
+        "mode": "provisioned"
+      }
+    },
+    {
+      "id": "foundry-gpt-5-4-mini-2026-03-17-regional-provisioned-uksouth",
+      "name": "gpt-5.4-mini · 2026-03-17",
+      "family": "foundry",
+      "currency": "GBP",
+      "region": "uksouth",
+      "components": [
+        {
+          "id": "capacity",
+          "label": "Provisioned throughput",
+          "unit": "1 Hour",
+          "quantityPerUnit": 1
+        }
+      ],
+      "note": "Official regional availability. Retail tariff is verified independently.",
+      "evidence": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#regional-provisioned-managed",
+      "deployment": "regional-provisioned",
+      "kind": "model-deployment",
+      "model": {
+        "id": "gpt-5.4-mini",
+        "version": "2026-03-17",
+        "sku": "ProvisionedManaged",
+        "mode": "provisioned"
+      }
+    },
+    {
+      "id": "foundry-gpt-5-6-sol-2026-07-09-data-zone-provisioned-eastus2",
+      "name": "gpt-5.6-sol · 2026-07-09",
+      "family": "foundry",
+      "currency": "GBP",
+      "region": "eastus2",
+      "components": [
+        {
+          "id": "capacity",
+          "label": "Provisioned throughput",
+          "unit": "1 Hour",
+          "quantityPerUnit": 1
+        }
+      ],
+      "note": "Official regional availability. Retail tariff is verified independently.",
+      "evidence": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#data-zone-provisioned-managed",
+      "deployment": "data-zone-provisioned",
+      "kind": "model-deployment",
+      "model": {
+        "id": "gpt-5.6-sol",
+        "version": "2026-07-09",
+        "sku": "DataZoneProvisionedManaged",
+        "mode": "provisioned"
+      }
+    },
+    {
+      "id": "foundry-gpt-5-6-sol-2026-07-09-data-zone-provisioned-westeurope",
+      "name": "gpt-5.6-sol · 2026-07-09",
+      "family": "foundry",
+      "currency": "GBP",
+      "region": "westeurope",
+      "components": [
+        {
+          "id": "capacity",
+          "label": "Provisioned throughput",
+          "unit": "1 Hour",
+          "quantityPerUnit": 1
+        }
+      ],
+      "note": "Official regional availability. Retail tariff is verified independently.",
+      "evidence": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#data-zone-provisioned-managed",
+      "deployment": "data-zone-provisioned",
+      "kind": "model-deployment",
+      "model": {
+        "id": "gpt-5.6-sol",
+        "version": "2026-07-09",
+        "sku": "DataZoneProvisionedManaged",
+        "mode": "provisioned"
+      }
+    },
+    {
+      "id": "foundry-gpt-5-6-sol-2026-07-09-global-provisioned-uksouth",
+      "name": "gpt-5.6-sol · 2026-07-09",
+      "family": "foundry",
+      "currency": "GBP",
+      "region": "uksouth",
+      "components": [
+        {
+          "id": "capacity",
+          "label": "Provisioned throughput",
+          "unit": "1 Hour",
+          "quantityPerUnit": 1
+        }
+      ],
+      "note": "Official regional availability. Retail tariff is verified independently.",
+      "evidence": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#global-provisioned-managed",
+      "deployment": "global-provisioned",
+      "kind": "model-deployment",
+      "model": {
+        "id": "gpt-5.6-sol",
+        "version": "2026-07-09",
+        "sku": "GlobalProvisionedManaged",
+        "mode": "provisioned"
+      }
+    },
+    {
+      "id": "foundry-gpt-5-6-sol-2026-07-09-global-provisioned-westeurope",
+      "name": "gpt-5.6-sol · 2026-07-09",
+      "family": "foundry",
+      "currency": "GBP",
+      "region": "westeurope",
+      "components": [
+        {
+          "id": "capacity",
+          "label": "Provisioned throughput",
+          "unit": "1 Hour",
+          "quantityPerUnit": 1
+        }
+      ],
+      "note": "Official regional availability. Retail tariff is verified independently.",
+      "evidence": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#global-provisioned-managed",
+      "deployment": "global-provisioned",
+      "kind": "model-deployment",
+      "model": {
+        "id": "gpt-5.6-sol",
+        "version": "2026-07-09",
+        "sku": "GlobalProvisionedManaged",
+        "mode": "provisioned"
+      }
+    },
+    {
+      "id": "foundry-gpt-5-6-sol-2026-07-09-regional-provisioned-uksouth",
+      "name": "gpt-5.6-sol · 2026-07-09",
+      "family": "foundry",
+      "currency": "GBP",
+      "region": "uksouth",
+      "components": [
+        {
+          "id": "capacity",
+          "label": "Provisioned throughput",
+          "unit": "1 Hour",
+          "quantityPerUnit": 1
+        }
+      ],
+      "note": "Official regional availability. Retail tariff is verified independently.",
+      "evidence": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#regional-provisioned-managed",
+      "deployment": "regional-provisioned",
+      "kind": "model-deployment",
+      "model": {
+        "id": "gpt-5.6-sol",
+        "version": "2026-07-09",
+        "sku": "ProvisionedManaged",
+        "mode": "provisioned"
+      }
+    },
+    {
+      "id": "foundry-gpt-6-sol-2026-09-22-data-zone-provisioned-eastus2",
+      "name": "gpt-6-sol · 2026-09-22",
+      "family": "foundry",
+      "currency": "GBP",
+      "region": "eastus2",
+      "components": [
+        {
+          "id": "capacity",
+          "label": "Provisioned throughput",
+          "unit": "1 Hour",
+          "quantityPerUnit": 1
+        }
+      ],
+      "note": "Official regional availability. Retail tariff is verified independently.",
+      "evidence": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#data-zone-provisioned-managed",
+      "deployment": "data-zone-provisioned",
+      "kind": "model-deployment",
+      "model": {
+        "id": "gpt-6-sol",
+        "version": "2026-09-22",
+        "sku": "DataZoneProvisionedManaged",
+        "mode": "provisioned"
+      }
+    },
+    {
+      "id": "foundry-gpt-6-sol-2026-09-22-global-provisioned-eastus2",
+      "name": "gpt-6-sol · 2026-09-22",
+      "family": "foundry",
+      "currency": "GBP",
+      "region": "eastus2",
+      "components": [
+        {
+          "id": "capacity",
+          "label": "Provisioned throughput",
+          "unit": "1 Hour",
+          "quantityPerUnit": 1
+        }
+      ],
+      "note": "Official regional availability. Retail tariff is verified independently.",
+      "evidence": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#global-provisioned-managed",
+      "deployment": "global-provisioned",
+      "kind": "model-deployment",
+      "model": {
+        "id": "gpt-6-sol",
+        "version": "2026-09-22",
+        "sku": "GlobalProvisionedManaged",
+        "mode": "provisioned"
+      }
+    },
+    {
+      "id": "foundry-gpt-6-sol-2026-09-22-global-provisioned-uksouth",
+      "name": "gpt-6-sol · 2026-09-22",
+      "family": "foundry",
+      "currency": "GBP",
+      "region": "uksouth",
+      "components": [
+        {
+          "id": "capacity",
+          "label": "Provisioned throughput",
+          "unit": "1 Hour",
+          "quantityPerUnit": 1
+        }
+      ],
+      "note": "Official regional availability. Retail tariff is verified independently.",
+      "evidence": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#global-provisioned-managed",
+      "deployment": "global-provisioned",
+      "kind": "model-deployment",
+      "model": {
+        "id": "gpt-6-sol",
+        "version": "2026-09-22",
+        "sku": "GlobalProvisionedManaged",
+        "mode": "provisioned"
+      }
+    },
+    {
+      "id": "foundry-gpt-6-sol-2026-09-22-global-provisioned-westeurope",
+      "name": "gpt-6-sol · 2026-09-22",
+      "family": "foundry",
+      "currency": "GBP",
+      "region": "westeurope",
+      "components": [
+        {
+          "id": "capacity",
+          "label": "Provisioned throughput",
+          "unit": "1 Hour",
+          "quantityPerUnit": 1
+        }
+      ],
+      "note": "Official regional availability. Retail tariff is verified independently.",
+      "evidence": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#global-provisioned-managed",
+      "deployment": "global-provisioned",
+      "kind": "model-deployment",
+      "model": {
+        "id": "gpt-6-sol",
+        "version": "2026-09-22",
+        "sku": "GlobalProvisionedManaged",
+        "mode": "provisioned"
+      }
+    },
+    {
+      "id": "foundry-llama-3-3-70b-instruct-9-data-zone-provisioned-eastus2",
+      "name": "Llama-3.3-70B-Instruct · 9",
+      "family": "foundry",
+      "currency": "GBP",
+      "region": "eastus2",
+      "components": [
+        {
+          "id": "capacity",
+          "label": "Provisioned throughput",
+          "unit": "1 Hour",
+          "quantityPerUnit": 1
+        }
+      ],
+      "note": "Official regional availability. Retail tariff is verified independently.",
+      "evidence": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#data-zone-provisioned-managed",
+      "deployment": "data-zone-provisioned",
+      "kind": "model-deployment",
+      "model": {
+        "id": "Llama-3.3-70B-Instruct",
+        "version": "9",
+        "sku": "DataZoneProvisionedManaged",
+        "mode": "provisioned"
+      }
+    },
+    {
+      "id": "foundry-llama-3-3-70b-instruct-9-data-zone-provisioned-westeurope",
+      "name": "Llama-3.3-70B-Instruct · 9",
+      "family": "foundry",
+      "currency": "GBP",
+      "region": "westeurope",
+      "components": [
+        {
+          "id": "capacity",
+          "label": "Provisioned throughput",
+          "unit": "1 Hour",
+          "quantityPerUnit": 1
+        }
+      ],
+      "note": "Official regional availability. Retail tariff is verified independently.",
+      "evidence": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#data-zone-provisioned-managed",
+      "deployment": "data-zone-provisioned",
+      "kind": "model-deployment",
+      "model": {
+        "id": "Llama-3.3-70B-Instruct",
+        "version": "9",
+        "sku": "DataZoneProvisionedManaged",
+        "mode": "provisioned"
+      }
+    },
+    {
+      "id": "foundry-llama-3-3-70b-instruct-9-global-provisioned-eastus2",
+      "name": "Llama-3.3-70B-Instruct · 9",
+      "family": "foundry",
+      "currency": "GBP",
+      "region": "eastus2",
+      "components": [
+        {
+          "id": "capacity",
+          "label": "Provisioned throughput",
+          "unit": "1 Hour",
+          "quantityPerUnit": 1
+        }
+      ],
+      "note": "Official regional availability. Retail tariff is verified independently.",
+      "evidence": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#global-provisioned-managed",
+      "deployment": "global-provisioned",
+      "kind": "model-deployment",
+      "model": {
+        "id": "Llama-3.3-70B-Instruct",
+        "version": "9",
+        "sku": "GlobalProvisionedManaged",
+        "mode": "provisioned"
+      }
+    },
+    {
+      "id": "foundry-llama-3-3-70b-instruct-9-global-provisioned-uksouth",
+      "name": "Llama-3.3-70B-Instruct · 9",
+      "family": "foundry",
+      "currency": "GBP",
+      "region": "uksouth",
+      "components": [
+        {
+          "id": "capacity",
+          "label": "Provisioned throughput",
+          "unit": "1 Hour",
+          "quantityPerUnit": 1
+        }
+      ],
+      "note": "Official regional availability. Retail tariff is verified independently.",
+      "evidence": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#global-provisioned-managed",
+      "deployment": "global-provisioned",
+      "kind": "model-deployment",
+      "model": {
+        "id": "Llama-3.3-70B-Instruct",
+        "version": "9",
+        "sku": "GlobalProvisionedManaged",
+        "mode": "provisioned"
+      }
+    },
+    {
+      "id": "foundry-llama-3-3-70b-instruct-9-global-provisioned-westeurope",
+      "name": "Llama-3.3-70B-Instruct · 9",
+      "family": "foundry",
+      "currency": "GBP",
+      "region": "westeurope",
+      "components": [
+        {
+          "id": "capacity",
+          "label": "Provisioned throughput",
+          "unit": "1 Hour",
+          "quantityPerUnit": 1
+        }
+      ],
+      "note": "Official regional availability. Retail tariff is verified independently.",
+      "evidence": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#global-provisioned-managed",
+      "deployment": "global-provisioned",
+      "kind": "model-deployment",
+      "model": {
+        "id": "Llama-3.3-70B-Instruct",
+        "version": "9",
+        "sku": "GlobalProvisionedManaged",
+        "mode": "provisioned"
+      }
+    },
+    {
+      "id": "foundry-gpt-5-1-codex-2025-11-13-global-provisioned-eastus2",
+      "name": "gpt-5.1-codex · 2025-11-13",
+      "family": "foundry",
+      "currency": "GBP",
+      "region": "eastus2",
+      "components": [
+        {
+          "id": "capacity",
+          "label": "Provisioned throughput",
+          "unit": "1 Hour",
+          "quantityPerUnit": 1
+        }
+      ],
+      "note": "Official regional availability. Retail tariff is verified independently.",
+      "evidence": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#global-provisioned-managed",
+      "deployment": "global-provisioned",
+      "kind": "model-deployment",
+      "model": {
+        "id": "gpt-5.1-codex",
+        "version": "2025-11-13",
+        "sku": "GlobalProvisionedManaged",
+        "mode": "provisioned"
+      }
+    },
+    {
+      "id": "foundry-gpt-5-2-codex-2026-01-14-global-provisioned-eastus2",
+      "name": "gpt-5.2-codex · 2026-01-14",
+      "family": "foundry",
+      "currency": "GBP",
+      "region": "eastus2",
+      "components": [
+        {
+          "id": "capacity",
+          "label": "Provisioned throughput",
+          "unit": "1 Hour",
+          "quantityPerUnit": 1
+        }
+      ],
+      "note": "Official regional availability. Retail tariff is verified independently.",
+      "evidence": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#global-provisioned-managed",
+      "deployment": "global-provisioned",
+      "kind": "model-deployment",
+      "model": {
+        "id": "gpt-5.2-codex",
+        "version": "2026-01-14",
+        "sku": "GlobalProvisionedManaged",
+        "mode": "provisioned"
+      }
+    },
+    {
+      "id": "foundry-gpt-5-3-codex-2026-02-24-global-provisioned-eastus2",
+      "name": "gpt-5.3-codex · 2026-02-24",
+      "family": "foundry",
+      "currency": "GBP",
+      "region": "eastus2",
+      "components": [
+        {
+          "id": "capacity",
+          "label": "Provisioned throughput",
+          "unit": "1 Hour",
+          "quantityPerUnit": 1
+        }
+      ],
+      "note": "Official regional availability. Retail tariff is verified independently.",
+      "evidence": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#global-provisioned-managed",
+      "deployment": "global-provisioned",
+      "kind": "model-deployment",
+      "model": {
+        "id": "gpt-5.3-codex",
+        "version": "2026-02-24",
+        "sku": "GlobalProvisionedManaged",
+        "mode": "provisioned"
+      }
+    },
+    {
+      "id": "foundry-gpt-5-5-2026-04-24-global-provisioned-eastus2",
+      "name": "gpt-5.5 · 2026-04-24",
+      "family": "foundry",
+      "currency": "GBP",
+      "region": "eastus2",
+      "components": [
+        {
+          "id": "capacity",
+          "label": "Provisioned throughput",
+          "unit": "1 Hour",
+          "quantityPerUnit": 1
+        }
+      ],
+      "note": "Official regional availability. Retail tariff is verified independently.",
+      "evidence": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#global-provisioned-managed",
+      "deployment": "global-provisioned",
+      "kind": "model-deployment",
+      "model": {
+        "id": "gpt-5.5",
+        "version": "2026-04-24",
+        "sku": "GlobalProvisionedManaged",
+        "mode": "provisioned"
+      }
+    },
+    {
+      "id": "foundry-gpt-5-6-luna-2026-07-09-global-provisioned-eastus2",
+      "name": "gpt-5.6-luna · 2026-07-09",
+      "family": "foundry",
+      "currency": "GBP",
+      "region": "eastus2",
+      "components": [
+        {
+          "id": "capacity",
+          "label": "Provisioned throughput",
+          "unit": "1 Hour",
+          "quantityPerUnit": 1
+        }
+      ],
+      "note": "Official regional availability. Retail tariff is verified independently.",
+      "evidence": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#global-provisioned-managed",
+      "deployment": "global-provisioned",
+      "kind": "model-deployment",
+      "model": {
+        "id": "gpt-5.6-luna",
+        "version": "2026-07-09",
+        "sku": "GlobalProvisionedManaged",
+        "mode": "provisioned"
+      }
+    },
+    {
+      "id": "foundry-gpt-5-6-terra-2026-07-09-global-provisioned-eastus2",
+      "name": "gpt-5.6-terra · 2026-07-09",
+      "family": "foundry",
+      "currency": "GBP",
+      "region": "eastus2",
+      "components": [
+        {
+          "id": "capacity",
+          "label": "Provisioned throughput",
+          "unit": "1 Hour",
+          "quantityPerUnit": 1
+        }
+      ],
+      "note": "Official regional availability. Retail tariff is verified independently.",
+      "evidence": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#global-provisioned-managed",
+      "deployment": "global-provisioned",
+      "kind": "model-deployment",
+      "model": {
+        "id": "gpt-5.6-terra",
+        "version": "2026-07-09",
+        "sku": "GlobalProvisionedManaged",
+        "mode": "provisioned"
+      }
+    },
+    {
+      "id": "foundry-gpt-6-astra-2026-09-03-global-provisioned-eastus2",
+      "name": "gpt-6-astra · 2026-09-03",
+      "family": "foundry",
+      "currency": "GBP",
+      "region": "eastus2",
+      "components": [
+        {
+          "id": "capacity",
+          "label": "Provisioned throughput",
+          "unit": "1 Hour",
+          "quantityPerUnit": 1
+        }
+      ],
+      "note": "Official regional availability. Retail tariff is verified independently.",
+      "evidence": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#global-provisioned-managed",
+      "deployment": "global-provisioned",
+      "kind": "model-deployment",
+      "model": {
+        "id": "gpt-6-astra",
+        "version": "2026-09-03",
+        "sku": "GlobalProvisionedManaged",
+        "mode": "provisioned"
+      }
+    },
+    {
+      "id": "foundry-gpt-6-luna-2026-09-22-global-provisioned-eastus2",
+      "name": "gpt-6-luna · 2026-09-22",
+      "family": "foundry",
+      "currency": "GBP",
+      "region": "eastus2",
+      "components": [
+        {
+          "id": "capacity",
+          "label": "Provisioned throughput",
+          "unit": "1 Hour",
+          "quantityPerUnit": 1
+        }
+      ],
+      "note": "Official regional availability. Retail tariff is verified independently.",
+      "evidence": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#global-provisioned-managed",
+      "deployment": "global-provisioned",
+      "kind": "model-deployment",
+      "model": {
+        "id": "gpt-6-luna",
+        "version": "2026-09-22",
+        "sku": "GlobalProvisionedManaged",
+        "mode": "provisioned"
+      }
+    },
+    {
+      "id": "foundry-gpt-6-1-sol-2026-09-29-global-provisioned-eastus2",
+      "name": "gpt-6.1-sol · 2026-09-29",
+      "family": "foundry",
+      "currency": "GBP",
+      "region": "eastus2",
+      "components": [
+        {
+          "id": "capacity",
+          "label": "Provisioned throughput",
+          "unit": "1 Hour",
+          "quantityPerUnit": 1
+        }
+      ],
+      "note": "Official regional availability. Retail tariff is verified independently.",
+      "evidence": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#global-provisioned-managed",
+      "deployment": "global-provisioned",
+      "kind": "model-deployment",
+      "model": {
+        "id": "gpt-6.1-sol",
+        "version": "2026-09-29",
+        "sku": "GlobalProvisionedManaged",
+        "mode": "provisioned"
+      }
+    },
+    {
+      "id": "foundry-gpt-5-1-codex-2025-11-13-global-provisioned-uksouth",
+      "name": "gpt-5.1-codex · 2025-11-13",
+      "family": "foundry",
+      "currency": "GBP",
+      "region": "uksouth",
+      "components": [
+        {
+          "id": "capacity",
+          "label": "Provisioned throughput",
+          "unit": "1 Hour",
+          "quantityPerUnit": 1
+        }
+      ],
+      "note": "Official regional availability. Retail tariff is verified independently.",
+      "evidence": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#global-provisioned-managed",
+      "deployment": "global-provisioned",
+      "kind": "model-deployment",
+      "model": {
+        "id": "gpt-5.1-codex",
+        "version": "2025-11-13",
+        "sku": "GlobalProvisionedManaged",
+        "mode": "provisioned"
+      }
+    },
+    {
+      "id": "foundry-gpt-5-1-codex-2025-11-13-global-provisioned-westeurope",
+      "name": "gpt-5.1-codex · 2025-11-13",
+      "family": "foundry",
+      "currency": "GBP",
+      "region": "westeurope",
+      "components": [
+        {
+          "id": "capacity",
+          "label": "Provisioned throughput",
+          "unit": "1 Hour",
+          "quantityPerUnit": 1
+        }
+      ],
+      "note": "Official regional availability. Retail tariff is verified independently.",
+      "evidence": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#global-provisioned-managed",
+      "deployment": "global-provisioned",
+      "kind": "model-deployment",
+      "model": {
+        "id": "gpt-5.1-codex",
+        "version": "2025-11-13",
+        "sku": "GlobalProvisionedManaged",
+        "mode": "provisioned"
+      }
+    },
+    {
+      "id": "foundry-gpt-5-2-codex-2026-01-14-global-provisioned-uksouth",
+      "name": "gpt-5.2-codex · 2026-01-14",
+      "family": "foundry",
+      "currency": "GBP",
+      "region": "uksouth",
+      "components": [
+        {
+          "id": "capacity",
+          "label": "Provisioned throughput",
+          "unit": "1 Hour",
+          "quantityPerUnit": 1
+        }
+      ],
+      "note": "Official regional availability. Retail tariff is verified independently.",
+      "evidence": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#global-provisioned-managed",
+      "deployment": "global-provisioned",
+      "kind": "model-deployment",
+      "model": {
+        "id": "gpt-5.2-codex",
+        "version": "2026-01-14",
+        "sku": "GlobalProvisionedManaged",
+        "mode": "provisioned"
+      }
+    },
+    {
+      "id": "foundry-gpt-5-2-codex-2026-01-14-global-provisioned-westeurope",
+      "name": "gpt-5.2-codex · 2026-01-14",
+      "family": "foundry",
+      "currency": "GBP",
+      "region": "westeurope",
+      "components": [
+        {
+          "id": "capacity",
+          "label": "Provisioned throughput",
+          "unit": "1 Hour",
+          "quantityPerUnit": 1
+        }
+      ],
+      "note": "Official regional availability. Retail tariff is verified independently.",
+      "evidence": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#global-provisioned-managed",
+      "deployment": "global-provisioned",
+      "kind": "model-deployment",
+      "model": {
+        "id": "gpt-5.2-codex",
+        "version": "2026-01-14",
+        "sku": "GlobalProvisionedManaged",
+        "mode": "provisioned"
+      }
+    },
+    {
+      "id": "foundry-gpt-5-3-codex-2026-02-24-global-provisioned-uksouth",
+      "name": "gpt-5.3-codex · 2026-02-24",
+      "family": "foundry",
+      "currency": "GBP",
+      "region": "uksouth",
+      "components": [
+        {
+          "id": "capacity",
+          "label": "Provisioned throughput",
+          "unit": "1 Hour",
+          "quantityPerUnit": 1
+        }
+      ],
+      "note": "Official regional availability. Retail tariff is verified independently.",
+      "evidence": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#global-provisioned-managed",
+      "deployment": "global-provisioned",
+      "kind": "model-deployment",
+      "model": {
+        "id": "gpt-5.3-codex",
+        "version": "2026-02-24",
+        "sku": "GlobalProvisionedManaged",
+        "mode": "provisioned"
+      }
+    },
+    {
+      "id": "foundry-gpt-5-3-codex-2026-02-24-global-provisioned-westeurope",
+      "name": "gpt-5.3-codex · 2026-02-24",
+      "family": "foundry",
+      "currency": "GBP",
+      "region": "westeurope",
+      "components": [
+        {
+          "id": "capacity",
+          "label": "Provisioned throughput",
+          "unit": "1 Hour",
+          "quantityPerUnit": 1
+        }
+      ],
+      "note": "Official regional availability. Retail tariff is verified independently.",
+      "evidence": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#global-provisioned-managed",
+      "deployment": "global-provisioned",
+      "kind": "model-deployment",
+      "model": {
+        "id": "gpt-5.3-codex",
+        "version": "2026-02-24",
+        "sku": "GlobalProvisionedManaged",
+        "mode": "provisioned"
+      }
+    },
+    {
+      "id": "foundry-gpt-5-5-2026-04-24-global-provisioned-uksouth",
+      "name": "gpt-5.5 · 2026-04-24",
+      "family": "foundry",
+      "currency": "GBP",
+      "region": "uksouth",
+      "components": [
+        {
+          "id": "capacity",
+          "label": "Provisioned throughput",
+          "unit": "1 Hour",
+          "quantityPerUnit": 1
+        }
+      ],
+      "note": "Official regional availability. Retail tariff is verified independently.",
+      "evidence": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#global-provisioned-managed",
+      "deployment": "global-provisioned",
+      "kind": "model-deployment",
+      "model": {
+        "id": "gpt-5.5",
+        "version": "2026-04-24",
+        "sku": "GlobalProvisionedManaged",
+        "mode": "provisioned"
+      }
+    },
+    {
+      "id": "foundry-gpt-5-5-2026-04-24-global-provisioned-westeurope",
+      "name": "gpt-5.5 · 2026-04-24",
+      "family": "foundry",
+      "currency": "GBP",
+      "region": "westeurope",
+      "components": [
+        {
+          "id": "capacity",
+          "label": "Provisioned throughput",
+          "unit": "1 Hour",
+          "quantityPerUnit": 1
+        }
+      ],
+      "note": "Official regional availability. Retail tariff is verified independently.",
+      "evidence": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#global-provisioned-managed",
+      "deployment": "global-provisioned",
+      "kind": "model-deployment",
+      "model": {
+        "id": "gpt-5.5",
+        "version": "2026-04-24",
+        "sku": "GlobalProvisionedManaged",
+        "mode": "provisioned"
+      }
+    },
+    {
+      "id": "foundry-gpt-5-6-luna-2026-07-09-global-provisioned-uksouth",
+      "name": "gpt-5.6-luna · 2026-07-09",
+      "family": "foundry",
+      "currency": "GBP",
+      "region": "uksouth",
+      "components": [
+        {
+          "id": "capacity",
+          "label": "Provisioned throughput",
+          "unit": "1 Hour",
+          "quantityPerUnit": 1
+        }
+      ],
+      "note": "Official regional availability. Retail tariff is verified independently.",
+      "evidence": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#global-provisioned-managed",
+      "deployment": "global-provisioned",
+      "kind": "model-deployment",
+      "model": {
+        "id": "gpt-5.6-luna",
+        "version": "2026-07-09",
+        "sku": "GlobalProvisionedManaged",
+        "mode": "provisioned"
+      }
+    },
+    {
+      "id": "foundry-gpt-5-6-luna-2026-07-09-global-provisioned-westeurope",
+      "name": "gpt-5.6-luna · 2026-07-09",
+      "family": "foundry",
+      "currency": "GBP",
+      "region": "westeurope",
+      "components": [
+        {
+          "id": "capacity",
+          "label": "Provisioned throughput",
+          "unit": "1 Hour",
+          "quantityPerUnit": 1
+        }
+      ],
+      "note": "Official regional availability. Retail tariff is verified independently.",
+      "evidence": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#global-provisioned-managed",
+      "deployment": "global-provisioned",
+      "kind": "model-deployment",
+      "model": {
+        "id": "gpt-5.6-luna",
+        "version": "2026-07-09",
+        "sku": "GlobalProvisionedManaged",
+        "mode": "provisioned"
+      }
+    },
+    {
+      "id": "foundry-gpt-5-6-terra-2026-07-09-global-provisioned-uksouth",
+      "name": "gpt-5.6-terra · 2026-07-09",
+      "family": "foundry",
+      "currency": "GBP",
+      "region": "uksouth",
+      "components": [
+        {
+          "id": "capacity",
+          "label": "Provisioned throughput",
+          "unit": "1 Hour",
+          "quantityPerUnit": 1
+        }
+      ],
+      "note": "Official regional availability. Retail tariff is verified independently.",
+      "evidence": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#global-provisioned-managed",
+      "deployment": "global-provisioned",
+      "kind": "model-deployment",
+      "model": {
+        "id": "gpt-5.6-terra",
+        "version": "2026-07-09",
+        "sku": "GlobalProvisionedManaged",
+        "mode": "provisioned"
+      }
+    },
+    {
+      "id": "foundry-gpt-5-6-terra-2026-07-09-global-provisioned-westeurope",
+      "name": "gpt-5.6-terra · 2026-07-09",
+      "family": "foundry",
+      "currency": "GBP",
+      "region": "westeurope",
+      "components": [
+        {
+          "id": "capacity",
+          "label": "Provisioned throughput",
+          "unit": "1 Hour",
+          "quantityPerUnit": 1
+        }
+      ],
+      "note": "Official regional availability. Retail tariff is verified independently.",
+      "evidence": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#global-provisioned-managed",
+      "deployment": "global-provisioned",
+      "kind": "model-deployment",
+      "model": {
+        "id": "gpt-5.6-terra",
+        "version": "2026-07-09",
+        "sku": "GlobalProvisionedManaged",
+        "mode": "provisioned"
+      }
+    },
+    {
+      "id": "foundry-gpt-6-astra-2026-09-03-global-provisioned-uksouth",
+      "name": "gpt-6-astra · 2026-09-03",
+      "family": "foundry",
+      "currency": "GBP",
+      "region": "uksouth",
+      "components": [
+        {
+          "id": "capacity",
+          "label": "Provisioned throughput",
+          "unit": "1 Hour",
+          "quantityPerUnit": 1
+        }
+      ],
+      "note": "Official regional availability. Retail tariff is verified independently.",
+      "evidence": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#global-provisioned-managed",
+      "deployment": "global-provisioned",
+      "kind": "model-deployment",
+      "model": {
+        "id": "gpt-6-astra",
+        "version": "2026-09-03",
+        "sku": "GlobalProvisionedManaged",
+        "mode": "provisioned"
+      }
+    },
+    {
+      "id": "foundry-gpt-6-astra-2026-09-03-global-provisioned-westeurope",
+      "name": "gpt-6-astra · 2026-09-03",
+      "family": "foundry",
+      "currency": "GBP",
+      "region": "westeurope",
+      "components": [
+        {
+          "id": "capacity",
+          "label": "Provisioned throughput",
+          "unit": "1 Hour",
+          "quantityPerUnit": 1
+        }
+      ],
+      "note": "Official regional availability. Retail tariff is verified independently.",
+      "evidence": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#global-provisioned-managed",
+      "deployment": "global-provisioned",
+      "kind": "model-deployment",
+      "model": {
+        "id": "gpt-6-astra",
+        "version": "2026-09-03",
+        "sku": "GlobalProvisionedManaged",
+        "mode": "provisioned"
+      }
+    },
+    {
+      "id": "foundry-gpt-6-luna-2026-09-22-global-provisioned-uksouth",
+      "name": "gpt-6-luna · 2026-09-22",
+      "family": "foundry",
+      "currency": "GBP",
+      "region": "uksouth",
+      "components": [
+        {
+          "id": "capacity",
+          "label": "Provisioned throughput",
+          "unit": "1 Hour",
+          "quantityPerUnit": 1
+        }
+      ],
+      "note": "Official regional availability. Retail tariff is verified independently.",
+      "evidence": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#global-provisioned-managed",
+      "deployment": "global-provisioned",
+      "kind": "model-deployment",
+      "model": {
+        "id": "gpt-6-luna",
+        "version": "2026-09-22",
+        "sku": "GlobalProvisionedManaged",
+        "mode": "provisioned"
+      }
+    },
+    {
+      "id": "foundry-gpt-6-luna-2026-09-22-global-provisioned-westeurope",
+      "name": "gpt-6-luna · 2026-09-22",
+      "family": "foundry",
+      "currency": "GBP",
+      "region": "westeurope",
+      "components": [
+        {
+          "id": "capacity",
+          "label": "Provisioned throughput",
+          "unit": "1 Hour",
+          "quantityPerUnit": 1
+        }
+      ],
+      "note": "Official regional availability. Retail tariff is verified independently.",
+      "evidence": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#global-provisioned-managed",
+      "deployment": "global-provisioned",
+      "kind": "model-deployment",
+      "model": {
+        "id": "gpt-6-luna",
+        "version": "2026-09-22",
+        "sku": "GlobalProvisionedManaged",
+        "mode": "provisioned"
+      }
+    },
+    {
+      "id": "foundry-gpt-6-1-sol-2026-09-29-global-provisioned-uksouth",
+      "name": "gpt-6.1-sol · 2026-09-29",
+      "family": "foundry",
+      "currency": "GBP",
+      "region": "uksouth",
+      "components": [
+        {
+          "id": "capacity",
+          "label": "Provisioned throughput",
+          "unit": "1 Hour",
+          "quantityPerUnit": 1
+        }
+      ],
+      "note": "Official regional availability. Retail tariff is verified independently.",
+      "evidence": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#global-provisioned-managed",
+      "deployment": "global-provisioned",
+      "kind": "model-deployment",
+      "model": {
+        "id": "gpt-6.1-sol",
+        "version": "2026-09-29",
+        "sku": "GlobalProvisionedManaged",
+        "mode": "provisioned"
+      }
+    },
+    {
+      "id": "foundry-gpt-6-1-sol-2026-09-29-global-provisioned-westeurope",
+      "name": "gpt-6.1-sol · 2026-09-29",
+      "family": "foundry",
+      "currency": "GBP",
+      "region": "westeurope",
+      "components": [
+        {
+          "id": "capacity",
+          "label": "Provisioned throughput",
+          "unit": "1 Hour",
+          "quantityPerUnit": 1
+        }
+      ],
+      "note": "Official regional availability. Retail tariff is verified independently.",
+      "evidence": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#global-provisioned-managed",
+      "deployment": "global-provisioned",
+      "kind": "model-deployment",
+      "model": {
+        "id": "gpt-6.1-sol",
+        "version": "2026-09-29",
+        "sku": "GlobalProvisionedManaged",
+        "mode": "provisioned"
+      }
+    },
+    {
+      "id": "foundry-gpt-5-1-codex-2025-11-13-data-zone-provisioned-eastus2",
+      "name": "gpt-5.1-codex · 2025-11-13",
+      "family": "foundry",
+      "currency": "GBP",
+      "region": "eastus2",
+      "components": [
+        {
+          "id": "capacity",
+          "label": "Provisioned throughput",
+          "unit": "1 Hour",
+          "quantityPerUnit": 1
+        }
+      ],
+      "note": "Official regional availability. Retail tariff is verified independently.",
+      "evidence": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#data-zone-provisioned-managed",
+      "deployment": "data-zone-provisioned",
+      "kind": "model-deployment",
+      "model": {
+        "id": "gpt-5.1-codex",
+        "version": "2025-11-13",
+        "sku": "DataZoneProvisionedManaged",
+        "mode": "provisioned"
+      }
+    },
+    {
+      "id": "foundry-gpt-5-5-2026-04-24-data-zone-provisioned-eastus2",
+      "name": "gpt-5.5 · 2026-04-24",
+      "family": "foundry",
+      "currency": "GBP",
+      "region": "eastus2",
+      "components": [
+        {
+          "id": "capacity",
+          "label": "Provisioned throughput",
+          "unit": "1 Hour",
+          "quantityPerUnit": 1
+        }
+      ],
+      "note": "Official regional availability. Retail tariff is verified independently.",
+      "evidence": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#data-zone-provisioned-managed",
+      "deployment": "data-zone-provisioned",
+      "kind": "model-deployment",
+      "model": {
+        "id": "gpt-5.5",
+        "version": "2026-04-24",
+        "sku": "DataZoneProvisionedManaged",
+        "mode": "provisioned"
+      }
+    },
+    {
+      "id": "foundry-gpt-5-6-luna-2026-07-09-data-zone-provisioned-eastus2",
+      "name": "gpt-5.6-luna · 2026-07-09",
+      "family": "foundry",
+      "currency": "GBP",
+      "region": "eastus2",
+      "components": [
+        {
+          "id": "capacity",
+          "label": "Provisioned throughput",
+          "unit": "1 Hour",
+          "quantityPerUnit": 1
+        }
+      ],
+      "note": "Official regional availability. Retail tariff is verified independently.",
+      "evidence": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#data-zone-provisioned-managed",
+      "deployment": "data-zone-provisioned",
+      "kind": "model-deployment",
+      "model": {
+        "id": "gpt-5.6-luna",
+        "version": "2026-07-09",
+        "sku": "DataZoneProvisionedManaged",
+        "mode": "provisioned"
+      }
+    },
+    {
+      "id": "foundry-gpt-5-6-terra-2026-07-09-data-zone-provisioned-eastus2",
+      "name": "gpt-5.6-terra · 2026-07-09",
+      "family": "foundry",
+      "currency": "GBP",
+      "region": "eastus2",
+      "components": [
+        {
+          "id": "capacity",
+          "label": "Provisioned throughput",
+          "unit": "1 Hour",
+          "quantityPerUnit": 1
+        }
+      ],
+      "note": "Official regional availability. Retail tariff is verified independently.",
+      "evidence": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#data-zone-provisioned-managed",
+      "deployment": "data-zone-provisioned",
+      "kind": "model-deployment",
+      "model": {
+        "id": "gpt-5.6-terra",
+        "version": "2026-07-09",
+        "sku": "DataZoneProvisionedManaged",
+        "mode": "provisioned"
+      }
+    },
+    {
+      "id": "foundry-gpt-6-astra-2026-09-03-data-zone-provisioned-eastus2",
+      "name": "gpt-6-astra · 2026-09-03",
+      "family": "foundry",
+      "currency": "GBP",
+      "region": "eastus2",
+      "components": [
+        {
+          "id": "capacity",
+          "label": "Provisioned throughput",
+          "unit": "1 Hour",
+          "quantityPerUnit": 1
+        }
+      ],
+      "note": "Official regional availability. Retail tariff is verified independently.",
+      "evidence": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#data-zone-provisioned-managed",
+      "deployment": "data-zone-provisioned",
+      "kind": "model-deployment",
+      "model": {
+        "id": "gpt-6-astra",
+        "version": "2026-09-03",
+        "sku": "DataZoneProvisionedManaged",
+        "mode": "provisioned"
+      }
+    },
+    {
+      "id": "foundry-gpt-6-luna-2026-09-22-data-zone-provisioned-eastus2",
+      "name": "gpt-6-luna · 2026-09-22",
+      "family": "foundry",
+      "currency": "GBP",
+      "region": "eastus2",
+      "components": [
+        {
+          "id": "capacity",
+          "label": "Provisioned throughput",
+          "unit": "1 Hour",
+          "quantityPerUnit": 1
+        }
+      ],
+      "note": "Official regional availability. Retail tariff is verified independently.",
+      "evidence": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#data-zone-provisioned-managed",
+      "deployment": "data-zone-provisioned",
+      "kind": "model-deployment",
+      "model": {
+        "id": "gpt-6-luna",
+        "version": "2026-09-22",
+        "sku": "DataZoneProvisionedManaged",
+        "mode": "provisioned"
+      }
+    },
+    {
+      "id": "foundry-gpt-6-1-sol-2026-09-29-data-zone-provisioned-eastus2",
+      "name": "gpt-6.1-sol · 2026-09-29",
+      "family": "foundry",
+      "currency": "GBP",
+      "region": "eastus2",
+      "components": [
+        {
+          "id": "capacity",
+          "label": "Provisioned throughput",
+          "unit": "1 Hour",
+          "quantityPerUnit": 1
+        }
+      ],
+      "note": "Official regional availability. Retail tariff is verified independently.",
+      "evidence": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#data-zone-provisioned-managed",
+      "deployment": "data-zone-provisioned",
+      "kind": "model-deployment",
+      "model": {
+        "id": "gpt-6.1-sol",
+        "version": "2026-09-29",
+        "sku": "DataZoneProvisionedManaged",
+        "mode": "provisioned"
+      }
+    },
+    {
+      "id": "foundry-gpt-5-1-codex-2025-11-13-data-zone-provisioned-westeurope",
+      "name": "gpt-5.1-codex · 2025-11-13",
+      "family": "foundry",
+      "currency": "GBP",
+      "region": "westeurope",
+      "components": [
+        {
+          "id": "capacity",
+          "label": "Provisioned throughput",
+          "unit": "1 Hour",
+          "quantityPerUnit": 1
+        }
+      ],
+      "note": "Official regional availability. Retail tariff is verified independently.",
+      "evidence": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#data-zone-provisioned-managed",
+      "deployment": "data-zone-provisioned",
+      "kind": "model-deployment",
+      "model": {
+        "id": "gpt-5.1-codex",
+        "version": "2025-11-13",
+        "sku": "DataZoneProvisionedManaged",
+        "mode": "provisioned"
+      }
+    },
+    {
+      "id": "foundry-gpt-5-5-2026-04-24-data-zone-provisioned-westeurope",
+      "name": "gpt-5.5 · 2026-04-24",
+      "family": "foundry",
+      "currency": "GBP",
+      "region": "westeurope",
+      "components": [
+        {
+          "id": "capacity",
+          "label": "Provisioned throughput",
+          "unit": "1 Hour",
+          "quantityPerUnit": 1
+        }
+      ],
+      "note": "Official regional availability. Retail tariff is verified independently.",
+      "evidence": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#data-zone-provisioned-managed",
+      "deployment": "data-zone-provisioned",
+      "kind": "model-deployment",
+      "model": {
+        "id": "gpt-5.5",
+        "version": "2026-04-24",
+        "sku": "DataZoneProvisionedManaged",
+        "mode": "provisioned"
+      }
+    },
+    {
+      "id": "foundry-gpt-5-6-luna-2026-07-09-data-zone-provisioned-westeurope",
+      "name": "gpt-5.6-luna · 2026-07-09",
+      "family": "foundry",
+      "currency": "GBP",
+      "region": "westeurope",
+      "components": [
+        {
+          "id": "capacity",
+          "label": "Provisioned throughput",
+          "unit": "1 Hour",
+          "quantityPerUnit": 1
+        }
+      ],
+      "note": "Official regional availability. Retail tariff is verified independently.",
+      "evidence": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#data-zone-provisioned-managed",
+      "deployment": "data-zone-provisioned",
+      "kind": "model-deployment",
+      "model": {
+        "id": "gpt-5.6-luna",
+        "version": "2026-07-09",
+        "sku": "DataZoneProvisionedManaged",
+        "mode": "provisioned"
+      }
+    },
+    {
+      "id": "foundry-gpt-5-6-terra-2026-07-09-data-zone-provisioned-westeurope",
+      "name": "gpt-5.6-terra · 2026-07-09",
+      "family": "foundry",
+      "currency": "GBP",
+      "region": "westeurope",
+      "components": [
+        {
+          "id": "capacity",
+          "label": "Provisioned throughput",
+          "unit": "1 Hour",
+          "quantityPerUnit": 1
+        }
+      ],
+      "note": "Official regional availability. Retail tariff is verified independently.",
+      "evidence": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#data-zone-provisioned-managed",
+      "deployment": "data-zone-provisioned",
+      "kind": "model-deployment",
+      "model": {
+        "id": "gpt-5.6-terra",
+        "version": "2026-07-09",
+        "sku": "DataZoneProvisionedManaged",
+        "mode": "provisioned"
+      }
+    },
+    {
+      "id": "foundry-gpt-6-luna-2026-09-22-data-zone-provisioned-westeurope",
+      "name": "gpt-6-luna · 2026-09-22",
+      "family": "foundry",
+      "currency": "GBP",
+      "region": "westeurope",
+      "components": [
+        {
+          "id": "capacity",
+          "label": "Provisioned throughput",
+          "unit": "1 Hour",
+          "quantityPerUnit": 1
+        }
+      ],
+      "note": "Official regional availability. Retail tariff is verified independently.",
+      "evidence": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#data-zone-provisioned-managed",
+      "deployment": "data-zone-provisioned",
+      "kind": "model-deployment",
+      "model": {
+        "id": "gpt-6-luna",
+        "version": "2026-09-22",
+        "sku": "DataZoneProvisionedManaged",
+        "mode": "provisioned"
+      }
+    },
+    {
+      "id": "foundry-gpt-6-1-sol-2026-09-29-data-zone-provisioned-westeurope",
+      "name": "gpt-6.1-sol · 2026-09-29",
+      "family": "foundry",
+      "currency": "GBP",
+      "region": "westeurope",
+      "components": [
+        {
+          "id": "capacity",
+          "label": "Provisioned throughput",
+          "unit": "1 Hour",
+          "quantityPerUnit": 1
+        }
+      ],
+      "note": "Official regional availability. Retail tariff is verified independently.",
+      "evidence": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#data-zone-provisioned-managed",
+      "deployment": "data-zone-provisioned",
+      "kind": "model-deployment",
+      "model": {
+        "id": "gpt-6.1-sol",
+        "version": "2026-09-29",
+        "sku": "DataZoneProvisionedManaged",
+        "mode": "provisioned"
+      }
+    },
+    {
+      "id": "foundry-gpt-5-6-luna-2026-07-09-regional-provisioned-eastus2",
+      "name": "gpt-5.6-luna · 2026-07-09",
+      "family": "foundry",
+      "currency": "GBP",
+      "region": "eastus2",
+      "components": [
+        {
+          "id": "capacity",
+          "label": "Provisioned throughput",
+          "unit": "1 Hour",
+          "quantityPerUnit": 1
+        }
+      ],
+      "note": "Official regional availability. Retail tariff is verified independently.",
+      "evidence": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#regional-provisioned-managed",
+      "deployment": "regional-provisioned",
+      "kind": "model-deployment",
+      "model": {
+        "id": "gpt-5.6-luna",
+        "version": "2026-07-09",
+        "sku": "ProvisionedManaged",
+        "mode": "provisioned"
+      }
+    },
+    {
+      "id": "foundry-gpt-5-3-codex-2026-02-24-regional-provisioned-uksouth",
+      "name": "gpt-5.3-codex · 2026-02-24",
+      "family": "foundry",
+      "currency": "GBP",
+      "region": "uksouth",
+      "components": [
+        {
+          "id": "capacity",
+          "label": "Provisioned throughput",
+          "unit": "1 Hour",
+          "quantityPerUnit": 1
+        }
+      ],
+      "note": "Official regional availability. Retail tariff is verified independently.",
+      "evidence": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#regional-provisioned-managed",
+      "deployment": "regional-provisioned",
+      "kind": "model-deployment",
+      "model": {
+        "id": "gpt-5.3-codex",
+        "version": "2026-02-24",
+        "sku": "ProvisionedManaged",
+        "mode": "provisioned"
+      }
+    },
+    {
+      "id": "foundry-gpt-5-6-luna-2026-07-09-regional-provisioned-uksouth",
+      "name": "gpt-5.6-luna · 2026-07-09",
+      "family": "foundry",
+      "currency": "GBP",
+      "region": "uksouth",
+      "components": [
+        {
+          "id": "capacity",
+          "label": "Provisioned throughput",
+          "unit": "1 Hour",
+          "quantityPerUnit": 1
+        }
+      ],
+      "note": "Official regional availability. Retail tariff is verified independently.",
+      "evidence": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#regional-provisioned-managed",
+      "deployment": "regional-provisioned",
+      "kind": "model-deployment",
+      "model": {
+        "id": "gpt-5.6-luna",
+        "version": "2026-07-09",
+        "sku": "ProvisionedManaged",
+        "mode": "provisioned"
+      }
     },
     {
       "id": "gpt-4o-mini-global-standard-westeurope",

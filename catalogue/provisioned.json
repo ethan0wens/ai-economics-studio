@@ -17,9 +17,9 @@
     "outputWeight": 8,
     "source": "https://learn.microsoft.com/en-us/azure/foundry/openai/how-to/provisioned-throughput-sizing#deployment-parameters-and-throughput-values-by-model",
     "verifiedOn": "2026-11-19",
+    "observedSince": "2026-11-19",
     "reviewBy": "2027-01-03",
-    "condition": "Published model-version sizing parameters. Capacity and tenant quota require separate confirmation.",
-    "observedSince": "2026-11-19"
+    "condition": "Published model-version sizing parameters. Capacity and tenant quota require separate confirmation."
   },
   {
     "id": "gpt-5.2-2025-12-11-datazoneprovisionedmanaged",
@@ -38,9 +38,9 @@
     "outputWeight": 8,
     "source": "https://learn.microsoft.com/en-us/azure/foundry/openai/how-to/provisioned-throughput-sizing#deployment-parameters-and-throughput-values-by-model",
     "verifiedOn": "2026-11-19",
+    "observedSince": "2026-11-19",
     "reviewBy": "2027-01-03",
-    "condition": "Published model-version sizing parameters. Capacity and tenant quota require separate confirmation.",
-    "observedSince": "2026-11-19"
+    "condition": "Published model-version sizing parameters. Capacity and tenant quota require separate confirmation."
   },
   {
     "id": "gpt-5.2-2025-12-11-provisionedmanaged",
@@ -58,9 +58,9 @@
     "outputWeight": 8,
     "source": "https://learn.microsoft.com/en-us/azure/foundry/openai/how-to/provisioned-throughput-sizing#deployment-parameters-and-throughput-values-by-model",
     "verifiedOn": "2026-11-19",
+    "observedSince": "2026-11-19",
     "reviewBy": "2027-01-03",
-    "condition": "Published model-version sizing parameters. Capacity and tenant quota require separate confirmation.",
-    "observedSince": "2026-11-19"
+    "condition": "Published model-version sizing parameters. Capacity and tenant quota require separate confirmation."
   },
   {
     "id": "gpt-5.1-2025-11-13-globalprovisionedmanaged",
@@ -80,9 +80,9 @@
     "outputWeight": 8,
     "source": "https://learn.microsoft.com/en-us/azure/foundry/openai/how-to/provisioned-throughput-sizing#deployment-parameters-and-throughput-values-by-model",
     "verifiedOn": "2026-11-19",
+    "observedSince": "2026-11-19",
     "reviewBy": "2027-01-03",
-    "condition": "Published model-version sizing parameters. Capacity and tenant quota require separate confirmation.",
-    "observedSince": "2026-11-19"
+    "condition": "Published model-version sizing parameters. Capacity and tenant quota require separate confirmation."
   },
   {
     "id": "gpt-5.1-2025-11-13-datazoneprovisionedmanaged",
@@ -101,9 +101,9 @@
     "outputWeight": 8,
     "source": "https://learn.microsoft.com/en-us/azure/foundry/openai/how-to/provisioned-throughput-sizing#deployment-parameters-and-throughput-values-by-model",
     "verifiedOn": "2026-11-19",
+    "observedSince": "2026-11-19",
     "reviewBy": "2027-01-03",
-    "condition": "Published model-version sizing parameters. Capacity and tenant quota require separate confirmation.",
-    "observedSince": "2026-11-19"
+    "condition": "Published model-version sizing parameters. Capacity and tenant quota require separate confirmation."
   },
   {
     "id": "gpt-5.1-2025-11-13-provisionedmanaged",
@@ -122,9 +122,9 @@
     "outputWeight": 8,
     "source": "https://learn.microsoft.com/en-us/azure/foundry/openai/how-to/provisioned-throughput-sizing#deployment-parameters-and-throughput-values-by-model",
     "verifiedOn": "2026-11-19",
+    "observedSince": "2026-11-19",
     "reviewBy": "2027-01-03",
-    "condition": "Published model-version sizing parameters. Capacity and tenant quota require separate confirmation.",
-    "observedSince": "2026-11-19"
+    "condition": "Published model-version sizing parameters. Capacity and tenant quota require separate confirmation."
   },
   {
     "id": "gpt-5-2025-08-07-globalprovisionedmanaged",
@@ -144,9 +144,9 @@
     "outputWeight": 8,
     "source": "https://learn.microsoft.com/en-us/azure/foundry/openai/how-to/provisioned-throughput-sizing#deployment-parameters-and-throughput-values-by-model",
     "verifiedOn": "2026-11-19",
+    "observedSince": "2026-11-19",
     "reviewBy": "2027-01-03",
-    "condition": "Published model-version sizing parameters. Capacity and tenant quota require separate confirmation.",
-    "observedSince": "2026-11-19"
+    "condition": "Published model-version sizing parameters. Capacity and tenant quota require separate confirmation."
   },
   {
     "id": "gpt-5-2025-08-07-datazoneprovisionedmanaged",
@@ -165,9 +165,9 @@
     "outputWeight": 8,
     "source": "https://learn.microsoft.com/en-us/azure/foundry/openai/how-to/provisioned-throughput-sizing#deployment-parameters-and-throughput-values-by-model",
     "verifiedOn": "2026-11-19",
+    "observedSince": "2026-11-19",
     "reviewBy": "2027-01-03",
-    "condition": "Published model-version sizing parameters. Capacity and tenant quota require separate confirmation.",
-    "observedSince": "2026-11-19"
+    "condition": "Published model-version sizing parameters. Capacity and tenant quota require separate confirmation."
   },
   {
     "id": "gpt-5-2025-08-07-provisionedmanaged",
@@ -186,9 +186,9 @@
     "outputWeight": 8,
     "source": "https://learn.microsoft.com/en-us/azure/foundry/openai/how-to/provisioned-throughput-sizing#deployment-parameters-and-throughput-values-by-model",
     "verifiedOn": "2026-11-19",
+    "observedSince": "2026-11-19",
     "reviewBy": "2027-01-03",
-    "condition": "Published model-version sizing parameters. Capacity and tenant quota require separate confirmation.",
-    "observedSince": "2026-11-19"
+    "condition": "Published model-version sizing parameters. Capacity and tenant quota require separate confirmation."
   },
   {
     "id": "gpt-5-mini-2025-08-07-globalprovisionedmanaged",
@@ -208,9 +208,9 @@
     "outputWeight": 8,
     "source": "https://learn.microsoft.com/en-us/azure/foundry/openai/how-to/provisioned-throughput-sizing#deployment-parameters-and-throughput-values-by-model",
     "verifiedOn": "2026-11-19",
+    "observedSince": "2026-11-19",
     "reviewBy": "2027-01-03",
-    "condition": "Published model-version sizing parameters. Capacity and tenant quota require separate confirmation.",
-    "observedSince": "2026-11-19"
+    "condition": "Published model-version sizing parameters. Capacity and tenant quota require separate confirmation."
   },
   {
     "id": "gpt-5-mini-2025-08-07-datazoneprovisionedmanaged",
@@ -229,9 +229,9 @@
     "outputWeight": 8,
     "source": "https://learn.microsoft.com/en-us/azure/foundry/openai/how-to/provisioned-throughput-sizing#deployment-parameters-and-throughput-values-by-model",
     "verifiedOn": "2026-11-19",
+    "observedSince": "2026-11-19",
     "reviewBy": "2027-01-03",
-    "condition": "Published model-version sizing parameters. Capacity and tenant quota require separate confirmation.",
-    "observedSince": "2026-11-19"
+    "condition": "Published model-version sizing parameters. Capacity and tenant quota require separate confirmation."
   },
   {
     "id": "gpt-5-mini-2025-08-07-provisionedmanaged",
@@ -250,9 +250,9 @@
     "outputWeight": 8,
     "source": "https://learn.microsoft.com/en-us/azure/foundry/openai/how-to/provisioned-throughput-sizing#deployment-parameters-and-throughput-values-by-model",
     "verifiedOn": "2026-11-19",
+    "observedSince": "2026-11-19",
     "reviewBy": "2027-01-03",
-    "condition": "Published model-version sizing parameters. Capacity and tenant quota require separate confirmation.",
-    "observedSince": "2026-11-19"
+    "condition": "Published model-version sizing parameters. Capacity and tenant quota require separate confirmation."
   },
   {
     "id": "gpt-4.1-2025-04-14-globalprovisionedmanaged",
@@ -272,9 +272,9 @@
     "outputWeight": 4,
     "source": "https://learn.microsoft.com/en-us/azure/foundry/openai/how-to/provisioned-throughput-sizing#deployment-parameters-and-throughput-values-by-model",
     "verifiedOn": "2026-11-19",
+    "observedSince": "2026-11-19",
     "reviewBy": "2027-01-03",
-    "condition": "Published model-version sizing parameters. Capacity and tenant quota require separate confirmation.",
-    "observedSince": "2026-11-19"
+    "condition": "Published model-version sizing parameters. Capacity and tenant quota require separate confirmation."
   },
   {
     "id": "gpt-4.1-2025-04-14-datazoneprovisionedmanaged",
@@ -293,9 +293,9 @@
     "outputWeight": 4,
     "source": "https://learn.microsoft.com/en-us/azure/foundry/openai/how-to/provisioned-throughput-sizing#deployment-parameters-and-throughput-values-by-model",
     "verifiedOn": "2026-11-19",
+    "observedSince": "2026-11-19",
     "reviewBy": "2027-01-03",
-    "condition": "Published model-version sizing parameters. Capacity and tenant quota require separate confirmation.",
-    "observedSince": "2026-11-19"
+    "condition": "Published model-version sizing parameters. Capacity and tenant quota require separate confirmation."
   },
   {
     "id": "gpt-4.1-2025-04-14-provisionedmanaged",
@@ -314,9 +314,9 @@
     "outputWeight": 4,
     "source": "https://learn.microsoft.com/en-us/azure/foundry/openai/how-to/provisioned-throughput-sizing#deployment-parameters-and-throughput-values-by-model",
     "verifiedOn": "2026-11-19",
+    "observedSince": "2026-11-19",
     "reviewBy": "2027-01-03",
-    "condition": "Published model-version sizing parameters. Capacity and tenant quota require separate confirmation.",
-    "observedSince": "2026-11-19"
+    "condition": "Published model-version sizing parameters. Capacity and tenant quota require separate confirmation."
   },
   {
     "id": "gpt-4.1-mini-2025-04-14-globalprovisionedmanaged",
@@ -336,9 +336,9 @@
     "outputWeight": 4,
     "source": "https://learn.microsoft.com/en-us/azure/foundry/openai/how-to/provisioned-throughput-sizing#deployment-parameters-and-throughput-values-by-model",
     "verifiedOn": "2026-11-19",
+    "observedSince": "2026-11-19",
     "reviewBy": "2027-01-03",
-    "condition": "Published model-version sizing parameters. Capacity and tenant quota require separate confirmation.",
-    "observedSince": "2026-11-19"
+    "condition": "Published model-version sizing parameters. Capacity and tenant quota require separate confirmation."
   },
   {
     "id": "gpt-4.1-mini-2025-04-14-datazoneprovisionedmanaged",
@@ -357,9 +357,9 @@
     "outputWeight": 4,
     "source": "https://learn.microsoft.com/en-us/azure/foundry/openai/how-to/provisioned-throughput-sizing#deployment-parameters-and-throughput-values-by-model",
     "verifiedOn": "2026-11-19",
+    "observedSince": "2026-11-19",
     "reviewBy": "2027-01-03",
-    "condition": "Published model-version sizing parameters. Capacity and tenant quota require separate confirmation.",
-    "observedSince": "2026-11-19"
+    "condition": "Published model-version sizing parameters. Capacity and tenant quota require separate confirmation."
   },
   {
     "id": "gpt-4.1-mini-2025-04-14-provisionedmanaged",
@@ -378,9 +378,9 @@
     "outputWeight": 4,
     "source": "https://learn.microsoft.com/en-us/azure/foundry/openai/how-to/provisioned-throughput-sizing#deployment-parameters-and-throughput-values-by-model",
     "verifiedOn": "2026-11-19",
+    "observedSince": "2026-11-19",
     "reviewBy": "2027-01-03",
-    "condition": "Published model-version sizing parameters. Capacity and tenant quota require separate confirmation.",
-    "observedSince": "2026-11-19"
+    "condition": "Published model-version sizing parameters. Capacity and tenant quota require separate confirmation."
   },
   {
     "id": "gpt-4.1-nano-2025-04-14-globalprovisionedmanaged",
@@ -400,9 +400,9 @@
     "outputWeight": 4,
     "source": "https://learn.microsoft.com/en-us/azure/foundry/openai/how-to/provisioned-throughput-sizing#deployment-parameters-and-throughput-values-by-model",
     "verifiedOn": "2026-11-19",
+    "observedSince": "2026-11-19",
     "reviewBy": "2027-01-03",
-    "condition": "Published model-version sizing parameters. Capacity and tenant quota require separate confirmation.",
-    "observedSince": "2026-11-19"
+    "condition": "Published model-version sizing parameters. Capacity and tenant quota require separate confirmation."
   },
   {
     "id": "gpt-4.1-nano-2025-04-14-datazoneprovisionedmanaged",
@@ -421,9 +421,9 @@
     "outputWeight": 4,
     "source": "https://learn.microsoft.com/en-us/azure/foundry/openai/how-to/provisioned-throughput-sizing#deployment-parameters-and-throughput-values-by-model",
     "verifiedOn": "2026-11-19",
+    "observedSince": "2026-11-19",
     "reviewBy": "2027-01-03",
-    "condition": "Published model-version sizing parameters. Capacity and tenant quota require separate confirmation.",
-    "observedSince": "2026-11-19"
+    "condition": "Published model-version sizing parameters. Capacity and tenant quota require separate confirmation."
   },
   {
     "id": "gpt-4.1-nano-2025-04-14-provisionedmanaged",
@@ -441,9 +441,9 @@
     "outputWeight": 4,
     "source": "https://learn.microsoft.com/en-us/azure/foundry/openai/how-to/provisioned-throughput-sizing#deployment-parameters-and-throughput-values-by-model",
     "verifiedOn": "2026-11-19",
+    "observedSince": "2026-11-19",
     "reviewBy": "2027-01-03",
-    "condition": "Published model-version sizing parameters. Capacity and tenant quota require separate confirmation.",
-    "observedSince": "2026-11-19"
+    "condition": "Published model-version sizing parameters. Capacity and tenant quota require separate confirmation."
   },
   {
     "id": "o3-2025-04-16-globalprovisionedmanaged",
@@ -463,9 +463,9 @@
     "outputWeight": 4,
     "source": "https://learn.microsoft.com/en-us/azure/foundry/openai/how-to/provisioned-throughput-sizing#deployment-parameters-and-throughput-values-by-model",
     "verifiedOn": "2026-11-19",
+    "observedSince": "2026-11-19",
     "reviewBy": "2027-01-03",
-    "condition": "Published model-version sizing parameters. Capacity and tenant quota require separate confirmation.",
-    "observedSince": "2026-11-19"
+    "condition": "Published model-version sizing parameters. Capacity and tenant quota require separate confirmation."
   },
   {
     "id": "o3-2025-04-16-datazoneprovisionedmanaged",
@@ -484,9 +484,9 @@
     "outputWeight": 4,
     "source": "https://learn.microsoft.com/en-us/azure/foundry/openai/how-to/provisioned-throughput-sizing#deployment-parameters-and-throughput-values-by-model",
     "verifiedOn": "2026-11-19",
+    "observedSince": "2026-11-19",
     "reviewBy": "2027-01-03",
-    "condition": "Published model-version sizing parameters. Capacity and tenant quota require separate confirmation.",
-    "observedSince": "2026-11-19"
+    "condition": "Published model-version sizing parameters. Capacity and tenant quota require separate confirmation."
   },
   {
     "id": "o3-2025-04-16-provisionedmanaged",
@@ -505,9 +505,9 @@
     "outputWeight": 4,
     "source": "https://learn.microsoft.com/en-us/azure/foundry/openai/how-to/provisioned-throughput-sizing#deployment-parameters-and-throughput-values-by-model",
     "verifiedOn": "2026-11-19",
+    "observedSince": "2026-11-19",
     "reviewBy": "2027-01-03",
-    "condition": "Published model-version sizing parameters. Capacity and tenant quota require separate confirmation.",
-    "observedSince": "2026-11-19"
+    "condition": "Published model-version sizing parameters. Capacity and tenant quota require separate confirmation."
   },
   {
     "id": "gpt-6-sol-2026-09-22-globalprovisionedmanaged",
@@ -526,9 +526,9 @@
     "inputTpmPerPtu": 3000,
     "source": "https://learn.microsoft.com/en-us/azure/foundry/openai/how-to/provisioned-throughput-sizing#deployment-parameters-and-throughput-values-by-model",
     "verifiedOn": "2026-11-19",
+    "observedSince": "2026-11-19",
     "reviewBy": "2027-01-03",
-    "condition": "Published model-version sizing parameters. Capacity and tenant quota require separate confirmation.",
-    "observedSince": "2026-11-19"
+    "condition": "Published model-version sizing parameters. Capacity and tenant quota require separate confirmation."
   },
   {
     "id": "gpt-6-sol-2026-09-22-datazoneprovisionedmanaged",
@@ -545,9 +545,9 @@
     "inputTpmPerPtu": 3000,
     "source": "https://learn.microsoft.com/en-us/azure/foundry/openai/how-to/provisioned-throughput-sizing#deployment-parameters-and-throughput-values-by-model",
     "verifiedOn": "2026-11-19",
+    "observedSince": "2026-11-19",
     "reviewBy": "2027-01-03",
-    "condition": "Published model-version sizing parameters. Capacity and tenant quota require separate confirmation.",
-    "observedSince": "2026-11-19"
+    "condition": "Published model-version sizing parameters. Capacity and tenant quota require separate confirmation."
   },
   {
     "id": "gpt-5.6-sol-2026-07-09-globalprovisionedmanaged",
@@ -566,9 +566,9 @@
     "outputWeight": 6,
     "source": "https://learn.microsoft.com/en-us/azure/foundry/openai/how-to/provisioned-throughput-sizing#deployment-parameters-and-throughput-values-by-model",
     "verifiedOn": "2026-11-19",
+    "observedSince": "2026-11-19",
     "reviewBy": "2027-01-03",
-    "condition": "Published model-version sizing parameters. Capacity and tenant quota require separate confirmation.",
-    "observedSince": "2026-11-19"
+    "condition": "Published model-version sizing parameters. Capacity and tenant quota require separate confirmation."
   },
   {
     "id": "gpt-5.6-sol-2026-07-09-datazoneprovisionedmanaged",
@@ -587,9 +587,9 @@
     "outputWeight": 6,
     "source": "https://learn.microsoft.com/en-us/azure/foundry/openai/how-to/provisioned-throughput-sizing#deployment-parameters-and-throughput-values-by-model",
     "verifiedOn": "2026-11-19",
+    "observedSince": "2026-11-19",
     "reviewBy": "2027-01-03",
-    "condition": "Published model-version sizing parameters. Capacity and tenant quota require separate confirmation.",
-    "observedSince": "2026-11-19"
+    "condition": "Published model-version sizing parameters. Capacity and tenant quota require separate confirmation."
   },
   {
     "id": "gpt-5.6-sol-2026-07-09-provisionedmanaged",
@@ -607,9 +607,9 @@
     "outputWeight": 6,
     "source": "https://learn.microsoft.com/en-us/azure/foundry/openai/how-to/provisioned-throughput-sizing#deployment-parameters-and-throughput-values-by-model",
     "verifiedOn": "2026-11-19",
+    "observedSince": "2026-11-19",
     "reviewBy": "2027-01-03",
-    "condition": "Published model-version sizing parameters. Capacity and tenant quota require separate confirmation.",
-    "observedSince": "2026-11-19"
+    "condition": "Published model-version sizing parameters. Capacity and tenant quota require separate confirmation."
   },
   {
     "id": "gpt-5.4-2026-03-05-globalprovisionedmanaged",
@@ -629,9 +629,9 @@
     "outputWeight": 6,
     "source": "https://learn.microsoft.com/en-us/azure/foundry/openai/how-to/provisioned-throughput-sizing#deployment-parameters-and-throughput-values-by-model",
     "verifiedOn": "2026-11-19",
+    "observedSince": "2026-11-19",
     "reviewBy": "2027-01-03",
-    "condition": "Published model-version sizing parameters. Capacity and tenant quota require separate confirmation.",
-    "observedSince": "2026-11-19"
+    "condition": "Published model-version sizing parameters. Capacity and tenant quota require separate confirmation."
   },
   {
     "id": "gpt-5.4-2026-03-05-datazoneprovisionedmanaged",
@@ -650,9 +650,9 @@
     "outputWeight": 6,
     "source": "https://learn.microsoft.com/en-us/azure/foundry/openai/how-to/provisioned-throughput-sizing#deployment-parameters-and-throughput-values-by-model",
     "verifiedOn": "2026-11-19",
+    "observedSince": "2026-11-19",
     "reviewBy": "2027-01-03",
-    "condition": "Published model-version sizing parameters. Capacity and tenant quota require separate confirmation.",
-    "observedSince": "2026-11-19"
+    "condition": "Published model-version sizing parameters. Capacity and tenant quota require separate confirmation."
   },
   {
     "id": "gpt-5.4-2026-03-05-provisionedmanaged",
@@ -670,9 +670,9 @@
     "outputWeight": 6,
     "source": "https://learn.microsoft.com/en-us/azure/foundry/openai/how-to/provisioned-throughput-sizing#deployment-parameters-and-throughput-values-by-model",
     "verifiedOn": "2026-11-19",
+    "observedSince": "2026-11-19",
     "reviewBy": "2027-01-03",
-    "condition": "Published model-version sizing parameters. Capacity and tenant quota require separate confirmation.",
-    "observedSince": "2026-11-19"
+    "condition": "Published model-version sizing parameters. Capacity and tenant quota require separate confirmation."
   },
   {
     "id": "gpt-5.4-mini-2026-03-17-globalprovisionedmanaged",
@@ -692,9 +692,9 @@
     "outputWeight": 6,
     "source": "https://learn.microsoft.com/en-us/azure/foundry/openai/how-to/provisioned-throughput-sizing#deployment-parameters-and-throughput-values-by-model",
     "verifiedOn": "2026-11-19",
+    "observedSince": "2026-11-19",
     "reviewBy": "2027-01-03",
-    "condition": "Published model-version sizing parameters. Capacity and tenant quota require separate confirmation.",
-    "observedSince": "2026-11-19"
+    "condition": "Published model-version sizing parameters. Capacity and tenant quota require separate confirmation."
   },
   {
     "id": "gpt-5.4-mini-2026-03-17-datazoneprovisionedmanaged",
@@ -713,9 +713,9 @@
     "outputWeight": 6,
     "source": "https://learn.microsoft.com/en-us/azure/foundry/openai/how-to/provisioned-throughput-sizing#deployment-parameters-and-throughput-values-by-model",
     "verifiedOn": "2026-11-19",
+    "observedSince": "2026-11-19",
     "reviewBy": "2027-01-03",
-    "condition": "Published model-version sizing parameters. Capacity and tenant quota require separate confirmation.",
-    "observedSince": "2026-11-19"
+    "condition": "Published model-version sizing parameters. Capacity and tenant quota require separate confirmation."
   },
   {
     "id": "gpt-5.4-mini-2026-03-17-provisionedmanaged",
@@ -733,430 +733,451 @@
     "outputWeight": 6,
     "source": "https://learn.microsoft.com/en-us/azure/foundry/openai/how-to/provisioned-throughput-sizing#deployment-parameters-and-throughput-values-by-model",
     "verifiedOn": "2026-11-19",
+    "observedSince": "2026-11-19",
+    "reviewBy": "2027-01-03",
+    "condition": "Published model-version sizing parameters. Capacity and tenant quota require separate confirmation."
+  },
+  {
+    "id": "maint-sizing-gpt-6-1-sol-2026-09-29-globalprovisionedmanaged",
+    "models": [
+      "gpt-6.1-sol"
+    ],
+    "version": "2026-09-29",
+    "sku": "GlobalProvisionedManaged",
+    "regions": [
+      "eastus2",
+      "uksouth",
+      "westeurope"
+    ],
+    "minimum": 15,
+    "increment": 5,
+    "inputTpmPerPtu": 3000,
+    "source": "https://learn.microsoft.com/en-us/azure/foundry/openai/how-to/provisioned-throughput-sizing#deployment-parameters-and-throughput-values-by-model",
+    "verifiedOn": "2026-11-19",
     "reviewBy": "2027-01-03",
     "condition": "Published model-version sizing parameters. Capacity and tenant quota require separate confirmation.",
     "observedSince": "2026-11-19"
   },
   {
-    "verifiedOn": "2026-11-19",
-    "reviewBy": "2027-01-03",
-    "version": "2026-09-29",
-    "sku": "GlobalProvisionedManaged",
-    "minimum": 15,
-    "increment": 5,
-    "inputTpmPerPtu": 3000,
-    "source": "https://learn.microsoft.com/en-us/azure/foundry/openai/how-to/provisioned-throughput-sizing#deployment-parameters-and-throughput-values-by-model",
-    "id": "maint-sizing-gpt-6-1-sol-2026-09-29-globalprovisionedmanaged",
-    "models": [
-      "gpt-6.1-sol"
-    ],
-    "regions": [
-      "eastus2",
-      "uksouth",
-      "westeurope"
-    ],
-    "condition": "Published model-version sizing parameters. Capacity and tenant quota require separate confirmation."
-  },
-  {
-    "verifiedOn": "2026-11-19",
-    "reviewBy": "2027-01-03",
-    "version": "2026-09-29",
-    "sku": "DataZoneProvisionedManaged",
-    "minimum": 15,
-    "increment": 5,
-    "inputTpmPerPtu": 3000,
-    "source": "https://learn.microsoft.com/en-us/azure/foundry/openai/how-to/provisioned-throughput-sizing#deployment-parameters-and-throughput-values-by-model",
     "id": "maint-sizing-gpt-6-1-sol-2026-09-29-datazoneprovisionedmanaged",
     "models": [
       "gpt-6.1-sol"
     ],
+    "version": "2026-09-29",
+    "sku": "DataZoneProvisionedManaged",
     "regions": [
       "eastus2",
       "westeurope"
     ],
-    "condition": "Published model-version sizing parameters. Capacity and tenant quota require separate confirmation."
-  },
-  {
-    "verifiedOn": "2026-11-19",
-    "reviewBy": "2027-01-03",
-    "version": "2026-09-22",
-    "sku": "GlobalProvisionedManaged",
     "minimum": 15,
     "increment": 5,
-    "inputTpmPerPtu": 59400,
+    "inputTpmPerPtu": 3000,
     "source": "https://learn.microsoft.com/en-us/azure/foundry/openai/how-to/provisioned-throughput-sizing#deployment-parameters-and-throughput-values-by-model",
+    "verifiedOn": "2026-11-19",
+    "reviewBy": "2027-01-03",
+    "condition": "Published model-version sizing parameters. Capacity and tenant quota require separate confirmation.",
+    "observedSince": "2026-11-19"
+  },
+  {
     "id": "maint-sizing-gpt-6-luna-2026-09-22-globalprovisionedmanaged",
     "models": [
       "gpt-6-luna"
     ],
+    "version": "2026-09-22",
+    "sku": "GlobalProvisionedManaged",
     "regions": [
       "eastus2",
       "uksouth",
       "westeurope"
     ],
-    "condition": "Published model-version sizing parameters. Capacity and tenant quota require separate confirmation."
-  },
-  {
-    "verifiedOn": "2026-11-19",
-    "reviewBy": "2027-01-03",
-    "version": "2026-09-22",
-    "sku": "DataZoneProvisionedManaged",
     "minimum": 15,
     "increment": 5,
     "inputTpmPerPtu": 59400,
     "source": "https://learn.microsoft.com/en-us/azure/foundry/openai/how-to/provisioned-throughput-sizing#deployment-parameters-and-throughput-values-by-model",
+    "verifiedOn": "2026-11-19",
+    "reviewBy": "2027-01-03",
+    "condition": "Published model-version sizing parameters. Capacity and tenant quota require separate confirmation.",
+    "observedSince": "2026-11-19"
+  },
+  {
     "id": "maint-sizing-gpt-6-luna-2026-09-22-datazoneprovisionedmanaged",
     "models": [
       "gpt-6-luna"
     ],
+    "version": "2026-09-22",
+    "sku": "DataZoneProvisionedManaged",
     "regions": [
       "eastus2",
       "westeurope"
     ],
-    "condition": "Published model-version sizing parameters. Capacity and tenant quota require separate confirmation."
-  },
-  {
-    "verifiedOn": "2026-11-19",
-    "reviewBy": "2027-01-03",
-    "version": "2026-09-03",
-    "sku": "GlobalProvisionedManaged",
     "minimum": 15,
     "increment": 5,
-    "inputTpmPerPtu": 600,
+    "inputTpmPerPtu": 59400,
     "source": "https://learn.microsoft.com/en-us/azure/foundry/openai/how-to/provisioned-throughput-sizing#deployment-parameters-and-throughput-values-by-model",
+    "verifiedOn": "2026-11-19",
+    "reviewBy": "2027-01-03",
+    "condition": "Published model-version sizing parameters. Capacity and tenant quota require separate confirmation.",
+    "observedSince": "2026-11-19"
+  },
+  {
     "id": "maint-sizing-gpt-6-astra-2026-09-03-globalprovisionedmanaged",
     "models": [
       "gpt-6-astra"
     ],
+    "version": "2026-09-03",
+    "sku": "GlobalProvisionedManaged",
     "regions": [
       "eastus2",
       "uksouth",
       "westeurope"
     ],
-    "condition": "Published model-version sizing parameters. Capacity and tenant quota require separate confirmation."
-  },
-  {
-    "verifiedOn": "2026-11-19",
-    "reviewBy": "2027-01-03",
-    "version": "2026-09-03",
-    "sku": "DataZoneProvisionedManaged",
     "minimum": 15,
     "increment": 5,
     "inputTpmPerPtu": 600,
     "source": "https://learn.microsoft.com/en-us/azure/foundry/openai/how-to/provisioned-throughput-sizing#deployment-parameters-and-throughput-values-by-model",
+    "verifiedOn": "2026-11-19",
+    "reviewBy": "2027-01-03",
+    "condition": "Published model-version sizing parameters. Capacity and tenant quota require separate confirmation.",
+    "observedSince": "2026-11-19"
+  },
+  {
     "id": "maint-sizing-gpt-6-astra-2026-09-03-datazoneprovisionedmanaged",
     "models": [
       "gpt-6-astra"
     ],
+    "version": "2026-09-03",
+    "sku": "DataZoneProvisionedManaged",
     "regions": [
       "eastus2"
     ],
-    "condition": "Published model-version sizing parameters. Capacity and tenant quota require separate confirmation."
-  },
-  {
-    "verifiedOn": "2026-11-19",
-    "reviewBy": "2027-01-03",
-    "version": "2026-07-09",
-    "sku": "GlobalProvisionedManaged",
     "minimum": 15,
     "increment": 5,
-    "inputTpmPerPtu": 30000,
-    "outputWeight": 6,
+    "inputTpmPerPtu": 600,
     "source": "https://learn.microsoft.com/en-us/azure/foundry/openai/how-to/provisioned-throughput-sizing#deployment-parameters-and-throughput-values-by-model",
+    "verifiedOn": "2026-11-19",
+    "reviewBy": "2027-01-03",
+    "condition": "Published model-version sizing parameters. Capacity and tenant quota require separate confirmation.",
+    "observedSince": "2026-11-19"
+  },
+  {
     "id": "maint-sizing-gpt-5-6-luna-2026-07-09-globalprovisionedmanaged",
     "models": [
       "gpt-5.6-luna"
     ],
+    "version": "2026-07-09",
+    "sku": "GlobalProvisionedManaged",
     "regions": [
       "eastus2",
       "uksouth",
       "westeurope"
     ],
-    "condition": "Published model-version sizing parameters. Capacity and tenant quota require separate confirmation."
-  },
-  {
-    "verifiedOn": "2026-11-19",
-    "reviewBy": "2027-01-03",
-    "version": "2026-07-09",
-    "sku": "DataZoneProvisionedManaged",
     "minimum": 15,
     "increment": 5,
     "inputTpmPerPtu": 30000,
     "outputWeight": 6,
     "source": "https://learn.microsoft.com/en-us/azure/foundry/openai/how-to/provisioned-throughput-sizing#deployment-parameters-and-throughput-values-by-model",
+    "verifiedOn": "2026-11-19",
+    "reviewBy": "2027-01-03",
+    "condition": "Published model-version sizing parameters. Capacity and tenant quota require separate confirmation.",
+    "observedSince": "2026-11-19"
+  },
+  {
     "id": "maint-sizing-gpt-5-6-luna-2026-07-09-datazoneprovisionedmanaged",
     "models": [
       "gpt-5.6-luna"
     ],
+    "version": "2026-07-09",
+    "sku": "DataZoneProvisionedManaged",
     "regions": [
       "eastus2",
       "westeurope"
     ],
-    "condition": "Published model-version sizing parameters. Capacity and tenant quota require separate confirmation."
-  },
-  {
-    "verifiedOn": "2026-11-19",
-    "reviewBy": "2027-01-03",
-    "version": "2026-07-09",
-    "sku": "ProvisionedManaged",
     "minimum": 15,
     "increment": 5,
     "inputTpmPerPtu": 30000,
     "outputWeight": 6,
     "source": "https://learn.microsoft.com/en-us/azure/foundry/openai/how-to/provisioned-throughput-sizing#deployment-parameters-and-throughput-values-by-model",
+    "verifiedOn": "2026-11-19",
+    "reviewBy": "2027-01-03",
+    "condition": "Published model-version sizing parameters. Capacity and tenant quota require separate confirmation.",
+    "observedSince": "2026-11-19"
+  },
+  {
     "id": "maint-sizing-gpt-5-6-luna-2026-07-09-provisionedmanaged",
     "models": [
       "gpt-5.6-luna"
     ],
+    "version": "2026-07-09",
+    "sku": "ProvisionedManaged",
     "regions": [
       "eastus2",
       "uksouth"
     ],
-    "condition": "Published model-version sizing parameters. Capacity and tenant quota require separate confirmation."
-  },
-  {
-    "verifiedOn": "2026-11-19",
-    "reviewBy": "2027-01-03",
-    "version": "2026-07-09",
-    "sku": "GlobalProvisionedManaged",
     "minimum": 15,
     "increment": 5,
-    "inputTpmPerPtu": 3000,
+    "inputTpmPerPtu": 30000,
     "outputWeight": 6,
     "source": "https://learn.microsoft.com/en-us/azure/foundry/openai/how-to/provisioned-throughput-sizing#deployment-parameters-and-throughput-values-by-model",
+    "verifiedOn": "2026-11-19",
+    "reviewBy": "2027-01-03",
+    "condition": "Published model-version sizing parameters. Capacity and tenant quota require separate confirmation.",
+    "observedSince": "2026-11-19"
+  },
+  {
     "id": "maint-sizing-gpt-5-6-terra-2026-07-09-globalprovisionedmanaged",
     "models": [
       "gpt-5.6-terra"
     ],
+    "version": "2026-07-09",
+    "sku": "GlobalProvisionedManaged",
     "regions": [
       "eastus2",
       "uksouth",
       "westeurope"
     ],
-    "condition": "Published model-version sizing parameters. Capacity and tenant quota require separate confirmation."
-  },
-  {
-    "verifiedOn": "2026-11-19",
-    "reviewBy": "2027-01-03",
-    "version": "2026-07-09",
-    "sku": "DataZoneProvisionedManaged",
     "minimum": 15,
     "increment": 5,
     "inputTpmPerPtu": 3000,
     "outputWeight": 6,
     "source": "https://learn.microsoft.com/en-us/azure/foundry/openai/how-to/provisioned-throughput-sizing#deployment-parameters-and-throughput-values-by-model",
+    "verifiedOn": "2026-11-19",
+    "reviewBy": "2027-01-03",
+    "condition": "Published model-version sizing parameters. Capacity and tenant quota require separate confirmation.",
+    "observedSince": "2026-11-19"
+  },
+  {
     "id": "maint-sizing-gpt-5-6-terra-2026-07-09-datazoneprovisionedmanaged",
     "models": [
       "gpt-5.6-terra"
     ],
+    "version": "2026-07-09",
+    "sku": "DataZoneProvisionedManaged",
     "regions": [
       "eastus2",
       "westeurope"
     ],
-    "condition": "Published model-version sizing parameters. Capacity and tenant quota require separate confirmation."
-  },
-  {
-    "verifiedOn": "2026-11-19",
-    "reviewBy": "2027-01-03",
-    "version": "2026-04-24",
-    "sku": "GlobalProvisionedManaged",
     "minimum": 15,
     "increment": 5,
-    "inputTpmPerPtu": 1200,
+    "inputTpmPerPtu": 3000,
     "outputWeight": 6,
     "source": "https://learn.microsoft.com/en-us/azure/foundry/openai/how-to/provisioned-throughput-sizing#deployment-parameters-and-throughput-values-by-model",
+    "verifiedOn": "2026-11-19",
+    "reviewBy": "2027-01-03",
+    "condition": "Published model-version sizing parameters. Capacity and tenant quota require separate confirmation.",
+    "observedSince": "2026-11-19"
+  },
+  {
     "id": "maint-sizing-gpt-5-5-2026-04-24-globalprovisionedmanaged",
     "models": [
       "gpt-5.5"
     ],
+    "version": "2026-04-24",
+    "sku": "GlobalProvisionedManaged",
     "regions": [
       "eastus2",
       "uksouth",
       "westeurope"
     ],
-    "condition": "Published model-version sizing parameters. Capacity and tenant quota require separate confirmation."
-  },
-  {
-    "verifiedOn": "2026-11-19",
-    "reviewBy": "2027-01-03",
-    "version": "2026-04-24",
-    "sku": "DataZoneProvisionedManaged",
     "minimum": 15,
     "increment": 5,
     "inputTpmPerPtu": 1200,
     "outputWeight": 6,
     "source": "https://learn.microsoft.com/en-us/azure/foundry/openai/how-to/provisioned-throughput-sizing#deployment-parameters-and-throughput-values-by-model",
+    "verifiedOn": "2026-11-19",
+    "reviewBy": "2027-01-03",
+    "condition": "Published model-version sizing parameters. Capacity and tenant quota require separate confirmation.",
+    "observedSince": "2026-11-19"
+  },
+  {
     "id": "maint-sizing-gpt-5-5-2026-04-24-datazoneprovisionedmanaged",
     "models": [
       "gpt-5.5"
     ],
+    "version": "2026-04-24",
+    "sku": "DataZoneProvisionedManaged",
     "regions": [
       "eastus2",
       "westeurope"
     ],
-    "condition": "Published model-version sizing parameters. Capacity and tenant quota require separate confirmation."
-  },
-  {
+    "minimum": 15,
+    "increment": 5,
+    "inputTpmPerPtu": 1200,
+    "outputWeight": 6,
+    "source": "https://learn.microsoft.com/en-us/azure/foundry/openai/how-to/provisioned-throughput-sizing#deployment-parameters-and-throughput-values-by-model",
     "verifiedOn": "2026-11-19",
     "reviewBy": "2027-01-03",
+    "condition": "Published model-version sizing parameters. Capacity and tenant quota require separate confirmation.",
+    "observedSince": "2026-11-19"
+  },
+  {
+    "id": "maint-sizing-gpt-5-3-codex-2026-02-24-globalprovisionedmanaged",
+    "models": [
+      "gpt-5.3-codex"
+    ],
     "version": "2026-02-24",
     "sku": "GlobalProvisionedManaged",
+    "regions": [
+      "eastus2",
+      "uksouth",
+      "westeurope"
+    ],
     "minimum": 15,
     "increment": 5,
     "inputTpmPerPtu": 3400,
     "outputWeight": 8,
     "source": "https://learn.microsoft.com/en-us/azure/foundry/openai/how-to/provisioned-throughput-sizing#deployment-parameters-and-throughput-values-by-model",
-    "id": "maint-sizing-gpt-5-3-codex-2026-02-24-globalprovisionedmanaged",
+    "verifiedOn": "2026-11-19",
+    "reviewBy": "2027-01-03",
+    "condition": "Published model-version sizing parameters. Capacity and tenant quota require separate confirmation.",
+    "observedSince": "2026-11-19"
+  },
+  {
+    "id": "maint-sizing-gpt-5-3-codex-2026-02-24-provisionedmanaged",
     "models": [
       "gpt-5.3-codex"
     ],
-    "regions": [
-      "eastus2",
-      "uksouth",
-      "westeurope"
-    ],
-    "condition": "Published model-version sizing parameters. Capacity and tenant quota require separate confirmation."
-  },
-  {
-    "verifiedOn": "2026-11-19",
-    "reviewBy": "2027-01-03",
     "version": "2026-02-24",
     "sku": "ProvisionedManaged",
+    "regions": [
+      "uksouth"
+    ],
     "minimum": 50,
     "increment": 50,
     "inputTpmPerPtu": 3400,
     "outputWeight": 8,
     "source": "https://learn.microsoft.com/en-us/azure/foundry/openai/how-to/provisioned-throughput-sizing#deployment-parameters-and-throughput-values-by-model",
-    "id": "maint-sizing-gpt-5-3-codex-2026-02-24-provisionedmanaged",
-    "models": [
-      "gpt-5.3-codex"
-    ],
-    "regions": [
-      "uksouth"
-    ],
-    "condition": "Published model-version sizing parameters. Capacity and tenant quota require separate confirmation."
-  },
-  {
     "verifiedOn": "2026-11-19",
     "reviewBy": "2027-01-03",
+    "condition": "Published model-version sizing parameters. Capacity and tenant quota require separate confirmation.",
+    "observedSince": "2026-11-19"
+  },
+  {
+    "id": "maint-sizing-gpt-5-2-codex-2026-01-14-globalprovisionedmanaged",
+    "models": [
+      "gpt-5.2-codex"
+    ],
     "version": "2026-01-14",
     "sku": "GlobalProvisionedManaged",
+    "regions": [
+      "eastus2",
+      "uksouth",
+      "westeurope"
+    ],
     "minimum": 15,
     "increment": 5,
     "inputTpmPerPtu": 3400,
     "outputWeight": 8,
     "source": "https://learn.microsoft.com/en-us/azure/foundry/openai/how-to/provisioned-throughput-sizing#deployment-parameters-and-throughput-values-by-model",
-    "id": "maint-sizing-gpt-5-2-codex-2026-01-14-globalprovisionedmanaged",
-    "models": [
-      "gpt-5.2-codex"
-    ],
-    "regions": [
-      "eastus2",
-      "uksouth",
-      "westeurope"
-    ],
-    "condition": "Published model-version sizing parameters. Capacity and tenant quota require separate confirmation."
-  },
-  {
     "verifiedOn": "2026-11-19",
     "reviewBy": "2027-01-03",
-    "version": "2025-11-13",
-    "sku": "GlobalProvisionedManaged",
-    "minimum": 15,
-    "increment": 5,
-    "inputTpmPerPtu": 4750,
-    "outputWeight": 8,
-    "source": "https://learn.microsoft.com/en-us/azure/foundry/openai/how-to/provisioned-throughput-sizing#deployment-parameters-and-throughput-values-by-model",
+    "condition": "Published model-version sizing parameters. Capacity and tenant quota require separate confirmation.",
+    "observedSince": "2026-11-19"
+  },
+  {
     "id": "maint-sizing-gpt-5-1-codex-2025-11-13-globalprovisionedmanaged",
     "models": [
       "gpt-5.1-codex"
     ],
+    "version": "2025-11-13",
+    "sku": "GlobalProvisionedManaged",
     "regions": [
       "eastus2",
       "uksouth",
       "westeurope"
     ],
-    "condition": "Published model-version sizing parameters. Capacity and tenant quota require separate confirmation."
-  },
-  {
-    "verifiedOn": "2026-11-19",
-    "reviewBy": "2027-01-03",
-    "version": "2025-11-13",
-    "sku": "DataZoneProvisionedManaged",
     "minimum": 15,
     "increment": 5,
     "inputTpmPerPtu": 4750,
     "outputWeight": 8,
     "source": "https://learn.microsoft.com/en-us/azure/foundry/openai/how-to/provisioned-throughput-sizing#deployment-parameters-and-throughput-values-by-model",
+    "verifiedOn": "2026-11-19",
+    "reviewBy": "2027-01-03",
+    "condition": "Published model-version sizing parameters. Capacity and tenant quota require separate confirmation.",
+    "observedSince": "2026-11-19"
+  },
+  {
     "id": "maint-sizing-gpt-5-1-codex-2025-11-13-datazoneprovisionedmanaged",
     "models": [
       "gpt-5.1-codex"
     ],
+    "version": "2025-11-13",
+    "sku": "DataZoneProvisionedManaged",
     "regions": [
       "eastus2",
       "westeurope"
     ],
-    "condition": "Published model-version sizing parameters. Capacity and tenant quota require separate confirmation."
-  },
-  {
-    "verifiedOn": "2026-11-19",
-    "reviewBy": "2027-01-03",
-    "version": "2025-04-16",
-    "sku": "GlobalProvisionedManaged",
     "minimum": 15,
     "increment": 5,
-    "inputTpmPerPtu": 5400,
-    "outputWeight": 4,
+    "inputTpmPerPtu": 4750,
+    "outputWeight": 8,
     "source": "https://learn.microsoft.com/en-us/azure/foundry/openai/how-to/provisioned-throughput-sizing#deployment-parameters-and-throughput-values-by-model",
+    "verifiedOn": "2026-11-19",
+    "reviewBy": "2027-01-03",
+    "condition": "Published model-version sizing parameters. Capacity and tenant quota require separate confirmation.",
+    "observedSince": "2026-11-19"
+  },
+  {
     "id": "maint-sizing-o4-mini-2025-04-16-globalprovisionedmanaged",
     "models": [
       "o4-mini"
     ],
+    "version": "2025-04-16",
+    "sku": "GlobalProvisionedManaged",
     "regions": [
       "eastus2",
       "uksouth",
       "westeurope"
     ],
-    "condition": "Published model-version sizing parameters. Capacity and tenant quota require separate confirmation."
-  },
-  {
-    "verifiedOn": "2026-11-19",
-    "reviewBy": "2027-01-03",
-    "version": "2025-04-16",
-    "sku": "DataZoneProvisionedManaged",
     "minimum": 15,
     "increment": 5,
     "inputTpmPerPtu": 5400,
     "outputWeight": 4,
     "source": "https://learn.microsoft.com/en-us/azure/foundry/openai/how-to/provisioned-throughput-sizing#deployment-parameters-and-throughput-values-by-model",
+    "verifiedOn": "2026-11-19",
+    "reviewBy": "2027-01-03",
+    "condition": "Published model-version sizing parameters. Capacity and tenant quota require separate confirmation.",
+    "observedSince": "2026-11-19"
+  },
+  {
     "id": "maint-sizing-o4-mini-2025-04-16-datazoneprovisionedmanaged",
     "models": [
       "o4-mini"
     ],
+    "version": "2025-04-16",
+    "sku": "DataZoneProvisionedManaged",
     "regions": [
       "eastus2",
       "westeurope"
     ],
-    "condition": "Published model-version sizing parameters. Capacity and tenant quota require separate confirmation."
-  },
-  {
+    "minimum": 15,
+    "increment": 5,
+    "inputTpmPerPtu": 5400,
+    "outputWeight": 4,
+    "source": "https://learn.microsoft.com/en-us/azure/foundry/openai/how-to/provisioned-throughput-sizing#deployment-parameters-and-throughput-values-by-model",
     "verifiedOn": "2026-11-19",
     "reviewBy": "2027-01-03",
+    "condition": "Published model-version sizing parameters. Capacity and tenant quota require separate confirmation.",
+    "observedSince": "2026-11-19"
+  },
+  {
+    "id": "maint-sizing-o4-mini-2025-04-16-provisionedmanaged",
+    "models": [
+      "o4-mini"
+    ],
     "version": "2025-04-16",
     "sku": "ProvisionedManaged",
+    "regions": [
+      "eastus2",
+      "westeurope"
+    ],
     "minimum": 25,
     "increment": 25,
     "inputTpmPerPtu": 5400,
     "outputWeight": 4,
     "source": "https://learn.microsoft.com/en-us/azure/foundry/openai/how-to/provisioned-throughput-sizing#deployment-parameters-and-throughput-values-by-model",
-    "id": "maint-sizing-o4-mini-2025-04-16-provisionedmanaged",
-    "models": [
-      "o4-mini"
-    ],
-    "regions": [
-      "eastus2",
-      "westeurope"
-    ],
-    "condition": "Published model-version sizing parameters. Capacity and tenant quota require separate confirmation."
+    "verifiedOn": "2026-11-19",
+    "reviewBy": "2027-01-03",
+    "condition": "Published model-version sizing parameters. Capacity and tenant quota require separate confirmation.",
+    "observedSince": "2026-11-19"
   }
 ]

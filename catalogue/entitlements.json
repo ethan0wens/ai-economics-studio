@@ -57,9 +57,9 @@
     ],
     "source": "https://learn.microsoft.com/en-us/copilot/plan/copilot-license-options",
     "verifiedOn": "2026-11-19",
+    "observedSince": "2026-11-19",
     "reviewBy": "2027-01-03",
-    "condition": "The Copilot Business add-on requires an eligible small-business subscription. Confirm applicable customer limits and offer terms.",
-    "observedSince": "2026-11-19"
+    "condition": "The Copilot Business add-on requires an eligible small-business subscription. Confirm applicable customer limits and offer terms."
   },
   {
     "id": "copilot-bundles",
@@ -78,9 +78,9 @@
     ],
     "source": "https://learn.microsoft.com/en-us/copilot/plan/copilot-license-options",
     "verifiedOn": "2026-11-19",
+    "observedSince": "2026-11-19",
     "reviewBy": "2027-01-03",
-    "condition": "This offer includes Microsoft 365 Copilot for assigned users. Included agent activity is a separate condition.",
-    "observedSince": "2026-11-19"
+    "condition": "This offer includes Microsoft 365 Copilot for assigned users. Included agent activity is a separate condition."
   },
   {
     "id": "copilot-included-use",
@@ -114,9 +114,9 @@
     ],
     "source": "https://www.microsoft.com/en-gb/microsoft-agent-365",
     "verifiedOn": "2026-11-19",
+    "observedSince": "2026-11-19",
     "reviewBy": "2027-01-03",
-    "condition": "Microsoft 365 E7 includes Agent 365. Assignment and coverage of owners, managers, sponsors and users are subject to the applicable terms.",
-    "observedSince": "2026-11-19"
+    "condition": "Microsoft 365 E7 includes Agent 365. Assignment and coverage of owners, managers, sponsors and users are subject to the applicable terms."
   },
   {
     "id": "agent365-user",
@@ -128,9 +128,9 @@
     "capability": "Agent 365 per-user scope",
     "source": "https://www.microsoft.com/en-gb/microsoft-agent-365",
     "verifiedOn": "2026-11-19",
+    "observedSince": "2026-11-19",
     "reviewBy": "2027-01-03",
-    "condition": "Agent 365 is licensed per user. Determine the licence needs of people who interact with, own, manage or sponsor governed agents.",
-    "observedSince": "2026-11-19"
+    "condition": "Agent 365 is licensed per user. Determine the licence needs of people who interact with, own, manage or sponsor governed agents."
   },
   {
     "id": "entra-e3",
@@ -203,9 +203,9 @@
     ],
     "source": "https://www.microsoft.com/en-gb/security/microsoft-entra-pricing",
     "verifiedOn": "2026-11-19",
+    "observedSince": "2026-11-19",
     "reviewBy": "2027-01-03",
-    "condition": "Entra ID P2 includes P1 capabilities. Check the qualifying product terms for the Entra Suite purchase.",
-    "observedSince": "2026-11-19"
+    "condition": "Entra ID P2 includes P1 capabilities. Check the qualifying product terms for the Entra Suite purchase."
   },
   {
     "id": "entra-suite-e7",
@@ -221,9 +221,9 @@
     ],
     "source": "https://www.microsoft.com/en-gb/security/microsoft-entra-pricing",
     "verifiedOn": "2026-11-19",
+    "observedSince": "2026-11-19",
     "reviewBy": "2027-01-03",
-    "condition": "Microsoft Entra Suite is included in Microsoft 365 E7. Reconcile existing identity agreements before recording savings.",
-    "observedSince": "2026-11-19"
+    "condition": "Microsoft Entra Suite is included in Microsoft 365 E7. Reconcile existing identity agreements before recording savings."
   },
   {
     "id": "entra-governance",
@@ -349,8 +349,8 @@
     "capability": "Purview workload licensing",
     "source": "https://learn.microsoft.com/en-us/purview/ediscovery-assign-permissions",
     "verifiedOn": "2026-11-19",
+    "observedSince": "2026-11-19",
     "reviewBy": "2027-01-03",
-    "condition": "Confirm the licence and assigned roles for each eDiscovery workload. Microsoft documents plan- and role-specific premium access. A suite label does not establish rights for all users or workloads.",
-    "observedSince": "2026-11-19"
+    "condition": "Confirm the licence and assigned roles for each eDiscovery workload. Microsoft documents plan- and role-specific premium access. A suite label does not establish rights for all users or workloads."
   }
 ]

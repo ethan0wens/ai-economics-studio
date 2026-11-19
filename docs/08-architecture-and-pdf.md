@@ -22,7 +22,7 @@ The diagram represents a declared plan. Validate actual deployment topology, net
 
 ## Layout and accessibility
 
-Cloud Professional colours, embedded fonts, A4 portrait and landscape templates, repeated table headings and numbered pages give both formats consistent print layouts. Text is selectable and searchable. Full Report provides a printed contents page. This format has limited screen-reader table semantics and carries neither tagged PDF structure nor PDF/UA certification. Some unsupported scripts and emoji appear as a replacement glyph. The editable JSON retains the original characters.
+The Economic Signal vector mark, navy cover, compact page headers, Cloud Professional colours, embedded fonts, A4 portrait and landscape templates, repeated table headings and numbered pages give both formats consistent print layouts. Text is selectable and searchable. Full Report provides a printed contents page. This format has limited screen-reader table semantics and carries neither tagged PDF structure nor PDF/UA certification. Some unsupported scripts and emoji appear as a replacement glyph. The editable JSON retains the original characters.
 
 The [technical reference](technical/01-workspace-flow.md#diagrams-and-report-flow) explains implementation and the [report audit](34-pdf-report-redesign.md) gives visual review commands.
 

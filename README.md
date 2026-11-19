@@ -25,6 +25,8 @@ npx playwright install chromium
 npm run test:e2e
 ```
 
+The [Economic Signal brand specification](design/brand/README.md) covers the local logo masters, browser icons, design tokens and PDF treatments.
+
 See the [field guide](docs/13-field-guide.md) for configuration inputs, units and requirements. See [source coverage](SOURCES.md) for the pricing coverage matrix, exact Azure mappings, commercial review dates and remaining evidence gaps, and the [operations runbook](docs/12-operations.md) for publishing, incident response and checks.
 
 The five curated examples are [Basic Foundry Assistant](https://ai-econmics-studio.ethan0wens.workers.dev/#/examples/foundry-assistant), [Copilot Studio Business Agent](https://ai-econmics-studio.ethan0wens.workers.dev/#/examples/copilot-agent), [Enterprise AI Environment](https://ai-econmics-studio.ethan0wens.workers.dev/#/examples/enterprise-ai), [Shared Model Deployment](https://ai-econmics-studio.ethan0wens.workers.dev/#/examples/shared-deployment) and [AI Adoption & Business Case](https://ai-econmics-studio.ethan0wens.workers.dev/#/documentation/example-ai-adoption-business-case). Each opens as an editable copy with fictional inputs and uses the applied catalogue for retail prices. See the [business-case reconciliation](docs/technical/03-worked-reconciliations.md#ai-adoption-and-business-case) for a reproducible test with fictional rates and the [source traceability matrix](docs/technical/traceability.md) for implementation and regression links.

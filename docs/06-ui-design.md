@@ -1,10 +1,10 @@
 # 06 — UI/UX and design system
 
-## Approved direction: Cloud Professional
+## Approved direction: Cloud Professional with Economic Signal
 
-Professional, restrained, light-first SaaS tooling; do not imitate the Azure Portal. Visually consistent with PDF report. Tokens in `design/tokens.json` are authoritative.
+Professional, restrained, light-first SaaS tooling; do not imitate the Azure Portal. Visually consistent with PDF report. Tokens in `design/tokens.json` are authoritative. See the [Economic Signal specification](../design/brand/README.md) for the supplied mark, Home and navigation treatments, browser icons and report identity.
 
-- Canvas `#F7F9FC`, white surface `#FFFFFF`, deep navy primary text `#17243B`, blue action/selection `#2563EB`, border `#E2E8F0`, muted text `#64748B`.
+- Canvas `#F7F9FC`, white surface `#FFFFFF`, deep navy primary text `#17243B`, blue action/selection `#2563EB`, border `#E2E8F0`, muted text `#56667C`.
 - Semantic success `#16836B`, warning `#D97706`, critical `#DC3545`. Unknown/unpriced is neutral, not a fake success or automatic failure.
 - Typography **Inter or Geist** with safe system fallback; self-host only licence-compliant assets if included, do not load Google fonts at runtime. Use tabular numerals for currency, usage and token counts.
 - Rounded card/panel corners 8–12px; subtle borders and restrained shadows; spacious desktop, compact mobile; no excessive gradients/glassmorphism; no colourful summary/recommendation boxes.
@@ -13,7 +13,9 @@ Professional, restrained, light-first SaaS tooling; do not imitate the Azure Por
 
 ## Navigation (MVP)
 
-`Overview | Environment Builder | Architecture | Cost Analysis | Security & Governance | Reports & Export`
+`Home | Environment Builder | Cost & Value Analysis | Environment Review | Reports & Export | Documentation`
+
+Pricing Catalogue is a separate reference link. Environment Review groups Overview, Architecture, Technical fit and Controls.
 
 Keep current environment name and `Not exported` status visible. Prominent `Export JSON`, `Add object` and contextual `Import JSON` where appropriate. Show independent project disclaimer without overwhelming primary content.
 

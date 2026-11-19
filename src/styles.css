@@ -298,11 +298,10 @@ dialog::backdrop{background:#17243b70}dialog p{margin:8px 0 12px}dialog ul{list-
 .welcome-lead { color: var(--light); font-size: clamp(1.02rem, 1.4vw, 1.25rem); line-height: 1.55; }
 .signal-motif {
   position: absolute; pointer-events: none; z-index: -1; aspect-ratio: 1;
-  mask: url('../design/brand/economic-signal-mark-mono.svg?no-inline') center / contain no-repeat;
 }
 .signal-motif-hero {
-  width: min(43%, 525px); right: -2%; bottom: -23%; opacity: .33;
-  background: linear-gradient(118deg, var(--soft-blue), var(--supporting-blue));
+  width: min(43%, 525px); right: -2%; bottom: -23%; opacity: .31;
+  background: url('../design/brand/economic-signal-mark-on-dark.svg?no-inline') center / contain no-repeat;
 }
 .welcome-entry, .welcome-examples {
   min-width: 0; display: grid; align-content: start; border: 1px solid #dbe4ef;
@@ -579,7 +578,10 @@ dialog::backdrop{background:#17243b70}dialog p{margin:8px 0 12px}dialog ul{list-
   background: var(--cloud); padding: clamp(16px, 2.7vw, 29px); padding-right: min(26%, 175px);
 }
 .review-intro p { margin-top: 6px; }
-.signal-motif-section { width: min(29%, 215px); right: 0; bottom: -49%; background: var(--primary); opacity: .11; }
+.signal-motif-section {
+  width: min(29%, 215px); right: 0; bottom: -49%; background: var(--primary); opacity: .11;
+  mask: url('../design/brand/economic-signal-mark-mono.svg?no-inline') center / contain no-repeat;
+}
 .workspace-empty .signal-motif-section { bottom: -20%; }
 @media (max-width: 460px) {
   .review-intro { padding-right: 22px; }

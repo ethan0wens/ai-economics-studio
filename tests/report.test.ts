@@ -2,7 +2,7 @@ import { mkdir, writeFile } from 'node:fs/promises';
 import { join } from 'node:path';
 import { createHash } from 'node:crypto';
 import { PDFDocument, PDFName } from 'pdf-lib';
-import { getDocument } from 'pdfjs-dist/legacy/build/pdf.mjs';
+import { getDocument, OPS } from 'pdfjs-dist/legacy/build/pdf.mjs';
 import { expect, it } from 'vitest';
 import { enterpriseInventory, referenceAt, scenarios } from '../fixtures/enterprise-scenarios';
 import type { Catalogue } from '../src/catalogue';
@@ -63,6 +63,13 @@ async function inspect(bytes: Uint8Array, format: ReportFormat) {
       const page = await doc.getPage(pageNumber);
       const bounds = page.getViewport({ scale: 1 });
       if (bounds.width > bounds.height) landscape++;
+      if (pageNumber <= 2) {
+        const ops = await page.getOperatorList();
+        const fills = ops.argsArray.filter((_, index) => ops.fnArray[index] === OPS.setFillRGBColor).flat();
+        const signal = pageNumber === 1 ? ['#bfdfff', '#60a5fa', '#3b82f6'] : ['#93c5fd', '#3b82f6', '#2563eb'];
+        expect(fills).toEqual(expect.arrayContaining(signal));
+        if (pageNumber === 1) expect(fills.filter(fill => fill === '#bfdfff')).toHaveLength(2);
+      }
       const content = await page.getTextContent();
       const items = content.items.filter(item => 'str' in item && item.str.trim()).flatMap(item => 'str' in item ? [item] : []);
       expect(items.length, `blank page ${pageNumber}`).toBeGreaterThan(4);

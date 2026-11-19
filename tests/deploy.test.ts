@@ -55,4 +55,14 @@ describe('public deployment verification', () => {
     const request = vi.fn<typeof fetch>().mockResolvedValueOnce(new Response('previous'));
     await expect(verifyPublishedAssets(new Map([['/', 'current']]), request)).rejects.toThrow('does not match the build');
   });
+
+  it('compares a binary browser icon without decoding it as text', async () => {
+    const icon = new Uint8Array([0x89, 0x50, 0x4e, 0x47, 0x00]);
+    const path = '/brand/favicon-32.png';
+    const expected = new Map([[path, icon]]);
+    const request = vi.fn<typeof fetch>().mockResolvedValueOnce(new Response(icon));
+    await expect(verifyPublishedAssets(expected, request)).resolves.toBeUndefined();
+    request.mockResolvedValueOnce(new Response(new Uint8Array([0x88, 0x50, 0x4e, 0x47, 0x00])));
+    await expect(verifyPublishedAssets(expected, request)).rejects.toThrow('does not match the build');
+  });
 });

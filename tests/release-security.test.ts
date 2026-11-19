@@ -34,6 +34,8 @@ type Overrides = {
   alternate?: string;
   missingHeaders?: string[];
   mime?: string;
+  iconMime?: string;
+  iconCache?: string;
   cache?: string;
   catalogue?: string;
   receipt?: string;
@@ -53,6 +55,9 @@ function fixture(options: Overrides = {}) {
       ...immutable, 'cache-control': options.cache ?? immutable['cache-control'], 'content-type': options.mime ?? 'text/javascript',
     } });
     if (url.pathname.endsWith('.css')) return new Response('', { headers: { ...immutable, 'content-type': 'text/css; charset=utf-8' } });
+    if (url.pathname === '/brand/favicon.svg') return new Response('<svg xmlns="http://www.w3.org/2000/svg"></svg>', { headers: {
+      'x-content-type-options': 'nosniff', 'cache-control': options.iconCache ?? 'no-cache', 'content-type': options.iconMime ?? 'image/svg+xml',
+    } });
     const headers = new Headers(documentHeaders);
     for (const key of options.missingHeaders ?? []) headers.delete(key);
     return new Response(url.pathname === '/documentation' && options.alternate !== undefined
@@ -61,6 +66,13 @@ function fixture(options: Overrides = {}) {
 }
 
 describe('preview delivery', () => {
+  it('checks the local favicon type and revalidation independently of the immutable scripts', async () => {
+    const withIcon = html.replace('</head>', '<link rel="icon" href="/brand/favicon.svg"></head>');
+    await expect(verifyPublicSecurity(workerUrl, preview, fixture({ html: withIcon }))).resolves.toMatchObject({ exception: 'S6-10' });
+    await expect(verifyPublicSecurity(workerUrl, preview, fixture({ html: withIcon, iconMime: 'text/html' }))).rejects.toThrow('asset MIME type');
+    await expect(verifyPublicSecurity(workerUrl, preview, fixture({ html: withIcon, iconCache: immutable['cache-control'] }))).rejects.toThrow('cache policy');
+  });
+
   it('records the byte-identical HTTP shell as S6-10 on the existing host and verifies HTTPS', async () => {
     const request = fixture();
     await expect(verifyPublicSecurity(workerUrl, { ...preview, expectedCatalogueId: hash, expectedApplication: app }, request))

@@ -1,6 +1,7 @@
 import { LearnMore } from './learn-more';
 import { useEffect, useRef, useState, type ReactNode } from 'react';
-import { ArrowDownToLine, ArrowRight, BookOpen, Boxes, ChartNoAxesCombined, ClipboardCheck, Cloud, FileText, GitFork, House, Menu, ShieldCheck, Workflow, X } from 'lucide-react';
+import { ArrowDownToLine, ArrowRight, BookOpen, Boxes, ChartNoAxesCombined, ClipboardCheck, Cloud, FileText, GitFork, House, Menu, ShieldCheck, UsersRound, X } from 'lucide-react';
+import { BrandLockup, EconomicSignalMotif } from './brand';
 import type { Environment } from './domain';
 import { destinations, reviewPages, routeHref, type Destination } from './navigation';
 
@@ -32,8 +33,8 @@ export function StudioNavigation({ page }: { page: Destination }) {
     <a className="reference-nav" href={routeHref('catalogue')} aria-current={page === 'catalogue' ? 'page' : undefined} onClick={() => close(false)}>
       <Cloud size={19} aria-hidden="true" />Pricing Catalogue</a>
   </nav>;
-  const brand = () => <a className="brand" href={routeHref('home')} onClick={() => close(false)}><span className="brand-icon"><Workflow size={22} aria-hidden="true" /></span>
-    <span>AI Economics<span className="brand-studio">Studio</span></span></a>;
+  const brand = (dark = false) => <a className="brand" href={routeHref('home')} onClick={() => close(false)}>
+    <BrandLockup variant={dark ? 'on-dark' : 'standard'} /></a>;
   return <>
     <aside className="sidebar"><div>{brand()}</div>{nav()}
       <div className="rail-footer"><ShieldCheck size={17} aria-hidden="true" /><div><strong>Browser-only workspace</strong><small>Export JSON to keep your work.</small></div></div>
@@ -41,7 +42,7 @@ export function StudioNavigation({ page }: { page: Destination }) {
     <div className="mobile-studio">
       <button ref={trigger} className="icon-button" aria-label="Toggle navigation" aria-expanded={open} aria-controls="mobile-navigation"
         onClick={() => open ? close(true) : setOpenFor(page)}><Menu size={21} aria-hidden="true" /></button>
-      {brand()}
+      {brand(true)}
     </div>
     <dialog ref={dialog} id="mobile-navigation" aria-label="Studio menu" className="mobile-navigation"
       onCancel={event => { event.preventDefault(); close(true); }}>
@@ -73,10 +74,12 @@ export function Home({ env, status, create, resume, importFile, error }: {
   const name = useRef<HTMLInputElement>(null);
   const entering = !env || showNew;
   return <div className="welcome">
-    <div className="welcome-intro">
+    <header className="welcome-intro">
+      <EconomicSignalMotif size="hero" />
+      <p className="welcome-tagline">Before you build AI, build the case.</p>
       <h1 tabIndex={-1}>Understand the cost of your AI ambitions.</h1>
-      <p>Plan your Microsoft AI environment, estimate its costs and explore its potential value.</p>
-    </div>
+      <p className="welcome-lead">Plan the architecture. Model the economics. Explore the value.</p>
+    </header>
     <div className="welcome-entry">
       {entering ? <form onSubmit={event => {
         event.preventDefault();
@@ -101,13 +104,17 @@ export function Home({ env, status, create, resume, importFile, error }: {
       </div>}
       {error && <p className="notice error" role="alert">{error}</p>}
     </div>
-    <ul className="welcome-capabilities">
-      <li><GitFork size={20} aria-hidden="true" /><div><strong>Design</strong><p>Build your AI environment with guided configuration.</p></div></li>
-      <li><ChartNoAxesCombined size={20} aria-hidden="true" /><div><strong>Understand</strong><p>Explore costs, assumptions and potential spend.</p></div></li>
-      <li><ArrowDownToLine size={20} aria-hidden="true" /><div><strong>Share</strong><p>Turn your analysis into a clear, shareable report.</p></div></li>
+    <div className="welcome-examples">
+      <div><span className="welcome-icon"><BookOpen size={21} aria-hidden="true" /></span>
+        <h2>Explore an example</h2><p>Start with a fictional AI environment and follow the assumptions behind its estimate.</p></div>
+      <a className="button" href={routeHref('examples')}>Explore examples <ArrowRight size={16} aria-hidden="true" /></a>
+    </div>
+    <ul className="welcome-capabilities" aria-label="Studio capabilities">
+      <li><span className="welcome-icon"><GitFork size={19} aria-hidden="true" /></span><div><strong>Architecture</strong><p>Define agents, deployments and their relationships.</p></div></li>
+      <li><span className="welcome-icon"><ChartNoAxesCombined size={19} aria-hidden="true" /></span><div><strong>Cost and scenarios</strong><p>Estimate expenditure and compare changes.</p></div></li>
+      <li><span className="welcome-icon"><UsersRound size={19} aria-hidden="true" /></span><div><strong>Adoption and value</strong><p>Explore adoption and potential productivity.</p></div></li>
+      <li><span className="welcome-icon"><ArrowDownToLine size={19} aria-hidden="true" /></span><div><strong>Shareable evidence</strong><p>Share reports with assumptions and sources.</p></div></li>
     </ul>
-    <div className="welcome-examples"><div><h2>Explore an example</h2><p>See how it works with a ready-made AI environment.</p></div>
-      <a className="button" href={routeHref('examples')}>Explore examples <ArrowRight size={16} aria-hidden="true" /></a></div>
     <p className="privacy-copy">No account required. Your environment stays in this browser tab until you leave or reload. Export it to keep a copy. <LearnMore guide="privacy" /></p>
   </div>;
 }

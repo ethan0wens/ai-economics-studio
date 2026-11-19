@@ -1,4 +1,5 @@
 import { createHash } from 'node:crypto';
+import AxeBuilder from '@axe-core/playwright';
 import { readFile } from 'node:fs/promises';
 import { expect, test, type Page } from '@playwright/test';
 import { enterpriseInventory, referenceAt, scenarios } from '../../fixtures/enterprise-scenarios';
@@ -186,4 +187,34 @@ test('both PDFs reconcile accepted value and only the Full Report includes an op
   const json = (await download(page, 'Export JSON')).toString();
   expect(json).not.toContain('Illustrative adoption comparison');
   expect(JSON.parse(json).valuePlan).toEqual(accepted);
+});
+
+test.describe('narrow guided and optional views', () => {
+  test.use({ viewport: { width: 320, height: 780 }, deviceScaleFactor: 2 });
+  test('keeps navigation small and reflows Costs and Environment Review with clear keyboard focus', async ({ page }) => {
+    await openSample(page);
+    await page.getByRole('button', { name: 'Toggle navigation' }).press('Enter');
+    const primary = page.getByRole('navigation', { name: 'Studio navigation' });
+    await expect(primary.getByRole('link')).toHaveText([
+      'Home', 'Environment Builder', 'Cost & Value Analysis', 'Reports & Export', 'Documentation', 'Pricing Catalogue',
+    ]);
+    await primary.getByRole('link', { name: 'Cost & Value Analysis' }).press('Enter');
+    await expect(page.getByRole('heading', { name: 'Cost & Value Analysis' })).toBeFocused();
+    await expect(page.getByRole('button', { name: 'Costs', exact: true })).toHaveAttribute('aria-pressed', 'true');
+    await expect(page.getByLabel('Expected active adoption (%)')).toHaveCount(0);
+    const overflow = () => page.evaluate(() => document.documentElement.scrollWidth - innerWidth);
+    expect(await overflow()).toBe(0);
+    expect((await new AxeBuilder({ page }).include('#main').analyze()).violations).toEqual([]);
+
+    await page.evaluate(() => { window.location.hash = '#/review'; });
+    await expect(page.getByRole('heading', { name: 'Environment Review' })).toBeFocused();
+    const views = page.getByRole('navigation', { name: 'Environment review views' });
+    await views.getByRole('link', { name: 'Architecture' }).press('Enter');
+    await expect(page.getByRole('region', { name: 'Scrollable logical diagram' })).toBeVisible();
+    expect(await overflow()).toBe(0);
+    await views.getByRole('link', { name: 'Technical fit' }).press('Enter');
+    await expect(page.getByRole('heading', { name: 'Technical fit' })).toBeVisible();
+    expect(await overflow()).toBe(0);
+    expect((await new AxeBuilder({ page }).include('#main').analyze()).violations).toEqual([]);
+  });
 });

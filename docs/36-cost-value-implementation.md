@@ -35,3 +35,11 @@ Type checking, lint, build, 120 unit and 50 Chromium tests passed. The new brows
 Accepted value estimates appear after the cost and uncertainty content in both PDFs. Full Report includes the input provenance, methods and separate implementation and operating cost scopes. An explicit comparison action adds one illustrative adoption table to Full Report only. The choice can be removed and is cleared for a different environment or price catalogue. JSON retains accepted assumptions only. Documentation Hub adds guides to value, workload linkage and review, with contextual paths. Home retains the central cost proposition.
 
 Type checking, lint, build, 121 unit tests and 51 Chromium tests passed. The new report fixture keeps £3,594.00 of known monthly AI spend and one unresolved charge alongside £6,000.00 of separately modelled economic equivalent. Raster review inspected the executive table and the detailed provenance page. Browser checks reconciled both formats, confirmed a temporary comparison is excluded by default and verified separate opt-in and unchanged JSON.
+
+## Stage 6 · Usability and release
+
+The final browser suite exercises the original Guided Foundry and Copilot journeys, temporary cost and adoption comparisons, accepted assumptions, contextual review and both PDF formats. The narrow viewport check uses 320 CSS pixels at a device scale factor of 2, verifies keyboard focus and inspects Costs and Technical fit with axe. The check found a keyboard scrolling issue in the licence expenditure table. The region now has a name and can receive focus.
+
+Live smoke includes the value and review journeys in addition to the existing financial, catalogue, documentation and privacy checks. The same account and existing Worker remain the deployment target. The wider release command continues to block under the Stage 6.1 S6-10 condition. The [moderated study materials](37-cost-value-usability-study.md) are prepared and participant sessions remain outstanding.
+
+The final candidate passed type checking, lint, 121 unit tests and 52 Chromium tests. The build passed pricing, evidence, documentation and production asset validation. Both dependency audits reported zero vulnerabilities. The rebuilt accessibility check passed, including the focusable licence table. A production preview requires separate guarded GitHub checks and live verification.

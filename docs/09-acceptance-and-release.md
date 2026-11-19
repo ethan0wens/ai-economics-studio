@@ -38,6 +38,15 @@
 - [ ] No user-configured data sent through fetch/XHR/beacon/analytics; browser storage contains no environment objects; only same-origin static resource fetches in normal operation.
 - [ ] No runtime backend, Worker script, auth workflow or database in production output.
 
+### Optional cost, value and design review
+
+- [ ] Complete a Guided Foundry or Copilot estimate without entering value or governance assumptions.
+- [ ] Compare usage, prices and adoption without altering accepted pricing or workload. Resolve whole-environment differences only when charges are known.
+- [ ] Check optional value inputs, source labels, explicit acceptance, strict v1 imports, separate cashable savings and unchanged ledger totals.
+- [ ] Verify Environment Review opens the correct editor fields and preserves old architecture and governance links.
+- [ ] Reconcile both report formats. Include an illustrative adoption comparison only after explicit selection in Full Report.
+- [ ] Test keyboard access and narrow reflow. Record the [moderated study](37-cost-value-usability-study.md) separately from automated verification.
+
 ### CI and catalogue
 
 - [ ] `npm ci`, `npm run typecheck`, `npm run lint`, `npm run test`, `npm run build` pass from clean checkout; e2e suite runs on CI with browser installed.

@@ -59,7 +59,7 @@ export function LicenceEstate({ result, currency }: { result: Ledger; currency: 
   ] as const;
   return <section className="panel padded">
     <h2>Existing and proposed spend</h2>
-    <div className="table-wrap"><table><thead><tr><th>Scope</th><th>Known monthly</th><th>Known annual</th><th>Unresolved</th></tr></thead>
+    <div className="table-wrap" tabIndex={0} role="region" aria-label="Scrollable licence expenditure"><table><thead><tr><th>Scope</th><th>Known monthly</th><th>Known annual</th><th>Unresolved</th></tr></thead>
       <tbody>{values.map(([label, value]) => {
         const missingExisting = label === 'Existing licence spend' && estate.owned > 0 && estate.owned === value.incomplete;
         return <tr key={label}><th scope="row">{label}</th><td>{formatMoney(missingExisting ? null : value.known, currency)}</td><td>{formatMoney(missingExisting ? null : value.annual, currency)}</td><td>{value.incomplete}</td></tr>;

@@ -133,6 +133,33 @@ jobs:
           node-version: '24'
           cache: npm
       - run: npm ci --ignore-scripts
+      - name: Capture the incident asset response outside the workspace proxy
+        if: github.ref == 'refs/heads/release/fix-production-mime'
+        run: |
+          node --input-type=module <<'JS'
+          import { createHash } from 'node:crypto';
+          const origin = 'https://studio.ethan0wens.tech';
+          const modes = [
+            ['identity', { cache: 'no-store', headers: { 'Accept-Encoding': 'identity', 'Cache-Control': 'no-cache' } }],
+            ['public', { cache: 'no-cache' }],
+            ['cors', { headers: { 'Sec-Fetch-Mode': 'cors', 'Accept': '*/*' } }],
+            ['navigate', { headers: { 'Sec-Fetch-Mode': 'navigate', 'Accept': 'text/html' } }],
+          ];
+          const digest = bytes => createHash('sha256').update(bytes).digest('hex').slice(0, 16);
+          const get = (path, options) => fetch(origin + path, { ...options, redirect: 'manual', credentials: 'omit', signal: AbortSignal.timeout(10_000) });
+          const base = await get('/', modes[0][1]);
+          const shell = await base.text();
+          const built = /<script[^>]*src="([^"]+)"/.exec(shell)?.[1];
+          const release = (await (await get('/pricing/health.json', modes[0][1])).json()).release;
+          console.log('::notice title=Asset incident baseline::' + JSON.stringify({ application: release.application, shell: digest(shell), publishedScript: built }));
+          const paths = [...new Set(['/assets/index-C0cT9zG4.js', built].filter(Boolean))];
+          await Promise.all(paths.flatMap(path => modes.map(async ([rule, options]) => {
+            const response = await get(path, options);
+            const bytes = Buffer.from(await response.arrayBuffer());
+            const headers = Object.fromEntries(['content-type', 'content-encoding', 'cache-control', 'cf-cache-status', 'cf-ray', 'age', 'etag', 'vary'].map(name => [name, response.headers.get(name)]));
+            console.log('::notice title=Asset incident response::' + JSON.stringify({ path, rule, status: response.status, sha: digest(bytes), shell: bytes.equals(Buffer.from(shell)), headers }));
+          })));
+          JS
       - name: Observe current custom-domain delivery
         run: npm run security:production -- --observe-current
       - name: Recheck both retired preview protocols

@@ -86,7 +86,7 @@ export async function verifyPublishedAssets(expected: ReadonlyMap<string, AssetC
 }
 
 const cleanEnv = { ...process.env, CLOUDFLARE_ACCOUNT_ID: undefined, CLOUDFLARE_API_TOKEN: undefined,
-  GITHUB_TOKEN: undefined, STUDIO_PUBLISH_TOKEN: undefined };
+  GITHUB_TOKEN: undefined, STUDIO_PRICING_APP_PRIVATE_KEY: undefined };
 
 function command(program: string, args: string[], env: NodeJS.ProcessEnv = cleanEnv) {
   const result = spawnSync(program, args, { env, encoding: 'utf8', maxBuffer: 4_000_000 });
@@ -156,27 +156,6 @@ function assertUpstream(application: string) {
   if (remote !== application) throw new Error('main advanced during this run. The checked candidate cannot supersede it.');
 }
 
-function publishCatalogue(application: string, token: string) {
-  assertUpstream(application);
-  command('git', ['add', '--', 'catalogue/commercial.json', 'catalogue/compatibility.json', 'catalogue/entitlements.json',
-    'catalogue/provisioned.json', 'catalogue/discovered.json', 'catalogue/maintenance.json', 'public/pricing']);
-  if (!command('git', ['diff', '--cached', '--name-only'])) return;
-  command('git', ['-c', 'user.name=github-actions[bot]', '-c', 'user.email=41898282+github-actions[bot]@users.noreply.github.com',
-    'commit', '-m', 'Publish validated catalogue and Microsoft evidence']);
-  // Send the scoped repository token to git for this push. Neither Wrangler nor browser checks receive it.
-  const origin = command('git', ['remote', 'get-url', 'origin']);
-  if (!/^https:\/\/github\.com\/ethan0wens\/ai-economics-studio(?:\.git)?$/.test(origin)) throw new Error('Unexpected catalogue publication remote.');
-  const basic = Buffer.from(`x-access-token:${token}`).toString('base64');
-  try {
-    command('git', ['-c', 'credential.helper=', '-c', 'http.followRedirects=false', 'push', 'origin', 'HEAD:main'], {
-      ...cleanEnv, GIT_CONFIG_COUNT: '1', GIT_CONFIG_KEY_0: 'http.https://github.com/.extraheader',
-      GIT_CONFIG_VALUE_0: `AUTHORIZATION: basic ${basic}`, GIT_TERMINAL_PROMPT: '0',
-    });
-  } catch {
-    throw new Error('GitHub refused the staged catalogue commit. Verify the production publisher and branch rules.');
-  }
-}
-
 function liveBrowser(catalogueId: string) {
   const browser = spawnSync('npm', ['run', 'test:e2e', '--', '--retries=1', 'tests/e2e/field-help.spec.ts',
     'tests/e2e/retail-first.spec.ts', 'tests/e2e/enterprise.spec.ts', 'tests/e2e/guided.spec.ts', 'tests/e2e/technical-docs.spec.ts',
@@ -213,10 +192,7 @@ async function waitForPublishedAssets(assets: ReadonlyMap<string, AssetContents>
 
 if (process.argv[1] && pathToFileURL(process.argv[1]).href === import.meta.url) {
   try {
-    const publish = process.argv[2] === '--publish-catalogue';
-    const publishToken = process.env.STUDIO_PUBLISH_TOKEN;
-    if (publish && !publishToken) throw new Error('Catalogue publication requires the scoped GitHub workflow token.');
-    if (process.argv.length !== (publish ? 3 : 2)) throw new Error('Production deploy uses the checked-in Worker target.');
+    if (process.argv.length !== 2) throw new Error('Production deploy uses the checked-in Worker target and catalogue.');
     const { CLOUDFLARE_ACCOUNT_ID: account, CLOUDFLARE_API_TOKEN: token } = process.env;
     const configText = await readFile(config, 'utf8');
     const name = await verifyWorker(configText, account, token);
@@ -227,15 +203,12 @@ if (process.argv[1] && pathToFileURL(process.argv[1]).href === import.meta.url) 
     const previous = await worker.current();
     const previousAssets = await currentAssets();
     if ((await worker.current()).deployment !== previous.deployment) throw new Error('The active Worker changed while capturing the rollback target.');
-    if (publish && await readFile(new URL('../public/pricing/manifest.json', import.meta.url), 'utf8') !==
-      await readFile(new URL('../dist/pricing/manifest.json', import.meta.url), 'utf8')) {
-      throw new Error('Staged deployment and Git publication use different catalogue manifests.');
-    }
     const { assets, catalogueId } = await builtAssets(previous, previousAssets, application);
     report('notice', `Verified enabled Custom Domain ${productionHostname} on the existing Worker ${name} with rollback target ${previous.version}`);
     await promoteWorker({
       previous,
       upload() {
+        if (process.env.GITHUB_ACTIONS === 'true') assertUpstream(application);
         const result = spawnSync(process.execPath, [wrangler, 'deploy', '--config', config, '--name', name], { encoding: 'utf8', maxBuffer: 4_000_000,
           env: { ...cleanEnv, CLOUDFLARE_ACCOUNT_ID: account, CLOUDFLARE_API_TOKEN: token } });
         if (result.stdout) console.log(result.stdout);
@@ -259,7 +232,7 @@ if (process.argv[1] && pathToFileURL(process.argv[1]).href === import.meta.url) 
           report('notice', `Cloudflare confirmed workers.dev and its Preview URLs are disabled. Legacy delivery returned HTTP ${legacy.httpStatus} and HTTPS ${legacy.httpsStatus}.`);
         }
       },
-      persist() { if (publish) publishCatalogue(application, publishToken!); },
+      persist() { if (process.env.GITHUB_ACTIONS === 'true') assertUpstream(application); },
       restore: worker.restore,
       async verifyRestore() {
         await waitForPublishedAssets(previousAssets.assets, 'rollback target');

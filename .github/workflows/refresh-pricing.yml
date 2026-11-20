@@ -1,18 +1,5 @@
-name: Refresh and deploy Studio retail prices
+name: Refresh and publish Studio retail prices
 on:
-  push:
-    branches: [main]
-    paths:
-      - 'scripts/pricing.ts'
-      - 'scripts/discovery.ts'
-      - 'scripts/*maintenance*.ts'
-      - 'scripts/microsoft-*.ts'
-      - 'catalogue/**'
-      - 'src/coverage.ts'
-      - 'scripts/retail-mappings.ts'
-      - 'scripts/commercial-pricing.ts'
-      - 'src/offerings.ts'
-      - 'src/catalogue.ts'
   schedule:
     - cron: '17 6 * * 0,2-6'
     - cron: '17 6 * * 1'
@@ -21,7 +8,7 @@ on:
 permissions: {}
 
 concurrency:
-  group: production-static-assets
+  group: verified-pricing-publication
   cancel-in-progress: false
 
 jobs:
@@ -29,12 +16,15 @@ jobs:
     if: github.ref == 'refs/heads/main'
     permissions:
       contents: read
+      pull-requests: read
     runs-on: ubuntu-latest
     timeout-minutes: 20
     outputs:
       review: ${{ steps.review.outcome }}
       refresh: ${{ steps.refresh.outcome }}
       regression: ${{ steps.regression.outcome }}
+      changed: ${{ steps.candidate.outputs.changed }}
+      pending: ${{ steps.pending.outputs.exists }}
     steps:
       - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
         with:
@@ -66,9 +56,28 @@ jobs:
         run: |
           npm run pricing:refresh
           npx --no-install tsx scripts/pricing.ts coverage >> "$GITHUB_STEP_SUMMARY"
+      - name: Identify material pricing and evidence changes
+        id: candidate
+        run: |
+          npm run pricing:validate
+          npm run evidence:validate
+          npx --no-install tsx scripts/pricing-candidate.ts "$RUNNER_TEMP/pricing.patch"
+      - name: Find a pending pricing pull request on a no-change run
+        if: steps.candidate.outputs.changed == 'false'
+        id: pending
+        run: |
+          count=$(gh api --method GET "repos/$GITHUB_REPOSITORY/pulls" -f state=open -f base=main \
+            -f "head=${GITHUB_REPOSITORY_OWNER}:automation/verified-pricing" --jq 'length')
+          if [[ "$count" != '0' ]]; then
+            echo 'exists=true' >> "$GITHUB_OUTPUT"
+          fi
+        env:
+          GH_TOKEN: ${{ github.token }}
       - uses: ./.github/actions/setup-browser
+        if: steps.candidate.outputs.changed == 'true'
       - name: Validate the catalogue and reconcile financial and browser scenarios
         id: regression
+        if: steps.candidate.outputs.changed == 'true'
         run: |
           npm run typecheck
           npm run lint
@@ -78,44 +87,52 @@ jobs:
         env:
           STUDIO_CHECK_PUBLISHED_CATALOGUE: '1'
       - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7
+        if: steps.candidate.outputs.changed == 'true'
         with:
-          name: staged-studio-${{ github.run_attempt }}
-          path: |
-            catalogue/
-            public/pricing/
-            dist/
+          name: verified-pricing-patch-${{ github.run_attempt }}
+          path: ${{ runner.temp }}/pricing.patch
           if-no-files-found: error
           retention-days: 2
 
   publish:
     needs: prepare
-    environment: production
+    if: needs.prepare.outputs.changed == 'true' || needs.prepare.outputs.pending == 'true'
+    environment: pricing-publisher
     permissions:
-      contents: write
+      contents: read
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 22
     steps:
       - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
         with:
           persist-credentials: false
+          fetch-depth: 0
       - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
         with:
           node-version: '24'
       - run: npm ci --ignore-scripts
-      - uses: ./.github/actions/setup-browser
-      - name: Clear the checkout's pricing snapshot before loading the staged snapshot
-        run: node -e "require('node:fs').rmSync('public/pricing', { recursive:true })"
       - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8
+        if: needs.prepare.outputs.changed == 'true'
         with:
-          name: staged-studio-${{ github.run_attempt }}
-          path: .
-      - run: npm run pricing:validate && npm run evidence:validate && npm run security:build
-      - name: Deploy, verify and publish the staged catalogue
-        run: npm run deploy -- --publish-catalogue
+          name: verified-pricing-patch-${{ github.run_attempt }}
+          path: ${{ runner.temp }}/pricing-patch
+      - name: Apply the allowlisted, validated patch to the checked base
+        if: needs.prepare.outputs.changed == 'true'
+        run: |
+          npx --no-install tsx scripts/check-pricing-patch.ts "$RUNNER_TEMP/pricing-patch/pricing.patch"
+          npm run pricing:validate
+          npm run evidence:validate
+      - name: Publish and squash-merge the pricing-only pull request after required checks
+        run: |
+          if [[ "$STUDIO_PRICING_CHANGED" == 'true' ]]; then
+            npx --no-install tsx scripts/publish-pricing.ts
+          else
+            npx --no-install tsx scripts/publish-pricing.ts --no-change
+          fi
         env:
-          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          STUDIO_PUBLISH_TOKEN: ${{ github.token }}
+          STUDIO_PRICING_CHANGED: ${{ needs.prepare.outputs.changed }}
+          STUDIO_PRICING_APP_ID: ${{ vars.STUDIO_PRICING_APP_ID }}
+          STUDIO_PRICING_APP_PRIVATE_KEY: ${{ secrets.STUDIO_PRICING_APP_PRIVATE_KEY }}
 
   notify:
     if: always() && !cancelled() && github.ref == 'refs/heads/main'
@@ -148,4 +165,5 @@ jobs:
           STUDIO_REVIEW_OUTCOME: ${{ needs.prepare.outputs.review == 'success' && steps.evidence.outcome != 'success' && 'failure' || needs.prepare.outputs.review }}
           STUDIO_REFRESH_OUTCOME: ${{ needs.prepare.outputs.refresh }}
           STUDIO_REGRESSION_OUTCOME: ${{ needs.prepare.outputs.regression }}
-          STUDIO_DEPLOY_OUTCOME: ${{ needs.publish.result }}
+          STUDIO_PREPARE_OUTCOME: ${{ needs.prepare.result }}
+          STUDIO_PUBLISH_OUTCOME: ${{ needs.publish.result }}

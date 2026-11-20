@@ -4,6 +4,8 @@ on:
     branches: [main]
     paths-ignore:
       - 'docs/security/public-release.json'
+  schedule:
+    - cron: '37 * * * *'
   workflow_dispatch:
 
 permissions:
@@ -14,8 +16,31 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  deploy:
+  plan:
     if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    outputs:
+      deploy: ${{ steps.recovery.outputs.deploy }}
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        if: github.event_name == 'schedule'
+        with:
+          persist-credentials: false
+          fetch-depth: 0
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        if: github.event_name == 'schedule'
+        with:
+          node-version: '24'
+      - if: github.event_name == 'schedule'
+        run: npm ci --ignore-scripts
+      - id: recovery
+        if: github.event_name == 'schedule'
+        run: npx --no-install tsx scripts/production-recovery.ts
+
+  deploy:
+    needs: plan
+    if: github.ref == 'refs/heads/main' && (github.event_name != 'schedule' || needs.plan.outputs.deploy == 'true')
     runs-on: ubuntu-latest
     timeout-minutes: 20
     environment: production
@@ -32,7 +57,12 @@ jobs:
       - run: npm run typecheck && npm run lint && npm test && npm run build
       - uses: ./.github/actions/setup-browser
       - run: npm run test:e2e
-      - run: npm run deploy
+      - name: Deploy and verify the exact main revision
+        run: |
+          if ! npm run deploy; then
+            printf '## Production remains unverified\n\nMain %s was not confirmed live. Inspect the guarded promotion and rollback logs. The scheduled production check retries a recoverable mismatch from the latest main.\n' "$GITHUB_SHA" >> "$GITHUB_STEP_SUMMARY"
+            exit 1
+          fi
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}

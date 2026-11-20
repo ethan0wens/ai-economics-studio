@@ -1,13 +1,17 @@
 name: Verify Azure retail feed before release
 on:
   push:
-    branches: [work]
+    branches: [work, 'release/**']
     paths:
       - '.github/workflows/pricing-preview.yml'
       - '.github/workflows/deploy.yml'
       - '.github/workflows/enterprise-evidence.yml'
       - '.github/workflows/refresh-pricing.yml'
       - 'scripts/pricing.ts'
+      - 'scripts/pricing-candidate.ts'
+      - 'scripts/publish-pricing.ts'
+      - 'scripts/check-pricing-patch.ts'
+      - 'scripts/production-recovery.ts'
       - 'scripts/discovery.ts'
       - 'catalogue/**'
       - 'src/coverage.ts'
@@ -116,7 +120,7 @@ jobs:
 
   public-security:
     runs-on: ubuntu-latest
-    timeout-minutes: 5
+    timeout-minutes: 10
     steps:
       - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
         with:
@@ -128,3 +132,37 @@ jobs:
       - run: npm ci --ignore-scripts
       - name: Observe current custom-domain delivery
         run: npm run security:production -- --observe-current
+      - name: Recheck both retired preview protocols
+        run: npm run security:production -- --verify-legacy-retired
+      - uses: ./.github/actions/setup-browser
+        if: startsWith(github.ref, 'refs/heads/release/')
+      - name: Reconcile the current live release in Chromium
+        if: startsWith(github.ref, 'refs/heads/release/')
+        run: |
+          export STUDIO_EXPECTED_CATALOGUE_ID="$(jq -r .catalogueId public/pricing/manifest.json)"
+          npm run test:e2e
+        env:
+          STUDIO_TEST_URL: https://studio.ethan0wens.tech
+          STUDIO_CHECK_PUBLISHED_CATALOGUE: '1'
+          STUDIO_CHECK_RELEASE_HEALTH: '1'
+
+  publisher-rehearsal:
+    if: startsWith(github.ref, 'refs/heads/release/')
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        with:
+          node-version: '24'
+          cache: npm
+      - run: npm ci --ignore-scripts
+      - name: Validate and stage genuine current Microsoft evidence without publishing
+        run: |
+          npm run maintenance:review -- --daily
+          npm run pricing:refresh
+          npm run pricing:validate
+          npm run evidence:validate
+          npx --no-install tsx scripts/pricing-candidate.ts "$RUNNER_TEMP/pricing.patch"

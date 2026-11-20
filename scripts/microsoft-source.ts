@@ -1,4 +1,5 @@
 import { parse, type DefaultTreeAdapterTypes as Html } from 'parse5';
+import { setTimeout as delay } from 'node:timers/promises';
 
 export type Element = Html.Element;
 type Parent = Html.ParentNode;
@@ -68,6 +69,22 @@ export const productTerms = 'https://www.microsoft.com/licensing/terms/productof
 
 export type Source = { url: string; html?: string; error?: string };
 
+async function sourceResponse(url: URL, request: typeof fetch) {
+  for (let attempt = 0; ; attempt++) {
+    let response;
+    try {
+      response = await request(url, { redirect: 'manual', signal: AbortSignal.timeout(18_000),
+        headers: { 'Accept-Language': 'en-GB,en;q=0.8', Accept: 'text/html,application/xhtml+xml' } });
+    } catch (error) {
+      if (attempt === 2) throw error;
+    }
+    if (response && (attempt === 2 || ![408, 429, 500, 502, 503, 504].includes(response.status))) return response;
+    const retry = Number(response?.headers.get('retry-after'));
+    await response?.body?.cancel();
+    await delay(retry > 0 ? Math.min(retry, 15) * 1000 : 500 * 2 ** attempt);
+  }
+}
+
 export function sourceReader(request = fetch) {
   const cache = new Map<string, Promise<Source>>();
   return (source: string) => {
@@ -79,8 +96,7 @@ export function sourceReader(request = fetch) {
       let next = url;
       try {
         for (let hop = 0; hop < 4; hop++) {
-          const response = await request(next, { redirect: 'manual', signal: AbortSignal.timeout(18_000),
-            headers: { 'Accept-Language': 'en-GB,en;q=0.8', Accept: 'text/html,application/xhtml+xml' } });
+          const response = await sourceResponse(next, request);
           const location = response.headers.get('location');
           if (response.status >= 300 && response.status < 400 && location) {
             next = officialUrl(new URL(location, next).href);

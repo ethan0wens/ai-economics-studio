@@ -21,7 +21,8 @@ const cases = new Map<string, Exception>();
 const add = (id: string, title: string, active: Exception['active'], detail: string) => cases.set(id, { title, active, detail });
 const refresh = process.env.STUDIO_REFRESH_OUTCOME;
 const regression = process.env.STUDIO_REGRESSION_OUTCOME;
-const deploy = process.env.STUDIO_DEPLOY_OUTCOME;
+const publication = process.env.STUDIO_PUBLISH_OUTCOME;
+const preparation = process.env.STUDIO_PREPARE_OUTCOME;
 const reviewed = process.env.STUDIO_REVIEW_OUTCOME === 'success';
 const prev = (await api('/actions/workflows/refresh-pricing.yml/runs?status=completed&per_page=5')) as {
   workflow_runs: Array<{ id: number; conclusion: string }>;
@@ -32,8 +33,9 @@ add('persistent-ingestion', 'Repeated catalogue ingestion failure', refresh === 
 'Two consecutive maintenance runs failed to reconcile evidence or validate the pricing refresh. Inspect the source and mapping diagnostics.');
 add('financial-regression', 'Catalogue validation or financial regression failed', regression === 'success' ? false : regression === 'failure' ? true : undefined,
   'A staged catalogue failed the required validation, financial or browser regression gates. The candidate was not uploaded.');
-add('production-verification', 'Catalogue deployment or live verification failed', deploy === 'success' ? false : deploy === 'failure' ? true : undefined,
-  'Inspect the exact Worker deployment, verification and restoration outcome in the logs. The maintenance snapshot is committed only after the live checks pass.');
+add('pricing-publication', 'Protected catalogue publication failed', publication === 'failure' || preparation === 'failure' ? true
+  : publication === 'success' || preparation === 'success' ? false : undefined,
+  'The prepared catalogue was rejected or its protected merge did not complete. Inspect the refresh, candidate validation and publishing diagnostics. Production can only change in the main deployment workflow.');
 if (reviewed) {
   const health = maintenanceHealthSchema.parse(JSON.parse(await readFile(new URL('../catalogue/maintenance.json', import.meta.url), 'utf8')));
   const rows = (kind: 'expired' | 'ambiguous') => health.unresolved.filter(item => item.kind === kind);

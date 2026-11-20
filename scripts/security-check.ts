@@ -1,6 +1,6 @@
 import { readFile } from 'node:fs/promises';
 import { publicReleaseReminder, verifyPublicRelease } from './release-readiness';
-import { observeProductionSecurity, previewOrigin, productionOrigin, reportSecurityVerification, verifyPublicSecurity } from './security-http';
+import { observeProductionSecurity, previewOrigin, productionOrigin, reportSecurityVerification, verifyPublicSecurity, verifyRetiredPreview } from './security-http';
 
 try {
   const args = process.argv.slice(2);
@@ -9,6 +9,10 @@ try {
   } else if (args[0] === 'production' && args.length === 2 && args[1] === '--observe-current') {
     console.log('Read-only observation of the active production receipt. Release approval uses npm run release:public.');
     await reportSecurityVerification(await observeProductionSecurity());
+  } else if (args[0] === 'production' && args.length === 2 && args[1] === '--verify-legacy-retired') {
+    const legacy = await verifyRetiredPreview();
+    const observation = `Legacy hostname refused delivery over HTTP (${legacy.httpStatus}) and HTTPS (${legacy.httpsStatus}).`;
+    console.log(process.env.GITHUB_ACTIONS === 'true' ? `::notice title=Retired Worker preview::${observation}` : observation);
   } else if (args[0] === 'production' && args.length === 3) {
     await reportSecurityVerification(await verifyPublicSecurity(productionOrigin, {
       policy: 'public', expectedApplication: args[1], expectedCatalogueId: args[2],

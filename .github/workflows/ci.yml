@@ -26,3 +26,5 @@ jobs:
       - run: npm run typecheck && npm run lint && npm test && npm run build
       - uses: ./.github/actions/setup-browser
       - run: npm run test:e2e
+        env:
+          STUDIO_CHECK_PUBLISHED_CATALOGUE: '1'

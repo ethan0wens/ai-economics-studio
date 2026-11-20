@@ -13,8 +13,12 @@ test('a normal workspace downloads locally and neither transmits nor persists it
   await nav(page, 'Reports & Export').click();
   const json = JSON.parse((await getFile(page, 'Export JSON')).toString());
   expect(json.name).toBe(marker);
-  expect(requests.every(({ url, method, body }) => (url.startsWith('blob:') || new URL(url).origin === origin) &&
-    method === 'GET' && !body && !decodeURIComponent(url).includes(marker))).toBe(true);
+  const unexpected = requests.filter(({ url, method, body }) => !(url.startsWith('blob:') || new URL(url).origin === origin) ||
+    method !== 'GET' || !!body || decodeURIComponent(url).includes(marker));
+  expect(unexpected.map(({ url, method, body }) => {
+    const target = new URL(url);
+    return { origin: target.origin, path: target.pathname, method, hasBody: body !== null };
+  })).toEqual([]);
   expect(await page.evaluate(async () => [localStorage.length, sessionStorage.length, (await indexedDB.databases()).length])).toEqual([0, 0, 0]);
   expect(await context.cookies()).toEqual(beforeCookies);
   await page.reload();

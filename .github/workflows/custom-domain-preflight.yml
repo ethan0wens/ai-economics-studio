@@ -8,6 +8,8 @@ on:
       - 'scripts/security-http.ts'
       - 'scripts/security-check.ts'
       - 'docs/security/public-release.json'
+      - 'tests/e2e/security.spec.ts'
+      - 'tests/e2e/studio.spec.ts'
   workflow_dispatch:
     inputs:
       application:
@@ -93,7 +95,8 @@ jobs:
       - uses: ./.github/actions/setup-browser
       - name: Verify the Studio in Chromium on the custom domain
         run: |
-          if ! npm run test:e2e > "$RUNNER_TEMP/studio-custom-domain-browser.log" 2>&1; then
+          if ! npm run test:e2e -- tests/e2e/security.spec.ts tests/e2e/studio.spec.ts > "$RUNNER_TEMP/studio-custom-domain-browser.log" 2>&1 ||
+            ! npm run test:e2e >> "$RUNNER_TEMP/studio-custom-domain-browser.log" 2>&1; then
             cat "$RUNNER_TEMP/studio-custom-domain-browser.log"
             tail -c 12000 "$RUNNER_TEMP/studio-custom-domain-browser.log" | jq -Rs -r 'gsub("%"; "%25") | gsub("\r"; "%0D") | gsub("\n"; "%0A")' | sed 's/^/::error title=Custom domain browser checks::/'
             exit 1

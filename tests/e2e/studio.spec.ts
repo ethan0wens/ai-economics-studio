@@ -96,14 +96,18 @@ test('draft creation, shared costing, keyboard graph, reconciled report and JSON
   await expect(page.getByRole('button', { name: /Fictional Alpha/ })).toHaveCount(0);
   const origin = new URL(page.url()).origin;
   expect(requests.length).toBeGreaterThan(3);
-  expect(requests.every(({ url, method, body }) => {
-    if (url.startsWith('blob:')) return true;
+  const unexpected = requests.filter(({ url, method, body }) => {
+    if (url.startsWith('blob:')) return false;
     const target = new URL(url);
-    return target.origin === origin && !target.search && method === 'GET' && body === null &&
+    return !(target.origin === origin && !target.search && method === 'GET' && body === null &&
       (target.pathname === '/' || target.pathname === '/pricing/manifest.json' ||
         /^\/pricing\/catalogue-[a-f0-9]{64}\.json$/.test(target.pathname) || target.pathname.startsWith('/assets/') ||
-        browserIcons.has(target.pathname));
-  })).toBe(true);
+        browserIcons.has(target.pathname)));
+  }).map(({ url, method, body }) => {
+    const target = new URL(url);
+    return { origin: target.origin, path: target.pathname, method, hasBody: body !== null };
+  });
+  expect(unexpected).toEqual([]);
 });
 
 test('mobile reflow, keyboard drafts and accessible overview', async ({ page }) => {

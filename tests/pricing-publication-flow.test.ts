@@ -1,7 +1,7 @@
 import { generateKeyPairSync } from 'node:crypto';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { git } from '../scripts/pricing-candidate';
-import { publishPricing } from '../scripts/publish-pricing';
+import { publishPricing, smokePricingApp } from '../scripts/publish-pricing';
 
 vi.mock('../scripts/pricing-candidate', async original => ({
   ...await original<typeof import('../scripts/pricing-candidate')>(),
@@ -25,6 +25,7 @@ const effectiveRules = [
   { type: 'required_status_checks', parameters: { strict_required_status_checks_policy: true,
     required_status_checks: [{ context: 'checks', integration_id: 15368 }] } },
 ];
+const expectedGrant = { contents: 'write', pull_requests: 'write', actions: 'read', metadata: 'read' };
 
 type Options = { open?: boolean; unchanged?: boolean; stale?: boolean; failed?: boolean; missingChecks?: boolean; mergeRejected?: boolean };
 
@@ -112,10 +113,90 @@ function rehearsal(options: Options = {}) {
 beforeEach(() => {
   vi.stubEnv('GITHUB_REPOSITORY', repo);
   vi.stubEnv('GITHUB_REF', 'refs/heads/main');
+  vi.stubEnv('GITHUB_SHA', base);
   vi.stubEnv('GITHUB_ACTIONS', 'false');
   vi.stubEnv('GITHUB_STEP_SUMMARY', '');
   vi.stubEnv('STUDIO_PRICING_APP_ID', '1');
   vi.stubEnv('STUDIO_PRICING_APP_PRIVATE_KEY', signingKey);
+});
+
+describe('main-only GitHub App authentication smoke', () => {
+  function scopeFixture(total: number, selection = 'selected', permissions = expectedGrant) {
+    const mutations: string[] = [];
+    const metadataFixture = 'fictional-metadata-grant';
+    const writerFixture = 'fictional-publisher-grant';
+    vi.mocked(git).mockReturnValue(base);
+    const request = vi.fn<typeof fetch>(async (input, options) => {
+      const url = new URL(String(input));
+      const path = url.pathname.replace('/repos/' + repo, '');
+      const method = options?.method ?? 'GET';
+      const authorization = new Headers(options?.headers).get('Authorization');
+      if (method !== 'GET') mutations.push(method + ' ' + path);
+      if (path === '/app') return Response.json({ slug: 'fictional-pricing' });
+      if (path === '/installation' && method === 'GET') {
+        return Response.json({ id: 2, repository_selection: selection, permissions });
+      }
+      if (path === '/app/installations/2/access_tokens') {
+        const required = JSON.parse(String(options?.body));
+        if (required.permissions.metadata === 'read') {
+          expect(required).toEqual({ permissions: { metadata: 'read' } });
+          return Response.json({ token: metadataFixture, permissions: { metadata: 'read' } });
+        }
+        expect(required.repositories).toEqual(['ai-economics-studio']);
+        return Response.json({ token: writerFixture, permissions: expectedGrant });
+      }
+      if (path === '/installation/repositories') {
+        expect(authorization).toBe('Bearer ' + metadataFixture);
+        return Response.json({ total_count: total, repositories: [{ full_name: repo }] });
+      }
+      if (path === '/installation/token' && method === 'DELETE') return new Response(null, { status: 204 });
+      expect(authorization).toBe('Bearer ' + writerFixture);
+      if (path === '/git/ref/heads/main') return Response.json({ object: { sha: base } });
+      if (path === '/rules/branches/main') return Response.json(effectiveRules);
+      if (path === '/pulls') return Response.json([]);
+      if (path === '/actions/workflows/ci.yml') return Response.json({ path: '.github/workflows/ci.yml', state: 'active' });
+      return new Response(null, { status: 404 });
+    });
+    vi.stubGlobal('fetch', request);
+    return { mutations, request, metadataFixture, writerFixture };
+  }
+
+  it('confirms the whole installation and required read APIs with no repo mutations or credential output', async () => {
+    const fixture = scopeFixture(1);
+    const output = vi.spyOn(console, 'log').mockImplementation(() => {});
+    try {
+      await smokePricingApp();
+      expect(fixture.mutations).toEqual([
+        'POST /app/installations/2/access_tokens', 'DELETE /installation/token',
+        'POST /app/installations/2/access_tokens', 'DELETE /installation/token',
+      ]);
+      expect(output.mock.calls.flat().join(' ')).toContain('only, with Contents write');
+      expect(output.mock.calls.flat().join(' ')).not.toContain(fixture.writerFixture);
+      expect(output.mock.calls.flat().join(' ')).not.toContain(fixture.metadataFixture);
+    } finally { output.mockRestore(); }
+  });
+
+  it('rejects a second installed repository even when a token could be narrowed to Studio', async () => {
+    const fixture = scopeFixture(2);
+    await expect(smokePricingApp()).rejects.toThrow('only the Studio repository');
+    expect(fixture.mutations).toEqual(['POST /app/installations/2/access_tokens', 'DELETE /installation/token']);
+  });
+
+  it('fails before minting operational tokens for an all-repo installation or extra permissions', async () => {
+    const selection = scopeFixture(1, 'all');
+    await expect(smokePricingApp()).rejects.toThrow('selected repositories only');
+    expect(selection.mutations).toEqual([]);
+    const permissions = scopeFixture(1, 'selected', { ...expectedGrant, issues: 'write' } as typeof expectedGrant);
+    await expect(smokePricingApp()).rejects.toThrow('permissions do not match');
+    expect(permissions.mutations).toEqual([]);
+  });
+
+  it('refuses to read credentials on a feature ref', async () => {
+    const fixture = scopeFixture(1);
+    vi.stubEnv('GITHUB_REF', 'refs/heads/release/fixture');
+    await expect(smokePricingApp()).rejects.toThrow('main workflow checkout');
+    expect(fixture.request).not.toHaveBeenCalled();
+  });
 });
 
 afterEach(() => {

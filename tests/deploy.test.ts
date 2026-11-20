@@ -134,10 +134,29 @@ describe('public deployment verification', () => {
     const icon = new Uint8Array([0x89, 0x50, 0x4e, 0x47, 0x00]);
     const path = '/brand/favicon-32.png';
     const expected = new Map([[path, icon]]);
-    const request = vi.fn<typeof fetch>().mockResolvedValueOnce(new Response(icon));
+    const headers = { 'content-type': 'image/png' };
+    const request = vi.fn<typeof fetch>().mockResolvedValueOnce(new Response(icon, { headers }));
     await expect(verifyPublishedAssets(expected, request)).resolves.toBeUndefined();
-    request.mockResolvedValueOnce(new Response(new Uint8Array([0x88, 0x50, 0x4e, 0x47, 0x00])));
+    request.mockResolvedValueOnce(new Response(new Uint8Array([0x88, 0x50, 0x4e, 0x47, 0x00]), { headers }));
     await expect(verifyPublishedAssets(expected, request)).rejects.toThrow('does not match the build');
+  });
+
+  it('rejects exact JavaScript bytes incorrectly advertised as HTML', async () => {
+    const path = '/bundles/v2/index-HASH.js';
+    const code = 'export const example = true;';
+    const request = vi.fn<typeof fetch>().mockResolvedValueOnce(new Response(code, { headers: { 'content-type': 'text/html' } }));
+    await expect(verifyPublishedAssets(new Map([[path, code]]), request))
+      .rejects.toThrow(/Unexpected asset MIME type.*HTTP 200, content-type=text\/html/);
+  });
+
+  it('identifies a cached fallback by digest and shell equality without logging its contents', async () => {
+    const shell = '<!doctype html><div id="root">fixture-private-marker</div>';
+    const path = '/bundles/v2/index-HASH.js';
+    const request = vi.fn<typeof fetch>()
+      .mockResolvedValueOnce(new Response(shell, { headers: { 'content-type': 'text/html' } }))
+      .mockResolvedValueOnce(new Response(shell, { headers: { 'content-type': 'text/html', 'cf-cache-status': 'HIT', 'cf-ray': 'test-IAD' } }));
+    await expect(verifyPublishedAssets(new Map([['/', shell], [path, 'export {}']]), request)).rejects.toThrow(
+      /cf-cache-status=HIT, cf-ray=test-IAD; expected .+ HTML SHA-256 [a-f0-9]{16}, matches the application shell/);
   });
 
   it('requires the canonical receipt bytes and diagnoses a stale response without logging content', async () => {

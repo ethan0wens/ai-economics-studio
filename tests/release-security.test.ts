@@ -43,6 +43,7 @@ type Overrides = {
   cache?: string;
   catalogue?: string;
   receipt?: string;
+  missingBundle?: Response;
 };
 function fixture(options: Overrides = {}) {
   return vi.fn<typeof fetch>(async input => {
@@ -58,6 +59,7 @@ function fixture(options: Overrides = {}) {
     } }, { headers: { 'x-content-type-options': 'nosniff', 'cache-control': 'no-cache' } });
     if (url.pathname.startsWith('/pricing/catalogue-')) return options.catalogueMissing
       ? new Response(null, { status: 404 }) : new Response(options.catalogue ?? raw, { headers: immutable });
+    if (url.pathname === '/bundles/v2/studio-missing-probe.js') return options.missingBundle ?? new Response(null, { status: 404 });
     if (url.pathname.endsWith('.js')) return new Response('', { headers: {
       ...immutable, 'cache-control': options.cache ?? immutable['cache-control'], 'content-type': options.mime ?? 'text/javascript',
     } });
@@ -140,6 +142,21 @@ describe('preview delivery', () => {
 });
 
 describe('strict public release', () => {
+  it('proves the versioned bundle path returns a real 404 for missing modules without immutable caching', async () => {
+    const html = productionHtml.replaceAll('/assets/', '/bundles/v2/');
+    const http = (url: URL) => Response.redirect(new URL(url.pathname + url.search, productionOrigin), 301);
+    await expect(verifyPublicSecurity(productionOrigin, strict, fixture({ html, http }))).resolves.toMatchObject({
+      bundleResponses: [
+        { path: '/bundles/v2/index-Abcd1234.js', status: 200, mime: 'text/javascript' },
+        { path: '/bundles/v2/index-QWER5678.css', status: 200, mime: 'text/css' },
+      ],
+    });
+    for (const missingBundle of [new Response(html), new Response(null, { status: 404, headers: immutable })]) {
+      await expect(verifyPublicSecurity(productionOrigin, strict, fixture({ html, http, missingBundle })))
+        .rejects.toThrow('Missing bundle must return a 404 without immutable caching');
+    }
+  });
+
   it('rejects the preview hostname before probing even with an otherwise valid response', async () => {
     const request = fixture();
     await expect(verifyPublicSecurity(previewOrigin, strict, request))

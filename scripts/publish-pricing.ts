@@ -81,22 +81,95 @@ export function assertOwnedPull(pull: Pull, bot: string, expectedHead?: string) 
   }
 }
 
-async function install(api: ReturnType<typeof github>) {
+const publisherPermissions = { contents: 'write', pull_requests: 'write', actions: 'read' } as const;
+type AppToken = { token: string; permissions?: Record<string, string> };
+
+async function appInstallation(api: ReturnType<typeof github>) {
   const { STUDIO_PRICING_APP_ID: id, STUDIO_PRICING_APP_PRIVATE_KEY: key } = process.env;
   if (!id || !/^\d+$/.test(id) || !key) throw new Error('Configure STUDIO_PRICING_APP_ID and STUDIO_PRICING_APP_PRIVATE_KEY for the pricing-publisher environment.');
   const jwtPart = (data: object) => Buffer.from(JSON.stringify(data)).toString('base64url');
   const now = Math.floor(Date.now() / 1000);
   const unsigned = jwtPart({ alg: 'RS256', typ: 'JWT' }) + '.' + jwtPart({ iss: id, iat: now - 30, exp: now + 300 });
-  const jwt = unsigned + '.' + createSign('RSA-SHA256').update(unsigned).sign(key, 'base64url');
+  let jwt: string;
+  try { jwt = unsigned + '.' + createSign('RSA-SHA256').update(unsigned).sign(key, 'base64url'); }
+  catch (error) { throw new Error('Could not sign with the configured pricing App private key.', { cause: error }); }
   const app = await api<{ slug: string }>('/app', jwt);
   if (!/^[a-z0-9-]+$/i.test(app.slug)) throw new Error('Could not identify the pricing GitHub App.');
-  const installation = await api<{ id: number }>(`/repos/${repository}/installation`, jwt);
+  const installation = await api<{ id: number; repository_selection?: string; permissions?: Record<string, string> }>(
+    `/repos/${repository}/installation`, jwt);
   if (!Number.isSafeInteger(installation.id) || installation.id <= 0) throw new Error('The pricing App is not installed on this repository.');
-  const { token } = await api<{ token: string }>(`/app/installations/${installation.id}/access_tokens`, jwt, 'POST',
-    { repositories: [repository.split('/')[1]], permissions: { contents: 'write', pull_requests: 'write', actions: 'read' } });
-  if (!token || /\s/.test(token)) throw new Error('The pricing App did not issue a scoped installation token.');
-  if (process.env.GITHUB_ACTIONS === 'true') console.log('::add-mask::' + token);
-  return { token, bot: app.slug + '[bot]' };
+  return {
+    installation, bot: app.slug + '[bot]',
+    async mint(permissions: Record<string, string>, scoped = true) {
+      const grant = await api<AppToken>(`/app/installations/${installation.id}/access_tokens`, jwt, 'POST',
+        { ...(scoped && { repositories: [repository.split('/')[1]] }), permissions });
+      if (!grant.token || /\s/.test(grant.token)) throw new Error('The pricing App did not issue a scoped installation token.');
+      return grant;
+    },
+  };
+}
+
+async function revokeAppToken(api: ReturnType<typeof github>, token: string) {
+  try { await api('/installation/token', token, 'DELETE'); }
+  catch { console.warn('The short-lived GitHub App token could not be revoked and will expire automatically.'); }
+}
+
+function assertPermissions(actual: Record<string, string> | undefined, expected: Record<string, string>) {
+  const allowed: Record<string, string> = { ...expected, metadata: 'read' };
+  if (!actual || Object.entries(expected).some(([key, value]) => actual[key] !== value) ||
+    Object.entries(actual).some(([key, value]) => !Object.hasOwn(allowed, key) || allowed[key] !== value)) {
+    throw new Error('GitHub App permissions do not match the checked pricing publisher permissions.');
+  }
+}
+
+export async function withVerifiedPricingApp<T>(operation: (app: { api: ReturnType<typeof github>; token: string; bot: string }) => Promise<T>) {
+  if (process.env.GITHUB_REPOSITORY !== repository || process.env.GITHUB_REF !== checkedBaseRef ||
+    !sha.test(process.env.GITHUB_SHA ?? '') || git(['rev-parse', 'HEAD']) !== process.env.GITHUB_SHA) {
+    throw new Error('Pricing App verification requires the exact main workflow checkout for this repository.');
+  }
+  const api = github();
+  const { installation, bot, mint } = await appInstallation(api);
+  if (installation.repository_selection !== 'selected') throw new Error('The pricing App must be installed on selected repositories only.');
+  assertPermissions(installation.permissions, publisherPermissions);
+
+  // Omit the repositories constraint to check the whole installation with a metadata-only token.
+  const metadata = await mint({ metadata: 'read' }, false);
+  try {
+    assertPermissions(metadata.permissions, { metadata: 'read' });
+    const installed = await api<{ total_count: number; repositories: Array<{ full_name: string }> }>(
+      '/installation/repositories?per_page=2', metadata.token);
+    if (installed.total_count !== 1 || installed.repositories.length !== 1 || installed.repositories[0]?.full_name !== repository) {
+      throw new Error('The pricing App installation must contain only the Studio repository.');
+    }
+  } finally {
+    await revokeAppToken(api, metadata.token);
+  }
+
+  const grant = await mint(publisherPermissions);
+  try {
+    assertPermissions(grant.permissions, publisherPermissions);
+    const repo = `/repos/${repository}`;
+    const [main, rules, pulls, workflow] = await Promise.all([
+      api<{ object: { sha: string } }>(`${repo}/git/ref/heads/main`, grant.token),
+      api<Rules>(`${repo}/rules/branches/main`, grant.token),
+      api<Pull[]>(`${repo}/pulls?state=open&base=main&per_page=1`, grant.token),
+      api<{ path: string; state: string }>(`${repo}/actions/workflows/ci.yml`, grant.token),
+    ]);
+    if (main.object.sha !== process.env.GITHUB_SHA || !Array.isArray(pulls) || workflow.path !== '.github/workflows/ci.yml' ||
+      workflow.state !== 'active') throw new Error('The App did not verify the current main ref, pull requests and active PR checks workflow.');
+    assertProtectedMain(rules);
+    return await operation({ api, token: grant.token, bot });
+  } finally {
+    await revokeAppToken(api, grant.token);
+  }
+}
+
+export async function smokePricingApp() {
+  await withVerifiedPricingApp(async ({ bot }) => {
+    const message = `Verified ${bot} on ${repository} only, with Contents write, Pull requests write and Actions read. The current protected main ref and required workflow APIs are accessible.`;
+    console.log(process.env.GITHUB_ACTIONS === 'true' ? `::notice title=GitHub pricing App authentication::${message}` : message);
+    if (process.env.GITHUB_STEP_SUMMARY) await appendFile(process.env.GITHUB_STEP_SUMMARY, message + '\n');
+  });
 }
 
 class Superseded extends Error {}
@@ -112,7 +185,8 @@ export async function publishPricing(noChange: boolean, wait = () => pause(20_00
   if (paths.length) assertPricingIndex(paths);
 
   const api = github();
-  const { token, bot } = await install(api);
+  const { mint, bot } = await appInstallation(api);
+  const { token } = await mint(publisherPermissions);
   const repo = `/repos/${repository}`;
   const remote = `https://github.com/${repository}.git`;
   const gitEnv = { ...process.env, STUDIO_PRICING_APP_PRIVATE_KEY: undefined, GIT_TERMINAL_PROMPT: '0',
@@ -243,13 +317,15 @@ export async function publishPricing(noChange: boolean, wait = () => pause(20_00
     console.log(error.message);
     if (process.env.GITHUB_STEP_SUMMARY) await appendFile(process.env.GITHUB_STEP_SUMMARY, error.message + '\n');
   } finally {
-    try { await api('/installation/token', token, 'DELETE'); }
-    catch { console.warn('The short-lived GitHub App token could not be revoked and will expire automatically.'); }
+    await revokeAppToken(api, token);
   }
 }
 
 if (process.argv[1] && pathToFileURL(process.argv[1]).href === import.meta.url) {
-  try { await publishPricing(process.argv[2] === '--no-change'); }
+  try {
+    if (process.argv[2] === '--verify-app') await smokePricingApp();
+    else await publishPricing(process.argv[2] === '--no-change');
+  }
   catch (error) {
     const message = error instanceof Error ? error.message : String(error);
     console.error(message);

@@ -40,10 +40,10 @@ type Promotion = {
   previous: ActiveWorker;
   upload: () => string;
   current: () => Promise<ActiveWorker>;
-  verify: () => Promise<void>;
+  verify: (candidate: ActiveWorker) => Promise<void>;
   persist: () => void;
   restore: (version: string) => Promise<void>;
-  verifyRestore: () => Promise<void>;
+  verifyRestore: (restored: ActiveWorker) => Promise<void>;
   pause?: () => Promise<void>;
 };
 
@@ -67,7 +67,7 @@ export async function promoteWorker(operations: Promotion) {
   try {
     const version = operations.upload();
     candidate = await waitForVersion(operations, version, operations.previous);
-    await operations.verify();
+    await operations.verify(candidate);
     const active = await operations.current();
     if (active.deployment !== candidate.deployment || active.version !== candidate.version) {
       throw new Error(`The active Worker deployment changed during verification. Expected ${candidate.deployment}, observed ${active.deployment}.`);
@@ -82,7 +82,7 @@ export async function promoteWorker(operations: Promotion) {
     try {
       await operations.restore(operations.previous.version);
       const restored = await waitForVersion(operations, operations.previous.version, candidate);
-      await operations.verifyRestore();
+      await operations.verifyRestore(restored);
       const verified = await operations.current();
       if (verified.deployment !== restored.deployment || verified.version !== restored.version) {
         throw new Error('The active Worker deployment changed while verifying restoration.', { cause: reason });

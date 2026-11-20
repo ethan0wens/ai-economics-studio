@@ -1,6 +1,6 @@
 import { readFile } from 'node:fs/promises';
 import { describe, expect, it, vi } from 'vitest';
-import { verifyPublishedAssets, verifyWorker } from '../scripts/deploy';
+import { EdgeReleasePending, verifyPublishedAssets, verifyWorker, waitForStableDelivery } from '../scripts/deploy';
 import { workerReleases } from '../scripts/worker-release';
 
 const account = 'a'.repeat(32);
@@ -166,5 +166,40 @@ describe('public deployment verification', () => {
     const result = verifyPublishedAssets(new Map([[path, '{"release":"current"}']]), request);
     await expect(result).rejects.toThrow(/^Live .*expected SHA-256 [a-f0-9]{12}, received [a-f0-9]{12}/);
     expect(String(request.mock.calls[0]?.[0])).toBe('https://studio.ethan0wens.tech' + path);
+  });
+
+  it('distinguishes known preceding files and temporary bundle misses from an invalid candidate', async () => {
+    const path = '/bundles/v2/index-current.css';
+    const prior = new Map([['/', 'verified prior shell']]);
+    const expected = new Map([[path, 'body { color: black }']]);
+    const request = vi.fn<typeof fetch>()
+      .mockResolvedValueOnce(new Response(prior.get('/'), { headers: { 'content-type': 'text/html' } }))
+      .mockResolvedValueOnce(new Response(null, { status: 404 }))
+      .mockResolvedValueOnce(new Response('unknown HTML', { headers: { 'content-type': 'text/html' } }));
+    await expect(verifyPublishedAssets(expected, request, prior)).rejects.toBeInstanceOf(EdgeReleasePending);
+    await expect(verifyPublishedAssets(expected, request, prior)).rejects.toBeInstanceOf(EdgeReleasePending);
+    await expect(verifyPublishedAssets(expected, request, prior)).rejects.not.toBeInstanceOf(EdgeReleasePending);
+  });
+});
+
+describe('publication convergence window', () => {
+  it('bounds preceding-release retries to 13 sweeps within the existing delay budget', async () => {
+    const probe = vi.fn(async () => { throw new EdgeReleasePending('known old worker'); });
+    const pause = vi.fn(async () => {});
+    const observePending = vi.fn();
+    await expect(waitForStableDelivery(probe, { pause, observePending })).rejects.toThrow(/13 checks.*known old worker/);
+    expect(probe).toHaveBeenCalledTimes(13);
+    expect(pause).toHaveBeenCalledTimes(12);
+    expect(observePending).toHaveBeenCalledTimes(1);
+  });
+
+  it('stops immediately for an invalid candidate or a lost Worker deployment', async () => {
+    const pause = vi.fn(async () => {});
+    const check = vi.fn(async () => { throw new Error('invalid CSP'); });
+    await expect(waitForStableDelivery(check, { pause })).rejects.toThrow('invalid CSP');
+    expect(pause).not.toHaveBeenCalled();
+    const beforeAttempt = vi.fn(async () => { throw new Error('deployment changed'); });
+    await expect(waitForStableDelivery(check, { beforeAttempt, pause })).rejects.toThrow('deployment changed');
+    expect(check).toHaveBeenCalledOnce();
   });
 });

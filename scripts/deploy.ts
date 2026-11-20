@@ -7,7 +7,7 @@ import { parseConfigFileTextToJson } from 'typescript';
 import { catalogueFilename, catalogueSchema, manifestSchema, maxCatalogueBytes, maxManifestBytes } from '../src/catalogue';
 import { catalogueCoverage } from '../src/coverage';
 import { maintenanceHealthSchema, releaseHealthSchema } from '../src/catalogue-health';
-import { assetResponseSummary, documentAssetPaths, parsePublishedReceipt, productionHostname, productionOrigin, reportSecurityVerification, verifyAssetMime, verifyPublicSecurity, verifyRetiredPreview } from './security-http';
+import { assetResponseSummary, documentAssetPaths, missingBundleProbe, parsePublishedReceipt, productionHostname, productionOrigin, reportSecurityVerification, verifyAssetMime, verifyPublicSecurity, verifyRetiredPreview } from './security-http';
 import { buildAsset, listStaticFiles } from './static-site';
 import { readResponseBytes } from '../src/untrusted-data';
 import { promoteWorker, workerReleases, type ActiveWorker } from './worker-release';
@@ -64,32 +64,121 @@ export async function verifyWorker(configText: string, accountId?: string, token
 type AssetContents = string | Uint8Array;
 const manifestPath = '/pricing/manifest.json';
 const healthPath = '/pricing/health.json';
+const noticesPath = '/third-party-notices.txt';
 
-export async function verifyPublishedAssets(expected: ReadonlyMap<string, AssetContents>, request = fetch) {
+type ReleaseFiles = ReadonlyMap<string, AssetContents>;
+type DeliveryTarget = { application: string; catalogueId: string; assets: ReleaseFiles };
+
+export class EdgeReleasePending extends Error {}
+
+function previousBytes(files: ReleaseFiles | undefined, path: string) {
+  const value = files?.get(path);
+  return value === undefined ? undefined : Buffer.from(value);
+}
+
+function bundlePath(path: string) {
+  return path.startsWith('/') && (buildAsset.test(path.slice(1)) ||
+    /^\/assets\/[a-z0-9][a-z0-9._-]*\.(?:js|css)$/i.test(path));
+}
+
+async function verifyResponse(path: string, response: Response, contents: AssetContents, expected: ReleaseFiles, preceding?: ReleaseFiles) {
+  const bytes = Buffer.from(contents);
+  const prior = previousBytes(preceding, path);
+  const previousShell = previousBytes(preceding, '/');
+  const isHtml = /^text\/html\b/i.test(response.headers.get('content-type') ?? '');
+  const max = path === healthPath ? 1_000_000 : Math.max(bytes.length, prior?.length ?? 0, isHtml ? 128_000 : 0) + 256;
+  const observed = response.status === 200 && await readResponseBytes(response, max, `Published ${path}`)
+    .catch(() => false as const);
+  if (response.status !== 200) await response.body?.cancel();
+  const summary = assetResponseSummary(response);
+  const digest = (value: Uint8Array) => createHash('sha256').update(value).digest('hex').slice(0, 12);
+  if (observed && bytes.equals(observed)) {
+    // A matching body with the wrong MIME is an invalid candidate response, even during a rollout.
+    verifyAssetMime(path, response, observed, previousBytes(expected, '/'));
+    return Buffer.from(observed);
+  }
+  const rolloutFile = bundlePath(path) || path === noticesPath || /^\/pricing\/catalogue-[a-f0-9]{64}\.json$/.test(path);
+  if (observed && (prior?.equals(observed) || rolloutFile && !prior && isHtml && previousShell?.equals(observed))) {
+    throw new EdgeReleasePending(`The preceding release was served for ${path} (${summary}, SHA-256 ${digest(observed)}).`);
+  }
+  if (preceding && !prior && response.status === 404 && rolloutFile) {
+    throw new EdgeReleasePending(`The current edge has not exposed the new file ${path} (${summary}).`);
+  }
+  if (response.status === 200) verifyAssetMime(path, response, observed || undefined, previousBytes(expected, '/'));
+  const detail = observed ? `; expected SHA-256 ${digest(bytes)}, received ${digest(observed)}` : '';
+  throw new Error(`Live ${path} does not match the build (${summary}${detail}).`);
+}
+
+export async function verifyPublishedAssets(expected: ReleaseFiles, request = fetch, preceding?: ReleaseFiles, identity = true) {
   const checks = await Promise.allSettled([...expected].map(async ([path, contents]) => {
     const response = await request(new URL(path, site), {
       cache: 'no-store',
       credentials: 'omit',
-      headers: { 'Cache-Control': 'no-cache', 'Accept-Encoding': 'identity' },
+      headers: { 'Cache-Control': 'no-cache', ...(identity ? { 'Accept-Encoding': 'identity' } : {}) },
       redirect: 'error',
       signal: AbortSignal.timeout(10_000),
     });
-    const bytes = typeof contents === 'string' ? Buffer.from(contents, 'utf8') : Buffer.from(contents);
-    const isHtml = /^text\/html\b/i.test(response.headers.get('content-type') ?? '');
-    const max = path === healthPath ? 1_000_000 : isHtml ? Math.max(bytes.length, 128_000) : bytes.length;
-    const observed = response.status === 200 && await readResponseBytes(response, max, `Published ${path}`)
-      .catch(() => false as const);
-    if (response.status === 200) {
-      const shell = expected.get('/');
-      verifyAssetMime(path, response, observed || undefined, typeof shell === 'string' ? Buffer.from(shell) : shell);
-    } else await response.body?.cancel();
-    if (observed && bytes.equals(observed)) return;
-    const digest = (value: Uint8Array) => createHash('sha256').update(value).digest('hex').slice(0, 12);
-    const detail = observed ? `; expected SHA-256 ${digest(bytes)}, received ${digest(observed)}` : '';
-    throw new Error(`Live ${path} does not match the build (${assetResponseSummary(response)}${detail}).`);
+    await verifyResponse(path, response, contents, expected, preceding);
   }));
   const failed = checks.filter(result => result.status === 'rejected');
-  if (failed.length) throw new Error(failed.map(({ reason }) => reason instanceof Error ? reason.message : String(reason)).join(' '));
+  if (failed.length) {
+    const reason = failed.map(({ reason }) => reason instanceof Error ? reason.message : String(reason)).join(' ');
+    throw failed.every(({ reason }) => reason instanceof EdgeReleasePending) ? new EdgeReleasePending(reason) : new Error(reason);
+  }
+}
+
+export async function verifyReleaseDelivery(target: DeliveryTarget, preceding: ReleaseFiles, identity: boolean, request = fetch) {
+  const checked = new Set<string>();
+  const observation = await verifyPublicSecurity(site, {
+    policy: 'public', expectedCatalogueId: target.catalogueId, expectedApplication: target.application,
+  }, async (input, init) => {
+    const url = new URL(String(input));
+    if (url.origin !== site) return request(input, init);
+    const path = url.pathname === '/documentation' ? '/' : url.pathname;
+    const headers = new Headers(init?.headers);
+    if (identity) headers.set('Accept-Encoding', 'identity');
+    const response = await request(input, { ...init, headers });
+    const expected = target.assets.get(path);
+    if (expected !== undefined) {
+      const bytes = await verifyResponse(path, response, expected, target.assets, preceding);
+      checked.add(path);
+      return new Response(bytes, { status: response.status, headers: response.headers });
+    }
+    if (path === missingBundleProbe && response.status === 200 && /^text\/html\b/i.test(response.headers.get('content-type') ?? '')) {
+      const bytes = await readResponseBytes(response, 128_000, 'Missing-bundle HTML');
+      if (previousBytes(preceding, '/')?.equals(bytes)) {
+        throw new EdgeReleasePending(`The preceding application shell was served for the missing bundle probe (${assetResponseSummary(response)}).`);
+      }
+      return new Response(Buffer.from(bytes), { status: response.status, headers: response.headers });
+    }
+    return response;
+  });
+  const outstanding = new Map([...target.assets].filter(([path]) => !checked.has(path)));
+  await verifyPublishedAssets(outstanding, request, preceding, identity);
+  return observation;
+}
+
+export async function waitForStableDelivery<T>(check: (identity: boolean) => Promise<T>, options: {
+  beforeAttempt?: () => Promise<void>; observePending?: (message: string) => void; pause?: () => Promise<void>;
+} = {}) {
+  let identityVerified = false;
+  let pending: EdgeReleasePending | undefined;
+  for (let attempt = 1; attempt <= 13; attempt++) {
+    await options.beforeAttempt?.();
+    try {
+      const result = await check(!identityVerified);
+      if (identityVerified) return result;
+      identityVerified = true;
+      pending = undefined;
+    } catch (error) {
+      if (!(error instanceof EdgeReleasePending)) throw error;
+      if (!pending) options.observePending?.(error.message);
+      pending = error;
+      identityVerified = false;
+    }
+    if (attempt < 13) await (options.pause?.() ?? delay(5_000));
+  }
+  throw new Error(`Public delivery did not converge at ${site} within 13 checks.${pending ? ' ' + pending.message : ''}`, { cause: pending });
 }
 
 const cleanEnv = { ...process.env, CLOUDFLARE_ACCOUNT_ID: undefined, CLOUDFLARE_API_TOKEN: undefined,
@@ -138,7 +227,7 @@ async function builtAssets(previous: ActiveWorker, previousAssets: Awaited<Retur
   if (!catalogueId) throw new Error('Production deployment requires a validated catalogue.');
   const html = await readAsset('/index.html');
   const assets = new Map<string, AssetContents>([['/', html], [manifestPath, raw]]);
-  assets.set('/third-party-notices.txt', await readAsset('/third-party-notices.txt'));
+  assets.set(noticesPath, await readAsset(noticesPath));
   const bundles = (await listStaticFiles('dist'))
     .filter(path => buildAsset.test(path) && /\.(?:js|css)$/.test(path)).map(path => '/' + path);
   for (const path of new Set([...documentAssetPaths(html).assets, ...bundles])) {
@@ -190,20 +279,19 @@ function report(status: 'notice' | 'error', message: string) {
   else console.log(message);
 }
 
-async function waitForPublishedAssets(assets: ReadonlyMap<string, AssetContents>, release: 'candidate' | 'rollback target') {
-  for (let attempt = 1; ; attempt++) {
-    try {
-      await verifyPublishedAssets(assets);
-      report('notice', `Application and pricing assets match the ${release} at ${site}`);
-      return;
-    } catch (error) {
-      if (attempt === 1) report('notice', `First public response did not verify for the ${release}. ${error instanceof Error ? error.message : String(error)}`);
-      if (attempt === 13) {
-        throw new Error(`Post-deploy verification failed for ${site}: ${error instanceof Error ? error.message : String(error)}`, { cause: error });
+async function verifyStableRelease(target: DeliveryTarget, preceding: ReleaseFiles, version: ActiveWorker,
+  activeWorker: () => Promise<ActiveWorker>, label: string) {
+  const observation = await waitForStableDelivery(identity => verifyReleaseDelivery(target, preceding, identity), {
+    async beforeAttempt() {
+      const active = await activeWorker();
+      if (active.deployment !== version.deployment || active.version !== version.version) {
+        throw new Error(`The Worker deployment changed while verifying the ${label}.`);
       }
-      await delay(5_000);
-    }
-  }
+    },
+    observePending: message => report('notice', `Public delivery is still converging for the ${label}. ${message}`),
+  });
+  report('notice', `MIME, exact bytes and security checks match the ${label} in consecutive identity and default fetches at ${site}`);
+  await reportSecurityVerification(observation);
 }
 
 if (process.argv[1] && pathToFileURL(process.argv[1]).href === import.meta.url) {
@@ -237,11 +325,8 @@ if (process.argv[1] && pathToFileURL(process.argv[1]).href === import.meta.url) 
         return version;
       },
       current: worker.current,
-      async verify() {
-        await waitForPublishedAssets(assets, 'candidate');
-        await reportSecurityVerification(await verifyPublicSecurity(site, {
-          policy: 'public', expectedCatalogueId: catalogueId, expectedApplication: application,
-        }));
+      async verify(candidate) {
+        await verifyStableRelease({ application, catalogueId, assets }, previousAssets.assets, candidate, worker.current, 'candidate');
         liveBrowser(catalogueId);
         if (legacyRetired) {
           await worker.confirmPreviewDisabled();
@@ -251,11 +336,8 @@ if (process.argv[1] && pathToFileURL(process.argv[1]).href === import.meta.url) 
       },
       persist() { if (process.env.GITHUB_ACTIONS === 'true') assertUpstream(application); },
       restore: worker.restore,
-      async verifyRestore() {
-        await waitForPublishedAssets(previousAssets.assets, 'rollback target');
-        await reportSecurityVerification(await verifyPublicSecurity(site, {
-          policy: 'public', expectedCatalogueId: previousAssets.catalogueId, expectedApplication: previousAssets.application,
-        }));
+      async verifyRestore(restored) {
+        await verifyStableRelease(previousAssets, assets, restored, worker.current, 'rollback target');
       },
     });
     report('notice', `Production browser reconciliation passed for application ${application}, catalogue ${catalogueId} at ${site}`);

@@ -1,8 +1,117 @@
+<p><img src="design/brand/economic-signal-lockup.svg" alt="AI Economics Studio Economic Signal brand" width="248"></p>
+
 # AI Economics Studio
 
-AI Economics Studio is a free, independent, Microsoft-first planning tool for modelling hypothetical AI environments and estimating costs. Build an inventory, link agents and shared model deployments, enter usage and agreement assumptions, and export a logical diagram, PDF report or versioned JSON.
+**Before you build AI, build the case.**
 
-## Run locally
+AI Economics Studio is an independent, open-source planning tool for Microsoft-first AI environments. Model the architecture, estimate expenditure, and compare adoption and potential value before implementation.
+
+[Open the Studio](https://studio.ethan0wens.tech) · [User documentation](https://studio.ethan0wens.tech/#/documentation) · [MIT licence](LICENSE)
+
+![Studio home with options to start an environment, import JSON or explore examples](docs/assets/readme/home.png)
+
+## What you can do
+
+| Capability | What it helps you do |
+| --- | --- |
+| Environment Builder | Model platforms, agents, model deployments, supporting resources and licences. Use Guided or Advanced mode on the same environment. |
+| Cost & Value Analysis | See estimated monthly and annualised expenditure using the available verified pricing and your assumptions. |
+| Explore changes | Compare usage, price and adoption assumptions while preserving the accepted figures. |
+| Potential value | Model adoption, time and productivity assumptions separately from expenditure and declared cashable savings. |
+| Environment Review | Inspect the logical architecture, technical fit, evidence gaps and declared controls. |
+| Reports & Export | Download a branded Executive Summary or Full Report PDF. Export editable JSON to keep the workspace. |
+| Pricing Catalogue | Inspect coverage, provenance, currency, units and gaps for the published Microsoft catalogue. |
+
+## A tour of the Studio
+
+<details open>
+<summary><strong>Build an environment and understand its cost</strong></summary>
+
+Start with a guided checklist and see the monthly estimate update as you add information.
+
+![Guided Environment Builder with its steps and the fictional environment estimate](docs/assets/readme/guided-builder.png)
+
+Review the known costs, unresolved inputs and the usage and pricing behind each charge.
+
+![Cost & Value Analysis with monthly expenditure of £450 and annualised expenditure of £5,400](docs/assets/readme/cost-analysis.png)
+
+</details>
+
+<details>
+<summary><strong>Compare changes and model adoption</strong></summary>
+
+Compare alternative adoption levels. Link adoption to a specific workload when you want to see a projected expenditure change.
+
+![Explore changes table comparing lower, accepted and higher adoption cases](docs/assets/readme/explore-changes.png)
+
+Review expected users, gross and realised time, and the economic equivalent. Declare cashable savings separately when you have evidence for them.
+
+![Potential value showing 240 realised hours, a £6,000 monthly economic equivalent and unknown cashable savings](docs/assets/readme/potential-value.png)
+
+</details>
+
+<details>
+<summary><strong>Review the design and share your work</strong></summary>
+
+Inspect the diagram and its object register alongside technical fit and evidence-based controls.
+
+![Environment Review showing an agent, shared model, usage profile and planned control in a logical architecture diagram](docs/assets/readme/environment-review.png)
+
+Select a branded PDF format and save a JSON copy to edit later. Your browser generates both downloads.
+
+![Reports & Export offering Executive Summary and Full Report PDFs and editable workspace JSON](docs/assets/readme/reports-export.png)
+
+</details>
+
+## A fictional business case
+
+The AI Adoption & Business Case example models an internal support assistant. The accepted run-rate uses **pinned fictional rates**. The example leaves implementation and additional operating costs undeclared.
+
+| Input or result | Fictional example |
+| --- | ---: |
+| Target users | 200 |
+| Adoption | 50% |
+| Active users | 100 |
+| Tasks per active user per month | 20 |
+| Minutes saved per task | 12 |
+| Gross time equivalent | 400 hours monthly |
+| Realisation factor | 60% |
+| Realised time equivalent | 240 hours monthly |
+| Hourly economic assumption | £25 |
+| Economic equivalent | £6,000 monthly / £72,000 annualised |
+| Accepted AI expenditure | £450 monthly / £5,400 annualised |
+| Cashable savings | Undeclared |
+
+Economic equivalent expresses the assumed value of productive time. A cashable saving requires a separate declaration. [Walkthrough](https://studio.ethan0wens.tech/#/documentation/example-ai-adoption-business-case) · [Independent reconciliation](docs/technical/03-worked-reconciliations.md#ai-adoption-and-business-case)
+
+## Five editable examples
+
+| Example | What it illustrates |
+| --- | --- |
+| [Basic Foundry Assistant](https://studio.ethan0wens.tech/#/examples/foundry-assistant) | Connect an assistant, usage profile and model deployment. |
+| [Copilot Studio Business Agent](https://studio.ethan0wens.tech/#/examples/copilot-agent) | Declare Copilot credit usage and inspect the evidence behind its pricing. |
+| [Enterprise AI Environment](https://studio.ethan0wens.tech/#/examples/enterprise-ai) | Review agents, deployed models, shared resources, licences and planned controls together. |
+| [Shared Model Deployment](https://studio.ethan0wens.tech/#/examples/shared-deployment) | Allocate a shared deployment charge across agents while counting the commitment once. |
+| [AI Adoption & Business Case](https://studio.ethan0wens.tech/#/examples/ai-adoption-business-case) | Compare expenditure and productivity under separately declared assumptions. |
+
+## How estimates work
+
+The ledger uses verified public retail rates where available. Explicit agreements can override or discount those rates, and forecasts stay separate from current expenditure. Estimates distinguish existing licence spend from incremental spend and allocate shared capacity once. The quantity, billing unit, currency and evidence determine each charge. Unknown costs stay unknown and appear alongside the known subtotal.
+
+Adoption feeds a scenario’s expenditure only when you explicitly link it to a workload. The potential-value estimate uses separate time and realisation inputs. [Pricing and TCO methodology](docs/04-pricing-and-tco.md) · [Technical ledger reference](docs/technical/03-ledger-methodology.md) · [Pricing evidence](SOURCES.md)
+
+## Privacy and hosting
+
+Your browser holds the environment in memory, calculates results and generates reports. The Studio has no accounts, customer-data backend, automatic environment storage or application telemetry. Use JSON export and import to keep an editable copy. Cloudflare serves static assets, and GitHub Actions maintains the Microsoft catalogue separately from browser sessions. [Architecture](docs/technical/01-system-architecture.md) · [Security policy](SECURITY.md)
+
+## Get started
+
+1. Open [the Studio](https://studio.ethan0wens.tech), then load an example or name a new environment.
+2. Add your agents, models and resources in Guided or Advanced mode. Supply usage and check evidence gaps as you go.
+3. Review costs and explore changes. Use Environment Review to inspect the design and its controls.
+4. Download a PDF for sharing and export JSON if you want to keep editing later.
+
+### Run locally
 
 Use Node.js 24 LTS and npm.
 
@@ -11,75 +120,30 @@ npm ci
 npm run dev
 ```
 
-Name an environment on **Home** or preview a fictional example. **Environment Builder** opens in Guided mode, where you can choose platforms, add agents, enter usage and see the estimate update. Advanced opens the same inventory and its settings. **Cost & Value Analysis** shows the estimate first and offers optional workload, price and adoption comparisons. Accept a value plan to model productivity and separate cashable savings. **Environment Review** opens from the sidebar or from **Review your design**. It contains Overview, Architecture, Technical fit and Controls. Use **Reports & Export** for an Executive Summary or Full Report PDF, or to save editable JSON. **Documentation** offers searchable instructions and **Pricing Catalogue** shows the scope and evidence behind the rates. Cloud accounts and credentials are needed for production deployment.
+Run the same validation as the pull request checks.
 
 ```sh
+npm run security:audit
 npm run typecheck
 npm run lint
 npm test
-npm run pricing:validate
-npm run evidence:validate
-npm run docs:validate
 npm run build
 npx playwright install chromium
-npm run test:e2e
+STUDIO_CHECK_PUBLISHED_CATALOGUE=1 npm run test:e2e
 ```
 
-The [Economic Signal brand specification](design/brand/README.md) covers the local logo masters, browser icons, design tokens and PDF treatments.
+The build validates documentation, catalogue data, Microsoft evidence and the production asset policy. See the [capture instructions](docs/assets/readme/README.md) to reproduce the screenshots.
 
-See the [field guide](docs/13-field-guide.md) for configuration inputs, units and requirements. See [source coverage](SOURCES.md) for the pricing coverage matrix, exact Azure mappings, commercial review dates and remaining evidence gaps, and the [operations runbook](docs/12-operations.md) for publishing, incident response and checks.
+## Reference and contributing
 
-The five curated examples are [Basic Foundry Assistant](https://studio.ethan0wens.tech/#/examples/foundry-assistant), [Copilot Studio Business Agent](https://studio.ethan0wens.tech/#/examples/copilot-agent), [Enterprise AI Environment](https://studio.ethan0wens.tech/#/examples/enterprise-ai), [Shared Model Deployment](https://studio.ethan0wens.tech/#/examples/shared-deployment) and [AI Adoption & Business Case](https://studio.ethan0wens.tech/#/documentation/example-ai-adoption-business-case). Each opens as an editable copy with fictional inputs and uses the applied catalogue for retail prices. See the [business-case reconciliation](docs/technical/03-worked-reconciliations.md#ai-adoption-and-business-case) for a reproducible test with fictional rates and the [source traceability matrix](docs/technical/traceability.md) for implementation and regression links.
+- [User guides](https://studio.ethan0wens.tech/#/documentation) and [field guide](docs/13-field-guide.md)
+- [Technical documentation](docs/technical/README.md), [catalogue sources](SOURCES.md) and [operations](docs/12-operations.md)
+- [Contributing](CONTRIBUTING.md), [reporting security issues](SECURITY.md) and [Economic Signal assets](design/brand/README.md)
 
-See the [Stage 2 delivery notes](docs/30-stage-2-ux-delivery.md) for navigation, example reconciliations and documentation maintenance.
-Use the [product language guide](docs/31-product-language.md) when editing the interface, help, documentation or reports.
+## Limitations and independence
 
-See the [licensing and technical evidence guide](docs/18-licensing-and-technical-evidence.md), [enterprise financial reconciliations](docs/19-enterprise-financial-validation.md), [UK licensing review](docs/21-uk-licensing-gap-review.md) and [provisioned sizing and Foundry review](docs/22-ptu-and-foundry-review.md) for current coverage and test results. See [catalogue maintenance](docs/23-maintenance-automation.md) for schedules, source rules and recovery.
+AI Economics Studio is independent of Microsoft. It focuses on Microsoft-first designs and applies the verified public evidence and inputs available to the workspace. Estimates are for planning. They carry no quotation, invoice, licensing certification or compliance certification. Coverage varies by billing dimension, region, eligibility and product. [Supported scope and gaps](docs/16-catalogue-scope-and-maintenance.md) · [Technical limitations](docs/technical/07-limitations.md)
 
-## Technical documentation
+## Licence
 
-Read the [seven-section technical reference](docs/technical/README.md) for architecture, schemas, financial calculations, Microsoft evidence, catalogue maintenance, deployment and testing. The same articles are available in the studio under **Documentation → Technical Documentation**. Start with the [source traceability matrix](docs/technical/traceability.md) for an audit or the [maintenance guidance](docs/technical/maintenance.md) for a contribution.
-
-## Security
-
-Review the [threat model](docs/security/01-threat-model.md), [security verification](docs/security/05-security-verification.md) and [reporting policy](SECURITY.md). Run `npm run security:audit` for dependency checks. The production build includes the static asset security gate.
-
-## Before public release — mandatory security requirements
-
-**The approved production hostname is [studio.ethan0wens.tech](https://studio.ethan0wens.tech). Wider public release is blocked pending the security evidence and owner approval.** The custom-domain delivery check accepts a verified application revision and catalogue SHA-256. Use `npm run release:public` for the separate approval gate. [Custom-domain tracking issue draft](docs/security/public-release-blocker.md) · [Risk register](docs/security/03-risk-register.md) · [Release requirements](docs/security/06-operational-security.md#before-public-release--mandatory-security-requirements)
-
-## Locked architecture
-
-- **UI**: React + TypeScript + Vite, light-first Cloud Professional design system.
-- **Delivery**: Cloudflare **Workers Static Assets** (no runtime Worker script), deployed by GitHub Actions on changes merged to `main`.
-- **Pricing**: public, versioned catalogue; scheduled GitHub Actions discover published rates within reviewed Microsoft product and SKU families. The static inventory includes manual-rate and unsupported configurations. Scheduled Microsoft source reconciliation verifies UK commercial offers and technical evidence independently. The Pricing Catalogue shows the latest published health report. Failed updates preserve the last verified release.
-- **Compute and privacy**: all app state, TCO, validation, diagrams and PDF generation in the user's browser. No login, telemetry, persistent environment storage, data collection, application server or database.
-- **Saving**: users explicitly export/import versioned JSON; no `localStorage`, `sessionStorage`, IndexedDB or automatic cloud saves for environment data.
-- **Financial accuracy**: latest verified published rates by default; user-fixed contract prices, retail percentage discounts and forecast adjustments; never use zero when price is unknown. An unverified cost is visibly **incomplete**.
-- **Workflow**: solution-first Guided builder with a running estimate and an Advanced inventory with no fixed object creation order. Both views support incomplete drafts.
-- **Current scope**: Microsoft Foundry/Foundry Agent Service, Copilot Studio, relevant Microsoft licensing, Azure supporting services and security/governance; future provider-neutral extension points only, not AWS/other provider implementation.
-
-## Product specification
-
-| File | Role |
-|---|---|
-| `AGENTS.md` | Non-negotiable implementation instructions to Codex |
-| `PREREQUISITES.md` | Original handover and Cloudflare/GitHub deployment prerequisites |
-| `docs/01-product-and-scope.md` | Audience, journeys, MVP in/out and honest UX |
-| `docs/02-architecture-and-deployment.md` | Runtime, deployment, price-refresh orchestration, cost and privacy |
-| `docs/03-domain-model.md` | Environment objects, relationships, validation, JSON schema |
-| `docs/04-pricing-and-tco.md` | Pricing precedence, maths, allocation, scenarios and rounding |
-| `docs/05-catalogue-and-evidence.md` | API ingestion, licence curation, compatibility evidence |
-| `docs/06-ui-design.md` | Styling and detailed workflows/screens |
-| `docs/07-governance-and-compatibility.md` | Rules, status and disclaimers |
-| `docs/08-architecture-and-pdf.md` | Logical diagram and browser PDF |
-| `docs/09-acceptance-and-release.md` | Acceptance matrix, CI, security and release gates |
-| `docs/10-delivery-plan.md` | Implementation order and decisions Codex may/not make |
-| `docs/11-references.md` | Authoritative source URLs verified at handover |
-| `fixtures/*` | **Fictional test-only** inputs and expected results, never production catalogue |
-| `design/tokens.json` | Authoritative agreed design tokens |
-| `prompts/*` | Copy-and-paste Codex task text |
-
-## Independence and disclaimers
-
-The product is independent of and not endorsed by Microsoft. All estimates depend on explicit assumptions and published/entered rates, are **not invoices, quotes, licensing advice or compliance certifications**, and must show source provenance and gaps.
+The Studio is available under the [MIT licence](LICENSE). The browser distribution carries [third-party notices](public/third-party-notices.txt), including the licences for its [bundled fonts](src/report-fonts/README.md).

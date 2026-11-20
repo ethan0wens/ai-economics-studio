@@ -15,10 +15,10 @@
    - `CLOUDFLARE_API_TOKEN` as an Actions **secret** (never commit or paste it in a prompt).
    - `CLOUDFLARE_ACCOUNT_ID` as an environment **secret** (the account ID is not inherently a password, but treat it as configuration).
 3. Allow Actions to run; ensure the deployment workflow triggers on pushes to **`main`** and manual dispatch. No deployment on untrusted pull requests; no `pull_request_target` secret exposure.
-4. Enable Actions `contents: write` only for the **price refresh workflow/job** that writes a checked catalogue commit to the repository; keep ordinary build/deploy steps at `contents: read` wherever possible. If branch protection blocks automatic catalogue commits, explicitly adjust the refresh workflow to use an approved bot/PR + approval process; do not bypass protection silently.
+4. Keep the default Actions token read-only. Configure the [dedicated pricing GitHub App](docs/36-protected-pricing-publication.md#one-time-owner-setup) in its own environment.
 5. Confirm the Cloudflare Worker name, account ID reference and enabled Custom Domain. Validate the live TLS certificate and path-preserving HTTPS redirect before deploying. The deployment token needs to read the binding and deploy the existing Worker.
 
-**Important GitHub Actions quirk:** a price refresh commit pushed via the built-in `GITHUB_TOKEN` normally does **not** trigger the separate `push` deployment workflow. The refresh workflow must **build and deploy in that same run**, or invoke a trusted reusable deployment workflow directly. This is a hard acceptance requirement.
+**GitHub Actions behaviour.** A push with the built-in `GITHUB_TOKEN` does not reliably trigger downstream workflows. The pricing App opens and merges a validated PR through the required checks. Its resulting main push triggers the authoritative production deployment.
 
 ## Exactly how to use Codex
 

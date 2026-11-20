@@ -4,3 +4,11 @@ dist/
 playwright-report/
 test-results/
 *.local
+.env
+.env.*
+!.env.example
+*.key
+*.pem
+.DS_Store
+Thumbs.db
+*.log

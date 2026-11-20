@@ -50,7 +50,8 @@ export const documentLocation = (file: string) => new URL(`/docs/technical/${fil
 
 export type TechnicalLink = { href: string; kind: 'internal' | 'implementation' | 'evidence' };
 function implementationPath(path: string) {
-  return /^\/(?:src|scripts|tests|fixtures|catalogue|\.github|docs\/technical\/examples)\/[^?#]+\.(?:tsx?|jsonc?|ya?ml)$/.test(path) ||
+  return path === '/docs/36-protected-pricing-publication.md' ||
+    /^\/(?:src|scripts|tests|fixtures|catalogue|\.github|docs\/technical\/examples)\/[^?#]+\.(?:tsx?|jsonc?|ya?ml)$/.test(path) ||
     /^\/(?:package(?:-lock)?\.json|wrangler\.jsonc|vite\.config\.ts|playwright\.config\.ts|index\.html|public\/_headers|docs\/technical\/(?:index|sources)\.json)$/.test(path);
 }
 

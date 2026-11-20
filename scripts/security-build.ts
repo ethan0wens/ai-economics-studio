@@ -5,7 +5,7 @@ import { catalogueFilename, manifestSchema, maxCatalogueBytes } from '../src/cat
 import { browserIcons, documentAssetPaths, verifySecurityHeaders } from './security-http';
 
 const dist = resolve('dist');
-const allowed = /^(?:_headers|index\.html|assets\/[\w.-]+\.(?:js|css|woff2?|svg|png)|pricing\/(?:manifest|catalogue-[a-f0-9]{64})\.json)$/;
+const allowed = /^(?:_headers|index\.html|third-party-notices\.txt|assets\/[\w.-]+\.(?:js|css|woff2?|svg|png)|pricing\/(?:manifest|catalogue-[a-f0-9]{64})\.json)$/;
 const credentials = /-----BEGIN (?:[A-Z0-9]+ )*PRIVATE KEY-----|\bgh[pousr]_[A-Za-z0-9]{30,}\b|\bgithub_pat_[A-Za-z0-9_]{40,}\b/;
 
 async function files(directory: string): Promise<string[]> {
@@ -20,6 +20,10 @@ async function files(directory: string): Promise<string[]> {
 
 const assets = await files('');
 const present = new Set(assets);
+const notices = await readFile(join(dist, 'third-party-notices.txt'), 'utf8');
+if (notices !== await readFile('public/third-party-notices.txt', 'utf8') || credentials.test(notices)) {
+  throw new Error('The shipped third-party notices differ from the reviewed notices.');
+}
 for (const file of assets) {
   if (!/\.(?:js|json|html)$/.test(file)) continue;
   const contents = await readFile(join(dist, file), 'utf8');

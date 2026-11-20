@@ -128,6 +128,7 @@ async function builtAssets(previous: ActiveWorker, previousAssets: Awaited<Retur
   if (!catalogueId) throw new Error('Production deployment requires a validated catalogue.');
   const html = await readAsset('/index.html');
   const assets = new Map<string, AssetContents>([['/', html], [manifestPath, raw]]);
+  assets.set('/third-party-notices.txt', await readAsset('/third-party-notices.txt'));
   for (const path of documentAssetPaths(html).assets) assets.set(path, await readFile(new URL(`../dist${path}`, import.meta.url)));
   const cataloguePath = `/pricing/${catalogueFilename(catalogueId)}`;
   const catalogue = await readAsset(cataloguePath);

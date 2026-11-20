@@ -1,12 +1,12 @@
 # Catalogue maintenance
 
-## Audit before implementation
+## Historical audit before implementation
 
 Baseline at `2b16979`, with 418 configurations and 377 verified prices. `refresh-pricing.yml` already refreshes the Azure Retail Prices API daily and on dispatch. It pages through bounded, reviewed meter queries, rejects missing or materially changed tariffs, produces immutable catalogue assets, runs regression tests and deploys in the same workflow. It pushed the manifest before live verification. `deploy.yml` independently shipped application changes and both jobs used the same production lock. Both verified public build bytes, and the client could fall back one catalogue generation. Cloudflare rollback required an operator.
 
 `enterprise-evidence.yml` and the pricing discovery/preview workflows produce useful read-only diagnostics. Microsoft UK prices, entitlements, compatibility, PTU sizing and model retirement required editing JSON manually. Diagnostic excerpts never renewed review dates. The build validates associations and the independent financial suite still derives expected amounts from the documented scenarios. The catalogue screen showed Azure freshness and rate coverage but no source-level evidence health or exception history. Failures were visible in workflow logs and annotations.
 
-## Expansion plan
+## Historical expansion plan
 
 Keep the daily retail refresh and its single writer. Add daily UK offer change detection and weekly claim reconciliation to that run, with dispatch and a read-only rehearsal using the existing evidence survey workflow. Parse exact UK offer cards and published compatibility, sizing and retirement tables. Make rule-specific source checks the basis for renewing entitlement and integration evidence. Track unavailable sources and ambiguous matches separately and retain historical values through their documented expiry.
 
@@ -14,7 +14,7 @@ Run semantic validators, independent financial and browser tests before deploy. 
 
 ## Running schedule
 
-**Refresh and deploy retail prices** runs every day at 06:17 UTC (06:17 GMT or 07:17 BST). Tuesday through Sunday run the Azure ingestion and UK offer change detection. Monday also reconciles commercial terms, licensing and Product Terms, Foundry regional and capability evidence, PTU sizing and reservation evidence, lifecycle, and overall integrity. Dispatch on `main` and relevant pushes use the weekly path. **Review Microsoft enterprise evidence** can rehearse the full process with no production secrets and records a report artifact. **Deploy static studio** publishes application changes using the same release verification and recovery code.
+**Refresh and publish Studio retail prices** runs daily at 06:17 UTC (06:17 GMT or 07:17 BST). Tuesday through Sunday run Azure ingestion and the daily commercial checks. Monday and manual dispatch use the full evidence set. [Protected publishing operations](36-protected-pricing-publication.md)
 
 ## How evidence is selected
 
@@ -25,7 +25,7 @@ Run semantic validators, independent financial and browser tests before deploy. 
 
 ## Publication and recovery
 
-Actions stages reconciliation in a clean checkout of the latest `main`. Schema, evidence, financial, JSON, PDF, build and Chromium checks run before credentials are provided to the publishing command. The production concurrency group serializes application and evidence publication. A non-fast-forward change aborts stale maintenance publication. Deployment targets only the existing `ai-econmics-studio` Worker and captures its single active version plus the previous public HTML and catalogue bytes. The candidate serves the exact built HTML, content-addressed catalogue, expected application revision and evidence report. Live browser checks run before a maintenance commit can advance `main`. A failed live check or rejected push restores the previous Worker version, then compares the restored bytes. If another Cloudflare version supersedes the candidate or the active Worker uses traffic splitting, the guard halts rather than changing an external rollout.
+Actions stages reconciliation against the checked main revision, then runs schema, evidence, financial, JSON, PDF, build and Chromium checks. A scoped GitHub App opens or updates a pricing-only PR and waits for the protected checks before squash-merging the exact candidate. The main deploy workflow targets the existing Worker, captures the last verified version and validates all live release assets. If verification fails after merge, the guard restores the previous Worker version when it still owns the candidate. The repository can remain ahead of production. The hourly recovery check retries a matching current main revision. [Publication and failure states](36-protected-pricing-publication.md#what-happens-in-common-cases)
 
 The published `/pricing/health.json` contains the release revision, verified catalogue hash, previous Cloudflare version, source results, last positive checks, due dates, coverage, lifecycle, discoveries and unresolved changes. **Pricing Catalogue → Catalogue health** shows a compact view. Failed candidates leave the previous public health report in place. Actions summaries and deduplicated exception issues report failures, material contradictions or regressions. Persistent ingestion failures are reported after two failed runs. An exception marker identifies its issue across updates. Later runs can close or reopen it.
 

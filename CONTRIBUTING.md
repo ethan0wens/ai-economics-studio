@@ -2,7 +2,7 @@
 
 ## Development workflow
 
-Use Node.js 24 LTS and run `npm ci`. Read `AGENTS.md` and the relevant specification before changing financial, domain, deployment or privacy behaviour. Run the [verification checks](docs/technical/07-verification-and-tests.md), including the browser suite for workflow changes. Keep lockfile updates with the dependency change they support.
+Use Node.js 24 LTS and run `npm ci`. Read `AGENTS.md` and the relevant specification before changing financial, domain, deployment or privacy behaviour. Run the [verification checks](docs/technical/07-verification-and-tests.md), including the browser suite for workflow changes. Keep lockfile updates with the dependency change they support. Open a feature-branch PR against `main` and wait for the `checks` job before owner merge. The separate pricing App handles generated catalogue changes.
 
 ## Evidence and financial review
 

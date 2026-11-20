@@ -42,9 +42,7 @@ Consider content-security-policy with `default-src 'self'`, `connect-src 'self'`
 
 **`ci-deploy.yml`**: on `push` to `main`, manual `workflow_dispatch`; checkout, Node stable LTS, `npm ci`, lint/typecheck/tests/build, `wrangler deploy` authenticated with **`CLOUDFLARE_API_TOKEN`** and **`CLOUDFLARE_ACCOUNT_ID`**. Run unit build validations on pull requests with a separate no-secrets check-only workflow or conditional job. Never expose deployment secrets to PR jobs. Normal CI tokens may be `contents: read`.
 
-**`refresh-pricing.yml`**: `schedule` (e.g. `17 6 * * *` UTC) plus manual `workflow_dispatch`; checkout, install, fetch only **curated known meters** from public Retail Prices API, paginate, normalize, validate diff/completeness, publish manifest and catalogue, optionally commit checked data to `main`, then **build and deploy in same workflow**. If refresh fails, preserve last-good deployed catalogue, mark CI failure, do not deploy empty data. If catalogue is unchanged, either update `lastCheckedAt` with a meaningful provenance revision or report check results without republishing. Use deployment-job concurrency to prevent overlapping deployments, and ensure the newer build wins if two runs race. A scheduled refresh is not an app backend.
-
-**Critical GitHub behavior**: `GITHUB_TOKEN` pushes normally do **not** trigger other workflows. Do NOT commit catalogue and assume `ci-deploy.yml` will run; deploy in the refresh run or call a trusted reusable workflow. If branch protection prevents bot commits, use an explicit approved alternative; don't silently skip publishing.
+**`refresh-pricing.yml`** runs on the daily schedule and manual dispatch. It fetches reviewed Microsoft sources, validates exact measures and writes a content-addressed snapshot. A scoped GitHub App publishes only generated data through a protected PR. Its squash merge triggers the single main-branch deployment workflow. A failed source check keeps the previous release. [Protected pricing publication](36-protected-pricing-publication.md)
 
 ## Repo structure Codex should create
 

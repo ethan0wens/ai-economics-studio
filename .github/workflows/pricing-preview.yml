@@ -5,6 +5,7 @@ on:
     paths:
       - '.github/workflows/pricing-preview.yml'
       - '.github/workflows/deploy.yml'
+      - '.github/workflows/enterprise-evidence.yml'
       - '.github/workflows/refresh-pricing.yml'
       - 'scripts/pricing.ts'
       - 'scripts/discovery.ts'

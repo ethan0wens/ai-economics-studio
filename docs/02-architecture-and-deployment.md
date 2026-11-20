@@ -32,7 +32,7 @@ No runtime Azure/Microsoft requests from customers; the public Microsoft Retail 
 
 ## Cloudflare configuration requirements
 
-`wrangler.jsonc` or `wrangler.toml` must set `name`, `compatibility_date`, `assets.directory = './dist'`, `assets.not_found_handling = 'single-page-application'`. **No `main`, no Worker entrypoint, no runtime bindings and no `run_worker_first`.** Use ordinary `wrangler deploy` after production build. Default `*.workers.dev` hostname; domain optional.
+`wrangler.jsonc` sets `name`, `compatibility_date`, `assets.directory = './dist'` and `assets.not_found_handling = 'single-page-application'`. **No `main`, no Worker entrypoint, no runtime bindings and no `run_worker_first`.** After building, the guarded deployment invokes Wrangler for the existing Worker and verifies its dashboard-managed Custom Domain. See the [technical deployment reference](technical/06-build-and-deploy.md).
 
 Cloudflare Workers serves static asset requests without metering them as Worker script executions under current terms. Set security headers and sensible cache-control; HTML short/no-cache, hashed JS/CSS immutable, public pricing manifest short freshness and versioned data long immutable. Verify actual `_headers` support and routing against current documentation; avoid setting incompatible headers that block legitimate same-origin assets or PDF/JSON downloads.
 

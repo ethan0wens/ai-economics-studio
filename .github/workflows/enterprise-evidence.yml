@@ -67,7 +67,7 @@ jobs:
           cache: npm
       - run: npm ci --ignore-scripts
       - uses: ./.github/actions/setup-browser
-      - name: Check the public Worker
+      - name: Check the Studio on its Custom Domain
         run: |
           if ! npm run test:e2e -- tests/e2e/enterprise.spec.ts tests/e2e/field-help.spec.ts tests/e2e/retail-first.spec.ts > "$RUNNER_TEMP/live-check.log" 2>&1; then
             cat "$RUNNER_TEMP/live-check.log"
@@ -76,7 +76,7 @@ jobs:
           fi
           cat "$RUNNER_TEMP/live-check.log"
         env:
-          STUDIO_TEST_URL: https://ai-econmics-studio.ethan0wens.workers.dev
+          STUDIO_TEST_URL: https://studio.ethan0wens.tech
           STUDIO_CHECK_PUBLISHED_CATALOGUE: '1'
   reconcile-preview:
     runs-on: ubuntu-latest

@@ -1,6 +1,6 @@
 # Security policy
 
-Security fixes are reviewed on the main release line for the existing Worker and its matching catalogue. The approved production hostname is `studio.ethan0wens.tech`. Wider public release still requires verified HTTPS enforcement, a reviewed evidence record and owner approval. The temporary S6-10 exception applies only to the legacy workers.dev preview. [Release requirements](docs/security/06-operational-security.md#before-public-release--mandatory-security-requirements) · [Risk register](docs/security/03-risk-register.md)
+Security fixes are reviewed on the main release line for the existing Worker and its matching catalogue. The approved production hostname is `studio.ethan0wens.tech`. The production transport checks passed, including trusted HTTPS and retired preview delivery. Wider public release requires a current, owner-reviewed evidence record and explicit launch approval. The S6-10 record retains the historical preview exception until owner review. [Release requirements](docs/security/06-operational-security.md#before-public-release--mandatory-security-requirements) · [Risk register](docs/security/03-risk-register.md)
 
 ## Report a vulnerability
 

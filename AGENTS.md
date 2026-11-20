@@ -27,7 +27,7 @@ Ship the entire **Microsoft-first community MVP** in one coherent development ef
 - Cost views: retail baseline, agreement-adjusted current, forecasted effective, per-agent allocations, monthly/annual and assumptions. Scenario selection never changes core environment objects.
 - Governance advisory engine uses explicit rule version, explanation and confidence/coverage. It does not certify compliance.
 - Read-only auto-layout logical architecture diagram, synced with objects, keyboard accessible, printable in a professional client-generated PDF. No topology/network or infrastructure-deployed claims.
-- Scheduled price ingestion with exact curated meter mapping, paging, currency, timestamps, validation, atomic fail-safe publishing and last-good fallback. A GitHub Actions `GITHUB_TOKEN` commit **cannot be relied on** to trigger a separate deploy workflow; schedule must deploy in the same job/run or invoke trusted reusable deployment directly.
+- Scheduled price ingestion with exact curated meter mapping, paging, currency, timestamps, validation, atomic fail-safe publishing and last-good fallback. A GitHub Actions `GITHUB_TOKEN` commit **cannot be relied on** to trigger another workflow. The protected publisher uses its dedicated GitHub App to open and squash-merge a checked pricing-only PR. The resulting `main` push triggers the sole guarded deployment workflow.
 - All prices have source URLs, effective dates, lookup/refresh times, billing units, currency and status. The product's independent-not-Microsoft disclaimer must be visible and exported.
 
 ## Build approach

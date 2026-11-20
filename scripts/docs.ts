@@ -1,4 +1,4 @@
-import { readdir, readFile } from 'node:fs/promises';
+import { readdir, readFile, stat } from 'node:fs/promises';
 import { resolve } from 'node:path';
 import { articles, topics } from '../src/documentation-content';
 import { documentationReference } from '../src/documentation-reference';
@@ -10,6 +10,21 @@ import { validate } from './pricing';
 import { validateTechnicalDocs } from './technical-docs';
 
 const fail = (message: string) => { throw new Error(message); };
+const readme = await readFile('README.md', 'utf8');
+const readmeImages = new Set<string>();
+for (const [, description, target] of readme.matchAll(/(!?\[[^\]\n]*\])\(([^\s)]+)\)/g)) {
+  if (target.startsWith('https:') || target.startsWith('#')) continue;
+  const path = target.split('#')[0];
+  if (!(await stat(path)).isFile()) fail(`README reference must resolve to a file: ${path}`);
+  if (!description.startsWith('!')) continue;
+  if (description.length <= 3 || !path.startsWith('docs/assets/readme/')) fail(`README capture needs descriptive alternative text: ${path}`);
+  readmeImages.add(path);
+}
+const captures = (await readdir('docs/assets/readme')).filter(name => name.endsWith('.png'));
+if (captures.length < 6 || captures.some(name => !readmeImages.has(`docs/assets/readme/${name}`))) fail('README showcases must reference all the checked captures.');
+const lockup = /<img\s+src="([^"]+)"\s+alt="([^"]+)"/.exec(readme);
+if (!lockup || !(await stat(lockup[1])).isFile()) fail('README Economic Signal lockup is missing.');
+
 const slug = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
 const ids = new Map(articles.map(article => [article.id, article]));
 const exampleIds = new Set(examples.map(example => example.id));

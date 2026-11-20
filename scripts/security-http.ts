@@ -10,6 +10,7 @@ import { previewOrigin, productionHostname, productionOrigin } from '../src/stud
 
 export { previewOrigin, productionHostname, productionOrigin };
 const transportPath = '/documentation?studio_transport_probe=1';
+export const missingBundleProbe = '/' + bundleDirectory + '/studio-missing-probe.js';
 const stage5Application = 'ba6b9c90e75beba0873003249286930f8ebdf024';
 const maxShellBytes = 128_000;
 const maxAssetBytes = 6_000_000;
@@ -266,8 +267,7 @@ export async function verifyPublicSecurity(site: string, options: ReleaseSecurit
   }));
 
   if (strict && observedAssets.some(asset => asset.path.startsWith('/' + bundleDirectory + '/'))) {
-    const path = '/' + bundleDirectory + '/studio-missing-probe.js';
-    const miss = await request(new URL(path, origin), {
+    const miss = await request(new URL(missingBundleProbe, origin), {
       redirect: 'error', cache: 'no-cache', credentials: 'omit', signal: AbortSignal.timeout(12_000),
     });
     await miss.body?.cancel();

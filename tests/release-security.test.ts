@@ -1,6 +1,7 @@
 import { createHash } from 'node:crypto';
 import { describe, expect, it, vi } from 'vitest';
 import { verifyPublicRelease } from '../scripts/release-readiness';
+import { verifyReleaseDelivery, waitForStableDelivery } from '../scripts/deploy';
 import { browserIcons, observeProductionSecurity, previewOrigin, productionHostname, productionOrigin, verifyPublicSecurity, verifyRetiredPreview, type ReleaseSecurityPolicy } from '../scripts/security-http';
 import { promoteWorker } from '../scripts/worker-release';
 
@@ -142,6 +143,30 @@ describe('preview delivery', () => {
 });
 
 describe('strict public release', () => {
+  it('restarts the full sweep when a default request serves the prior CSS fallback after identity verified', async () => {
+    const candidate = productionHtml.replaceAll('/assets/', '/bundles/v2/');
+    const previousShell = 'Previously verified HTML shell';
+    const cssPath = '/bundles/v2/index-QWER5678.css';
+    const knownResponses = fixture({ html: candidate, http: url => Response.redirect(new URL(url.pathname + url.search, productionOrigin), 301) });
+    const cssModes: string[] = [];
+    const request: typeof fetch = async (input, init) => {
+      if (new URL(String(input)).pathname !== cssPath) return knownResponses(input, init);
+      cssModes.push(new Headers(init?.headers).get('accept-encoding') ?? 'default');
+      if (cssModes.length === 2) {
+        return new Response(previousShell, { headers: { ...immutable, 'content-type': 'text/html', 'cf-cache-status': 'HIT' } });
+      }
+      return knownResponses(input, init);
+    };
+    const target = { application: app, catalogueId: hash, assets: new Map([['/', candidate], [cssPath, '']]) };
+    const preceding = new Map([['/', previousShell]]);
+    const pause = vi.fn(async () => {});
+    const observePending = vi.fn();
+    const result = await waitForStableDelivery(identity => verifyReleaseDelivery(target, preceding, identity, request), { pause, observePending });
+    expect(cssModes).toEqual(['identity', 'default', 'identity', 'default']);
+    expect(observePending).toHaveBeenCalledWith(expect.stringContaining('preceding release'));
+    expect(result.bundleResponses).toContainEqual({ path: cssPath, status: 200, mime: 'text/css' });
+  });
+
   it('proves the versioned bundle path returns a real 404 for missing modules without immutable caching', async () => {
     const html = productionHtml.replaceAll('/assets/', '/bundles/v2/');
     const http = (url: URL) => Response.redirect(new URL(url.pathname + url.search, productionOrigin), 301);

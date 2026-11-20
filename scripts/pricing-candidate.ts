@@ -75,7 +75,8 @@ async function stage() {
   const evidence = await Promise.all(evidenceFiles.filter(path => !path.endsWith('/maintenance.json')).map(async path =>
     meaningfulEvidenceChange(before(path), await read(path), now)));
   const previousHealth = maintenanceHealthSchema.parse(before('catalogue/maintenance.json'));
-  const findings = (report: typeof health) => report.unresolved.map(({ group, id, kind, detail, source }) => [group, id, kind, detail, source]);
+  const findings = (report: typeof health) => report.unresolved.filter(item => item.kind !== 'source')
+    .map(({ group, id, kind, detail, source }) => JSON.stringify([group, id, kind, detail, source])).sort();
   const changed = !previous.catalogueId ||
     meaningfulEvidenceChange(before(snapshot(previous.catalogueId)), await read(snapshot(next.catalogueId)), now) ||
     evidence.some(Boolean) || JSON.stringify(findings(previousHealth)) !== JSON.stringify(findings(health));
@@ -93,11 +94,11 @@ async function stage() {
     await writeFile(process.argv[2], patch);
   }
   await appendFile(output, `changed=${changed}\ncatalogue=${next.catalogueId}\n`);
-  if (process.env.GITHUB_STEP_SUMMARY) {
-    await appendFile(process.env.GITHUB_STEP_SUMMARY, `\nAzure and Microsoft validation completed at ${next.lastCheckedAt}. ${changed
-      ? `Candidate catalogue ${next.catalogueId} has material evidence or pricing changes.`
-      : `No material changes. Keep the published catalogue ${previous.catalogueId}.\n`}\n`);
-  }
+  const observation = `Azure and Microsoft validation completed at ${next.lastCheckedAt}. ${changed
+    ? `Candidate catalogue ${next.catalogueId} has material evidence or pricing changes.`
+    : `No material changes. Keep the published catalogue ${previous.catalogueId}.`}`;
+  console.log(process.env.GITHUB_ACTIONS === 'true' ? `::notice title=Microsoft pricing rehearsal::${observation}` : observation);
+  if (process.env.GITHUB_STEP_SUMMARY) await appendFile(process.env.GITHUB_STEP_SUMMARY, '\n' + observation + '\n');
 }
 
 if (process.argv[1] && pathToFileURL(process.argv[1]).href === import.meta.url) await stage();

@@ -101,13 +101,12 @@ async function install(api: ReturnType<typeof github>) {
 
 class Superseded extends Error {}
 
-async function main() {
+export async function publishPricing(noChange: boolean, wait = () => pause(20_000)) {
   if (process.env.GITHUB_REPOSITORY !== repository || process.env.GITHUB_REF !== checkedBaseRef) {
     throw new Error('Pricing publication runs only from this repository’s checked-out main workflow.');
   }
   const expected = git(['rev-parse', 'HEAD']);
   if (!sha.test(expected)) throw new Error('Could not identify the checked candidate base.');
-  const noChange = process.argv[2] === '--no-change';
   const paths = git(['diff', '--cached', '--name-only', '-z', expected]).split('\0').filter(Boolean);
   if (noChange ? paths.length : !paths.length) throw new Error('Pricing changes did not match the validated preparation outcome.');
   if (paths.length) assertPricingIndex(paths);
@@ -236,7 +235,7 @@ async function main() {
         head = retry;
         console.log(`Requested one fresh PR check run on the same validated tree at ${head}.`);
       }
-      if (attempt < 40) await pause(20_000);
+      if (attempt < 40) await wait();
     }
     throw new Error('Required checks did not pass within the publication window. A later scheduled refresh can safely rebuild the candidate.');
   } catch (error) {
@@ -250,7 +249,7 @@ async function main() {
 }
 
 if (process.argv[1] && pathToFileURL(process.argv[1]).href === import.meta.url) {
-  try { await main(); }
+  try { await publishPricing(process.argv[2] === '--no-change'); }
   catch (error) {
     const message = error instanceof Error ? error.message : String(error);
     console.error(message);

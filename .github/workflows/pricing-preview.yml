@@ -3,6 +3,9 @@ on:
   push:
     branches: [work, 'release/**']
     paths:
+      - 'README.md'
+      - 'scripts/docs.ts'
+      - 'tests/pricing-publication*.test.ts'
       - '.github/workflows/pricing-preview.yml'
       - '.github/workflows/deploy.yml'
       - '.github/workflows/enterprise-evidence.yml'

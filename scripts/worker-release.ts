@@ -1,6 +1,7 @@
+import { setTimeout as delay } from 'node:timers/promises';
 import { z } from 'zod';
 
-const activeSchema = z.object({ id: z.uuid(), created_on: z.iso.datetime({ offset: true }),
+const activeSchema = z.object({ id: z.uuid(),
   versions: z.array(z.object({ version_id: z.uuid(), percentage: z.number() })).length(1) })
   .refine(deployment => deployment.versions[0].percentage === 100);
 export type ActiveWorker = { deployment: string; version: string };
@@ -20,9 +21,8 @@ export function workerReleases(account: string, token: string, name: string, req
   return {
     async current(): Promise<ActiveWorker> {
       const result = z.object({ deployments: z.array(z.unknown()).min(1) }).parse(await api());
-      const history = result.deployments.map(value => ({ value, ...z.object({ created_on: z.iso.datetime({ offset: true }) }).parse(value) }));
-      const newest = history.sort((a, b) => Date.parse(b.created_on) - Date.parse(a.created_on))[0];
-      const selected = activeSchema.parse(newest.value);
+      // Cloudflare documents the first deployment as the actively serving deployment.
+      const selected = activeSchema.parse(result.deployments[0]);
       return { deployment: selected.id, version: selected.versions[0].version_id };
     },
     async restore(version: string) {
@@ -40,28 +40,52 @@ type Promotion = {
   persist: () => void;
   restore: (version: string) => Promise<void>;
   verifyRestore: () => Promise<void>;
+  pause?: () => Promise<void>;
 };
 
+async function waitForVersion(operations: Promotion, version: string, pending: ActiveWorker) {
+  for (let attempt = 1; ; attempt++) {
+    const active = await operations.current();
+    if (active.version === version) return active;
+    if (active.deployment !== pending.deployment || active.version !== pending.version || attempt === 10) {
+      throw new Error(`Expected Worker version ${version}. Cloudflare reported ${active.version} in deployment ${active.deployment}.`);
+    }
+    await (operations.pause?.() ?? delay(3_000));
+  }
+}
+
+function failureText(reason: unknown) {
+  return reason instanceof Error ? reason.message : String(reason);
+}
+
 export async function promoteWorker(operations: Promotion) {
-  let version: string | undefined;
+  let candidate: ActiveWorker | undefined;
   try {
-    version = operations.upload();
+    const version = operations.upload();
+    candidate = await waitForVersion(operations, version, operations.previous);
     await operations.verify();
-    if ((await operations.current()).version !== version) throw new Error('The active Worker version changed during verification.');
+    const active = await operations.current();
+    if (active.deployment !== candidate.deployment || active.version !== candidate.version) {
+      throw new Error(`The active Worker deployment changed during verification. Expected ${candidate.deployment}, observed ${active.deployment}.`);
+    }
     operations.persist();
   } catch (reason) {
     const active = await operations.current();
-    if (active.version === operations.previous.version) throw reason;
-    if (!version || active.version !== version) {
-      throw new Error('The active Worker changed without a verified candidate version. Automatic rollback was withheld.', { cause: reason });
+    if (active.deployment === operations.previous.deployment && active.version === operations.previous.version) throw reason;
+    if (!candidate || active.deployment !== candidate.deployment || active.version !== candidate.version) {
+      throw new Error(`The active Worker changed without a verified candidate deployment. Automatic rollback was withheld. Initial failure: ${failureText(reason)}`, { cause: reason });
     }
     try {
       await operations.restore(operations.previous.version);
+      const restored = await waitForVersion(operations, operations.previous.version, candidate);
       await operations.verifyRestore();
-      if ((await operations.current()).version !== operations.previous.version) throw new Error('Cloudflare did not restore the previous version.', { cause: reason });
+      const verified = await operations.current();
+      if (verified.deployment !== restored.deployment || verified.version !== restored.version) {
+        throw new Error('The active Worker deployment changed while verifying restoration.', { cause: reason });
+      }
     } catch (rollbackError) {
-      throw new Error(`Production verification failed and restoration could not be confirmed: ${rollbackError instanceof Error ? rollbackError.message : String(rollbackError)}`, { cause: rollbackError });
+      throw new Error(`Production verification failed and restoration could not be confirmed: ${failureText(rollbackError)}. Initial failure: ${failureText(reason)}`, { cause: rollbackError });
     }
-    throw new Error(`Previous production version restored after the candidate failed: ${reason instanceof Error ? reason.message : String(reason)}`, { cause: reason });
+    throw new Error(`Previous production version restored after the candidate failed: ${failureText(reason)}`, { cause: reason });
   }
 }

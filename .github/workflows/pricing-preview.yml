@@ -11,6 +11,8 @@ on:
       - 'catalogue/**'
       - 'src/coverage.ts'
       - 'scripts/deploy.ts'
+      - 'scripts/worker-release.ts'
+      - 'wrangler.jsonc'
       - 'scripts/retail-mappings.ts'
       - 'scripts/commercial-pricing.ts'
       - 'src/offerings.ts'

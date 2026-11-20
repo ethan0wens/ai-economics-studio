@@ -58,6 +58,17 @@ it('reads the current Cloudflare version with cache bypass and requires a single
   expect(request.mock.calls[0][1]).toMatchObject({ method: 'GET', cache: 'no-store', credentials: 'omit' });
 });
 
+it('uses the serving deployment in Cloudflare response order even if history timestamps disagree', async () => {
+  const serving = 'afdc5f6f-fb09-4cc2-8338-0678ac37e78c';
+  const older = 'a6127404-d16d-42ab-bdcf-298144c5333d';
+  const request = vi.fn<typeof fetch>().mockResolvedValueOnce(success({ deployments: [
+    { id: serving, created_on: '2026-11-20T12:00:00Z', versions: [{ version_id: serving, percentage: 100 }] },
+    { id: older, created_on: '2026-11-20T12:00:01Z', versions: [{ version_id: older, percentage: 100 }] },
+  ] }));
+  await expect(workerReleases(account, token, 'ai-econmics-studio', request).current())
+    .resolves.toEqual({ deployment: serving, version: serving });
+});
+
 describe('custom-domain deployment configuration', () => {
   it('accepts the exact Custom Domain declaration and rejects an ordinary or foreign route', async () => {
     const base = JSON.parse(config);

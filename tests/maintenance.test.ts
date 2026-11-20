@@ -139,6 +139,23 @@ describe('production promotion and rollback', () => {
     expect(flow.verify.mock.invocationCallOrder[0]).toBeLessThan(flow.persist.mock.invocationCallOrder[0]);
     expect(flow.restore).not.toHaveBeenCalled();
   });
+  it('allows the known previous deployment to propagate before verifying the candidate', async () => {
+    const flow = operations();
+    const pause = vi.fn(async () => {});
+    flow.current.mockResolvedValueOnce(flow.previous);
+    await expect(promoteWorker({ ...flow, pause })).resolves.toBeUndefined();
+    expect(pause).toHaveBeenCalledOnce();
+    expect(flow.persist).toHaveBeenCalledOnce();
+  });
+  it('does not restore over an external rollout that happens to reuse the candidate version', async () => {
+    const flow = operations();
+    const external = { version: candidate, deployment: 'external-deployment' };
+    flow.current.mockResolvedValueOnce({ version: candidate, deployment: candidate })
+      .mockResolvedValueOnce(external).mockResolvedValueOnce(external);
+    await expect(promoteWorker(flow)).rejects.toThrow('Automatic rollback was withheld');
+    expect(flow.persist).not.toHaveBeenCalled();
+    expect(flow.restore).not.toHaveBeenCalled();
+  });
   it('restores previous public assets after a live browser failure or rejected Git push', async () => {
     for (const phase of ['verify', 'persist'] as const) {
       const flow = operations();
@@ -149,6 +166,16 @@ describe('production promotion and rollback', () => {
       expect(flow.restore).toHaveBeenCalledWith(original);
       expect(flow.verifyRestore).toHaveBeenCalledOnce();
     }
+  });
+  it('waits for the restored version to become active before verifying previous assets', async () => {
+    const flow = operations();
+    const pending = { version: candidate, deployment: candidate };
+    const pause = vi.fn(async () => {});
+    flow.verify.mockRejectedValueOnce(new Error('Browser check failed'));
+    flow.current.mockResolvedValueOnce(pending).mockResolvedValueOnce(pending).mockResolvedValueOnce(pending);
+    await expect(promoteWorker({ ...flow, pause })).rejects.toThrow('Previous production version restored');
+    expect(pause).toHaveBeenCalledOnce();
+    expect(flow.verifyRestore).toHaveBeenCalledOnce();
   });
   it('uses the existing Cloudflare deployment API and rejects split traffic', async () => {
     const request = vi.fn<typeof fetch>().mockResolvedValueOnce(Response.json({ success: true, result: { deployments: [

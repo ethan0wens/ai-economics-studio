@@ -92,7 +92,14 @@ jobs:
         run: npm run security:production -- "$STUDIO_EXPECTED_APPLICATION" "$STUDIO_EXPECTED_CATALOGUE_ID"
       - uses: ./.github/actions/setup-browser
       - name: Verify the Studio in Chromium on the custom domain
-        run: npm run test:e2e
+        run: |
+          if ! npm run test:e2e > "$RUNNER_TEMP/studio-custom-domain-browser.log" 2>&1; then
+            cat "$RUNNER_TEMP/studio-custom-domain-browser.log"
+            tail -c 12000 "$RUNNER_TEMP/studio-custom-domain-browser.log" | jq -Rs -r 'gsub("%"; "%25") | gsub("\r"; "%0D") | gsub("\n"; "%0A")' | sed 's/^/::error title=Custom domain browser checks::/'
+            exit 1
+          fi
+          cat "$RUNNER_TEMP/studio-custom-domain-browser.log"
+          tail -n 18 "$RUNNER_TEMP/studio-custom-domain-browser.log" >> "$GITHUB_STEP_SUMMARY"
         env:
           STUDIO_TEST_URL: https://studio.ethan0wens.tech
           STUDIO_CHECK_RELEASE_HEALTH: '1'

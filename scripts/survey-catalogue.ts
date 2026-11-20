@@ -73,7 +73,7 @@ const groups: Record<string, [string, string][]> = {
     ['Partner availability', azureModels + 'models-from-partners-and-community'],
     ['Lifecycle', openai + 'model-retirements'],
     ['Agent capabilities', foundry + 'agents/how-to/connected-models'],
-    ['Public baseline', 'https://ai-econmics-studio.ethan0wens.workers.dev/pricing/manifest.json'],
+    ['Public baseline', 'https://studio.ethan0wens.tech/pricing/manifest.json'],
   ],
 };
 

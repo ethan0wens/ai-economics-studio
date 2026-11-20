@@ -3,7 +3,7 @@
 ## Before starting Codex — mandatory (about five decisions, no Azure subscription needed)
 
 1. **GitHub**: create a **public**, initially empty repository named `ai-economics-studio` (or your preferred name). Choose a licence only once; **MIT** is the suggested permissive licence, but it is the repository owner's decision. If creating a README through GitHub, merge this handover's README rather than overwriting unrelated content.
-2. **Cloudflare**: create or use a **Free** account and identify its **Account ID** under the account dashboard. For this repository, use the existing Worker `ai-econmics-studio` at `https://ai-econmics-studio.ethan0wens.workers.dev`.
+2. **Cloudflare**: create or use a **Free** account and identify its **Account ID** under the account dashboard. For this repository, use the existing Worker `ai-econmics-studio` at `https://studio.ethan0wens.tech`.
 3. **Codex access**: connect GitHub in Codex Cloud and grant access to this repository, or clone it locally and use Codex in your IDE/CLI. Confirm Codex has write access to its working branch. A paid Azure subscription, Microsoft tenant, Microsoft API key and database are **not** prerequisites.
 4. **Upload**: extract `ai-economics-studio-codex-handover.zip` and commit the **contained files**, including root `AGENTS.md`, `docs/`, `fixtures/`, `prompts/` and `design/` to the repository root. Do not commit just the ZIP or put everything inside a nested `ai-economics-studio-handover/` folder.
 5. **Launch the first task**: paste `prompts/01-build-mvp.md` into Codex. Let it execute across milestones without demanding approval for ordinary internal coding decisions. Review the final diff and CI tests, not just a screenshot.
@@ -16,7 +16,7 @@
    - `CLOUDFLARE_ACCOUNT_ID` as an environment **secret** (the account ID is not inherently a password, but treat it as configuration).
 3. Allow Actions to run; ensure the deployment workflow triggers on pushes to **`main`** and manual dispatch. No deployment on untrusted pull requests; no `pull_request_target` secret exposure.
 4. Enable Actions `contents: write` only for the **price refresh workflow/job** that writes a checked catalogue commit to the repository; keep ordinary build/deploy steps at `contents: read` wherever possible. If branch protection blocks automatic catalogue commits, explicitly adjust the refresh workflow to use an approved bot/PR + approval process; do not bypass protection silently.
-5. Confirm the Cloudflare Worker name, account ID reference and `workers.dev` hostname are correct before the first deploy.
+5. Confirm the Cloudflare Worker name, account ID reference and enabled Custom Domain. Validate the live TLS certificate and path-preserving HTTPS redirect before deploying. The deployment token needs to read the binding and deploy the existing Worker.
 
 **Important GitHub Actions quirk:** a price refresh commit pushed via the built-in `GITHUB_TOKEN` normally does **not** trigger the separate `push` deployment workflow. The refresh workflow must **build and deploy in that same run**, or invoke a trusted reusable deployment workflow directly. This is a hard acceptance requirement.
 

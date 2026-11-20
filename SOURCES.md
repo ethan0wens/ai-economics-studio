@@ -5,7 +5,7 @@ The [expanded catalogue guide](docs/16-catalogue-scope-and-maintenance.md) expla
 - [Product inventory and Azure billing signatures](catalogue/scope.json)
 - [Original exact Azure meters](catalogue/pinned.json) and [retained configurations](catalogue/retained.json)
 - [Reviewed Microsoft UK commercial prices](catalogue/commercial.json)
-- [Published catalogue manifest](https://ai-econmics-studio.ethan0wens.workers.dev/pricing/manifest.json)
+- [Published catalogue manifest](https://studio.ethan0wens.tech/pricing/manifest.json)
 - [Pricing and deployment operations](docs/12-operations.md)
 
 - [Commercial entitlement rules](catalogue/entitlements.json) and [technical availability evidence](catalogue/compatibility.json)

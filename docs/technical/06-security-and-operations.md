@@ -31,7 +31,7 @@ Check authorised target and main SHA ── deploy checked assets ─┘
                                   restore previous version ── verify bytes + version
 ```
 
-The deploy script uses `verifyWorker` and `verifyPublishedAssets`, then calls the guarded `promoteWorker` transaction. A failed verification or push restores the previous version only when the candidate is still identifiable as the active version. It then verifies previous bytes and version. An external rollout, split traffic or uncertain upload requires operator review. This prevents a failed job from rolling back someone else's deployment. See [Cloudflare promotion code](../../scripts/worker-release.ts), [deploy guard](../../scripts/deploy.ts) and [provider guidance](https://developers.cloudflare.com/workers/configuration/versions-and-deployments/).
+Canonical verification and rollback both use `https://studio.ethan0wens.tech`. Cloudflare owns the Custom Domain, DNS and TLS binding. The deploy script uses `verifyWorker` and `verifyPublishedAssets`, then calls the guarded `promoteWorker` transaction. A failed verification or push restores the previous version only when the candidate is still identifiable as the active version. It then verifies previous bytes and version. An external rollout, split traffic or uncertain upload requires operator review. This prevents a failed job from rolling back someone else's deployment. See [Cloudflare promotion code](../../scripts/worker-release.ts), [deploy guard](../../scripts/deploy.ts) and [provider guidance](https://developers.cloudflare.com/workers/configuration/versions-and-deployments/).
 
 The asset guard polls the canonical public URLs for up to 13 checks, with five seconds between attempts. It requests a fresh uncompressed response and requires byte equality before continuing. A persistent mismatch reports the affected path and, when a bounded response was readable, the expected and observed digest prefixes.
 
@@ -47,7 +47,7 @@ The asset guard polls the canonical public URLs for up to 13 checks, with five s
 These commands only read public files. Use the approved hostname and the expected application revision from Actions. The shell example uses curl, jq and sha256sum.
 
 ```sh
-studio_url='https://ai-econmics-studio.ethan0wens.workers.dev'
+studio_url='https://studio.ethan0wens.tech'
 curl --fail --silent --show-error "$studio_url/pricing/manifest.json" > manifest.json
 catalogue_id=$(jq -er '.catalogueId | select(test("^[0-9a-f]{64}$"))' manifest.json)
 curl --fail --silent --show-error "$studio_url/pricing/catalogue-$catalogue_id.json" > catalogue.json

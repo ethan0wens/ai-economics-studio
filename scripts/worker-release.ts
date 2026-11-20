@@ -10,7 +10,8 @@ export function workerReleases(account: string, token: string, name: string, req
   async function api(body?: object) {
     const response = await request(endpoint, {
       method: body ? 'POST' : 'GET', redirect: 'error', signal: AbortSignal.timeout(18_000),
-      headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' },
+      cache: 'no-store', credentials: 'omit',
+      headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json', 'Cache-Control': 'no-cache' },
       body: body && JSON.stringify(body),
     });
     if (!response.ok) throw new Error(`Cloudflare deployment API returned HTTP ${response.status}.`);

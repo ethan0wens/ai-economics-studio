@@ -1,4 +1,4 @@
-name: Deploy static studio preview
+name: Deploy static Studio to the custom domain
 on:
   push:
     branches: [main]

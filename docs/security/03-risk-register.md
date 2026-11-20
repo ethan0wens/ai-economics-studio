@@ -19,6 +19,6 @@ Severity reflects reachability and impact for this browser-only application. Evi
 
 On 19 November 2026 the owner accepted S6-10 temporarily for the existing publicly reachable [preview hostname](https://ai-econmics-studio.ethan0wens.workers.dev) pending the custom-domain launch. Prefer HTTPS links as the entry point. Compensating controls include browser HTTPS preload where applicable, a secure-context requirement, HSTS, restrictive CSP, browser-only processing with no customer-data backend, in-memory workspaces and user-directed exports.
 
-Clients without verified upgrade policies can receive the shell over plaintext. The application checks apply to the loaded application. First-contact transport still depends on the edge. Keep S6-10 open until the custom domain and HTTPS enforcement pass `npm run release:public`. See the [issue draft](public-release-blocker.md).
+Clients without verified upgrade policies can receive the shell over plaintext. The application checks apply to the loaded application. First-contact transport still depends on the edge. Keep S6-10 open in the release record until the owner reviews the transport evidence and legacy endpoint status. The delivery check uses the exact production hostname, expected revision and catalogue. The separate `npm run release:public` check also requires approval evidence. See the [issue draft](public-release-blocker.md).
 
 No dependency-advisory exception was accepted. Review residual risks at the next candidate or relevant provider or dependency change.

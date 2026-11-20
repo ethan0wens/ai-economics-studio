@@ -1,6 +1,6 @@
 # Technical documentation
 
-Use this reference to understand, verify, operate and extend AI Economics Studio. The running code, schemas, tests and dated evidence are the technical authority. Open [Technical Documentation in the studio](https://ai-econmics-studio.ethan0wens.workers.dev/#/documentation/technical) for searchable articles and generated references.
+Use this reference to understand, verify, operate and extend AI Economics Studio. The running code, schemas, tests and dated evidence are the technical authority. Open [Technical Documentation in the studio](https://studio.ethan0wens.tech/#/documentation/technical) for searchable articles and generated references.
 
 ## 1. Platform Architecture & System Design
 

@@ -1,4 +1,4 @@
-name: Refresh and deploy preview retail prices
+name: Refresh and deploy Studio retail prices
 on:
   push:
     branches: [main]

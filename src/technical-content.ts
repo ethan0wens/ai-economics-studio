@@ -1,3 +1,4 @@
+import { previewOrigin, productionHostname } from './studio-origins';
 import { marked, type Token, type Tokens } from 'marked';
 import { z } from 'zod';
 import index from '../docs/technical/index.json' with { type: 'json' };
@@ -44,7 +45,7 @@ const repo = 'https://github.com/ethan0wens/ai-economics-studio/blob/main/';
 const virtualRoot = 'https://studio-documentation.invalid';
 export const allowedTechnicalSources = ['learn.microsoft.com', 'www.microsoft.com', 'azure.microsoft.com', 'www.cloudflare.com',
   'developers.cloudflare.com', 'docs.github.com', 'vite.dev', 'playwright.dev', 'nodejs.org', 'github.com',
-  'ai-econmics-studio.ethan0wens.workers.dev'];
+  productionHostname, new URL(previewOrigin).hostname];
 export const documentLocation = (file: string) => new URL(`/docs/technical/${file}`, virtualRoot);
 
 export type TechnicalLink = { href: string; kind: 'internal' | 'implementation' | 'evidence' };
@@ -80,7 +81,7 @@ export function technicalLink(href: string, file: string): TechnicalLink | undef
     return;
   }
   if (!httpsUrl(target.href, allowedTechnicalSources)) return;
-  if (target.hostname === 'ai-econmics-studio.ethan0wens.workers.dev') return internalLink(target.hash || '#/');
+  if (target.origin === previewOrigin || target.hostname === productionHostname) return internalLink(target.hash || '#/');
   if (target.hostname === 'github.com') {
     if (!target.href.startsWith(repo) || !implementationPath('/' + target.href.slice(repo.length).split('#')[0])) return;
     return { href: target.href, kind: 'implementation' };

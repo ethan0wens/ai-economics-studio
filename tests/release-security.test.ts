@@ -1,7 +1,7 @@
 import { createHash } from 'node:crypto';
 import { describe, expect, it, vi } from 'vitest';
 import { verifyPublicRelease } from '../scripts/release-readiness';
-import { browserIcons, previewOrigin, productionHostname, productionOrigin, verifyPublicSecurity, type ReleaseSecurityPolicy } from '../scripts/security-http';
+import { browserIcons, observeProductionSecurity, previewOrigin, productionHostname, productionOrigin, verifyPublicSecurity, type ReleaseSecurityPolicy } from '../scripts/security-http';
 import { promoteWorker } from '../scripts/worker-release';
 
 const preview: ReleaseSecurityPolicy = { policy: 'preview' };
@@ -24,7 +24,7 @@ const documentHeaders = {
   'content-type': 'text/html',
   'content-security-policy': "default-src 'self'; script-src 'self'; style-src 'self'; font-src 'self'; img-src 'self' data:; connect-src 'self'; object-src 'none'; base-uri 'self'; frame-ancestors 'none'; form-action 'none'",
   'x-content-type-options': 'nosniff', 'x-frame-options': 'deny', 'strict-transport-security': 'max-age=31536000',
-  'referrer-policy': 'no-referrer', 'permissions-policy': 'camera=(), microphone=(), geolocation=()', 'cache-control': 'no-cache',
+  'referrer-policy': 'no-referrer', 'permissions-policy': 'camera=(), microphone=(), geolocation=()', 'cache-control': 'public, no-cache, no-transform',
 };
 const immutable = { 'x-content-type-options': 'nosniff', 'cache-control': 'public, max-age=31536000, immutable' };
 const plaintext = (body = html, status = 200) => new Response(body, { status, headers: { 'content-type': 'text/html' } });
@@ -39,6 +39,7 @@ type Overrides = {
   mime?: string;
   iconMime?: string;
   iconCache?: string;
+  shellCache?: string;
   cache?: string;
   catalogue?: string;
   receipt?: string;
@@ -66,6 +67,7 @@ function fixture(options: Overrides = {}) {
       'x-content-type-options': 'nosniff', 'cache-control': options.iconCache ?? 'no-cache', 'content-type': options.iconMime ?? icon.mime[0],
     } });
     const headers = new Headers(documentHeaders);
+    if (options.shellCache) headers.set('cache-control', options.shellCache);
     for (const key of options.missingHeaders ?? []) headers.delete(key);
     return new Response(url.pathname === '/documentation' && options.alternate !== undefined
       ? options.alternate : shell, { headers });
@@ -180,6 +182,7 @@ describe('strict public release', () => {
       [{ receipt: 'b'.repeat(40) }, 'revision did not match'],
       [{ missingHeaders: ['strict-transport-security'] }, 'strict-transport-security'],
       [{ html }, 'missing approved stylesheet or icon'],
+      [{ shellCache: 'no-cache' }, 'prevent edge script injection'],
     ] as const) {
       await expect(verifyPublicSecurity(productionOrigin, strict, fixture({ ...override, http }))).rejects.toThrow(message);
     }
@@ -187,6 +190,22 @@ describe('strict public release', () => {
     await expect(verifyPublicSecurity(productionOrigin, { ...strict, expectedCatalogueId: '' }, request))
       .rejects.toThrow('requires an expected application revision and catalogue digest');
     expect(request).not.toHaveBeenCalled();
+  });
+
+  it('observes a consistent live receipt independently of the evidence gate', async () => {
+    const http = (url: URL) => Response.redirect(new URL(url.pathname + url.search, productionOrigin), 308);
+    const current = fixture({ http });
+    await expect(observeProductionSecurity(current)).resolves.toMatchObject({ decision: 'pass-public-delivery', exception: null });
+    const newer = fixture({ http, receipt: 'b'.repeat(40) });
+    let captured = false;
+    const changed: typeof fetch = (url, options) => {
+      if (!captured && String(url).endsWith('/pricing/health.json')) {
+        captured = true;
+        return current(url, options);
+      }
+      return newer(url, options);
+    };
+    await expect(observeProductionSecurity(changed)).rejects.toThrow('revision did not match');
   });
 
   it('blocks missing evidence or open S6-10 independently of a successful preview assessment', async () => {

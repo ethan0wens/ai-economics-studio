@@ -5,9 +5,9 @@ import { catalogueFilename, catalogueSchema, manifestSchema, maxCatalogueBytes, 
 import { releaseHealthSchema } from '../src/catalogue-health';
 import { decodeUtf8, parseBoundedJson, readResponseBytes } from '../src/untrusted-data';
 
-export const previewOrigin = 'https://ai-econmics-studio.ethan0wens.workers.dev';
-export const productionHostname = 'studio.ethan0wens.tech';
-export const productionOrigin = `https://${productionHostname}`;
+import { previewOrigin, productionHostname, productionOrigin } from '../src/studio-origins';
+
+export { previewOrigin, productionHostname, productionOrigin };
 const transportPath = '/documentation?studio_transport_probe=1';
 const stage5Application = 'ba6b9c90e75beba0873003249286930f8ebdf024';
 const maxShellBytes = 128_000;
@@ -118,6 +118,24 @@ async function plaintextOutcome(response: Response, from: URL, expected: URL, sh
   throw new Error(`Unexpected plaintext HTTP response (HTTP ${status}) for ${from.pathname}${from.search}. Expected an exact HTTPS redirect, Cloudflare refusal or the known application shell.`);
 }
 
+export function parsePublishedReceipt(bytes: Uint8Array) {
+  const payload = parseBoundedJson(decodeUtf8(bytes), 30_000, 'Release receipt') as { release?: unknown } | null;
+  return releaseHealthSchema.parse(payload?.release);
+}
+
+export async function observeProductionSecurity(request = fetch) {
+  const response = await request(new URL('/pricing/health.json', productionOrigin), {
+    redirect: 'error', cache: 'no-cache', credentials: 'omit', signal: AbortSignal.timeout(12_000),
+  });
+  if (!response.ok) throw new Error(`Production observation could not read the release receipt (HTTP ${response.status}).`);
+  verifySecurityHeaders(response.headers, 'mutable');
+  const receipt = parsePublishedReceipt(await readResponseBytes(response, 1_000_000, 'Release receipt'));
+  if (!receipt.catalogueId) throw new Error('Production observation requires a verified catalogue.');
+  return verifyPublicSecurity(productionOrigin, {
+    policy: 'public', expectedApplication: receipt.application, expectedCatalogueId: receipt.catalogueId,
+  }, request);
+}
+
 export async function verifyPublicSecurity(site: string, options: ReleaseSecurityPolicy, request = fetch): Promise<SecurityVerification> {
   const origin = URL.parse(site);
   if (!origin || origin.protocol !== 'https:' || origin.href !== origin.origin + '/') {
@@ -145,8 +163,7 @@ export async function verifyPublicSecurity(site: string, options: ReleaseSecurit
     const response = await get('/pricing/health.json');
     if (strict) verifySecurityHeaders(response.headers, 'mutable');
     const bytes = await readResponseBytes(response, 1_000_000, 'Release receipt');
-    const payload = parseBoundedJson(decodeUtf8(bytes), 30_000, 'Release receipt') as { release?: unknown } | null;
-    const release = releaseHealthSchema.parse(payload?.release);
+    const release = parsePublishedReceipt(bytes);
     if (release.catalogueId !== manifest.catalogueId || release.pricingCheckedAt !== manifest.lastCheckedAt ||
         release.coverage.records !== manifest.records) throw new Error('The live release receipt did not match the pricing manifest.');
     return release;
@@ -176,7 +193,12 @@ export async function verifyPublicSecurity(site: string, options: ReleaseSecurit
   // deployment while it is still active. Every candidate requires both new headers.
   const stage5 = options.policy === 'preview' && options.observeCurrent === true && options.expectedApplication === undefined &&
     [html, fallback].every(response => !response.headers.has('x-frame-options') && !response.headers.has('strict-transport-security'));
-  [html, fallback].forEach(response => verifySecurityHeaders(response.headers, 'document', !stage5));
+  [html, fallback].forEach(response => {
+    verifySecurityHeaders(response.headers, 'document', !stage5);
+    if (strict && !response.headers.get('cache-control')?.split(',').some(value => value.trim().toLowerCase() === 'no-transform')) {
+      throw new Error('The production shell requires Cache-Control no-transform to prevent edge script injection.');
+    }
+  });
   if (stage5 || options.expectedApplication !== undefined) {
     const release = await readRelease(manifest);
     if (release.application !== (stage5 ? stage5Application : options.expectedApplication)) {

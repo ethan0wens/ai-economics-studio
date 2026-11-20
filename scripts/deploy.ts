@@ -4,16 +4,16 @@ import { readFile, writeFile } from 'node:fs/promises';
 import { createHash } from 'node:crypto';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import { parseConfigFileTextToJson } from 'typescript';
-import { catalogueFilename, catalogueSchema, manifestSchema } from '../src/catalogue';
+import { catalogueFilename, catalogueSchema, manifestSchema, maxCatalogueBytes, maxManifestBytes } from '../src/catalogue';
 import { catalogueCoverage } from '../src/coverage';
 import { maintenanceHealthSchema, releaseHealthSchema } from '../src/catalogue-health';
-import { documentAssetPaths, reportSecurityVerification, verifyPublicSecurity, previewOrigin } from './security-http';
+import { documentAssetPaths, parsePublishedReceipt, productionHostname, productionOrigin, reportSecurityVerification, verifyPublicSecurity } from './security-http';
 import { readResponseBytes } from '../src/untrusted-data';
 import { promoteWorker, workerReleases, type ActiveWorker } from './worker-release';
 
 const worker = 'ai-econmics-studio';
 const workersSubdomain = 'ethan0wens';
-const site = previewOrigin;
+const site = productionOrigin;
 const config = fileURLToPath(new URL('../wrangler.jsonc', import.meta.url));
 const wrangler = fileURLToPath(new URL('../node_modules/wrangler/bin/wrangler.js', import.meta.url));
 
@@ -22,27 +22,38 @@ export async function verifyWorker(configText: string, accountId?: string, token
   if (parsed.error || parsed.config?.name !== worker) {
     throw new Error(`wrangler.jsonc must target the existing Worker ${worker}.`);
   }
+  const routes: unknown = parsed.config.routes;
+  if (parsed.config.route !== undefined || (routes !== undefined && (!Array.isArray(routes) || routes.length !== 1 ||
+    routes[0]?.pattern !== productionHostname || routes[0]?.custom_domain !== true))) {
+    throw new Error(`Use the dashboard-managed Custom Domain ${productionHostname} or declare that exact custom_domain in Wrangler.`);
+  }
   if (!accountId || !/^[a-f0-9]{32}$/i.test(accountId) || !token) {
     throw new Error('Production deployment requires CLOUDFLARE_ACCOUNT_ID and CLOUDFLARE_API_TOKEN.');
   }
-  async function lookup(path: string, purpose: string) {
+  async function lookup(path: string, purpose: string): Promise<object> {
     const response = await request(`https://api.cloudflare.com/client/v4/accounts/${accountId}/workers/${path}`, {
-      headers: { Authorization: `Bearer ${token}` },
+      cache: 'no-store', credentials: 'omit',
+      headers: { Authorization: `Bearer ${token}`, 'Cache-Control': 'no-cache' },
       redirect: 'error',
       signal: AbortSignal.timeout(15_000),
     });
     if (!response.ok) throw new Error(`Cloudflare could not confirm ${purpose} (HTTP ${response.status}). Deployment stopped.`);
-    const body = await response.json() as { success?: boolean; result?: { subdomain?: string } };
+    const body = await response.json() as { success?: boolean; result?: object };
     if (body?.success !== true || typeof body.result !== 'object' || body.result === null) {
       throw new Error(`Cloudflare could not confirm ${purpose}. Deployment stopped.`);
     }
     return body.result;
   }
   const account = await lookup('subdomain', 'the Workers account subdomain');
-  if (account.subdomain !== workersSubdomain) {
+  if (!('subdomain' in account) || account.subdomain !== workersSubdomain) {
     throw new Error(`Expected the ${workersSubdomain}.workers.dev account subdomain. Deployment stopped.`);
   }
   await lookup(`scripts/${worker}/settings`, `the existing Worker ${worker}`);
+  const domains = await lookup(`domains?hostname=${productionHostname}`, 'the enabled Custom Domain binding');
+  if (!Array.isArray(domains) || domains.length !== 1 || domains[0]?.hostname !== productionHostname ||
+    domains[0]?.service !== worker || domains[0]?.zone_name !== 'ethan0wens.tech' || domains[0]?.enabled !== true) {
+    throw new Error(`Expected ${productionHostname} as an enabled Custom Domain on ${worker} in the ethan0wens.tech zone. Deployment stopped.`);
+  }
   return worker;
 }
 
@@ -82,23 +93,27 @@ function command(program: string, args: string[], env: NodeJS.ProcessEnv = clean
 }
 
 async function currentAssets() {
-  async function get(path: string) {
-    const response = await fetch(new URL(path, site), { redirect: 'error', cache: 'no-cache', signal: AbortSignal.timeout(12_000) });
+  async function get(path: string, max: number) {
+    const response = await fetch(new URL(path, site), {
+      redirect: 'error', cache: 'no-store', credentials: 'omit', headers: { 'Accept-Encoding': 'identity' }, signal: AbortSignal.timeout(12_000),
+    });
     if (!response.ok) throw new Error(`Cannot capture current production ${path} (HTTP ${response.status}).`);
-    return response.text();
+    return Buffer.from(await readResponseBytes(response, max, `Current production ${path}`));
   }
-  const [html, manifest, health] = await Promise.all([get('/'), get(manifestPath), get(healthPath).catch(() => '')]);
-  const catalogueId = manifestSchema.parse(JSON.parse(manifest)).catalogueId;
-  const parsed = (() => { try { return releaseHealthSchema.safeParse(JSON.parse(health).release); } catch { return undefined; } })();
-  const application = parsed?.success ? parsed.data.application : null;
-  const assets = new Map([['/', html], [manifestPath, manifest]]);
-  if (catalogueId) {
-    const path = `/pricing/${catalogueFilename(catalogueId)}`;
-    const raw = await get(path);
-    if (createHash('sha256').update(raw).digest('hex') !== catalogueId) throw new Error('Production rollback target catalogue hash could not be validated.');
-    assets.set(path, raw);
+  const [html, rawManifest, health] = await Promise.all([get('/', 128_000), get(manifestPath, maxManifestBytes), get(healthPath, 1_000_000)]);
+  const manifest = manifestSchema.parse(JSON.parse(rawManifest.toString('utf8')));
+  const { application, catalogueId } = parsePublishedReceipt(health);
+  if (!catalogueId || manifest.catalogueId !== catalogueId) throw new Error('The current production receipt did not match an applied catalogue.');
+  const path = `/pricing/${catalogueFilename(catalogueId)}`;
+  const [catalogue, entry] = await Promise.all([
+    get(path, maxCatalogueBytes),
+    Promise.all([...documentAssetPaths(html.toString('utf8')).assets].map(async asset => [asset, await get(asset, 6_000_000)] as const)),
+  ]);
+  if (createHash('sha256').update(catalogue).digest('hex') !== catalogueId) {
+    throw new Error('Production rollback target catalogue hash could not be validated.');
   }
-  if (parsed?.success) assets.set(healthPath, health);
+  const assets = new Map([['/', html], [manifestPath, rawManifest], [healthPath, health], [path, catalogue], ...entry]);
+  await verifyPublicSecurity(site, { policy: 'public', expectedCatalogueId: catalogueId, expectedApplication: application });
   return { application, catalogueId, assets };
 }
 
@@ -106,15 +121,18 @@ async function builtAssets(previous: ActiveWorker, previousAssets: Awaited<Retur
   const readAsset = (path: string) => readFile(new URL(`../dist${path}`, import.meta.url), 'utf8');
   const raw = await readAsset(manifestPath);
   const manifest = manifestSchema.parse(JSON.parse(raw));
+  const catalogueId = manifest.catalogueId;
+  if (!catalogueId) throw new Error('Production deployment requires a validated catalogue.');
   const html = await readAsset('/index.html');
   const assets = new Map<string, AssetContents>([['/', html], [manifestPath, raw]]);
   for (const path of documentAssetPaths(html).assets) assets.set(path, await readFile(new URL(`../dist${path}`, import.meta.url)));
-  const catalogue = manifest.catalogueId ? await readAsset(`/pricing/${catalogueFilename(manifest.catalogueId)}`) : undefined;
+  const cataloguePath = `/pricing/${catalogueFilename(catalogueId)}`;
+  const catalogue = await readAsset(cataloguePath);
   const checksum = (source: string) => createHash('sha256').update(source).digest('hex');
-  if (manifest.catalogueId && (!catalogue || checksum(catalogue) !== manifest.catalogueId)) throw new Error('Built pricing asset has an invalid checksum.');
-  if (manifest.catalogueId && catalogue) assets.set(`/pricing/${catalogueFilename(manifest.catalogueId)}`, catalogue);
-  const payload = catalogue && catalogueSchema.parse(JSON.parse(catalogue));
-  const coverage = catalogueCoverage({ manifest, records: payload ? payload.records : [], inventory: payload ? payload.inventory : undefined });
+  if (checksum(catalogue) !== catalogueId) throw new Error('Built pricing asset has an invalid checksum.');
+  assets.set(cataloguePath, catalogue);
+  const payload = catalogueSchema.parse(JSON.parse(catalogue));
+  const coverage = catalogueCoverage({ manifest, records: payload.records, inventory: payload.inventory });
   const sum = (key: 'discovered' | 'fully' | 'partial' | 'manual' | 'unsupported') => coverage.reduce((total, row) => total + row[key], 0);
   const evidence = await Promise.all(['commercial.json', 'compatibility.json', 'entitlements.json', 'provisioned.json', 'discovered.json', 'maintenance.json']
     .map(name => readFile(new URL(`../catalogue/${name}`, import.meta.url), 'utf8')));
@@ -127,7 +145,7 @@ async function builtAssets(previous: ActiveWorker, previousAssets: Awaited<Retur
   const health = JSON.stringify({ release, maintenance }, null, 2) + '\n';
   await writeFile(new URL(`../dist${healthPath}`, import.meta.url), health);
   assets.set(healthPath, health);
-  return { assets, manifest };
+  return { assets, catalogueId };
 }
 
 function assertUpstream(application: string) {
@@ -156,11 +174,12 @@ function publishCatalogue(application: string, token: string) {
   }
 }
 
-function liveBrowser(catalogueId: string | null) {
+function liveBrowser(catalogueId: string) {
   const browser = spawnSync('npm', ['run', 'test:e2e', '--', '--retries=1', 'tests/e2e/field-help.spec.ts',
     'tests/e2e/retail-first.spec.ts', 'tests/e2e/enterprise.spec.ts', 'tests/e2e/guided.spec.ts', 'tests/e2e/technical-docs.spec.ts',
-    'tests/e2e/documentation-links.spec.ts', 'tests/e2e/estimation.spec.ts', 'tests/e2e/value-review.spec.ts', 'tests/e2e/security.spec.ts', 'tests/e2e/brand.spec.ts'], {
-    stdio: 'inherit', env: { ...cleanEnv, STUDIO_TEST_URL: site, STUDIO_EXPECTED_CATALOGUE_ID: catalogueId ?? undefined, STUDIO_CHECK_RELEASE_HEALTH: '1', STUDIO_CHECK_PUBLISHED_CATALOGUE: '1' },
+    'tests/e2e/documentation-links.spec.ts', 'tests/e2e/estimation.spec.ts', 'tests/e2e/value-review.spec.ts',
+    'tests/e2e/security.spec.ts', 'tests/e2e/brand.spec.ts', 'tests/e2e/studio.spec.ts'], {
+    stdio: 'inherit', env: { ...cleanEnv, STUDIO_TEST_URL: site, STUDIO_EXPECTED_CATALOGUE_ID: catalogueId, STUDIO_CHECK_RELEASE_HEALTH: '1', STUDIO_CHECK_PUBLISHED_CATALOGUE: '1' },
   });
   if (browser.error) throw browser.error;
   if (browser.status !== 0) throw new Error(`Production browser reconciliation failed (exit ${browser.status ?? browser.signal}).`);
@@ -178,7 +197,7 @@ async function waitForPublishedAssets(assets: ReadonlyMap<string, AssetContents>
   for (let attempt = 1; ; attempt++) {
     try {
       await verifyPublishedAssets(assets);
-      report('notice', `Preview application and pricing assets match this build at ${site}`);
+      report('notice', `Application and pricing assets match this build at ${site}`);
       return;
     } catch (error) {
       if (attempt === 13) {
@@ -207,8 +226,8 @@ if (process.argv[1] && pathToFileURL(process.argv[1]).href === import.meta.url) 
       await readFile(new URL('../dist/pricing/manifest.json', import.meta.url), 'utf8')) {
       throw new Error('Staged deployment and Git publication use different catalogue manifests.');
     }
-    const { assets, manifest } = await builtAssets(previous, previousAssets, application);
-    report('notice', `Verified existing Worker ${site} with rollback target ${previous.version}`);
+    const { assets, catalogueId } = await builtAssets(previous, previousAssets, application);
+    report('notice', `Verified enabled Custom Domain ${productionHostname} on the existing Worker ${name} with rollback target ${previous.version}`);
     await promoteWorker({
       previous,
       upload() {
@@ -226,15 +245,15 @@ if (process.argv[1] && pathToFileURL(process.argv[1]).href === import.meta.url) 
       async verify() {
         await waitForPublishedAssets(assets);
         await reportSecurityVerification(await verifyPublicSecurity(site, {
-          policy: 'preview', expectedCatalogueId: manifest.catalogueId, expectedApplication: application,
+          policy: 'public', expectedCatalogueId: catalogueId, expectedApplication: application,
         }));
-        liveBrowser(manifest.catalogueId);
+        liveBrowser(catalogueId);
       },
       persist() { if (publish) publishCatalogue(application, publishToken!); },
       restore: worker.restore,
       verifyRestore: () => waitForPublishedAssets(previousAssets.assets),
     });
-    report('notice', `Preview browser reconciliation passed for application ${application}, catalogue ${manifest.catalogueId ?? 'unpriced bootstrap catalogue'} at ${site}`);
+    report('notice', `Production browser reconciliation passed for application ${application}, catalogue ${catalogueId} at ${site}`);
   } catch (error) {
     report('error', error instanceof Error ? error.message : String(error));
     process.exitCode = 1;

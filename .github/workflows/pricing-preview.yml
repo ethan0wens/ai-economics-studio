@@ -123,5 +123,5 @@ jobs:
           node-version: '24'
           cache: npm
       - run: npm ci --ignore-scripts
-      - name: Observe live preview delivery and record any exception
-        run: npm run security:preview -- --observe-current
+      - name: Observe current custom-domain delivery
+        run: npm run security:production -- --observe-current

@@ -1,22 +1,23 @@
 import { createHash } from 'node:crypto';
 import { describe, expect, it, vi } from 'vitest';
 import { verifyPublicRelease } from '../scripts/release-readiness';
-import { verifyPublicSecurity, workerUrl, type ReleaseSecurityPolicy } from '../scripts/security-http';
+import { browserIcons, previewOrigin, productionHostname, productionOrigin, verifyPublicSecurity, type ReleaseSecurityPolicy } from '../scripts/security-http';
 import { promoteWorker } from '../scripts/worker-release';
 
-const customSite = 'https://studio.example.test';
 const preview: ReleaseSecurityPolicy = { policy: 'preview' };
-const strict: ReleaseSecurityPolicy = { policy: 'public', approvedHostname: 'studio.example.test' };
 const app = 'a'.repeat(40);
 const stage5 = 'ba6b9c90e75beba0873003249286930f8ebdf024';
 const at = '2026-11-19T14:00:00Z';
 const html = '<!doctype html><html><head><script type="module" src="/assets/index-Abcd1234.js"></script><link rel="stylesheet" href="/assets/index-QWER5678.css"></head></html>';
+const productionHtml = html.replace('</head>', [...browserIcons].map(([path, { rel }]) =>
+  `<link rel="${rel}" href="${path}">`).join('') + '</head>');
 const raw = JSON.stringify({ schemaVersion: '1.0.0', records: [{
   meterId: 'fictional-meter', sku: 'fictional-sku', region: 'uksouth', unit: 'per request', quantityPerUnit: 1,
   priceType: 'Consumption', verification: 'azure-retail-api', currency: 'GBP', price: '10.25',
   effectiveAt: '2026-01-01T00:00:00Z', product: 'Fictional fixture', source: 'https://prices.azure.com/api/retail/prices',
 }] });
 const hash = createHash('sha256').update(raw).digest('hex');
+const strict: ReleaseSecurityPolicy = { policy: 'public', expectedApplication: app, expectedCatalogueId: hash };
 const manifest = { schemaVersion: '1.0.0', catalogueId: hash, records: 1, lastCheckedAt: at, previous: null };
 
 const documentHeaders = {
@@ -29,10 +30,12 @@ const immutable = { 'x-content-type-options': 'nosniff', 'cache-control': 'publi
 const plaintext = (body = html, status = 200) => new Response(body, { status, headers: { 'content-type': 'text/html' } });
 
 type Overrides = {
-  http?: () => Response;
+  http?: (url: URL) => Response;
+  failTLS?: Error;
+  catalogueMissing?: true;
   html?: string;
   alternate?: string;
-  missingHeaders?: string[];
+  missingHeaders?: readonly string[];
   mime?: string;
   iconMime?: string;
   iconCache?: string;
@@ -43,41 +46,45 @@ type Overrides = {
 function fixture(options: Overrides = {}) {
   return vi.fn<typeof fetch>(async input => {
     const url = new URL(String(input));
-    if (url.protocol === 'http:') return options.http ? options.http() : plaintext(options.html ?? html);
+    const shell = options.html ?? (url.hostname === productionHostname ? productionHtml : html);
+    if (url.protocol === 'http:') return options.http ? options.http(url) : plaintext(shell);
+    if (options.failTLS) throw options.failTLS;
     if (url.pathname === '/pricing/manifest.json') return Response.json(manifest, { headers: { 'x-content-type-options': 'nosniff', 'cache-control': 'no-cache' } });
     if (url.pathname === '/pricing/health.json') return Response.json({ release: {
       schemaVersion: 1, application: options.receipt ?? app, catalogueId: hash, pricingCheckedAt: at, evidenceHash: 'c'.repeat(64),
       deployedAt: at, status: 'published', coverage: { inventory: 1, complete: 1, partial: 0, unpriced: 0, unsupported: 0, records: 1 },
       previous: { cloudflareVersion: 'de767e83-1736-46c0-9097-f0fb93c570ff', catalogueId: null, application: null },
-    } });
-    if (url.pathname.startsWith('/pricing/catalogue-')) return new Response(options.catalogue ?? raw, { headers: immutable });
+    } }, { headers: { 'x-content-type-options': 'nosniff', 'cache-control': 'no-cache' } });
+    if (url.pathname.startsWith('/pricing/catalogue-')) return options.catalogueMissing
+      ? new Response(null, { status: 404 }) : new Response(options.catalogue ?? raw, { headers: immutable });
     if (url.pathname.endsWith('.js')) return new Response('', { headers: {
       ...immutable, 'cache-control': options.cache ?? immutable['cache-control'], 'content-type': options.mime ?? 'text/javascript',
     } });
     if (url.pathname.endsWith('.css')) return new Response('', { headers: { ...immutable, 'content-type': 'text/css; charset=utf-8' } });
-    if (url.pathname === '/brand/favicon.svg') return new Response('<svg xmlns="http://www.w3.org/2000/svg"></svg>', { headers: {
-      'x-content-type-options': 'nosniff', 'cache-control': options.iconCache ?? 'no-cache', 'content-type': options.iconMime ?? 'image/svg+xml',
+    const icon = browserIcons.get(url.pathname);
+    if (icon) return new Response('Fictional test asset', { headers: {
+      'x-content-type-options': 'nosniff', 'cache-control': options.iconCache ?? 'no-cache', 'content-type': options.iconMime ?? icon.mime[0],
     } });
     const headers = new Headers(documentHeaders);
     for (const key of options.missingHeaders ?? []) headers.delete(key);
     return new Response(url.pathname === '/documentation' && options.alternate !== undefined
-      ? options.alternate : options.html ?? html, { headers });
+      ? options.alternate : shell, { headers });
   });
 }
 
 describe('preview delivery', () => {
   it('checks the local favicon type and revalidation independently of the immutable scripts', async () => {
     const withIcon = html.replace('</head>', '<link rel="icon" href="/brand/favicon.svg"></head>');
-    await expect(verifyPublicSecurity(workerUrl, preview, fixture({ html: withIcon }))).resolves.toMatchObject({ exception: 'S6-10' });
-    await expect(verifyPublicSecurity(workerUrl, preview, fixture({ html: withIcon, iconMime: 'text/html' }))).rejects.toThrow('asset MIME type');
-    await expect(verifyPublicSecurity(workerUrl, preview, fixture({ html: withIcon, iconCache: immutable['cache-control'] }))).rejects.toThrow('cache policy');
+    await expect(verifyPublicSecurity(previewOrigin, preview, fixture({ html: withIcon }))).resolves.toMatchObject({ exception: 'S6-10' });
+    await expect(verifyPublicSecurity(previewOrigin, preview, fixture({ html: withIcon, iconMime: 'text/html' }))).rejects.toThrow('asset MIME type');
+    await expect(verifyPublicSecurity(previewOrigin, preview, fixture({ html: withIcon, iconCache: immutable['cache-control'] }))).rejects.toThrow('cache policy');
   });
 
   it('records the byte-identical HTTP shell as S6-10 on the existing host and verifies HTTPS', async () => {
     const request = fixture();
-    await expect(verifyPublicSecurity(workerUrl, { ...preview, expectedCatalogueId: hash, expectedApplication: app }, request))
+    await expect(verifyPublicSecurity(previewOrigin, { ...preview, expectedCatalogueId: hash, expectedApplication: app }, request))
       .resolves.toMatchObject({
-        hostname: new URL(workerUrl).hostname, policy: 'preview', decision: 'conditional-pass-preview-only',
+        hostname: new URL(previewOrigin).hostname, policy: 'preview', decision: 'conditional-pass-preview-only',
         https: { verified: true, headers: 'hardened', catalogueId: hash }, http: { status: 200, outcome: 'plaintext-shell' },
         exception: 'S6-10', warnings: [expect.stringContaining('Custom-domain HTTPS enforcement is mandatory')],
       });
@@ -88,17 +95,17 @@ describe('preview delivery', () => {
   it('limits the temporary receipt check to the identified Stage 5 release and read-only observation', async () => {
     const missingHeaders = ['strict-transport-security', 'x-frame-options'];
     const options = { policy: 'preview', observeCurrent: true } as const;
-    await expect(verifyPublicSecurity(workerUrl, options, fixture({ missingHeaders, receipt: stage5 })))
+    await expect(verifyPublicSecurity(previewOrigin, options, fixture({ missingHeaders, receipt: stage5 })))
       .resolves.toMatchObject({ decision: 'stage-5-observation', https: { headers: 'stage-5-baseline' }, exception: 'S6-10' });
-    await expect(verifyPublicSecurity(workerUrl, options, fixture({ missingHeaders }))).rejects.toThrow('revision did not match');
-    await expect(verifyPublicSecurity(workerUrl, preview, fixture({ missingHeaders, receipt: stage5 }))).rejects.toThrow('x-frame-options');
-    await expect(verifyPublicSecurity(workerUrl, options, fixture({ missingHeaders: ['strict-transport-security'], receipt: stage5 })))
+    await expect(verifyPublicSecurity(previewOrigin, options, fixture({ missingHeaders }))).rejects.toThrow('revision did not match');
+    await expect(verifyPublicSecurity(previewOrigin, preview, fixture({ missingHeaders, receipt: stage5 }))).rejects.toThrow('x-frame-options');
+    await expect(verifyPublicSecurity(previewOrigin, options, fixture({ missingHeaders: ['strict-transport-security'], receipt: stage5 })))
       .rejects.toThrow('strict-transport-security');
   });
 
   it('checks the candidate application and catalogue identifiers', async () => {
-    await expect(verifyPublicSecurity(workerUrl, { ...preview, expectedApplication: 'b'.repeat(40) }, fixture())).rejects.toThrow('revision did not match');
-    await expect(verifyPublicSecurity(workerUrl, { ...preview, expectedCatalogueId: 'b'.repeat(64) }, fixture())).rejects.toThrow('different catalogue');
+    await expect(verifyPublicSecurity(previewOrigin, { ...preview, expectedApplication: 'b'.repeat(40) }, fixture())).rejects.toThrow('revision did not match');
+    await expect(verifyPublicSecurity(previewOrigin, { ...preview, expectedCatalogueId: 'b'.repeat(64) }, fixture())).rejects.toThrow('different catalogue');
   });
 
   it.each([
@@ -118,12 +125,12 @@ describe('preview delivery', () => {
     ['unrelated HTTP network failure', { http: () => { throw new Error('fixture connection refused'); } }, 'fixture connection refused'],
   ] as const)('rejects %s despite the preview exception', async (_label, options, message) => {
     const configured = 'missingHeaders' in options ? { missingHeaders: [...options.missingHeaders] } : options;
-    await expect(verifyPublicSecurity(workerUrl, preview, fixture(configured))).rejects.toThrow(message);
+    await expect(verifyPublicSecurity(previewOrigin, preview, fixture(configured))).rejects.toThrow(message);
   });
 
   it('fails before fetching another workers.dev host or custom domain', async () => {
     const request = fixture();
-    for (const url of ['https://other.example.workers.dev', customSite, workerUrl + ':444', workerUrl + '/unapproved']) {
+    for (const url of ['https://other.example.workers.dev', productionOrigin, previewOrigin + ':444', previewOrigin + '/unapproved']) {
       await expect(verifyPublicSecurity(url, preview, request)).rejects.toThrow();
     }
     expect(request).not.toHaveBeenCalled();
@@ -133,24 +140,53 @@ describe('preview delivery', () => {
 describe('strict public release', () => {
   it('rejects the preview hostname before probing even with an otherwise valid response', async () => {
     const request = fixture();
-    await expect(verifyPublicSecurity(workerUrl, { policy: 'public', approvedHostname: new URL(workerUrl).hostname }, request))
+    await expect(verifyPublicSecurity(previewOrigin, strict, request))
       .rejects.toThrow('approved custom domain');
+    await expect(verifyPublicSecurity('https://studio.example.test', strict, request)).rejects.toThrow('approved custom domain');
     expect(request).not.toHaveBeenCalled();
   });
 
   it('requires verifiable delivery and mandatory HTTPS checks on the approved domain', async () => {
-    const redirect = () => Response.redirect(customSite, 308);
+    const redirect = (url: URL) => Response.redirect(new URL(url.pathname + url.search, productionOrigin), 308);
     const refusal = () => new Response('Cloudflare denial', { status: 403, headers: { server: 'cloudflare', 'cf-ray': 'abcd0123abcd0123-LHR' } });
-    await expect(verifyPublicSecurity(customSite, strict, fixture())).rejects.toThrow('Public plaintext delivery check failed');
-    await expect(verifyPublicSecurity(customSite, strict, fixture({ http: () => Response.redirect(workerUrl) }))).rejects.toThrow('Unexpected plaintext');
-    await expect(verifyPublicSecurity(customSite, strict, fixture({ http: redirect }))).resolves.toMatchObject({
-      decision: 'pass-public-delivery', http: { status: 308, outcome: 'redirected' }, exception: null, warnings: [],
+    await expect(verifyPublicSecurity(productionOrigin, strict, fixture())).rejects.toThrow('Public plaintext delivery check failed');
+    await expect(verifyPublicSecurity(productionOrigin, strict, fixture({ http: () => Response.redirect(previewOrigin) }))).rejects.toThrow('Unexpected plaintext');
+    await expect(verifyPublicSecurity(productionOrigin, strict, fixture({ http: redirect }))).resolves.toMatchObject({
+      decision: 'pass-public-delivery', http: { status: 308, outcome: 'redirected' },
+      pathTransport: { status: 308, outcome: 'redirected', path: '/documentation?studio_transport_probe=1' }, exception: null, warnings: [],
     });
-    await expect(verifyPublicSecurity(customSite, strict, fixture({ http: refusal }))).resolves.toMatchObject({
+    await expect(verifyPublicSecurity(productionOrigin, strict, fixture({ http: refusal }))).resolves.toMatchObject({
       http: { status: 403, outcome: 'cloudflare-refused' }, exception: null,
     });
-    await expect(verifyPublicSecurity(customSite, strict, fixture({ http: redirect, missingHeaders: ['x-frame-options'] })))
+    await expect(verifyPublicSecurity(productionOrigin, strict, fixture({ http: redirect, missingHeaders: ['x-frame-options'] })))
       .rejects.toThrow('x-frame-options');
+  });
+
+  it('rejects a path or query change and a plaintext shell below the root', async () => {
+    for (const path of ['/different?studio_transport_probe=1', '/documentation', '/documentation?studio_transport_probe=2']) {
+      const request = fixture({ http: url => Response.redirect(new URL(url.pathname === '/' ? '/' : path, productionOrigin), 301) });
+      await expect(verifyPublicSecurity(productionOrigin, strict, request)).rejects.toThrow('Unexpected plaintext');
+    }
+    await expect(verifyPublicSecurity(productionOrigin, strict, fixture({
+      http: url => url.pathname === '/' ? Response.redirect(productionOrigin, 308) : plaintext(productionHtml),
+    }))).rejects.toThrow('Public plaintext delivery check failed');
+  });
+
+  it('fails closed on TLS errors, missing pricing assets, a stale receipt or missing icons', async () => {
+    const http = (url: URL) => Response.redirect(new URL(url.pathname + url.search, productionOrigin), 308);
+    for (const [override, message] of [
+      [{ failTLS: new Error('certificate hostname mismatch') }, 'certificate hostname mismatch'],
+      [{ catalogueMissing: true }, 'HTTP 404'],
+      [{ receipt: 'b'.repeat(40) }, 'revision did not match'],
+      [{ missingHeaders: ['strict-transport-security'] }, 'strict-transport-security'],
+      [{ html }, 'missing approved stylesheet or icon'],
+    ] as const) {
+      await expect(verifyPublicSecurity(productionOrigin, strict, fixture({ ...override, http }))).rejects.toThrow(message);
+    }
+    const request = fixture({ http });
+    await expect(verifyPublicSecurity(productionOrigin, { ...strict, expectedCatalogueId: '' }, request))
+      .rejects.toThrow('requires an expected application revision and catalogue digest');
+    expect(request).not.toHaveBeenCalled();
   });
 
   it('blocks missing evidence or open S6-10 independently of a successful preview assessment', async () => {
@@ -159,12 +195,13 @@ describe('strict public release', () => {
       application: app, catalogueId: hash, reviewedOn: '2026-11-19', edgeEnforcement: reference, repositoryProtections: reference,
       deploymentTokenScope: reference, securityAndFinancialChecks: reference, verifiedDeployment: reference, riskRegisterReview: reference, publicReleaseApproval: reference,
     };
-    const request = fixture({ http: () => Response.redirect(customSite, 308) });
+    const request = fixture({ http: url => Response.redirect(new URL(url.pathname + url.search, productionOrigin), 308) });
     await expect(verifyPublicRelease({ hostname: null, s6_10: 'accepted-preview-only', evidence: null }, request)).rejects.toThrow('approved custom domain');
-    await expect(verifyPublicRelease({ hostname: 'studio.example.test', s6_10: 'resolved', evidence: null }, request)).rejects.toThrow('evidence');
-    await expect(verifyPublicRelease({ hostname: 'studio.example.test', s6_10: 'accepted-preview-only', evidence }, request)).rejects.toThrow('remediation of S6-10');
+    await expect(verifyPublicRelease({ hostname: productionHostname, s6_10: 'resolved', evidence: null }, request)).rejects.toThrow('evidence');
+    await expect(verifyPublicRelease({ hostname: 'studio.example.test', s6_10: 'resolved', evidence }, request)).rejects.toThrow('approved custom domain');
+    await expect(verifyPublicRelease({ hostname: productionHostname, s6_10: 'accepted-preview-only', evidence }, request)).rejects.toThrow('remediation of S6-10');
     expect(request).not.toHaveBeenCalled();
-    await expect(verifyPublicRelease({ hostname: 'studio.example.test', s6_10: 'resolved', evidence }, request)).resolves.toMatchObject({
+    await expect(verifyPublicRelease({ hostname: productionHostname, s6_10: 'resolved', evidence }, request)).resolves.toMatchObject({
       decision: 'pass-public-delivery', exception: null,
     });
   });
@@ -183,7 +220,7 @@ it('persists catalogue after verified preview and restores on a separate failed 
       upload() { active = next; return next.version; },
       current: async () => active,
       verify: async () => {
-        await verifyPublicSecurity(workerUrl, preview, fixture(unexpected ? { missingHeaders: ['strict-transport-security'] } : {}));
+        await verifyPublicSecurity(previewOrigin, preview, fixture(unexpected ? { missingHeaders: ['strict-transport-security'] } : {}));
       },
       persist, restore, verifyRestore,
     });

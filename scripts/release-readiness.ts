@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { publicHostname, verifyPublicSecurity } from './security-http';
+import { productionHostname, productionOrigin, verifyPublicSecurity } from './security-http';
 
 export const publicReleaseReminder = 'Before wider public release, use the approved custom domain and verify Cloudflare HTTPS enforcement. S6-10 is accepted for the current preview only.';
 const reviewReference = z.url().refine(value => {
@@ -28,13 +28,13 @@ export async function verifyPublicRelease(record: unknown, request = fetch) {
   if (!parsed.success) throw new Error('Wider public release is blocked. The public release evidence record is invalid.');
   const { hostname, s6_10, evidence } = parsed.data;
   const missing = [
-    ...(!hostname || !publicHostname(hostname) ? ['the approved custom domain'] : []),
+    ...(hostname !== productionHostname ? ['the approved custom domain'] : []),
     ...(s6_10 !== 'resolved' ? ['verified remediation of S6-10'] : []),
     ...(!evidence ? ['owner, security, regression and deployment evidence'] : []),
   ];
   if (!hostname || !evidence || missing.length) throw new Error(`Wider public release is blocked. Required: ${missing.join('; ')}.`);
-  return verifyPublicSecurity(`https://${hostname}`, {
-    policy: 'public', approvedHostname: hostname, expectedCatalogueId: evidence.catalogueId,
+  return verifyPublicSecurity(productionOrigin, {
+    policy: 'public', expectedCatalogueId: evidence.catalogueId,
     expectedApplication: evidence.application,
   }, request);
 }

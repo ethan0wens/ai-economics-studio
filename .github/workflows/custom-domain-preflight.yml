@@ -1,0 +1,99 @@
+name: Observe the Studio custom domain
+
+on:
+  push:
+    branches: [work]
+    paths:
+      - '.github/workflows/custom-domain-preflight.yml'
+      - 'scripts/security-http.ts'
+      - 'scripts/security-check.ts'
+      - 'docs/security/public-release.json'
+  workflow_dispatch:
+    inputs:
+      application:
+        description: Full Git revision from the verified live release
+        required: true
+        type: string
+      catalogue:
+        description: SHA-256 of the verified live catalogue
+        required: true
+        type: string
+
+permissions:
+  contents: read
+
+concurrency:
+  group: custom-domain-preflight-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  observe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      STUDIO_EXPECTED_APPLICATION: ${{ inputs.application || '654dd094c55685564ce15dbfa37e6feff5f88e47' }}
+      STUDIO_EXPECTED_CATALOGUE_ID: ${{ inputs.catalogue || '4bce81cee67a11aff49c47212877f6c026b68c4661a6893f158528bc4b54090d' }}
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        with:
+          node-version: '24'
+          cache: npm
+      - name: Observe public DNS, TLS and edge responses without credentials
+        run: |
+          node --input-type=module <<'JS'
+          import { Resolver } from 'node:dns/promises';
+          import { appendFile } from 'node:fs/promises';
+          import { connect } from 'node:tls';
+
+          const host = 'studio.ethan0wens.tech';
+          const dns = new Resolver({ timeout: 4000, tries: 2 });
+          const observed = async (label, check) => {
+            let result;
+            try { result = await check(); } catch (error) {
+              result = [error.code, error.message, error.cause?.message].filter(Boolean).join(' · ');
+            }
+            return `${label} · ${result}`;
+          };
+          const records = [
+            ['ethan0wens.tech', 'NS'], [host, 'A'], [host, 'AAAA'], [host, 'CNAME'],
+          ].map(([name, type]) => observed(`${name} ${type}`, async () => (await dns.resolve(name, type)).join(', ')));
+          const tls = observed('TLS certificate', () => new Promise((resolve, reject) => {
+            const socket = connect({ host, servername: host, port: 443, rejectUnauthorized: true });
+            socket.once('error', reject);
+            socket.setTimeout(10_000, () => socket.destroy(new Error('TLS probe timed out')));
+            socket.once('secureConnect', () => {
+              const peer = socket.getPeerCertificate();
+              resolve(`${socket.getProtocol()} · ${peer.subjectaltname} · issuer ${peer.issuer?.CN} · valid ${peer.valid_from} to ${peer.valid_to}`);
+              socket.end();
+            });
+          }));
+          const urls = [
+            `https://${host}/`, `http://${host}/`, `http://${host}/documentation?studio_transport_probe=1`,
+          ].map(url => observed(url, async () => {
+            const response = await fetch(url, { redirect: 'manual', credentials: 'omit', signal: AbortSignal.timeout(12_000) });
+            await response.body?.cancel();
+            const headers = ['location', 'server', 'cf-ray', 'strict-transport-security'].flatMap(name => {
+              const value = response.headers.get(name);
+              return value ? [`${name}=${value}`] : [];
+            });
+            return [`HTTP ${response.status}`, ...headers].join(' · ');
+          }));
+          const lines = await Promise.all([...records, tls, ...urls]);
+          for (const line of lines) {
+            console.log('::notice title=Studio domain observation::' + line.replaceAll('%', '%25').replaceAll('\r', '%0D').replaceAll('\n', '%0A'));
+          }
+          await appendFile(process.env.GITHUB_STEP_SUMMARY, '## Studio domain observations\n\n' + lines.map(line => '- ' + line).join('\n') + '\n');
+          JS
+      - run: npm ci --ignore-scripts
+      - name: Verify strict transport, published receipt and catalogue
+        run: npm run security:production -- "$STUDIO_EXPECTED_APPLICATION" "$STUDIO_EXPECTED_CATALOGUE_ID"
+      - uses: ./.github/actions/setup-browser
+      - name: Verify the Studio in Chromium on the custom domain
+        run: npm run test:e2e
+        env:
+          STUDIO_TEST_URL: https://studio.ethan0wens.tech
+          STUDIO_CHECK_RELEASE_HEALTH: '1'
+          STUDIO_CHECK_PUBLISHED_CATALOGUE: '1'

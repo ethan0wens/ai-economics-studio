@@ -7,13 +7,13 @@ import { parseConfigFileTextToJson } from 'typescript';
 import { catalogueFilename, catalogueSchema, manifestSchema } from '../src/catalogue';
 import { catalogueCoverage } from '../src/coverage';
 import { maintenanceHealthSchema, releaseHealthSchema } from '../src/catalogue-health';
-import { documentAssetPaths, reportSecurityVerification, verifyPublicSecurity, workerUrl } from './security-http';
+import { documentAssetPaths, reportSecurityVerification, verifyPublicSecurity, previewOrigin } from './security-http';
 import { readResponseBytes } from '../src/untrusted-data';
 import { promoteWorker, workerReleases, type ActiveWorker } from './worker-release';
 
 const worker = 'ai-econmics-studio';
 const workersSubdomain = 'ethan0wens';
-const site = workerUrl;
+const site = previewOrigin;
 const config = fileURLToPath(new URL('../wrangler.jsonc', import.meta.url));
 const wrangler = fileURLToPath(new URL('../node_modules/wrangler/bin/wrangler.js', import.meta.url));
 

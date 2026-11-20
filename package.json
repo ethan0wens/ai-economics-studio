@@ -25,6 +25,7 @@
     "security:build": "tsx scripts/security-build.ts",
     "security:http": "tsx scripts/security-check.ts",
     "security:preview": "tsx scripts/security-check.ts preview",
+    "security:production": "tsx scripts/security-check.ts production",
     "release:public": "tsx scripts/security-check.ts public"
   },
   "dependencies": {

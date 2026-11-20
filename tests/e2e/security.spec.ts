@@ -1,14 +1,19 @@
 import { readFile } from 'node:fs/promises';
 import { expect, test } from '@playwright/test';
 import { blankEnvironment, maxBytes } from '../../src/domain';
+import { productionOrigin } from '../../src/studio-origins';
 import { getFile, nav, start } from './studio-fixture';
 
 test('a normal workspace downloads locally and neither transmits nor persists its data', async ({ page, context }) => {
   const requests: { url: string; method: string; body: string | null }[] = [];
+  const mixedContent: string[] = [];
   page.on('request', request => requests.push({ url: request.url(), method: request.method(), body: request.postData() }));
+  page.on('console', message => { if (/mixed content/i.test(message.text())) mixedContent.push(message.text()); });
   const marker = 'Fictional private environment marker';
   await start(page, marker);
   const origin = new URL(page.url()).origin;
+  expect(await page.evaluate(() => window.isSecureContext)).toBe(true);
+  if (process.env.STUDIO_TEST_URL === productionOrigin) expect(origin).toBe(productionOrigin);
   const beforeCookies = await context.cookies();
   await nav(page, 'Reports & Export').click();
   const json = JSON.parse((await getFile(page, 'Export JSON')).toString());
@@ -19,6 +24,7 @@ test('a normal workspace downloads locally and neither transmits nor persists it
     const target = new URL(url);
     return { origin: target.origin, path: target.pathname, method, hasBody: body !== null };
   })).toEqual([]);
+  expect(mixedContent).toEqual([]);
   expect(await page.evaluate(async () => [localStorage.length, sessionStorage.length, (await indexedDB.databases()).length])).toEqual([0, 0, 0]);
   expect(await context.cookies()).toEqual(beforeCookies);
   await page.reload();

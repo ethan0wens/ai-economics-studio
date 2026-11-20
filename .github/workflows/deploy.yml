@@ -2,6 +2,8 @@ name: Deploy static Studio to the custom domain
 on:
   push:
     branches: [main]
+    paths-ignore:
+      - 'docs/security/public-release.json'
   workflow_dispatch:
 
 permissions:

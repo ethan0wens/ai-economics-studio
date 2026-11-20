@@ -1,7 +1,7 @@
 import { createHash } from 'node:crypto';
 import { describe, expect, it, vi } from 'vitest';
 import { verifyPublicRelease } from '../scripts/release-readiness';
-import { browserIcons, observeProductionSecurity, previewOrigin, productionHostname, productionOrigin, verifyPublicSecurity, type ReleaseSecurityPolicy } from '../scripts/security-http';
+import { browserIcons, observeProductionSecurity, previewOrigin, productionHostname, productionOrigin, verifyPublicSecurity, verifyRetiredPreview, type ReleaseSecurityPolicy } from '../scripts/security-http';
 import { promoteWorker } from '../scripts/worker-release';
 
 const preview: ReleaseSecurityPolicy = { policy: 'preview' };
@@ -223,6 +223,32 @@ describe('strict public release', () => {
     await expect(verifyPublicRelease({ hostname: productionHostname, s6_10: 'resolved', evidence }, request)).resolves.toMatchObject({
       decision: 'pass-public-delivery', exception: null,
     });
+  });
+});
+
+describe('retired workers.dev delivery', () => {
+  const refusal = (body = 'Cloudflare denial') => new Response(body, {
+    status: 404, headers: { server: 'cloudflare', 'cf-ray': 'abcd0123abcd0123-LHR' },
+  });
+
+  it('requires Cloudflare to refuse both protocols or direct HTTP to the refused HTTPS endpoint', async () => {
+    await expect(verifyRetiredPreview(vi.fn<typeof fetch>().mockImplementation(async () => refusal())))
+      .resolves.toEqual({ httpsStatus: 404, httpStatus: 404 });
+    const request = vi.fn<typeof fetch>(async input =>
+      String(input).startsWith('https:') ? refusal() : Response.redirect(previewOrigin, 301));
+    await expect(verifyRetiredPreview(request)).resolves.toEqual({ httpsStatus: 404, httpStatus: 301 });
+    expect(request.mock.calls.map(([url]) => String(url))).toEqual([previewOrigin + '/', previewOrigin.replace('https:', 'http:') + '/']);
+    expect(request.mock.calls[0][1]).toMatchObject({ redirect: 'manual', credentials: 'omit' });
+  });
+
+  it('rejects active studio delivery, unverified denials or redirects to any other endpoint', async () => {
+    for (const response of [() => plaintext(html), () => refusal('<div id="root"></div>'),
+      () => new Response(null, { status: 404 }), () => Response.redirect(productionOrigin, 301)]) {
+      await expect(verifyRetiredPreview(vi.fn<typeof fetch>(async input =>
+        String(input).startsWith('https:') ? refusal() : response()))).rejects.toThrow('did not refuse the studio over HTTP');
+    }
+    await expect(verifyRetiredPreview(vi.fn<typeof fetch>(async input => String(input).startsWith('https:')
+      ? plaintext(html) : Response.redirect(previewOrigin, 301)))).rejects.toThrow('did not refuse the studio over HTTPS');
   });
 });
 

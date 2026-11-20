@@ -70,6 +70,13 @@ it('uses the serving deployment in Cloudflare response order even if history tim
 });
 
 describe('custom-domain deployment configuration', () => {
+  it('requires preview URLs to be disabled alongside workers.dev', async () => {
+    const configText = '{"name":"ai-econmics-studio","workers_dev":false}';
+    const request = vi.fn<typeof fetch>();
+    await expect(verifyWorker(configText, account, token, request)).rejects.toThrow('requires preview_urls');
+    expect(request).not.toHaveBeenCalled();
+  });
+
   it('accepts the exact Custom Domain declaration and rejects an ordinary or foreign route', async () => {
     const base = JSON.parse(config);
     const pattern = productionBinding.hostname;
@@ -91,6 +98,20 @@ describe('custom-domain deployment configuration', () => {
         .rejects.toThrow('enabled Custom Domain on ai-econmics-studio');
     }
   });
+});
+
+it('requires both Cloudflare preview settings to be explicitly disabled', async () => {
+  const request = vi.fn<typeof fetch>()
+    .mockResolvedValueOnce(success({ enabled: false, previews_enabled: false }))
+    .mockResolvedValueOnce(success({ enabled: false, previews_enabled: true }))
+    .mockResolvedValueOnce(success({ enabled: false }));
+  const releases = workerReleases(account, token, 'ai-econmics-studio', request);
+  await expect(releases.confirmPreviewDisabled()).resolves.toBeUndefined();
+  await expect(releases.confirmPreviewDisabled()).rejects.toThrow('did not confirm');
+  await expect(releases.confirmPreviewDisabled()).rejects.toThrow('did not confirm');
+  expect(request.mock.calls[0]).toEqual([
+    `${endpoint}/scripts/ai-econmics-studio/subdomain`, expect.objectContaining({ method: 'GET', cache: 'no-store', redirect: 'error' }),
+  ]);
 });
 
 describe('public deployment verification', () => {

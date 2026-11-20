@@ -7,26 +7,30 @@ const activeSchema = z.object({ id: z.uuid(),
 export type ActiveWorker = { deployment: string; version: string };
 
 export function workerReleases(account: string, token: string, name: string, request = fetch) {
-  const endpoint = `https://api.cloudflare.com/client/v4/accounts/${account}/workers/scripts/${name}/deployments`;
-  async function api(body?: object) {
-    const response = await request(endpoint, {
+  const endpoint = `https://api.cloudflare.com/client/v4/accounts/${account}/workers/scripts/${name}`;
+  async function api(resource: 'deployments' | 'subdomain', body?: object) {
+    const response = await request(`${endpoint}/${resource}`, {
       method: body ? 'POST' : 'GET', redirect: 'error', signal: AbortSignal.timeout(18_000),
       cache: 'no-store', credentials: 'omit',
       headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json', 'Cache-Control': 'no-cache' },
       body: body && JSON.stringify(body),
     });
-    if (!response.ok) throw new Error(`Cloudflare deployment API returned HTTP ${response.status}.`);
+    if (!response.ok) throw new Error(`Cloudflare ${resource} API returned HTTP ${response.status}.`);
     return z.object({ success: z.literal(true), result: z.unknown() }).parse(await response.json()).result;
   }
   return {
     async current(): Promise<ActiveWorker> {
-      const result = z.object({ deployments: z.array(z.unknown()).min(1) }).parse(await api());
+      const result = z.object({ deployments: z.array(z.unknown()).min(1) }).parse(await api('deployments'));
       // Cloudflare documents the first deployment as the actively serving deployment.
       const selected = activeSchema.parse(result.deployments[0]);
       return { deployment: selected.id, version: selected.versions[0].version_id };
     },
+    async confirmPreviewDisabled() {
+      const state = z.object({ enabled: z.literal(false), previews_enabled: z.literal(false) }).safeParse(await api('subdomain'));
+      if (!state.success) throw new Error('Cloudflare did not confirm that workers.dev and its Preview URLs are disabled.');
+    },
     async restore(version: string) {
-      await api({ strategy: 'percentage', versions: [{ version_id: z.uuid().parse(version), percentage: 100 }],
+      await api('deployments', { strategy: 'percentage', versions: [{ version_id: z.uuid().parse(version), percentage: 100 }],
         annotations: { 'workers/message': 'Restore the last verified AI Economics Studio release after failed promotion' } });
     },
   };

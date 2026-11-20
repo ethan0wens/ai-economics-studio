@@ -103,6 +103,11 @@ export function documentAssetPaths(source: string) {
   return { script: scripts[0], assets };
 }
 
+function cloudflareRefusal(response: Response) {
+  return [400, 403, 404, 421, 426].includes(response.status) && response.headers.get('server') === 'cloudflare' &&
+    /^[a-f0-9]{16,32}-[a-z0-9]{3}$/i.test(response.headers.get('cf-ray') ?? '');
+}
+
 async function plaintextOutcome(response: Response, from: URL, expected: URL, shell: Uint8Array): Promise<Transport> {
   const location = response.headers.get('location');
   const status = response.status;
@@ -110,12 +115,30 @@ async function plaintextOutcome(response: Response, from: URL, expected: URL, sh
   const sameShell = bytes !== undefined && Buffer.from(shell).equals(bytes);
   const mime = response.headers.get('content-type')?.split(';', 1)[0].trim().toLowerCase();
   const redirect = [301, 302, 307, 308].includes(status);
-  const refusal = [400, 403, 404, 421, 426].includes(status) && response.headers.get('server') === 'cloudflare' &&
-    /^[a-f0-9]{16,32}-[a-z0-9]{3}$/i.test(response.headers.get('cf-ray') ?? '');
   if (redirect && location && URL.parse(location, from)?.href === expected.href && !sameShell) return { status, outcome: 'redirected' };
-  if (refusal && !location && !sameShell) return { status, outcome: 'cloudflare-refused' };
+  if (cloudflareRefusal(response) && !location && !sameShell) return { status, outcome: 'cloudflare-refused' };
   if (status === 200 && !location && mime === 'text/html' && sameShell) return { status, outcome: 'plaintext-shell' };
   throw new Error(`Unexpected plaintext HTTP response (HTTP ${status}) for ${from.pathname}${from.search}. Expected an exact HTTPS redirect, Cloudflare refusal or the known application shell.`);
+}
+
+export async function verifyRetiredPreview(request = fetch) {
+  const https = new URL(previewOrigin);
+  const http = new URL(https.href);
+  http.protocol = 'http:';
+  const checks = await Promise.all([https, http].map(async url => {
+    const response = await request(url, { redirect: 'manual', cache: 'no-store', credentials: 'omit', signal: AbortSignal.timeout(12_000) });
+    const location = response.headers.get('location');
+    const body = response.body ? decodeUtf8(await readResponseBytes(response, maxShellBytes, 'Retired preview response')) : '';
+    const appShell = /id\s*=\s*['"]root['"]/i.test(body);
+    const refused = cloudflareRefusal(response) && !location;
+    const toRefusedHttps = url.protocol === 'http:' && [301, 302, 307, 308].includes(response.status) &&
+      location && URL.parse(location, url)?.href === https.href;
+    if (appShell || (!refused && !toRefusedHttps)) {
+      throw new Error(`The retired workers.dev endpoint did not refuse the studio over ${url.protocol.slice(0, -1).toUpperCase()} (HTTP ${response.status}).`);
+    }
+    return response.status;
+  }));
+  return { httpsStatus: checks[0], httpStatus: checks[1] };
 }
 
 export function parsePublishedReceipt(bytes: Uint8Array) {

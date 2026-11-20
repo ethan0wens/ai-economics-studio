@@ -7,7 +7,7 @@ import { parseConfigFileTextToJson } from 'typescript';
 import { catalogueFilename, catalogueSchema, manifestSchema, maxCatalogueBytes, maxManifestBytes } from '../src/catalogue';
 import { catalogueCoverage } from '../src/coverage';
 import { maintenanceHealthSchema, releaseHealthSchema } from '../src/catalogue-health';
-import { documentAssetPaths, parsePublishedReceipt, productionHostname, productionOrigin, reportSecurityVerification, verifyPublicSecurity } from './security-http';
+import { documentAssetPaths, parsePublishedReceipt, productionHostname, productionOrigin, reportSecurityVerification, verifyPublicSecurity, verifyRetiredPreview } from './security-http';
 import { readResponseBytes } from '../src/untrusted-data';
 import { promoteWorker, workerReleases, type ActiveWorker } from './worker-release';
 
@@ -21,6 +21,9 @@ export async function verifyWorker(configText: string, accountId?: string, token
   const parsed = parseConfigFileTextToJson(config, configText);
   if (parsed.error || parsed.config?.name !== worker) {
     throw new Error(`wrangler.jsonc must target the existing Worker ${worker}.`);
+  }
+  if (parsed.config.workers_dev === false && parsed.config.preview_urls !== false) {
+    throw new Error('Retiring workers.dev also requires preview_urls to be false.');
   }
   const routes: unknown = parsed.config.routes;
   if (parsed.config.route !== undefined || (routes !== undefined && (!Array.isArray(routes) || routes.length !== 1 ||
@@ -193,11 +196,11 @@ function report(status: 'notice' | 'error', message: string) {
   else console.log(message);
 }
 
-async function waitForPublishedAssets(assets: ReadonlyMap<string, AssetContents>) {
+async function waitForPublishedAssets(assets: ReadonlyMap<string, AssetContents>, release: 'candidate' | 'rollback target') {
   for (let attempt = 1; ; attempt++) {
     try {
       await verifyPublishedAssets(assets);
-      report('notice', `Application and pricing assets match this build at ${site}`);
+      report('notice', `Application and pricing assets match the ${release} at ${site}`);
       return;
     } catch (error) {
       if (attempt === 13) {
@@ -215,7 +218,9 @@ if (process.argv[1] && pathToFileURL(process.argv[1]).href === import.meta.url) 
     if (publish && !publishToken) throw new Error('Catalogue publication requires the scoped GitHub workflow token.');
     if (process.argv.length !== (publish ? 3 : 2)) throw new Error('Production deploy uses the checked-in Worker target.');
     const { CLOUDFLARE_ACCOUNT_ID: account, CLOUDFLARE_API_TOKEN: token } = process.env;
-    const name = await verifyWorker(await readFile(config, 'utf8'), account, token);
+    const configText = await readFile(config, 'utf8');
+    const name = await verifyWorker(configText, account, token);
+    const legacyRetired = parseConfigFileTextToJson(config, configText).config?.workers_dev === false;
     const application = command('git', ['rev-parse', 'HEAD']);
     if (process.env.GITHUB_ACTIONS === 'true') assertUpstream(application);
     const worker = workerReleases(account!, token!, name);
@@ -243,15 +248,25 @@ if (process.argv[1] && pathToFileURL(process.argv[1]).href === import.meta.url) 
       },
       current: worker.current,
       async verify() {
-        await waitForPublishedAssets(assets);
+        await waitForPublishedAssets(assets, 'candidate');
         await reportSecurityVerification(await verifyPublicSecurity(site, {
           policy: 'public', expectedCatalogueId: catalogueId, expectedApplication: application,
         }));
         liveBrowser(catalogueId);
+        if (legacyRetired) {
+          await worker.confirmPreviewDisabled();
+          const legacy = await verifyRetiredPreview();
+          report('notice', `Cloudflare confirmed workers.dev and its Preview URLs are disabled. Legacy delivery returned HTTP ${legacy.httpStatus} and HTTPS ${legacy.httpsStatus}.`);
+        }
       },
       persist() { if (publish) publishCatalogue(application, publishToken!); },
       restore: worker.restore,
-      verifyRestore: () => waitForPublishedAssets(previousAssets.assets),
+      async verifyRestore() {
+        await waitForPublishedAssets(previousAssets.assets, 'rollback target');
+        await reportSecurityVerification(await verifyPublicSecurity(site, {
+          policy: 'public', expectedCatalogueId: previousAssets.catalogueId, expectedApplication: previousAssets.application,
+        }));
+      },
     });
     report('notice', `Production browser reconciliation passed for application ${application}, catalogue ${catalogueId} at ${site}`);
   } catch (error) {

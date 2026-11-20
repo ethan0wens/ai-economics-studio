@@ -12,7 +12,7 @@
 
 The deploy guard targets the existing Worker through `studio.ethan0wens.tech`. A guarded release requires an enabled Cloudflare Custom Domain on the exact account and Worker, valid TLS, direct HTTPS enforcement and the expected application, assets and catalogue. The browser smoke and rollback use the same hostname. The Work observation runs `npm run security:production -- --observe-current` against the active canonical receipt. For an independent expected release, use `npm run security:production -- <application SHA-1> <catalogue SHA-256>`.
 
-The legacy workers.dev hostname was the development preview. Keep its separate exception confined to the preview policy. Review retirement after proving that production deployment, rollback and maintenance operate on the canonical hostname.
+The legacy workers.dev hostname was the development preview. Its transport policy and exception are retained for historical evidence only. The current Wrangler configuration disables the hostname and Preview URLs. Deployments verify Cloudflare's settings and check that the legacy host refuses the Studio over both protocols. Legacy routing settings are separate from Worker versions. A rollback restores static assets at the Custom Domain with the current routing settings.
 
 ## Before public release — mandatory security requirements
 
@@ -22,6 +22,7 @@ The legacy workers.dev hostname was the development preview. Keep its separate e
 - Attach the approved custom domain to the existing Worker. Verify provider TLS, exact HTTPS redirection or Cloudflare refusal of plaintext, the hardened response policy, static assets and the catalogue. Update the deployment and browser test targets and published links as part of the migration.
 - Capture approved evidence for edge enforcement, repository protections, Cloudflare token scope, full security and financial regressions, verified deployment, risk review and public approval. Record the exact application revision and catalogue hash in [public-release.json](public-release.json). Keep secret values out of evidence.
 - Run `npm run release:public` before wider promotion. It rejects the preview hostname, open S6-10 or missing evidence, then performs live strict delivery checks against the approved custom domain and revision. `npm run security:http` also defaults to strict public. A technical deployment does not approve wider public release. No automated personal notification is configured. The issue and the executable gate carry the mandatory reminder.
+- Submit the approval record on its own after checking the exact active release. A record-only push leaves the verified application receipt in place. Any later application or catalogue promotion must match the release being reviewed.
 
 ## Release failure and incident handling
 

@@ -1,18 +1,18 @@
-# Public release blocker: Configure custom domain and enforce HTTPS
+# Public release blocker for custom-domain HTTPS and owner approval
 
-The existing publicly reachable workers.dev site is a development preview. The owner has accepted S6-10 for that preview. Wider public release stays blocked until a custom domain delivers the application with verified HTTPS enforcement and the owner approves the release. Keep this issue open during preview. Suggested labels, if they exist in the repository, are `security` and `release-blocker`.
+The owner accepted S6-10 temporarily for the former workers.dev development preview. The approved Custom Domain now delivers the Studio with verified HTTPS enforcement. S6-10 remains open until the owner reviews the transport evidence. Wider public release also requires the evidence and separate approval below.
 
-- [ ] Select and register the public domain.
-- [ ] Configure the domain within Cloudflare.
-- [ ] Attach the domain to the existing `ai-econmics-studio` Worker.
-- [ ] Confirm valid TLS certificate delivery.
-- [ ] Enable Cloudflare HTTPS enforcement for the custom domain.
-- [ ] Verify plaintext HTTP cannot serve the application.
-- [ ] Validate HSTS and other security headers.
-- [ ] Confirm the production CSP remains effective.
-- [ ] Verify the application and pricing catalogue on the new domain.
-- [ ] Update deployment and browser test targets.
-- [ ] Update application documentation and public links.
+- [x] Select and register the public domain.
+- [x] Configure the domain within Cloudflare.
+- [x] Attach the domain to the existing `ai-econmics-studio` Worker.
+- [x] Confirm valid TLS certificate delivery.
+- [x] Observe Cloudflare's direct HTTPS redirects at the root and on a query-bearing path.
+- [x] Verify plaintext HTTP cannot serve the application.
+- [x] Validate HSTS and other security headers.
+- [x] Confirm the production CSP and browser privacy checks.
+- [x] Verify the application and pricing catalogue on the new domain.
+- [x] Update deployment and browser test targets.
+- [x] Update application documentation and public links.
 - [ ] Verify GitHub production protections.
 - [ ] Verify Cloudflare publishing credentials.
 - [ ] Rerun the full security and regression suites.
@@ -26,6 +26,10 @@ Record the exact domain, application revision, catalogue hash and approved revie
 The owner selected `studio.ethan0wens.tech`. GitHub Actions observed Cloudflare nameservers `casey.ns.cloudflare.com` and `gabriella.ns.cloudflare.com`, IPv4 and IPv6 answers, and a trusted TLS 1.3 certificate covering the exact hostname. The certificate reported issuer WE1 and validity from 20 November 2026 to 18 February 2027. HTTPS returned 200 with `Strict-Transport-Security: max-age=31536000`. HTTP returned 301 to the exact HTTPS URL at the root and at `/documentation?studio_transport_probe=1`. The strict check verified the release and the catalogue against the expected revision and digest. [Transport observations](https://github.com/ethan0wens/ai-economics-studio/actions/runs/44734726030)
 
 Initial Chromium checks detected a request for the Cloudflare Web Analytics beacon from `static.cloudflareinsights.com`. The repository uses `Cache-Control: public, no-cache, no-transform` for the static shell to prevent Cloudflare's automatic injection and keeps the same-origin browser checks in place. The Cloudflare owner can also turn off automatic injection for this hostname in **Web Analytics → Manage site**, or exclude the Studio hostname from the existing zone site. Verify the browser requests again after any setting change. [Chromium failure evidence](https://github.com/ethan0wens/ai-economics-studio/actions/runs/44735776118) · [Cloudflare automatic injection documentation](https://developers.cloudflare.com/web-analytics/get-started/#sites-proxied-through-cloudflare)
+
+Live Chromium passed the full custom-domain suite after the header change, including both same-origin checks. Cloudflare's account API then confirmed the exact enabled Custom Domain on the existing Worker. The first canonical deployment verified the candidate bytes and subsequently reported that its final control-plane rollback check failed. A separate read-only run confirmed the last known-good application `ef7416ce8a5b1d567bf32baf76f59ab8fa69e0ee` and the original 377-record catalogue were serving after rollback. [Chromium and hardened transport](https://github.com/ethan0wens/ai-economics-studio/actions/runs/44737346367) · [Custom Domain binding and first deployment](https://github.com/ethan0wens/ai-economics-studio/actions/runs/44737842234) · [Independent restored receipt](https://github.com/ethan0wens/ai-economics-studio/actions/runs/44738734754/job/136296645618)
+
+The guarded cutover records the active deployment, exact application and catalogue, strict HTTPS probes and live Chromium checks. Use the completed production run for the release under review. [Canonical cutover](https://github.com/ethan0wens/ai-economics-studio/actions/runs/44739771008) · [Production deploy history](https://github.com/ethan0wens/ai-economics-studio/actions/workflows/deploy.yml)
 
 ### Review before approving
 

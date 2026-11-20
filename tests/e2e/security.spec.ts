@@ -111,7 +111,7 @@ test('switching workspaces clears an in-flight report from the earlier workspace
   let started!: () => void;
   const pending = new Promise<void>(resolve => { release = resolve; });
   const intercepted = new Promise<void>(resolve => { started = resolve; });
-  await page.route('**/assets/report-*.js', async route => {
+  await page.route('**/bundles/v2/report-*.js', async route => {
     started();
     await pending;
     await route.continue();

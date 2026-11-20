@@ -4,6 +4,7 @@ import { parse, type DefaultTreeAdapterTypes as Html } from 'parse5';
 import { catalogueFilename, catalogueSchema, manifestSchema, maxCatalogueBytes, maxManifestBytes, type Manifest } from '../src/catalogue';
 import { releaseHealthSchema } from '../src/catalogue-health';
 import { decodeUtf8, parseBoundedJson, readResponseBytes } from '../src/untrusted-data';
+import { buildAsset, bundleDirectory } from './static-site';
 
 import { previewOrigin, productionHostname, productionOrigin } from '../src/studio-origins';
 
@@ -18,12 +19,14 @@ export type ReleaseSecurityPolicy =
   | { policy: 'public'; expectedCatalogueId: string; expectedApplication: string };
 
 type Transport = { status: number; outcome: 'redirected' | 'cloudflare-refused' | 'plaintext-shell' };
+type CheckedAsset = { path: string; status: number; mime: string };
 export type SecurityVerification = {
   hostname: string;
   policy: 'preview' | 'public';
   https: { verified: true; headers: 'hardened' | 'stage-5-baseline'; catalogueId: string | null; application?: string };
   http: Transport;
   pathTransport?: Transport & { path: string };
+  bundleResponses: CheckedAsset[];
   exception: 'S6-10' | null;
   warnings: string[];
   decision: 'conditional-pass-preview-only' | 'stage-5-observation' | 'pass-public-delivery';
@@ -75,6 +78,27 @@ export const browserIcons = new Map([
   ['/brand/apple-touch-icon.png', { rel: 'apple-touch-icon', mime: ['image/png'] }],
 ]);
 
+export function assetResponseSummary(response: Response) {
+  const fields = ['content-type', 'cache-control', 'content-encoding', 'cf-cache-status', 'cf-ray', 'age'];
+  return ['HTTP ' + response.status, ...fields.flatMap(name => {
+    const value = response.headers.get(name);
+    return value === null ? [] : [name + '=' + value.replace(/[^\x20-\x7e]/g, '?').slice(0, 160)];
+  })].join(', ');
+}
+
+export function verifyAssetMime(path: string, response: Response, bytes?: Uint8Array, shell?: Uint8Array) {
+  const mime = response.headers.get('content-type')?.split(';', 1)[0].trim().toLowerCase() ?? '';
+  const expected = browserIcons.get(path)?.mime ??
+    (path.endsWith('.js') ? ['text/javascript', 'application/javascript'] : path.endsWith('.css') ? ['text/css'] : undefined);
+  if (expected && !expected.includes(mime)) {
+    const evidence = bytes && mime === 'text/html'
+      ? `; HTML SHA-256 ${createHash('sha256').update(bytes).digest('hex').slice(0, 16)}${shell && Buffer.from(shell).equals(bytes) ? ', matches the application shell' : ''}`
+      : '';
+    throw new Error(`Unexpected asset MIME type for ${path} (${assetResponseSummary(response)}; expected ${expected.join(' or ')}${evidence}).`);
+  }
+  return mime;
+}
+
 export function documentAssetPaths(source: string) {
   const scripts: string[] = [];
   const assets = new Set<string>();
@@ -89,7 +113,9 @@ export function documentAssetPaths(source: string) {
       if (path) {
         const icon = browserIcons.get(path);
         const approvedIcon = icon && node.tagName === 'link' && attributes.get('rel') === icon.rel;
-        if (!approvedIcon && !/^\/assets\/[a-z0-9][a-z0-9._-]*\.(?:js|css)$/i.test(path)) {
+        const legacyBundle = /^\/assets\/[a-z0-9][a-z0-9._-]*\.(?:js|css)$/i.test(path);
+        const currentBundle = path.startsWith('/') && buildAsset.test(path.slice(1)) && /\.(?:js|css)$/i.test(path);
+        if (!approvedIcon && !legacyBundle && !currentBundle) {
           throw new Error('The built HTML references an unexpected resource.');
         }
         assets.add(path);
@@ -179,7 +205,7 @@ export async function verifyPublicSecurity(site: string, options: ReleaseSecurit
     const response = await request(new URL(path, origin!), {
       redirect: 'error', cache: 'no-cache', credentials: 'omit', signal: AbortSignal.timeout(12_000),
     });
-    if (!response.ok) throw new Error(`Security delivery probe received HTTP ${response.status} for ${path}.`);
+    if (response.status !== 200) throw new Error(`Security delivery probe received ${assetResponseSummary(response)} for ${path}.`);
     return response;
   }
   async function readRelease(manifest: Manifest) {
@@ -231,17 +257,24 @@ export async function verifyPublicSecurity(site: string, options: ReleaseSecurit
     application = release.application;
   }
 
-  await Promise.all([...assets].map(async path => {
+  const observedAssets = await Promise.all([...assets].map(async path => {
     const response = await get(path);
-    const icon = browserIcons.get(path);
-    verifySecurityHeaders(response.headers, icon ? 'mutable' : 'immutable');
-    const mime = response.headers.get('content-type')?.split(';', 1)[0].trim().toLowerCase();
-    const expected = icon?.mime ?? (path.endsWith('.js') ? ['text/javascript', 'application/javascript'] : ['text/css']);
-    if (!expected.includes(mime ?? '')) {
-      throw new Error(`Unexpected asset MIME type for ${path}.`);
-    }
-    await readResponseBytes(response, maxAssetBytes, 'Application asset');
+    const bytes = await readResponseBytes(response, maxAssetBytes, 'Application asset');
+    const mime = verifyAssetMime(path, response, bytes, root);
+    verifySecurityHeaders(response.headers, browserIcons.has(path) ? 'mutable' : 'immutable');
+    return { path, status: response.status, mime };
   }));
+
+  if (strict && observedAssets.some(asset => asset.path.startsWith('/' + bundleDirectory + '/'))) {
+    const path = '/' + bundleDirectory + '/studio-missing-probe.js';
+    const miss = await request(new URL(path, origin), {
+      redirect: 'error', cache: 'no-cache', credentials: 'omit', signal: AbortSignal.timeout(12_000),
+    });
+    await miss.body?.cancel();
+    if (miss.status !== 404 || /\b(?:immutable|max-age=31536000)\b/i.test(miss.headers.get('cache-control') ?? '')) {
+      throw new Error(`Missing bundle must return a 404 without immutable caching (${assetResponseSummary(miss)}).`);
+    }
+  }
 
   if (manifest.catalogueId) {
     const response = await get(`/pricing/${catalogueFilename(manifest.catalogueId)}`);
@@ -264,6 +297,7 @@ export async function verifyPublicSecurity(site: string, options: ReleaseSecurit
   return {
     hostname: origin.hostname, policy: options.policy,
     https: { verified: true, headers: stage5 ? 'stage-5-baseline' : 'hardened', catalogueId: manifest.catalogueId, application },
+    bundleResponses: observedAssets.filter(asset => !browserIcons.has(asset.path)),
     http, ...(route && { pathTransport: { ...route, path: transportPath } }), exception, warnings,
     decision: stage5 ? 'stage-5-observation' : options.policy === 'preview' ? 'conditional-pass-preview-only' : 'pass-public-delivery',
   };
@@ -282,6 +316,7 @@ export async function reportSecurityVerification(result: SecurityVerification) {
     `${headline} · ${result.hostname}`,
     `HTTPS policy, headers (${result.https.headers}), assets, SPA fallback and catalogue integrity verified. Catalogue ${result.https.catalogueId ?? 'bootstrap'}.`,
     ...(result.https.application ? [`Verified live application ${result.https.application}.`] : []),
+    ...result.bundleResponses.map(asset => `${asset.path} returned HTTP ${asset.status} ${asset.mime}.`),
     `HTTP ${result.http.status} ${outcomes[result.http.outcome]}.`,
     ...(result.pathTransport ? [`HTTP ${result.pathTransport.status} for ${result.pathTransport.path} ${outcomes[result.pathTransport.outcome]}.`] : []),
     ...(result.decision === 'stage-5-observation' ? ['Candidate HSTS and X-Frame-Options must pass at deployment.'] : []),

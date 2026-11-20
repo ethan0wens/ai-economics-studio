@@ -3,9 +3,10 @@ import { dirname, join, resolve } from 'node:path';
 import { createHash } from 'node:crypto';
 import { catalogueFilename, manifestSchema, maxCatalogueBytes } from '../src/catalogue';
 import { browserIcons, documentAssetPaths, verifySecurityHeaders } from './security-http';
+import { buildAsset, staticHeaders } from './static-site';
 
 const dist = resolve('dist');
-const allowed = /^(?:_headers|index\.html|third-party-notices\.txt|assets\/[\w.-]+\.(?:js|css|woff2?|svg|png)|pricing\/(?:manifest|catalogue-[a-f0-9]{64})\.json)$/;
+const allowed = /^(?:_headers|_redirects|index\.html|third-party-notices\.txt|pricing\/(?:manifest|catalogue-[a-f0-9]{64})\.json)$/;
 const credentials = /-----BEGIN (?:[A-Z0-9]+ )*PRIVATE KEY-----|\bgh[pousr]_[A-Za-z0-9]{30,}\b|\bgithub_pat_[A-Za-z0-9_]{40,}\b/;
 
 async function files(directory: string): Promise<string[]> {
@@ -13,7 +14,9 @@ async function files(directory: string): Promise<string[]> {
   return (await Promise.all(entries.map(async entry => {
     const path = join(directory, entry.name);
     if (entry.isDirectory()) return files(path);
-    if (!entry.isFile() || !(allowed.test(path) || browserIcons.has('/' + path))) throw new Error(`Unexpected production build asset ${path}.`);
+    if (!entry.isFile() || !(allowed.test(path) || buildAsset.test(path) || browserIcons.has('/' + path))) {
+      throw new Error(`Unexpected production build asset ${path}.`);
+    }
     return [path];
   }))).flat();
 }
@@ -31,7 +34,11 @@ for (const file of assets) {
   if (file.endsWith('.js') && /\/\/#[\t ]*sourceMappingURL\s*=/.test(contents)) throw new Error(`Source map directive in ${file}.`);
 }
 const headers = await readFile(join(dist, '_headers'), 'utf8');
-if (headers !== await readFile('public/_headers', 'utf8')) throw new Error('Built security headers differ from the reviewed static configuration.');
+if (headers !== staticHeaders(await readFile('public/_headers', 'utf8'), assets)) {
+  throw new Error('Built security headers differ from the reviewed policies for the actual build files.');
+}
+const redirects = await readFile(join(dist, '_redirects'), 'utf8');
+if (redirects !== '/documentation / 200\n') throw new Error('The build must rewrite only the documented direct navigation path.');
 const configured = new Headers();
 for (const line of headers.split('\n').slice(1)) {
   if (line.startsWith('/')) break;

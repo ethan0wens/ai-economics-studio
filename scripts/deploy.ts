@@ -7,7 +7,8 @@ import { parseConfigFileTextToJson } from 'typescript';
 import { catalogueFilename, catalogueSchema, manifestSchema, maxCatalogueBytes, maxManifestBytes } from '../src/catalogue';
 import { catalogueCoverage } from '../src/coverage';
 import { maintenanceHealthSchema, releaseHealthSchema } from '../src/catalogue-health';
-import { documentAssetPaths, parsePublishedReceipt, productionHostname, productionOrigin, reportSecurityVerification, verifyPublicSecurity, verifyRetiredPreview } from './security-http';
+import { assetResponseSummary, documentAssetPaths, parsePublishedReceipt, productionHostname, productionOrigin, reportSecurityVerification, verifyAssetMime, verifyPublicSecurity, verifyRetiredPreview } from './security-http';
+import { buildAsset, listStaticFiles } from './static-site';
 import { readResponseBytes } from '../src/untrusted-data';
 import { promoteWorker, workerReleases, type ActiveWorker } from './worker-release';
 
@@ -74,12 +75,18 @@ export async function verifyPublishedAssets(expected: ReadonlyMap<string, AssetC
       signal: AbortSignal.timeout(10_000),
     });
     const bytes = typeof contents === 'string' ? Buffer.from(contents, 'utf8') : Buffer.from(contents);
-    const observed = response.ok && await readResponseBytes(response, path === healthPath ? 1_000_000 : bytes.length, `Published ${path}`)
+    const isHtml = /^text\/html\b/i.test(response.headers.get('content-type') ?? '');
+    const max = path === healthPath ? 1_000_000 : isHtml ? Math.max(bytes.length, 128_000) : bytes.length;
+    const observed = response.status === 200 && await readResponseBytes(response, max, `Published ${path}`)
       .catch(() => false as const);
+    if (response.status === 200) {
+      const shell = expected.get('/');
+      verifyAssetMime(path, response, observed || undefined, typeof shell === 'string' ? Buffer.from(shell) : shell);
+    } else await response.body?.cancel();
     if (observed && bytes.equals(observed)) return;
     const digest = (value: Uint8Array) => createHash('sha256').update(value).digest('hex').slice(0, 12);
     const detail = observed ? `; expected SHA-256 ${digest(bytes)}, received ${digest(observed)}` : '';
-    throw new Error(`Live ${path} does not match the build (HTTP ${response.status}${detail}).`);
+    throw new Error(`Live ${path} does not match the build (${assetResponseSummary(response)}${detail}).`);
   }));
   const failed = checks.filter(result => result.status === 'rejected');
   if (failed.length) throw new Error(failed.map(({ reason }) => reason instanceof Error ? reason.message : String(reason)).join(' '));
@@ -98,10 +105,13 @@ function command(program: string, args: string[], env: NodeJS.ProcessEnv = clean
 async function currentAssets() {
   async function get(path: string, max: number) {
     const response = await fetch(new URL(path, site), {
-      redirect: 'error', cache: 'no-store', credentials: 'omit', headers: { 'Accept-Encoding': 'identity' }, signal: AbortSignal.timeout(12_000),
+      redirect: 'error', cache: 'no-store', credentials: 'omit',
+      headers: { 'Accept-Encoding': 'identity', 'Cache-Control': 'no-cache' }, signal: AbortSignal.timeout(12_000),
     });
     if (!response.ok) throw new Error(`Cannot capture current production ${path} (HTTP ${response.status}).`);
-    return Buffer.from(await readResponseBytes(response, max, `Current production ${path}`));
+    const bytes = await readResponseBytes(response, max, `Current production ${path}`);
+    verifyAssetMime(path, response, bytes);
+    return Buffer.from(bytes);
   }
   const [html, rawManifest, health] = await Promise.all([get('/', 128_000), get(manifestPath, maxManifestBytes), get(healthPath, 1_000_000)]);
   const manifest = manifestSchema.parse(JSON.parse(rawManifest.toString('utf8')));
@@ -129,7 +139,11 @@ async function builtAssets(previous: ActiveWorker, previousAssets: Awaited<Retur
   const html = await readAsset('/index.html');
   const assets = new Map<string, AssetContents>([['/', html], [manifestPath, raw]]);
   assets.set('/third-party-notices.txt', await readAsset('/third-party-notices.txt'));
-  for (const path of documentAssetPaths(html).assets) assets.set(path, await readFile(new URL(`../dist${path}`, import.meta.url)));
+  const bundles = (await listStaticFiles('dist'))
+    .filter(path => buildAsset.test(path) && /\.(?:js|css)$/.test(path)).map(path => '/' + path);
+  for (const path of new Set([...documentAssetPaths(html).assets, ...bundles])) {
+    assets.set(path, await readFile(new URL(`../dist${path}`, import.meta.url)));
+  }
   const cataloguePath = `/pricing/${catalogueFilename(catalogueId)}`;
   const catalogue = await readAsset(cataloguePath);
   const checksum = (source: string) => createHash('sha256').update(source).digest('hex');
@@ -183,6 +197,7 @@ async function waitForPublishedAssets(assets: ReadonlyMap<string, AssetContents>
       report('notice', `Application and pricing assets match the ${release} at ${site}`);
       return;
     } catch (error) {
+      if (attempt === 1) report('notice', `First public response did not verify for the ${release}. ${error instanceof Error ? error.message : String(error)}`);
       if (attempt === 13) {
         throw new Error(`Post-deploy verification failed for ${site}: ${error instanceof Error ? error.message : String(error)}`, { cause: error });
       }
@@ -218,6 +233,7 @@ if (process.argv[1] && pathToFileURL(process.argv[1]).href === import.meta.url) 
         if (result.status !== 0) throw new Error(`Wrangler deploy failed (exit ${result.status ?? result.signal}).`);
         const version = /Current Version ID:\s*([a-f0-9-]{36})/i.exec(result.stdout)?.[1];
         if (!version) throw new Error('Wrangler did not return the deployed version ID.');
+        report('notice', `Wrangler returned candidate Worker version ${version}.`);
         return version;
       },
       current: worker.current,

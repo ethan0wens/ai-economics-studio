@@ -1,9 +1,21 @@
 name: Refresh and publish Studio retail prices
 on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/refresh-pricing.yml'
+      - 'scripts/publish-pricing.ts'
+      - 'scripts/pricing-app-integration.ts'
   schedule:
     - cron: '17 6 * * 0,2-6'
     - cron: '17 6 * * 1'
   workflow_dispatch:
+    inputs:
+      mode:
+        description: Refresh or verify the scoped pricing App
+        type: choice
+        options: [refresh, authenticate, integration]
+        default: refresh
 
 permissions: {}
 
@@ -12,8 +24,35 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
+  verify-app:
+    if: github.ref == 'refs/heads/main' && (github.event_name == 'push' || (github.event_name == 'workflow_dispatch' && inputs.mode != 'refresh'))
+    environment: pricing-publisher
+    permissions:
+      contents: read
+    runs-on: ubuntu-latest
+    timeout-minutes: 18
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        with:
+          node-version: '24'
+      - run: npm ci --ignore-scripts
+      - name: Verify the installation and required APIs
+        run: |
+          if [[ "$STUDIO_PRICING_MODE" == 'integration' ]]; then
+            npx --no-install tsx scripts/pricing-app-integration.ts
+          else
+            npx --no-install tsx scripts/publish-pricing.ts --verify-app
+          fi
+        env:
+          STUDIO_PRICING_MODE: ${{ inputs.mode }}
+          STUDIO_PRICING_APP_ID: ${{ secrets.STUDIO_PRICING_APP_ID || vars.STUDIO_PRICING_APP_ID }}
+          STUDIO_PRICING_APP_PRIVATE_KEY: ${{ secrets.STUDIO_PRICING_APP_PRIVATE_KEY }}
+
   prepare:
-    if: github.ref == 'refs/heads/main'
+    if: github.ref == 'refs/heads/main' && (github.event_name == 'schedule' || inputs.mode == 'refresh')
     permissions:
       contents: read
       pull-requests: read
@@ -131,11 +170,11 @@ jobs:
           fi
         env:
           STUDIO_PRICING_CHANGED: ${{ needs.prepare.outputs.changed }}
-          STUDIO_PRICING_APP_ID: ${{ vars.STUDIO_PRICING_APP_ID }}
+          STUDIO_PRICING_APP_ID: ${{ secrets.STUDIO_PRICING_APP_ID || vars.STUDIO_PRICING_APP_ID }}
           STUDIO_PRICING_APP_PRIVATE_KEY: ${{ secrets.STUDIO_PRICING_APP_PRIVATE_KEY }}
 
   notify:
-    if: always() && !cancelled() && github.ref == 'refs/heads/main'
+    if: always() && !cancelled() && github.ref == 'refs/heads/main' && needs.prepare.result != 'skipped'
     needs: [prepare, publish]
     permissions:
       contents: read

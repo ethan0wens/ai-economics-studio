@@ -1,15 +1,6 @@
 name: Observe the Studio custom domain
 
 on:
-  push:
-    branches: [work]
-    paths:
-      - '.github/workflows/custom-domain-preflight.yml'
-      - 'scripts/security-http.ts'
-      - 'scripts/security-check.ts'
-      - 'docs/security/public-release.json'
-      - 'tests/e2e/security.spec.ts'
-      - 'tests/e2e/studio.spec.ts'
   workflow_dispatch:
     inputs:
       application:
@@ -33,8 +24,8 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     env:
-      STUDIO_EXPECTED_APPLICATION: ${{ inputs.application || 'ef7416ce8a5b1d567bf32baf76f59ab8fa69e0ee' }}
-      STUDIO_EXPECTED_CATALOGUE_ID: ${{ inputs.catalogue || '4bce81cee67a11aff49c47212877f6c026b68c4661a6893f158528bc4b54090d' }}
+      STUDIO_EXPECTED_APPLICATION: ${{ inputs.application }}
+      STUDIO_EXPECTED_CATALOGUE_ID: ${{ inputs.catalogue }}
     steps:
       - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
         with:

@@ -21,7 +21,7 @@ type Transport = { status: number; outcome: 'redirected' | 'cloudflare-refused' 
 export type SecurityVerification = {
   hostname: string;
   policy: 'preview' | 'public';
-  https: { verified: true; headers: 'hardened' | 'stage-5-baseline'; catalogueId: string | null };
+  https: { verified: true; headers: 'hardened' | 'stage-5-baseline'; catalogueId: string | null; application?: string };
   http: Transport;
   pathTransport?: Transport & { path: string };
   exception: 'S6-10' | null;
@@ -199,11 +199,13 @@ export async function verifyPublicSecurity(site: string, options: ReleaseSecurit
       throw new Error('The production shell requires Cache-Control no-transform to prevent edge script injection.');
     }
   });
+  let application: string | undefined;
   if (stage5 || options.expectedApplication !== undefined) {
     const release = await readRelease(manifest);
     if (release.application !== (stage5 ? stage5Application : options.expectedApplication)) {
       throw new Error('The live application revision did not match the checked release.');
     }
+    application = release.application;
   }
 
   await Promise.all([...assets].map(async path => {
@@ -238,7 +240,7 @@ export async function verifyPublicSecurity(site: string, options: ReleaseSecurit
     : [];
   return {
     hostname: origin.hostname, policy: options.policy,
-    https: { verified: true, headers: stage5 ? 'stage-5-baseline' : 'hardened', catalogueId: manifest.catalogueId },
+    https: { verified: true, headers: stage5 ? 'stage-5-baseline' : 'hardened', catalogueId: manifest.catalogueId, application },
     http, ...(route && { pathTransport: { ...route, path: transportPath } }), exception, warnings,
     decision: stage5 ? 'stage-5-observation' : options.policy === 'preview' ? 'conditional-pass-preview-only' : 'pass-public-delivery',
   };
@@ -256,11 +258,16 @@ export async function reportSecurityVerification(result: SecurityVerification) {
   const details = [
     `${headline} · ${result.hostname}`,
     `HTTPS policy, headers (${result.https.headers}), assets, SPA fallback and catalogue integrity verified. Catalogue ${result.https.catalogueId ?? 'bootstrap'}.`,
+    ...(result.https.application ? [`Verified live application ${result.https.application}.`] : []),
     `HTTP ${result.http.status} ${outcomes[result.http.outcome]}.`,
     ...(result.pathTransport ? [`HTTP ${result.pathTransport.status} for ${result.pathTransport.path} ${outcomes[result.pathTransport.outcome]}.`] : []),
     ...(result.decision === 'stage-5-observation' ? ['Candidate HSTS and X-Frame-Options must pass at deployment.'] : []),
   ];
   console.log(details.join('\n'));
+  if (process.env.GITHUB_ACTIONS === 'true' && result.policy === 'public') {
+    const escaped = details.join(' ').replaceAll('%', '%25').replaceAll('\r', '%0D').replaceAll('\n', '%0A');
+    console.log(`::notice title=Verified Studio delivery::${escaped}`);
+  }
   for (const warning of result.warnings) {
     const label = 'Preview transport exception — S6-10';
     console.log(process.env.GITHUB_ACTIONS === 'true' ? `::warning title=${label}::${warning}` : `WARNING ${label} · ${warning}`);

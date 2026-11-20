@@ -18,6 +18,9 @@ concurrency:
 jobs:
   plan:
     if: github.ref == 'refs/heads/main'
+    permissions:
+      contents: read
+      actions: read
     runs-on: ubuntu-latest
     timeout-minutes: 5
     outputs:
@@ -37,6 +40,8 @@ jobs:
       - id: recovery
         if: github.event_name == 'schedule'
         run: npx --no-install tsx scripts/production-recovery.ts
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
 
   deploy:
     needs: plan

@@ -1,0 +1,28 @@
+name: Request the isolated pricing App test
+on:
+  push:
+    branches: [ops/pricing-verification-f3a4fba]
+    paths: [.github/workflows/dispatch-pricing-verification.yml]
+
+permissions: {}
+
+jobs:
+  integration:
+    if: github.repository == 'ethan0wens/ai-economics-studio' && github.ref == 'refs/heads/ops/pricing-verification-f3a4fba'
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    permissions:
+      actions: write
+    steps:
+      - name: Dispatch isolated verification on the approved main revision
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          target=$(git ls-remote https://github.com/ethan0wens/ai-economics-studio.git refs/heads/main | cut -f1)
+          test "$target" = f3a4fbab2d4149363041d18a3cf077cb923e62b3
+          if gh api --method POST repos/ethan0wens/ai-economics-studio/actions/workflows/refresh-pricing.yml/dispatches -f ref=main -f 'inputs[mode]=integration' >/dev/null; then
+            echo '::notice title=Pricing App integration::Dispatched the approved isolated integration mode on main.'
+          else
+            echo '::error title=Pricing App integration::GitHub rejected dispatch of the isolated integration mode.'
+            exit 1
+          fi

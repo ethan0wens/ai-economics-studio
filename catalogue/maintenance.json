@@ -1,40 +1,40 @@
 {
   "schemaVersion": 1,
-  "reviewedAt": "2026-11-19T20:36:18.234Z",
+  "reviewedAt": "2026-11-23T18:27:27.638Z",
   "reviews": {
     "commercial": {
-      "attemptedAt": "2026-11-19T20:36:18.234Z",
-      "successfulAt": "2026-11-19T20:36:18.234Z",
-      "checked": 31,
+      "attemptedAt": "2026-11-23T18:27:27.638Z",
+      "successfulAt": "2026-11-23T18:27:27.638Z",
+      "checked": 37,
       "state": "partial"
     },
     "licensing": {
-      "attemptedAt": "2026-11-19T20:36:18.234Z",
-      "successfulAt": "2026-11-19T20:36:18.234Z",
+      "attemptedAt": "2026-11-23T18:27:27.638Z",
+      "successfulAt": "2026-11-23T18:27:27.638Z",
       "checked": 7,
       "state": "partial"
     },
     "compatibility": {
-      "attemptedAt": "2026-11-19T20:36:18.234Z",
-      "successfulAt": "2026-11-19T20:36:18.234Z",
+      "attemptedAt": "2026-11-23T18:27:27.638Z",
+      "successfulAt": "2026-11-23T18:27:27.638Z",
       "checked": 746,
       "state": "partial"
     },
     "ptu": {
-      "attemptedAt": "2026-11-19T20:36:18.234Z",
-      "successfulAt": "2026-11-19T20:36:18.234Z",
+      "attemptedAt": "2026-11-23T18:27:27.638Z",
+      "successfulAt": "2026-11-23T18:27:27.638Z",
       "checked": 56,
       "state": "checked"
     },
     "lifecycle": {
-      "attemptedAt": "2026-11-19T20:36:18.234Z",
-      "successfulAt": "2026-11-19T20:36:18.234Z",
+      "attemptedAt": "2026-11-23T18:27:27.638Z",
+      "successfulAt": "2026-11-23T18:27:27.638Z",
       "checked": 109,
       "state": "checked"
     },
     "reservations": {
-      "attemptedAt": "2026-11-19T20:36:18.234Z",
-      "successfulAt": "2026-11-19T20:36:18.234Z",
+      "attemptedAt": "2026-11-23T18:27:27.638Z",
+      "successfulAt": "2026-11-23T18:27:27.638Z",
       "checked": 2,
       "state": "checked"
     }
@@ -44,277 +44,279 @@
       "url": "https://www.microsoft.com/en-gb/copilot/pricing/business",
       "group": "commercial",
       "state": "retrieved",
-      "checkedAt": "2026-11-19T20:36:18.234Z",
-      "digest": "83d3981c071aaad54adbfe1f26e149476d2e6fb81ae785ccf2d76afbbe258c6b"
+      "checkedAt": "2026-11-23T18:27:27.638Z",
+      "digest": "5b3e749f52086fb6666e38d5b47c41b6580697964ec1afa369050057ee7d2002"
     },
     {
       "url": "https://www.microsoft.com/en-gb/microsoft-365-copilot/microsoft-copilot-studio",
       "group": "commercial",
       "state": "retrieved",
-      "checkedAt": "2026-11-19T20:36:18.234Z",
-      "digest": "863fdbb84bebd1aa9197e57dd1e075d0bda5c4fa53033895a75a35c65f3c205e"
+      "checkedAt": "2026-11-23T18:27:27.638Z",
+      "digest": "77064617a47148d8e2e78d4b5ed83ee512c61625de33b91930ca6daaae797c01"
     },
     {
       "url": "https://www.microsoft.com/en-gb/microsoft-365/business/microsoft-365-business-premium",
       "group": "commercial",
       "state": "retrieved",
-      "checkedAt": "2026-11-19T20:36:18.234Z",
-      "digest": "36f9a3ed3659ff011b80603c81fa28a7fc096d191b6fc9f856a38204b5ea43aa"
+      "checkedAt": "2026-11-23T18:27:27.638Z",
+      "digest": "cdd0fc3d3e1e9844229bf078ca1f6190b398c0079bcc559a3ec9adfe61eb4165"
     },
     {
       "url": "https://www.microsoft.com/en-gb/microsoft-365/business/microsoft-365-business-standard",
       "group": "commercial",
       "state": "retrieved",
-      "checkedAt": "2026-11-19T20:36:18.234Z",
-      "digest": "b0bb4ffa454b42cee29eaf697b33c2b99c11cb560bd828c02c22190e31a6de88"
+      "checkedAt": "2026-11-23T18:27:27.638Z",
+      "digest": "65184dd2636be05837a7850cda978fb030465d93a22cedf57af3881437df21a6"
     },
     {
       "url": "https://www.microsoft.com/en-gb/microsoft-365/business/microsoft-365-plans-and-pricing",
       "group": "commercial",
       "state": "retrieved",
-      "checkedAt": "2026-11-19T20:36:18.234Z",
-      "digest": "c3cc3c07f1aaa8999522af96d28c5740693edbdcbefac65c202f99610239c1af"
+      "checkedAt": "2026-11-23T18:27:27.638Z",
+      "digest": "f1886349ff14dcd5df3ed4a3e9fc7108e0b95801b89710ff73ee276b5247ee85"
     },
     {
       "url": "https://www.microsoft.com/en-gb/microsoft-365/enterprise/frontline-plans-and-pricing",
       "group": "commercial",
       "state": "retrieved",
-      "checkedAt": "2026-11-19T20:36:18.234Z",
-      "digest": "52c400dd366d65fb6b38d4971dfec2044de14d1cc03faf87608eff827efea048"
+      "checkedAt": "2026-11-23T18:27:27.638Z",
+      "digest": "d63cc13556686b67360700161feca295d0511ab3561b99e3e1fcb6e345d11448"
     },
     {
       "url": "https://www.microsoft.com/en-gb/microsoft-365/enterprise/microsoft-365-plans-and-pricing",
       "group": "commercial",
-      "state": "unavailable",
-      "checkedAt": "2026-11-19T20:36:18.234Z"
+      "state": "retrieved",
+      "checkedAt": "2026-11-23T18:27:27.638Z",
+      "digest": "80bb0b4dfb98e6db6b9f2459c18ef53fa65e93ace9732dde915107caca85fb25"
     },
     {
       "url": "https://www.microsoft.com/en-gb/microsoft-365/enterprise/office-365-plans-and-pricing",
       "group": "commercial",
       "state": "retrieved",
-      "checkedAt": "2026-11-19T20:36:18.234Z",
-      "digest": "ad40cd45640737cc3467a1513bd8cf81b255b73764ea8873ab0bd7d590fddcab"
+      "checkedAt": "2026-11-23T18:27:27.638Z",
+      "digest": "c385e788e66215218a92f177d867298d15c40eeb46d827cdb1ffe4dec8896abf"
     },
     {
       "url": "https://www.microsoft.com/en-gb/microsoft-agent-365",
       "group": "commercial",
       "state": "retrieved",
-      "checkedAt": "2026-11-19T20:36:18.234Z",
-      "digest": "e9af64cd1387e3ae5eb73aa1ced7efe58dd66aa5af0c11e9d2f8909014b809ad"
+      "checkedAt": "2026-11-23T18:27:27.638Z",
+      "digest": "a6efc35ef49100009b8056b5aea39fb7929915403a90891084fb180b82ece64e"
     },
     {
       "url": "https://www.microsoft.com/en-gb/microsoft-teams/compare-microsoft-teams-business-options",
       "group": "commercial",
       "state": "retrieved",
-      "checkedAt": "2026-11-19T20:36:18.234Z",
-      "digest": "f0a8dfb359b0e006f7b7f8b7364b0f75d941c7fadc8dfa890103d965c72d4294"
+      "checkedAt": "2026-11-23T18:27:27.638Z",
+      "digest": "b8fbed4cf023c37e849f4cdf6d4fab03517ca41f45bc01dfe22dec1a3ce933d5"
     },
     {
       "url": "https://www.microsoft.com/en-gb/security/business/endpoint-security/microsoft-defender-endpoint",
       "group": "commercial",
       "state": "retrieved",
-      "checkedAt": "2026-11-19T20:36:18.234Z",
-      "digest": "d12dca10be32db5ecc0c8febdae0f462f344f3567c515a978ae000d200905b55"
+      "checkedAt": "2026-11-23T18:27:27.638Z",
+      "digest": "c65c1ccd6f63a0cca101eda4f70139ffafd1dbb4aeb69fb109935f0b0684ec38"
     },
     {
       "url": "https://www.microsoft.com/en-gb/security/business/identity-access/microsoft-defender-identity",
       "group": "commercial",
       "state": "unavailable",
-      "checkedAt": "2026-11-19T20:36:18.234Z"
+      "checkedAt": "2026-11-23T18:27:27.638Z"
     },
     {
       "url": "https://www.microsoft.com/en-gb/security/business/microsoft-purview",
       "group": "commercial",
       "state": "retrieved",
-      "checkedAt": "2026-11-19T20:36:18.234Z",
-      "digest": "e475dbe55fc41984b25eaa74edacec1671cd4558aa08ad11daca8a0501038747"
+      "checkedAt": "2026-11-23T18:27:27.638Z",
+      "digest": "8a57c4813b002dac4cdbd42683c63188c0d07ce4f33055c546819efe01e29ca8"
     },
     {
       "url": "https://www.microsoft.com/en-gb/security/business/siem-and-xdr/microsoft-defender-cloud-apps",
       "group": "commercial",
       "state": "retrieved",
-      "checkedAt": "2026-11-19T20:36:18.234Z",
-      "digest": "b26adce987ae648991d2e4b2c703b95ddd9a3247c983646cca455cc8cf6a8a60"
+      "checkedAt": "2026-11-23T18:27:27.638Z",
+      "digest": "31683eb26dd540b05417a4eb2674e3db9224fad6921ab8ad97ee670a0c495939"
     },
     {
       "url": "https://www.microsoft.com/en-gb/security/business/siem-and-xdr/microsoft-defender-office-365",
       "group": "commercial",
       "state": "retrieved",
-      "checkedAt": "2026-11-19T20:36:18.234Z",
-      "digest": "9983fd2feae6288f51c5a193e6556fcd71e27f6841987c19585ac49ce6905a29"
+      "checkedAt": "2026-11-23T18:27:27.638Z",
+      "digest": "cc3095036bdece340ed6e5cf9dda79dd09b67c8204066270a8e076a0a6cb1547"
     },
     {
       "url": "https://www.microsoft.com/en-gb/security/microsoft-entra-pricing",
       "group": "commercial",
       "state": "retrieved",
-      "checkedAt": "2026-11-19T20:36:18.234Z",
-      "digest": "338c839c56a7fc284331172f59f9985b0b5780575fd7750d8844ee92d15c04b3"
+      "checkedAt": "2026-11-23T18:27:27.638Z",
+      "digest": "a93ca6da0ce02fbfaa89c003ca297b8a8134e5ceedf99a909f9e9c96fd1ef44f"
     },
     {
       "url": "https://learn.microsoft.com/en-us/azure/foundry-classic/agents/concepts/model-region-support",
       "group": "compatibility",
       "state": "retrieved",
-      "checkedAt": "2026-11-19T20:36:18.234Z",
-      "digest": "938c448c22411a870760502252e0226a29f979ce0b06f5a3c3854a7caff8518e"
+      "checkedAt": "2026-11-23T18:27:27.638Z",
+      "digest": "84b94b00cdc2866d426bac61f116f396c4a8d34f44a6fcf942181e73977b7a59"
     },
     {
       "url": "https://learn.microsoft.com/en-us/azure/foundry-classic/agents/how-to/tools-classic/azure-ai-search",
       "group": "compatibility",
       "state": "retrieved",
-      "checkedAt": "2026-11-19T20:36:18.234Z",
-      "digest": "68db77cdc2bc7caa9a81e6053764a63dac90631327034233e62b81276362e1b2"
+      "checkedAt": "2026-11-23T18:27:27.638Z",
+      "digest": "752f598c421b40c64e55349726e285f98836d7c5d8d06d58daecb1f0477daf87"
     },
     {
       "url": "https://learn.microsoft.com/en-us/azure/foundry/agents/how-to/connected-models",
       "group": "compatibility",
       "state": "retrieved",
-      "checkedAt": "2026-11-19T20:36:18.234Z",
-      "digest": "e3d68e64f4101446778922edcd650cb6db5479c5349db3ec80f8b8714caca056"
+      "checkedAt": "2026-11-23T18:27:27.638Z",
+      "digest": "7c86aaf8e219b0e2bfd2d161b1491811f27b368ed4bcaeddd8740d4024a28224"
     },
     {
       "url": "https://learn.microsoft.com/en-us/azure/foundry/agents/how-to/tools/ai-search",
       "group": "compatibility",
       "state": "retrieved",
-      "checkedAt": "2026-11-19T20:36:18.234Z",
-      "digest": "c5c9e5dca4774f2cdd62cde0e084e77314d37dd0ea34ba4c91ff19571b7fbe2b"
+      "checkedAt": "2026-11-23T18:27:27.638Z",
+      "digest": "d71ab9f430598ac206455280b7b370cc89cca1393e5de98ac9e3804fa04579d4"
     },
     {
       "url": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "group": "compatibility",
       "state": "retrieved",
-      "checkedAt": "2026-11-19T20:36:18.234Z",
-      "digest": "30b233b6ad505c7bf50f857617d12764abbae593f766b33da641ed3e2aff023e"
+      "checkedAt": "2026-11-23T18:27:27.638Z",
+      "digest": "f71fde63110e9c9f46cce6d2cb2d385f10491ea72d6b9f35294b21a5a6e6028c"
     },
     {
       "url": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability",
       "group": "compatibility",
       "state": "retrieved",
-      "checkedAt": "2026-11-19T20:36:18.234Z",
-      "digest": "93aa95cc176bf244038d4cf19982e3455f3033e3d5489f988830c52d41bebf6c"
+      "checkedAt": "2026-11-23T18:27:27.638Z",
+      "digest": "acc5e6a8db457398d7e27b4f7a461ba51b5e115bd2b88d359baace4a686bac44"
     },
     {
       "url": "https://learn.microsoft.com/en-us/azure/foundry/openai/concepts/provisioned-throughput",
       "group": "compatibility",
       "state": "retrieved",
-      "checkedAt": "2026-11-19T20:36:18.234Z",
-      "digest": "ea6a4d09fcbd21ac32faf7d96086bd8ff742f31698e3e1be35d586e426c11577"
+      "checkedAt": "2026-11-23T18:27:27.638Z",
+      "digest": "615dad37a69598d147c2b12759077fa87580487822d30f9507c23c8b10d78df5"
     },
     {
       "url": "https://learn.microsoft.com/en-us/microsoft-copilot-studio/bring-your-own-model-prompts",
       "group": "compatibility",
       "state": "retrieved",
-      "checkedAt": "2026-11-19T20:36:18.234Z",
-      "digest": "653bd92f3e2fb1452c058f49fc5fa8d149bf914a83072cfff1a55e4b333d8dfe"
+      "checkedAt": "2026-11-23T18:27:27.638Z",
+      "digest": "d43ed8c96a0ae12a744dce1c6a6f29128b2ded6c6712ee10dc4e4693c4427490"
     },
     {
       "url": "https://learn.microsoft.com/en-us/microsoft-copilot-studio/requirements-messages-management",
       "group": "compatibility",
       "state": "retrieved",
-      "checkedAt": "2026-11-19T20:36:18.234Z",
-      "digest": "614978de7334b254c68944fd8eae9c055e9dc5ada7b9e4b86575715121b546a8"
+      "checkedAt": "2026-11-23T18:27:27.638Z",
+      "digest": "49430ddb96cbebf632bbe0e2ecf206992912902eecf6aac43d66d53ac64534e7"
     },
     {
       "url": "https://learn.microsoft.com/en-us/copilot/plan/copilot-license-options",
       "group": "licensing",
       "state": "retrieved",
-      "checkedAt": "2026-11-19T20:36:18.234Z",
-      "digest": "7445bc7a32d041ed7618cbce3ad62d421eeb14dc41ff13156889bb8c7188534f"
+      "checkedAt": "2026-11-23T18:27:27.638Z",
+      "digest": "47900de5574544a15629227253710fddb35adf17a13fcffccfca1ecf63e26d88"
     },
     {
       "url": "https://learn.microsoft.com/en-us/defender-xdr/prerequisites",
       "group": "licensing",
       "state": "retrieved",
-      "checkedAt": "2026-11-19T20:36:18.234Z",
-      "digest": "d1ab37c86337c9cbf18cbf9150217bc3f9273f2198b61e197cb7e6528bf08cce"
+      "checkedAt": "2026-11-23T18:27:27.638Z",
+      "digest": "64f06385b654c6a104527588f58491a1ba5d1dfd02eace8618f182de67ee3c67"
     },
     {
       "url": "https://learn.microsoft.com/en-us/microsoft-copilot-studio/requirements-messages-management",
       "group": "licensing",
       "state": "retrieved",
-      "checkedAt": "2026-11-19T20:36:18.234Z",
-      "digest": "614978de7334b254c68944fd8eae9c055e9dc5ada7b9e4b86575715121b546a8"
+      "checkedAt": "2026-11-23T18:27:27.638Z",
+      "digest": "49430ddb96cbebf632bbe0e2ecf206992912902eecf6aac43d66d53ac64534e7"
     },
     {
       "url": "https://learn.microsoft.com/en-us/purview/ediscovery-assign-permissions",
       "group": "licensing",
       "state": "retrieved",
-      "checkedAt": "2026-11-19T20:36:18.234Z",
-      "digest": "71975585b14429aff3729af829c9232c97bc4064a410c8a1086a90e0b2448dfb"
+      "checkedAt": "2026-11-23T18:27:27.638Z",
+      "digest": "d79193136ae844163ddb432c053ffa2b255fdd07b638290b3d5ae43715f7a474"
     },
     {
       "url": "https://www.microsoft.com/en-gb/microsoft-365/enterprise/microsoft-365-plans-and-pricing",
       "group": "licensing",
-      "state": "unavailable",
-      "checkedAt": "2026-11-19T20:36:18.234Z"
+      "state": "retrieved",
+      "checkedAt": "2026-11-23T18:27:27.638Z",
+      "digest": "80bb0b4dfb98e6db6b9f2459c18ef53fa65e93ace9732dde915107caca85fb25"
     },
     {
       "url": "https://www.microsoft.com/en-gb/microsoft-agent-365",
       "group": "licensing",
       "state": "retrieved",
-      "checkedAt": "2026-11-19T20:36:18.234Z",
-      "digest": "e9af64cd1387e3ae5eb73aa1ced7efe58dd66aa5af0c11e9d2f8909014b809ad"
+      "checkedAt": "2026-11-23T18:27:27.638Z",
+      "digest": "a6efc35ef49100009b8056b5aea39fb7929915403a90891084fb180b82ece64e"
     },
     {
       "url": "https://www.microsoft.com/en-gb/security/business/siem-and-xdr/microsoft-defender-cloud-apps",
       "group": "licensing",
       "state": "retrieved",
-      "checkedAt": "2026-11-19T20:36:18.234Z",
-      "digest": "b26adce987ae648991d2e4b2c703b95ddd9a3247c983646cca455cc8cf6a8a60"
+      "checkedAt": "2026-11-23T18:27:27.638Z",
+      "digest": "31683eb26dd540b05417a4eb2674e3db9224fad6921ab8ad97ee670a0c495939"
     },
     {
       "url": "https://www.microsoft.com/en-gb/security/business/siem-and-xdr/microsoft-defender-office-365",
       "group": "licensing",
       "state": "retrieved",
-      "checkedAt": "2026-11-19T20:36:18.234Z",
-      "digest": "9983fd2feae6288f51c5a193e6556fcd71e27f6841987c19585ac49ce6905a29"
+      "checkedAt": "2026-11-23T18:27:27.638Z",
+      "digest": "cc3095036bdece340ed6e5cf9dda79dd09b67c8204066270a8e076a0a6cb1547"
     },
     {
       "url": "https://www.microsoft.com/en-gb/security/microsoft-entra-pricing",
       "group": "licensing",
       "state": "retrieved",
-      "checkedAt": "2026-11-19T20:36:18.234Z",
-      "digest": "338c839c56a7fc284331172f59f9985b0b5780575fd7750d8844ee92d15c04b3"
+      "checkedAt": "2026-11-23T18:27:27.638Z",
+      "digest": "a93ca6da0ce02fbfaa89c003ca297b8a8134e5ceedf99a909f9e9c96fd1ef44f"
     },
     {
       "url": "https://www.microsoft.com/licensing/terms",
       "group": "licensing",
       "state": "retrieved",
-      "checkedAt": "2026-11-19T20:36:18.234Z",
-      "digest": "b8a096b173e76e652229f9bc739dbe6438ab6c10274476d49b2bf971fb369dcf"
+      "checkedAt": "2026-11-23T18:27:27.638Z",
+      "digest": "8b3b0b6db640141bebe5ad72ca9642f8f89a4a79165bc594c25b4c18523ec385"
     },
     {
       "url": "https://www.microsoft.com/licensing/terms/productoffering/Microsoft365/MCA",
       "group": "licensing",
       "state": "retrieved",
-      "checkedAt": "2026-11-19T20:36:18.234Z",
+      "checkedAt": "2026-11-23T18:27:27.638Z",
       "digest": "f7c385df7a66a1a6694af00ccc45e22afdcb887908a06d21b7cd30d696e5385f"
     },
     {
       "url": "https://learn.microsoft.com/en-us/azure/foundry/openai/concepts/model-retirement-schedule",
       "group": "lifecycle",
       "state": "retrieved",
-      "checkedAt": "2026-11-19T20:36:18.234Z",
-      "digest": "ca49bbca875b0d321b954f51680b44c0ff67487f68606a641d885aeaf05cca91"
+      "checkedAt": "2026-11-23T18:27:27.638Z",
+      "digest": "986210bb0b58357f26bf6278ccc37abd297eefa8a4b370cade9f6aa7f73ec1dc"
     },
     {
       "url": "https://learn.microsoft.com/en-us/azure/foundry/openai/how-to/provisioned-throughput-sizing",
       "group": "ptu",
       "state": "retrieved",
-      "checkedAt": "2026-11-19T20:36:18.234Z",
-      "digest": "0f811301165d781742b70aaec352c9cf6ff252f51b1662444ef941aa4edbd667"
+      "checkedAt": "2026-11-23T18:27:27.638Z",
+      "digest": "9b5ff838e562334852e98ae7f31888235eda9dc59a51d0a4b8d607d68ff2b8cc"
     },
     {
       "url": "https://learn.microsoft.com/en-us/azure/foundry/openai/concepts/provisioned-throughput-billing",
       "group": "reservations",
       "state": "retrieved",
-      "checkedAt": "2026-11-19T20:36:18.234Z",
-      "digest": "098e0baf1d43dff867ba0fdf23b296512df1e7e8e5f78f232919e8764e86dc43"
+      "checkedAt": "2026-11-23T18:27:27.638Z",
+      "digest": "49971445e0ff64b89a780d5aae4e162b65a0af3dce0be37bad3ece9d76a58e12"
     },
     {
       "url": "https://prices.azure.com/api/retail/prices?api-version=2023-01-01-preview&currencyCode=%27GBP%27&%24filter=priceType+eq+%27Reservation%27+and+productName+eq+%27Azure+OpenAI%27",
       "group": "reservations",
       "state": "retrieved",
-      "checkedAt": "2026-11-19T20:36:18.234Z"
+      "checkedAt": "2026-11-23T18:27:27.638Z"
     }
   ],
   "changes": [],
@@ -326,7 +328,7 @@
       "detail": "No exact standard GBP offer with the expected unit, term and VAT treatment was established.",
       "source": "https://www.microsoft.com/en-gb/microsoft-365-copilot/microsoft-copilot-studio#Pricing",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "commercial",
@@ -335,7 +337,7 @@
       "detail": "No exact standard GBP offer with the expected unit, term and VAT treatment was established.",
       "source": "https://www.microsoft.com/en-gb/security/business/siem-and-xdr/microsoft-defender-cloud-apps",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "commercial",
@@ -344,7 +346,7 @@
       "detail": "No exact standard GBP offer with the expected unit, term and VAT treatment was established.",
       "source": "https://www.microsoft.com/en-gb/security/business/endpoint-security/microsoft-defender-endpoint",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "commercial",
@@ -353,16 +355,7 @@
       "detail": "No exact standard GBP offer with the expected unit, term and VAT treatment was established.",
       "source": "https://www.microsoft.com/en-gb/security/business/endpoint-security/microsoft-defender-endpoint",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
-    },
-    {
-      "group": "commercial",
-      "id": "https://www.microsoft.com/en-gb/microsoft-365/enterprise/microsoft-365-plans-and-pricing",
-      "kind": "source",
-      "detail": "Source retrieval failed (The operation was aborted due to timeout).",
-      "source": "https://www.microsoft.com/en-gb/microsoft-365/enterprise/microsoft-365-plans-and-pricing",
-      "firstSeen": "2026-11-19T20:36:18.234Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "commercial",
@@ -371,7 +364,7 @@
       "detail": "Source retrieval failed (HTTP 404).",
       "source": "https://www.microsoft.com/en-gb/security/business/identity-access/microsoft-defender-identity",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "commercial",
@@ -380,7 +373,7 @@
       "detail": "No exact standard GBP offer with the expected unit, term and VAT treatment was established.",
       "source": "https://www.microsoft.com/en-gb/microsoft-365/enterprise/office-365-plans-and-pricing",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "commercial",
@@ -389,7 +382,7 @@
       "detail": "No exact standard GBP offer with the expected unit, term and VAT treatment was established.",
       "source": "https://www.microsoft.com/en-gb/security/business/microsoft-purview",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -398,7 +391,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -407,7 +400,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -416,7 +409,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -425,7 +418,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -434,7 +427,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -443,7 +436,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -452,7 +445,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -461,7 +454,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -470,7 +463,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -479,7 +472,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -488,7 +481,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -497,7 +490,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -506,7 +499,7 @@
       "detail": "The exact rule was not re-established by the approved scoped source check.",
       "source": "https://learn.microsoft.com/en-us/microsoft-copilot-studio/bring-your-own-model-prompts",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -515,7 +508,7 @@
       "detail": "The exact rule was not re-established by the approved scoped source check.",
       "source": "https://learn.microsoft.com/en-us/microsoft-copilot-studio/bring-your-own-model-prompts",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -524,7 +517,7 @@
       "detail": "The exact rule was not re-established by the approved scoped source check.",
       "source": "https://learn.microsoft.com/en-us/microsoft-copilot-studio/bring-your-own-model-prompts",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -533,7 +526,7 @@
       "detail": "The exact rule was not re-established by the approved scoped source check.",
       "source": "https://learn.microsoft.com/en-us/microsoft-copilot-studio/bring-your-own-model-prompts",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -542,7 +535,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -551,7 +544,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -560,7 +553,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -569,7 +562,7 @@
       "detail": "The exact model, version, deployment SKU and region were not established in the current source.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#data-zone-standard",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -578,7 +571,7 @@
       "detail": "The exact model, version, deployment SKU and region were not established in the current source.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability#data-zone-standard",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -587,7 +580,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -596,7 +589,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -605,7 +598,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -614,7 +607,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -623,7 +616,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -632,7 +625,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -641,7 +634,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -650,7 +643,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -659,7 +652,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -668,7 +661,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -677,7 +670,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -686,7 +679,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -695,7 +688,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -704,7 +697,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -713,7 +706,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -722,7 +715,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -731,7 +724,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -740,7 +733,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -749,7 +742,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -758,7 +751,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -767,7 +760,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -776,7 +769,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -785,7 +778,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -794,7 +787,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -803,7 +796,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -812,7 +805,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -821,7 +814,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -830,7 +823,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -839,7 +832,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -848,7 +841,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -857,7 +850,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -866,7 +859,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -875,7 +868,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -884,7 +877,7 @@
       "detail": "The exact rule was not re-established by the approved scoped source check.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry-classic/agents/concepts/model-region-support",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -893,7 +886,7 @@
       "detail": "The exact rule was not re-established by the approved scoped source check.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/agents/how-to/connected-models",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -902,7 +895,7 @@
       "detail": "Current structured source did not establish every capability in the previous claim.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -911,7 +904,7 @@
       "detail": "Current structured source did not establish every capability in the previous claim.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -920,7 +913,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -929,7 +922,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -938,7 +931,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -947,7 +940,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -956,7 +949,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -965,7 +958,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -974,7 +967,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -983,7 +976,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -992,7 +985,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -1001,7 +994,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -1010,7 +1003,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -1019,7 +1012,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -1028,7 +1021,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -1037,7 +1030,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -1046,7 +1039,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -1055,7 +1048,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -1064,7 +1057,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -1073,7 +1066,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -1082,7 +1075,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -1091,7 +1084,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -1100,7 +1093,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -1109,7 +1102,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -1118,7 +1111,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -1127,7 +1120,7 @@
       "detail": "Current structured source did not establish every capability in the previous claim.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -1136,7 +1129,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -1145,7 +1138,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -1154,7 +1147,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -1163,7 +1156,7 @@
       "detail": "Current structured source did not establish every capability in the previous claim.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -1172,7 +1165,7 @@
       "detail": "Current structured source did not establish every capability in the previous claim.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -1181,7 +1174,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -1190,7 +1183,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -1199,7 +1192,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -1208,7 +1201,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -1217,7 +1210,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -1226,7 +1219,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -1235,7 +1228,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -1244,7 +1237,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -1253,7 +1246,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -1262,7 +1255,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -1271,7 +1264,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -1280,7 +1273,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -1289,7 +1282,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -1298,7 +1291,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -1307,7 +1300,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -1316,7 +1309,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -1325,7 +1318,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -1334,7 +1327,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -1343,7 +1336,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -1352,7 +1345,7 @@
       "detail": "Current structured source did not establish every capability in the previous claim.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -1361,7 +1354,7 @@
       "detail": "Current structured source did not establish every capability in the previous claim.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -1370,7 +1363,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -1379,7 +1372,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -1388,7 +1381,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -1397,7 +1390,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -1406,7 +1399,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -1415,7 +1408,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -1424,7 +1417,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -1433,7 +1426,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -1442,7 +1435,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -1451,7 +1444,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -1460,7 +1453,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -1469,7 +1462,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -1478,7 +1471,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -1487,7 +1480,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -1496,7 +1489,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -1505,7 +1498,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -1514,7 +1507,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -1523,7 +1516,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -1532,7 +1525,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -1541,7 +1534,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -1550,7 +1543,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -1559,7 +1552,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -1568,7 +1561,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -1577,7 +1570,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -1586,7 +1579,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -1595,7 +1588,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -1604,7 +1597,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -1613,7 +1606,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -1622,7 +1615,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -1631,7 +1624,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -1640,7 +1633,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -1649,7 +1642,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -1658,7 +1651,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -1667,7 +1660,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -1676,7 +1669,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -1685,7 +1678,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -1694,7 +1687,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -1703,7 +1696,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -1712,7 +1705,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -1721,7 +1714,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -1730,7 +1723,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -1739,7 +1732,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -1748,7 +1741,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -1757,7 +1750,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -1766,7 +1759,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -1775,7 +1768,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -1784,7 +1777,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -1793,7 +1786,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -1802,7 +1795,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -1811,7 +1804,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -1820,7 +1813,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -1829,7 +1822,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -1838,7 +1831,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -1847,7 +1840,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -1856,7 +1849,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -1865,7 +1858,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -1874,7 +1867,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -1883,7 +1876,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -1892,7 +1885,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -1901,7 +1894,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -1910,7 +1903,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -1919,7 +1912,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -1928,7 +1921,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -1937,7 +1930,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -1946,7 +1939,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -1955,7 +1948,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -1964,7 +1957,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -1973,7 +1966,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -1982,7 +1975,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -1991,7 +1984,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -2000,7 +1993,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -2009,7 +2002,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -2018,7 +2011,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -2027,7 +2020,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -2036,7 +2029,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -2045,7 +2038,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -2054,7 +2047,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -2063,7 +2056,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -2072,7 +2065,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -2081,7 +2074,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -2090,7 +2083,7 @@
       "detail": "Current structured source did not establish every capability in the previous claim.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -2099,7 +2092,7 @@
       "detail": "Current structured source did not establish every capability in the previous claim.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -2108,7 +2101,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -2117,7 +2110,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -2126,7 +2119,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -2135,7 +2128,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -2144,7 +2137,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -2153,7 +2146,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -2162,7 +2155,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -2171,7 +2164,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -2180,7 +2173,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -2189,7 +2182,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -2198,7 +2191,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -2207,7 +2200,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -2216,7 +2209,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -2225,7 +2218,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -2234,7 +2227,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -2243,7 +2236,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -2252,7 +2245,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -2261,7 +2254,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -2270,7 +2263,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -2279,7 +2272,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -2288,7 +2281,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -2297,7 +2290,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -2306,7 +2299,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -2315,7 +2308,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -2324,7 +2317,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -2333,7 +2326,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -2342,7 +2335,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -2351,7 +2344,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -2360,7 +2353,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -2369,7 +2362,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -2378,7 +2371,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -2387,7 +2380,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -2396,7 +2389,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -2405,7 +2398,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -2414,7 +2407,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -2423,7 +2416,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -2432,7 +2425,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -2441,7 +2434,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -2450,7 +2443,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -2459,7 +2452,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -2468,7 +2461,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -2477,7 +2470,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -2486,7 +2479,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -2495,7 +2488,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -2504,7 +2497,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -2513,7 +2506,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -2522,7 +2515,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -2531,7 +2524,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -2540,7 +2533,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -2549,7 +2542,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -2558,7 +2551,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -2567,7 +2560,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -2576,7 +2569,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -2585,7 +2578,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -2594,7 +2587,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -2603,7 +2596,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -2612,7 +2605,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -2621,7 +2614,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -2630,7 +2623,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -2639,7 +2632,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -2648,7 +2641,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -2657,7 +2650,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -2666,7 +2659,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -2675,7 +2668,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -2684,7 +2677,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -2693,7 +2686,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -2702,7 +2695,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -2711,7 +2704,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -2720,7 +2713,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -2729,7 +2722,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -2738,7 +2731,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -2747,7 +2740,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -2756,7 +2749,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -2765,7 +2758,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -2774,7 +2767,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -2783,7 +2776,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -2792,7 +2785,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -2801,7 +2794,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -2810,7 +2803,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -2819,7 +2812,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -2828,7 +2821,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -2837,7 +2830,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -2846,7 +2839,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -2855,7 +2848,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -2864,7 +2857,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -2873,7 +2866,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -2882,7 +2875,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -2891,7 +2884,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -2900,7 +2893,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -2909,7 +2902,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -2918,7 +2911,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -2927,7 +2920,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -2936,7 +2929,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -2945,7 +2938,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -2954,7 +2947,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -2963,7 +2956,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -2972,7 +2965,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -2981,7 +2974,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -2990,7 +2983,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -2999,7 +2992,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -3008,7 +3001,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -3017,7 +3010,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -3026,7 +3019,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -3035,7 +3028,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -3044,7 +3037,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -3053,7 +3046,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -3062,7 +3055,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -3071,7 +3064,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -3080,7 +3073,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -3089,7 +3082,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -3098,7 +3091,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -3107,7 +3100,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -3116,7 +3109,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -3125,7 +3118,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -3134,7 +3127,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -3143,7 +3136,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -3152,7 +3145,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -3161,7 +3154,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -3170,7 +3163,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -3179,7 +3172,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -3188,7 +3181,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -3197,7 +3190,7 @@
       "detail": "The exact rule was not re-established by the approved scoped source check.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/agents/how-to/tools/ai-search",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -3206,7 +3199,7 @@
       "detail": "The exact rule was not re-established by the approved scoped source check.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/agents/how-to/tools/ai-search",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -3215,7 +3208,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -3224,7 +3217,7 @@
       "detail": "Current structured source did not establish every capability in the previous claim.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -3233,7 +3226,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -3242,7 +3235,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -3251,7 +3244,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -3260,7 +3253,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -3269,7 +3262,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -3278,7 +3271,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -3287,7 +3280,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -3296,7 +3289,7 @@
       "detail": "Current structured source did not establish every capability in the previous claim.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -3305,7 +3298,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -3314,7 +3307,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -3323,7 +3316,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -3332,7 +3325,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -3341,7 +3334,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -3350,7 +3343,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -3359,7 +3352,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -3368,7 +3361,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -3377,7 +3370,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -3386,7 +3379,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -3395,7 +3388,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -3404,7 +3397,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -3413,7 +3406,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -3422,7 +3415,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -3431,7 +3424,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "compatibility",
@@ -3440,7 +3433,7 @@
       "detail": "Availability is discoverable. The billing dimensions for this exact model version require separate evidence.",
       "source": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "licensing",
@@ -3449,7 +3442,7 @@
       "detail": "The exact rule was not re-established by the approved scoped source check.",
       "source": "https://www.microsoft.com/en-gb/microsoft-365/enterprise/microsoft-365-plans-and-pricing",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "licensing",
@@ -3458,7 +3451,7 @@
       "detail": "The exact rule was not re-established by the approved scoped source check.",
       "source": "https://learn.microsoft.com/en-us/copilot/plan/copilot-license-options",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "licensing",
@@ -3467,7 +3460,7 @@
       "detail": "The exact rule was not re-established by the approved scoped source check.",
       "source": "https://learn.microsoft.com/en-us/microsoft-copilot-studio/requirements-messages-management",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "licensing",
@@ -3476,7 +3469,7 @@
       "detail": "The exact rule was not re-established by the approved scoped source check.",
       "source": "https://www.microsoft.com/en-gb/security/business/siem-and-xdr/microsoft-defender-office-365",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "licensing",
@@ -3485,7 +3478,7 @@
       "detail": "The exact rule was not re-established by the approved scoped source check.",
       "source": "https://www.microsoft.com/en-gb/security/business/siem-and-xdr/microsoft-defender-cloud-apps",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "licensing",
@@ -3494,7 +3487,7 @@
       "detail": "The exact rule was not re-established by the approved scoped source check.",
       "source": "https://www.microsoft.com/en-gb/security/business/siem-and-xdr/microsoft-defender-cloud-apps",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "licensing",
@@ -3503,7 +3496,7 @@
       "detail": "The exact rule was not re-established by the approved scoped source check.",
       "source": "https://learn.microsoft.com/en-us/defender-xdr/prerequisites",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "licensing",
@@ -3512,7 +3505,7 @@
       "detail": "The exact rule was not re-established by the approved scoped source check.",
       "source": "https://www.microsoft.com/en-gb/security/microsoft-entra-pricing",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "licensing",
@@ -3521,7 +3514,7 @@
       "detail": "The exact rule was not re-established by the approved scoped source check.",
       "source": "https://www.microsoft.com/en-gb/security/microsoft-entra-pricing",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "licensing",
@@ -3530,7 +3523,7 @@
       "detail": "The exact rule was not re-established by the approved scoped source check.",
       "source": "https://www.microsoft.com/en-gb/security/microsoft-entra-pricing",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "licensing",
@@ -3539,16 +3532,7 @@
       "detail": "The exact rule was not re-established by the approved scoped source check.",
       "source": "https://www.microsoft.com/en-gb/security/microsoft-entra-pricing",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
-    },
-    {
-      "group": "licensing",
-      "id": "https://www.microsoft.com/en-gb/microsoft-365/enterprise/microsoft-365-plans-and-pricing",
-      "kind": "source",
-      "detail": "Source retrieval failed (The operation was aborted due to timeout).",
-      "source": "https://www.microsoft.com/en-gb/microsoft-365/enterprise/microsoft-365-plans-and-pricing",
-      "firstSeen": "2026-11-19T20:36:18.234Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "licensing",
@@ -3557,7 +3541,7 @@
       "detail": "The exact rule was not re-established by the approved scoped source check.",
       "source": "https://www.microsoft.com/licensing/terms",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     },
     {
       "group": "reservations",
@@ -3566,7 +3550,7 @@
       "detail": "The bounded Azure query returned no exact GBP reservation prices. Enter a customer quote for an eligible allocation.",
       "source": "https://prices.azure.com/api/retail/prices?api-version=2023-01-01-preview&currencyCode=%27GBP%27&%24filter=priceType+eq+%27Reservation%27+and+productName+eq+%27Azure+OpenAI%27",
       "firstSeen": "2026-11-19T12:08:05.001Z",
-      "occurrences": 1
+      "occurrences": 2
     }
   ],
   "expiring": [],

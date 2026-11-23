@@ -16,9 +16,9 @@
     "inputTpmPerPtu": 3400,
     "outputWeight": 8,
     "source": "https://learn.microsoft.com/en-us/azure/foundry/openai/how-to/provisioned-throughput-sizing#deployment-parameters-and-throughput-values-by-model",
-    "verifiedOn": "2026-11-19",
+    "verifiedOn": "2026-11-23",
     "observedSince": "2026-11-19",
-    "reviewBy": "2027-01-03",
+    "reviewBy": "2027-01-07",
     "condition": "Published model-version sizing parameters. Capacity and tenant quota require separate confirmation."
   },
   {
@@ -37,9 +37,9 @@
     "inputTpmPerPtu": 3400,
     "outputWeight": 8,
     "source": "https://learn.microsoft.com/en-us/azure/foundry/openai/how-to/provisioned-throughput-sizing#deployment-parameters-and-throughput-values-by-model",
-    "verifiedOn": "2026-11-19",
+    "verifiedOn": "2026-11-23",
     "observedSince": "2026-11-19",
-    "reviewBy": "2027-01-03",
+    "reviewBy": "2027-01-07",
     "condition": "Published model-version sizing parameters. Capacity and tenant quota require separate confirmation."
   },
   {
@@ -57,9 +57,9 @@
     "inputTpmPerPtu": 3400,
     "outputWeight": 8,
     "source": "https://learn.microsoft.com/en-us/azure/foundry/openai/how-to/provisioned-throughput-sizing#deployment-parameters-and-throughput-values-by-model",
-    "verifiedOn": "2026-11-19",
+    "verifiedOn": "2026-11-23",
     "observedSince": "2026-11-19",
-    "reviewBy": "2027-01-03",
+    "reviewBy": "2027-01-07",
     "condition": "Published model-version sizing parameters. Capacity and tenant quota require separate confirmation."
   },
   {
@@ -79,9 +79,9 @@
     "inputTpmPerPtu": 4750,
     "outputWeight": 8,
     "source": "https://learn.microsoft.com/en-us/azure/foundry/openai/how-to/provisioned-throughput-sizing#deployment-parameters-and-throughput-values-by-model",
-    "verifiedOn": "2026-11-19",
+    "verifiedOn": "2026-11-23",
     "observedSince": "2026-11-19",
-    "reviewBy": "2027-01-03",
+    "reviewBy": "2027-01-07",
     "condition": "Published model-version sizing parameters. Capacity and tenant quota require separate confirmation."
   },
   {
@@ -100,9 +100,9 @@
     "inputTpmPerPtu": 4750,
     "outputWeight": 8,
     "source": "https://learn.microsoft.com/en-us/azure/foundry/openai/how-to/provisioned-throughput-sizing#deployment-parameters-and-throughput-values-by-model",
-    "verifiedOn": "2026-11-19",
+    "verifiedOn": "2026-11-23",
     "observedSince": "2026-11-19",
-    "reviewBy": "2027-01-03",
+    "reviewBy": "2027-01-07",
     "condition": "Published model-version sizing parameters. Capacity and tenant quota require separate confirmation."
   },
   {
@@ -121,9 +121,9 @@
     "inputTpmPerPtu": 4750,
     "outputWeight": 8,
     "source": "https://learn.microsoft.com/en-us/azure/foundry/openai/how-to/provisioned-throughput-sizing#deployment-parameters-and-throughput-values-by-model",
-    "verifiedOn": "2026-11-19",
+    "verifiedOn": "2026-11-23",
     "observedSince": "2026-11-19",
-    "reviewBy": "2027-01-03",
+    "reviewBy": "2027-01-07",
     "condition": "Published model-version sizing parameters. Capacity and tenant quota require separate confirmation."
   },
   {
@@ -143,9 +143,9 @@
     "inputTpmPerPtu": 4750,
     "outputWeight": 8,
     "source": "https://learn.microsoft.com/en-us/azure/foundry/openai/how-to/provisioned-throughput-sizing#deployment-parameters-and-throughput-values-by-model",
-    "verifiedOn": "2026-11-19",
+    "verifiedOn": "2026-11-23",
     "observedSince": "2026-11-19",
-    "reviewBy": "2027-01-03",
+    "reviewBy": "2027-01-07",
     "condition": "Published model-version sizing parameters. Capacity and tenant quota require separate confirmation."
   },
   {
@@ -164,9 +164,9 @@
     "inputTpmPerPtu": 4750,
     "outputWeight": 8,
     "source": "https://learn.microsoft.com/en-us/azure/foundry/openai/how-to/provisioned-throughput-sizing#deployment-parameters-and-throughput-values-by-model",
-    "verifiedOn": "2026-11-19",
+    "verifiedOn": "2026-11-23",
     "observedSince": "2026-11-19",
-    "reviewBy": "2027-01-03",
+    "reviewBy": "2027-01-07",
     "condition": "Published model-version sizing parameters. Capacity and tenant quota require separate confirmation."
   },
   {
@@ -185,9 +185,9 @@
     "inputTpmPerPtu": 4750,
     "outputWeight": 8,
     "source": "https://learn.microsoft.com/en-us/azure/foundry/openai/how-to/provisioned-throughput-sizing#deployment-parameters-and-throughput-values-by-model",
-    "verifiedOn": "2026-11-19",
+    "verifiedOn": "2026-11-23",
     "observedSince": "2026-11-19",
-    "reviewBy": "2027-01-03",
+    "reviewBy": "2027-01-07",
     "condition": "Published model-version sizing parameters. Capacity and tenant quota require separate confirmation."
   },
   {
@@ -207,9 +207,9 @@
     "inputTpmPerPtu": 23750,
     "outputWeight": 8,
     "source": "https://learn.microsoft.com/en-us/azure/foundry/openai/how-to/provisioned-throughput-sizing#deployment-parameters-and-throughput-values-by-model",
-    "verifiedOn": "2026-11-19",
+    "verifiedOn": "2026-11-23",
     "observedSince": "2026-11-19",
-    "reviewBy": "2027-01-03",
+    "reviewBy": "2027-01-07",
     "condition": "Published model-version sizing parameters. Capacity and tenant quota require separate confirmation."
   },
   {
@@ -228,9 +228,9 @@
     "inputTpmPerPtu": 23750,
     "outputWeight": 8,
     "source": "https://learn.microsoft.com/en-us/azure/foundry/openai/how-to/provisioned-throughput-sizing#deployment-parameters-and-throughput-values-by-model",
-    "verifiedOn": "2026-11-19",
+    "verifiedOn": "2026-11-23",
     "observedSince": "2026-11-19",
-    "reviewBy": "2027-01-03",
+    "reviewBy": "2027-01-07",
     "condition": "Published model-version sizing parameters. Capacity and tenant quota require separate confirmation."
   },
   {
@@ -249,9 +249,9 @@
     "inputTpmPerPtu": 23750,
     "outputWeight": 8,
     "source": "https://learn.microsoft.com/en-us/azure/foundry/openai/how-to/provisioned-throughput-sizing#deployment-parameters-and-throughput-values-by-model",
-    "verifiedOn": "2026-11-19",
+    "verifiedOn": "2026-11-23",
     "observedSince": "2026-11-19",
-    "reviewBy": "2027-01-03",
+    "reviewBy": "2027-01-07",
     "condition": "Published model-version sizing parameters. Capacity and tenant quota require separate confirmation."
   },
   {
@@ -271,9 +271,9 @@
     "inputTpmPerPtu": 3000,
     "outputWeight": 4,
     "source": "https://learn.microsoft.com/en-us/azure/foundry/openai/how-to/provisioned-throughput-sizing#deployment-parameters-and-throughput-values-by-model",
-    "verifiedOn": "2026-11-19",
+    "verifiedOn": "2026-11-23",
     "observedSince": "2026-11-19",
-    "reviewBy": "2027-01-03",
+    "reviewBy": "2027-01-07",
     "condition": "Published model-version sizing parameters. Capacity and tenant quota require separate confirmation."
   },
   {
@@ -292,9 +292,9 @@
     "inputTpmPerPtu": 3000,
     "outputWeight": 4,
     "source": "https://learn.microsoft.com/en-us/azure/foundry/openai/how-to/provisioned-throughput-sizing#deployment-parameters-and-throughput-values-by-model",
-    "verifiedOn": "2026-11-19",
+    "verifiedOn": "2026-11-23",
     "observedSince": "2026-11-19",
-    "reviewBy": "2027-01-03",
+    "reviewBy": "2027-01-07",
     "condition": "Published model-version sizing parameters. Capacity and tenant quota require separate confirmation."
   },
   {
@@ -313,9 +313,9 @@
     "inputTpmPerPtu": 3000,
     "outputWeight": 4,
     "source": "https://learn.microsoft.com/en-us/azure/foundry/openai/how-to/provisioned-throughput-sizing#deployment-parameters-and-throughput-values-by-model",
-    "verifiedOn": "2026-11-19",
+    "verifiedOn": "2026-11-23",
     "observedSince": "2026-11-19",
-    "reviewBy": "2027-01-03",
+    "reviewBy": "2027-01-07",
     "condition": "Published model-version sizing parameters. Capacity and tenant quota require separate confirmation."
   },
   {
@@ -335,9 +335,9 @@
     "inputTpmPerPtu": 14900,
     "outputWeight": 4,
     "source": "https://learn.microsoft.com/en-us/azure/foundry/openai/how-to/provisioned-throughput-sizing#deployment-parameters-and-throughput-values-by-model",
-    "verifiedOn": "2026-11-19",
+    "verifiedOn": "2026-11-23",
     "observedSince": "2026-11-19",
-    "reviewBy": "2027-01-03",
+    "reviewBy": "2027-01-07",
     "condition": "Published model-version sizing parameters. Capacity and tenant quota require separate confirmation."
   },
   {
@@ -356,9 +356,9 @@
     "inputTpmPerPtu": 14900,
     "outputWeight": 4,
     "source": "https://learn.microsoft.com/en-us/azure/foundry/openai/how-to/provisioned-throughput-sizing#deployment-parameters-and-throughput-values-by-model",
-    "verifiedOn": "2026-11-19",
+    "verifiedOn": "2026-11-23",
     "observedSince": "2026-11-19",
-    "reviewBy": "2027-01-03",
+    "reviewBy": "2027-01-07",
     "condition": "Published model-version sizing parameters. Capacity and tenant quota require separate confirmation."
   },
   {
@@ -377,9 +377,9 @@
     "inputTpmPerPtu": 14900,
     "outputWeight": 4,
     "source": "https://learn.microsoft.com/en-us/azure/foundry/openai/how-to/provisioned-throughput-sizing#deployment-parameters-and-throughput-values-by-model",
-    "verifiedOn": "2026-11-19",
+    "verifiedOn": "2026-11-23",
     "observedSince": "2026-11-19",
-    "reviewBy": "2027-01-03",
+    "reviewBy": "2027-01-07",
     "condition": "Published model-version sizing parameters. Capacity and tenant quota require separate confirmation."
   },
   {
@@ -399,9 +399,9 @@
     "inputTpmPerPtu": 59400,
     "outputWeight": 4,
     "source": "https://learn.microsoft.com/en-us/azure/foundry/openai/how-to/provisioned-throughput-sizing#deployment-parameters-and-throughput-values-by-model",
-    "verifiedOn": "2026-11-19",
+    "verifiedOn": "2026-11-23",
     "observedSince": "2026-11-19",
-    "reviewBy": "2027-01-03",
+    "reviewBy": "2027-01-07",
     "condition": "Published model-version sizing parameters. Capacity and tenant quota require separate confirmation."
   },
   {
@@ -420,9 +420,9 @@
     "inputTpmPerPtu": 59400,
     "outputWeight": 4,
     "source": "https://learn.microsoft.com/en-us/azure/foundry/openai/how-to/provisioned-throughput-sizing#deployment-parameters-and-throughput-values-by-model",
-    "verifiedOn": "2026-11-19",
+    "verifiedOn": "2026-11-23",
     "observedSince": "2026-11-19",
-    "reviewBy": "2027-01-03",
+    "reviewBy": "2027-01-07",
     "condition": "Published model-version sizing parameters. Capacity and tenant quota require separate confirmation."
   },
   {
@@ -440,9 +440,9 @@
     "inputTpmPerPtu": 59400,
     "outputWeight": 4,
     "source": "https://learn.microsoft.com/en-us/azure/foundry/openai/how-to/provisioned-throughput-sizing#deployment-parameters-and-throughput-values-by-model",
-    "verifiedOn": "2026-11-19",
+    "verifiedOn": "2026-11-23",
     "observedSince": "2026-11-19",
-    "reviewBy": "2027-01-03",
+    "reviewBy": "2027-01-07",
     "condition": "Published model-version sizing parameters. Capacity and tenant quota require separate confirmation."
   },
   {
@@ -462,9 +462,9 @@
     "inputTpmPerPtu": 3000,
     "outputWeight": 4,
     "source": "https://learn.microsoft.com/en-us/azure/foundry/openai/how-to/provisioned-throughput-sizing#deployment-parameters-and-throughput-values-by-model",
-    "verifiedOn": "2026-11-19",
+    "verifiedOn": "2026-11-23",
     "observedSince": "2026-11-19",
-    "reviewBy": "2027-01-03",
+    "reviewBy": "2027-01-07",
     "condition": "Published model-version sizing parameters. Capacity and tenant quota require separate confirmation."
   },
   {
@@ -483,9 +483,9 @@
     "inputTpmPerPtu": 3000,
     "outputWeight": 4,
     "source": "https://learn.microsoft.com/en-us/azure/foundry/openai/how-to/provisioned-throughput-sizing#deployment-parameters-and-throughput-values-by-model",
-    "verifiedOn": "2026-11-19",
+    "verifiedOn": "2026-11-23",
     "observedSince": "2026-11-19",
-    "reviewBy": "2027-01-03",
+    "reviewBy": "2027-01-07",
     "condition": "Published model-version sizing parameters. Capacity and tenant quota require separate confirmation."
   },
   {
@@ -504,9 +504,9 @@
     "inputTpmPerPtu": 3000,
     "outputWeight": 4,
     "source": "https://learn.microsoft.com/en-us/azure/foundry/openai/how-to/provisioned-throughput-sizing#deployment-parameters-and-throughput-values-by-model",
-    "verifiedOn": "2026-11-19",
+    "verifiedOn": "2026-11-23",
     "observedSince": "2026-11-19",
-    "reviewBy": "2027-01-03",
+    "reviewBy": "2027-01-07",
     "condition": "Published model-version sizing parameters. Capacity and tenant quota require separate confirmation."
   },
   {
@@ -525,9 +525,9 @@
     "increment": 5,
     "inputTpmPerPtu": 3000,
     "source": "https://learn.microsoft.com/en-us/azure/foundry/openai/how-to/provisioned-throughput-sizing#deployment-parameters-and-throughput-values-by-model",
-    "verifiedOn": "2026-11-19",
+    "verifiedOn": "2026-11-23",
     "observedSince": "2026-11-19",
-    "reviewBy": "2027-01-03",
+    "reviewBy": "2027-01-07",
     "condition": "Published model-version sizing parameters. Capacity and tenant quota require separate confirmation."
   },
   {
@@ -544,9 +544,9 @@
     "increment": 5,
     "inputTpmPerPtu": 3000,
     "source": "https://learn.microsoft.com/en-us/azure/foundry/openai/how-to/provisioned-throughput-sizing#deployment-parameters-and-throughput-values-by-model",
-    "verifiedOn": "2026-11-19",
+    "verifiedOn": "2026-11-23",
     "observedSince": "2026-11-19",
-    "reviewBy": "2027-01-03",
+    "reviewBy": "2027-01-07",
     "condition": "Published model-version sizing parameters. Capacity and tenant quota require separate confirmation."
   },
   {
@@ -565,9 +565,9 @@
     "inputTpmPerPtu": 1200,
     "outputWeight": 6,
     "source": "https://learn.microsoft.com/en-us/azure/foundry/openai/how-to/provisioned-throughput-sizing#deployment-parameters-and-throughput-values-by-model",
-    "verifiedOn": "2026-11-19",
+    "verifiedOn": "2026-11-23",
     "observedSince": "2026-11-19",
-    "reviewBy": "2027-01-03",
+    "reviewBy": "2027-01-07",
     "condition": "Published model-version sizing parameters. Capacity and tenant quota require separate confirmation."
   },
   {
@@ -586,9 +586,9 @@
     "inputTpmPerPtu": 1200,
     "outputWeight": 6,
     "source": "https://learn.microsoft.com/en-us/azure/foundry/openai/how-to/provisioned-throughput-sizing#deployment-parameters-and-throughput-values-by-model",
-    "verifiedOn": "2026-11-19",
+    "verifiedOn": "2026-11-23",
     "observedSince": "2026-11-19",
-    "reviewBy": "2027-01-03",
+    "reviewBy": "2027-01-07",
     "condition": "Published model-version sizing parameters. Capacity and tenant quota require separate confirmation."
   },
   {
@@ -606,9 +606,9 @@
     "inputTpmPerPtu": 1200,
     "outputWeight": 6,
     "source": "https://learn.microsoft.com/en-us/azure/foundry/openai/how-to/provisioned-throughput-sizing#deployment-parameters-and-throughput-values-by-model",
-    "verifiedOn": "2026-11-19",
+    "verifiedOn": "2026-11-23",
     "observedSince": "2026-11-19",
-    "reviewBy": "2027-01-03",
+    "reviewBy": "2027-01-07",
     "condition": "Published model-version sizing parameters. Capacity and tenant quota require separate confirmation."
   },
   {
@@ -628,9 +628,9 @@
     "inputTpmPerPtu": 2400,
     "outputWeight": 6,
     "source": "https://learn.microsoft.com/en-us/azure/foundry/openai/how-to/provisioned-throughput-sizing#deployment-parameters-and-throughput-values-by-model",
-    "verifiedOn": "2026-11-19",
+    "verifiedOn": "2026-11-23",
     "observedSince": "2026-11-19",
-    "reviewBy": "2027-01-03",
+    "reviewBy": "2027-01-07",
     "condition": "Published model-version sizing parameters. Capacity and tenant quota require separate confirmation."
   },
   {
@@ -649,9 +649,9 @@
     "inputTpmPerPtu": 2400,
     "outputWeight": 6,
     "source": "https://learn.microsoft.com/en-us/azure/foundry/openai/how-to/provisioned-throughput-sizing#deployment-parameters-and-throughput-values-by-model",
-    "verifiedOn": "2026-11-19",
+    "verifiedOn": "2026-11-23",
     "observedSince": "2026-11-19",
-    "reviewBy": "2027-01-03",
+    "reviewBy": "2027-01-07",
     "condition": "Published model-version sizing parameters. Capacity and tenant quota require separate confirmation."
   },
   {
@@ -669,9 +669,9 @@
     "inputTpmPerPtu": 2400,
     "outputWeight": 6,
     "source": "https://learn.microsoft.com/en-us/azure/foundry/openai/how-to/provisioned-throughput-sizing#deployment-parameters-and-throughput-values-by-model",
-    "verifiedOn": "2026-11-19",
+    "verifiedOn": "2026-11-23",
     "observedSince": "2026-11-19",
-    "reviewBy": "2027-01-03",
+    "reviewBy": "2027-01-07",
     "condition": "Published model-version sizing parameters. Capacity and tenant quota require separate confirmation."
   },
   {
@@ -691,9 +691,9 @@
     "inputTpmPerPtu": 7900,
     "outputWeight": 6,
     "source": "https://learn.microsoft.com/en-us/azure/foundry/openai/how-to/provisioned-throughput-sizing#deployment-parameters-and-throughput-values-by-model",
-    "verifiedOn": "2026-11-19",
+    "verifiedOn": "2026-11-23",
     "observedSince": "2026-11-19",
-    "reviewBy": "2027-01-03",
+    "reviewBy": "2027-01-07",
     "condition": "Published model-version sizing parameters. Capacity and tenant quota require separate confirmation."
   },
   {
@@ -712,9 +712,9 @@
     "inputTpmPerPtu": 7900,
     "outputWeight": 6,
     "source": "https://learn.microsoft.com/en-us/azure/foundry/openai/how-to/provisioned-throughput-sizing#deployment-parameters-and-throughput-values-by-model",
-    "verifiedOn": "2026-11-19",
+    "verifiedOn": "2026-11-23",
     "observedSince": "2026-11-19",
-    "reviewBy": "2027-01-03",
+    "reviewBy": "2027-01-07",
     "condition": "Published model-version sizing parameters. Capacity and tenant quota require separate confirmation."
   },
   {
@@ -732,9 +732,9 @@
     "inputTpmPerPtu": 7900,
     "outputWeight": 6,
     "source": "https://learn.microsoft.com/en-us/azure/foundry/openai/how-to/provisioned-throughput-sizing#deployment-parameters-and-throughput-values-by-model",
-    "verifiedOn": "2026-11-19",
+    "verifiedOn": "2026-11-23",
     "observedSince": "2026-11-19",
-    "reviewBy": "2027-01-03",
+    "reviewBy": "2027-01-07",
     "condition": "Published model-version sizing parameters. Capacity and tenant quota require separate confirmation."
   },
   {
@@ -753,9 +753,9 @@
     "increment": 5,
     "inputTpmPerPtu": 3000,
     "source": "https://learn.microsoft.com/en-us/azure/foundry/openai/how-to/provisioned-throughput-sizing#deployment-parameters-and-throughput-values-by-model",
-    "verifiedOn": "2026-11-19",
+    "verifiedOn": "2026-11-23",
     "observedSince": "2026-11-19",
-    "reviewBy": "2027-01-03",
+    "reviewBy": "2027-01-07",
     "condition": "Published model-version sizing parameters. Capacity and tenant quota require separate confirmation."
   },
   {
@@ -773,9 +773,9 @@
     "increment": 5,
     "inputTpmPerPtu": 3000,
     "source": "https://learn.microsoft.com/en-us/azure/foundry/openai/how-to/provisioned-throughput-sizing#deployment-parameters-and-throughput-values-by-model",
-    "verifiedOn": "2026-11-19",
+    "verifiedOn": "2026-11-23",
     "observedSince": "2026-11-19",
-    "reviewBy": "2027-01-03",
+    "reviewBy": "2027-01-07",
     "condition": "Published model-version sizing parameters. Capacity and tenant quota require separate confirmation."
   },
   {
@@ -794,9 +794,9 @@
     "increment": 5,
     "inputTpmPerPtu": 59400,
     "source": "https://learn.microsoft.com/en-us/azure/foundry/openai/how-to/provisioned-throughput-sizing#deployment-parameters-and-throughput-values-by-model",
-    "verifiedOn": "2026-11-19",
+    "verifiedOn": "2026-11-23",
     "observedSince": "2026-11-19",
-    "reviewBy": "2027-01-03",
+    "reviewBy": "2027-01-07",
     "condition": "Published model-version sizing parameters. Capacity and tenant quota require separate confirmation."
   },
   {
@@ -814,9 +814,9 @@
     "increment": 5,
     "inputTpmPerPtu": 59400,
     "source": "https://learn.microsoft.com/en-us/azure/foundry/openai/how-to/provisioned-throughput-sizing#deployment-parameters-and-throughput-values-by-model",
-    "verifiedOn": "2026-11-19",
+    "verifiedOn": "2026-11-23",
     "observedSince": "2026-11-19",
-    "reviewBy": "2027-01-03",
+    "reviewBy": "2027-01-07",
     "condition": "Published model-version sizing parameters. Capacity and tenant quota require separate confirmation."
   },
   {
@@ -835,9 +835,9 @@
     "increment": 5,
     "inputTpmPerPtu": 600,
     "source": "https://learn.microsoft.com/en-us/azure/foundry/openai/how-to/provisioned-throughput-sizing#deployment-parameters-and-throughput-values-by-model",
-    "verifiedOn": "2026-11-19",
+    "verifiedOn": "2026-11-23",
     "observedSince": "2026-11-19",
-    "reviewBy": "2027-01-03",
+    "reviewBy": "2027-01-07",
     "condition": "Published model-version sizing parameters. Capacity and tenant quota require separate confirmation."
   },
   {
@@ -854,9 +854,9 @@
     "increment": 5,
     "inputTpmPerPtu": 600,
     "source": "https://learn.microsoft.com/en-us/azure/foundry/openai/how-to/provisioned-throughput-sizing#deployment-parameters-and-throughput-values-by-model",
-    "verifiedOn": "2026-11-19",
+    "verifiedOn": "2026-11-23",
     "observedSince": "2026-11-19",
-    "reviewBy": "2027-01-03",
+    "reviewBy": "2027-01-07",
     "condition": "Published model-version sizing parameters. Capacity and tenant quota require separate confirmation."
   },
   {
@@ -876,9 +876,9 @@
     "inputTpmPerPtu": 30000,
     "outputWeight": 6,
     "source": "https://learn.microsoft.com/en-us/azure/foundry/openai/how-to/provisioned-throughput-sizing#deployment-parameters-and-throughput-values-by-model",
-    "verifiedOn": "2026-11-19",
+    "verifiedOn": "2026-11-23",
     "observedSince": "2026-11-19",
-    "reviewBy": "2027-01-03",
+    "reviewBy": "2027-01-07",
     "condition": "Published model-version sizing parameters. Capacity and tenant quota require separate confirmation."
   },
   {
@@ -897,9 +897,9 @@
     "inputTpmPerPtu": 30000,
     "outputWeight": 6,
     "source": "https://learn.microsoft.com/en-us/azure/foundry/openai/how-to/provisioned-throughput-sizing#deployment-parameters-and-throughput-values-by-model",
-    "verifiedOn": "2026-11-19",
+    "verifiedOn": "2026-11-23",
     "observedSince": "2026-11-19",
-    "reviewBy": "2027-01-03",
+    "reviewBy": "2027-01-07",
     "condition": "Published model-version sizing parameters. Capacity and tenant quota require separate confirmation."
   },
   {
@@ -918,9 +918,9 @@
     "inputTpmPerPtu": 30000,
     "outputWeight": 6,
     "source": "https://learn.microsoft.com/en-us/azure/foundry/openai/how-to/provisioned-throughput-sizing#deployment-parameters-and-throughput-values-by-model",
-    "verifiedOn": "2026-11-19",
+    "verifiedOn": "2026-11-23",
     "observedSince": "2026-11-19",
-    "reviewBy": "2027-01-03",
+    "reviewBy": "2027-01-07",
     "condition": "Published model-version sizing parameters. Capacity and tenant quota require separate confirmation."
   },
   {
@@ -940,9 +940,9 @@
     "inputTpmPerPtu": 3000,
     "outputWeight": 6,
     "source": "https://learn.microsoft.com/en-us/azure/foundry/openai/how-to/provisioned-throughput-sizing#deployment-parameters-and-throughput-values-by-model",
-    "verifiedOn": "2026-11-19",
+    "verifiedOn": "2026-11-23",
     "observedSince": "2026-11-19",
-    "reviewBy": "2027-01-03",
+    "reviewBy": "2027-01-07",
     "condition": "Published model-version sizing parameters. Capacity and tenant quota require separate confirmation."
   },
   {
@@ -961,9 +961,9 @@
     "inputTpmPerPtu": 3000,
     "outputWeight": 6,
     "source": "https://learn.microsoft.com/en-us/azure/foundry/openai/how-to/provisioned-throughput-sizing#deployment-parameters-and-throughput-values-by-model",
-    "verifiedOn": "2026-11-19",
+    "verifiedOn": "2026-11-23",
     "observedSince": "2026-11-19",
-    "reviewBy": "2027-01-03",
+    "reviewBy": "2027-01-07",
     "condition": "Published model-version sizing parameters. Capacity and tenant quota require separate confirmation."
   },
   {
@@ -983,9 +983,9 @@
     "inputTpmPerPtu": 1200,
     "outputWeight": 6,
     "source": "https://learn.microsoft.com/en-us/azure/foundry/openai/how-to/provisioned-throughput-sizing#deployment-parameters-and-throughput-values-by-model",
-    "verifiedOn": "2026-11-19",
+    "verifiedOn": "2026-11-23",
     "observedSince": "2026-11-19",
-    "reviewBy": "2027-01-03",
+    "reviewBy": "2027-01-07",
     "condition": "Published model-version sizing parameters. Capacity and tenant quota require separate confirmation."
   },
   {
@@ -1004,9 +1004,9 @@
     "inputTpmPerPtu": 1200,
     "outputWeight": 6,
     "source": "https://learn.microsoft.com/en-us/azure/foundry/openai/how-to/provisioned-throughput-sizing#deployment-parameters-and-throughput-values-by-model",
-    "verifiedOn": "2026-11-19",
+    "verifiedOn": "2026-11-23",
     "observedSince": "2026-11-19",
-    "reviewBy": "2027-01-03",
+    "reviewBy": "2027-01-07",
     "condition": "Published model-version sizing parameters. Capacity and tenant quota require separate confirmation."
   },
   {
@@ -1026,9 +1026,9 @@
     "inputTpmPerPtu": 3400,
     "outputWeight": 8,
     "source": "https://learn.microsoft.com/en-us/azure/foundry/openai/how-to/provisioned-throughput-sizing#deployment-parameters-and-throughput-values-by-model",
-    "verifiedOn": "2026-11-19",
+    "verifiedOn": "2026-11-23",
     "observedSince": "2026-11-19",
-    "reviewBy": "2027-01-03",
+    "reviewBy": "2027-01-07",
     "condition": "Published model-version sizing parameters. Capacity and tenant quota require separate confirmation."
   },
   {
@@ -1046,9 +1046,9 @@
     "inputTpmPerPtu": 3400,
     "outputWeight": 8,
     "source": "https://learn.microsoft.com/en-us/azure/foundry/openai/how-to/provisioned-throughput-sizing#deployment-parameters-and-throughput-values-by-model",
-    "verifiedOn": "2026-11-19",
+    "verifiedOn": "2026-11-23",
     "observedSince": "2026-11-19",
-    "reviewBy": "2027-01-03",
+    "reviewBy": "2027-01-07",
     "condition": "Published model-version sizing parameters. Capacity and tenant quota require separate confirmation."
   },
   {
@@ -1068,9 +1068,9 @@
     "inputTpmPerPtu": 3400,
     "outputWeight": 8,
     "source": "https://learn.microsoft.com/en-us/azure/foundry/openai/how-to/provisioned-throughput-sizing#deployment-parameters-and-throughput-values-by-model",
-    "verifiedOn": "2026-11-19",
+    "verifiedOn": "2026-11-23",
     "observedSince": "2026-11-19",
-    "reviewBy": "2027-01-03",
+    "reviewBy": "2027-01-07",
     "condition": "Published model-version sizing parameters. Capacity and tenant quota require separate confirmation."
   },
   {
@@ -1090,9 +1090,9 @@
     "inputTpmPerPtu": 4750,
     "outputWeight": 8,
     "source": "https://learn.microsoft.com/en-us/azure/foundry/openai/how-to/provisioned-throughput-sizing#deployment-parameters-and-throughput-values-by-model",
-    "verifiedOn": "2026-11-19",
+    "verifiedOn": "2026-11-23",
     "observedSince": "2026-11-19",
-    "reviewBy": "2027-01-03",
+    "reviewBy": "2027-01-07",
     "condition": "Published model-version sizing parameters. Capacity and tenant quota require separate confirmation."
   },
   {
@@ -1111,9 +1111,9 @@
     "inputTpmPerPtu": 4750,
     "outputWeight": 8,
     "source": "https://learn.microsoft.com/en-us/azure/foundry/openai/how-to/provisioned-throughput-sizing#deployment-parameters-and-throughput-values-by-model",
-    "verifiedOn": "2026-11-19",
+    "verifiedOn": "2026-11-23",
     "observedSince": "2026-11-19",
-    "reviewBy": "2027-01-03",
+    "reviewBy": "2027-01-07",
     "condition": "Published model-version sizing parameters. Capacity and tenant quota require separate confirmation."
   },
   {
@@ -1133,9 +1133,9 @@
     "inputTpmPerPtu": 5400,
     "outputWeight": 4,
     "source": "https://learn.microsoft.com/en-us/azure/foundry/openai/how-to/provisioned-throughput-sizing#deployment-parameters-and-throughput-values-by-model",
-    "verifiedOn": "2026-11-19",
+    "verifiedOn": "2026-11-23",
     "observedSince": "2026-11-19",
-    "reviewBy": "2027-01-03",
+    "reviewBy": "2027-01-07",
     "condition": "Published model-version sizing parameters. Capacity and tenant quota require separate confirmation."
   },
   {
@@ -1154,9 +1154,9 @@
     "inputTpmPerPtu": 5400,
     "outputWeight": 4,
     "source": "https://learn.microsoft.com/en-us/azure/foundry/openai/how-to/provisioned-throughput-sizing#deployment-parameters-and-throughput-values-by-model",
-    "verifiedOn": "2026-11-19",
+    "verifiedOn": "2026-11-23",
     "observedSince": "2026-11-19",
-    "reviewBy": "2027-01-03",
+    "reviewBy": "2027-01-07",
     "condition": "Published model-version sizing parameters. Capacity and tenant quota require separate confirmation."
   },
   {
@@ -1175,9 +1175,9 @@
     "inputTpmPerPtu": 5400,
     "outputWeight": 4,
     "source": "https://learn.microsoft.com/en-us/azure/foundry/openai/how-to/provisioned-throughput-sizing#deployment-parameters-and-throughput-values-by-model",
-    "verifiedOn": "2026-11-19",
+    "verifiedOn": "2026-11-23",
     "observedSince": "2026-11-19",
-    "reviewBy": "2027-01-03",
+    "reviewBy": "2027-01-07",
     "condition": "Published model-version sizing parameters. Capacity and tenant quota require separate confirmation."
   }
 ]

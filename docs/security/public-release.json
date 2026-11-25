@@ -1,5 +1,16 @@
 {
   "hostname": "studio.ethan0wens.tech",
-  "s6_10": "accepted-preview-only",
-  "evidence": null
+  "s6_10": "resolved",
+  "evidence": {
+    "application": "b94aa3ff59ad9d23b0e5e48f9e5b5476d17982f2",
+    "catalogueId": "4bce81cee67a11aff49c47212877f6c026b68c4661a6893f158528bc4b54090d",
+    "reviewedOn": "2026-11-20",
+    "edgeEnforcement": "https://github.com/ethan0wens/ai-economics-studio/actions/runs/44765779183/job/136390461163",
+    "repositoryProtections": "https://github.com/ethan0wens/ai-economics-studio/rules/27727343",
+    "deploymentTokenScope": "https://github.com/ethan0wens/ai-economics-studio/actions/runs/44765779183/job/136390461163",
+    "securityAndFinancialChecks": "https://github.com/ethan0wens/ai-economics-studio/actions/runs/44765779183/job/136390461163",
+    "verifiedDeployment": "https://github.com/ethan0wens/ai-economics-studio/actions/runs/44765779183",
+    "riskRegisterReview": "https://github.com/ethan0wens/ai-economics-studio/blob/main/docs/security/03-risk-register.md",
+    "publicReleaseApproval": "https://github.com/ethan0wens/ai-economics-studio/issues/10"
+  }
 }
